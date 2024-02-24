@@ -110,7 +110,6 @@ Table "order_details" {
   "number_of_products" int(11) [default: 1, note: "Phải > 0"]
   "total_money" float [default: 0, note: "Phải >= 0"]
   "color_of_product" varchar(20) [default: ""]
-
 }
 
 Table "products" {

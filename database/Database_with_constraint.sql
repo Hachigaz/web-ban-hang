@@ -101,8 +101,7 @@ CREATE TABLE `order_details` (
   `price` decimal(10,2) DEFAULT 0,
   `number_of_products` int(11) DEFAULT 1 COMMENT 'Phải > 0',
   `total_money` float DEFAULT 0 COMMENT 'Phải >= 0',
-  `color_of_product` varchar(20) DEFAULT '',
-  `is_active` bit(1) DEFAULT 1
+  `color_of_product` varchar(20) DEFAULT ''
 );
 
 CREATE TABLE `products` (
