@@ -35,7 +35,7 @@ Table "customers" {
   "customer_fullname" varchar(100) [default: ""]
   "role_id" int(11) [not null]
   "account_id" int(11) [not null]
-  "gender" bit(1) [default: 0, note: "Male: 0, Female: 1"]
+  "gender" tinyint(1) [default: 0, note: "Male: 0, Female: 1"]
   "phone_number" varchar(20) [default: ""]
   "customer_email" varchar(200) [default: ""]
   "address" varchar(200) [default: "", note: "Địa chỉ của khách hàng"]
@@ -180,7 +180,7 @@ Table "staffs" {
   "staff_phone_number" varchar(20) [not null]
   "staff_email" varchar(200) [not null]
   "role_id" int(11) [not null]
-  "gender" bit(1) [default: 0, note: "Male: 0, Female: 1"]
+  "gender" tinyint(1) [default: 0, note: "Male: 0, Female: 1"]
   "entry_date" date [default: `now()`]
   "is_active" tinyint(1) [default: 1]
 }

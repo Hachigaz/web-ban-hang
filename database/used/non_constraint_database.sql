@@ -26,7 +26,7 @@ CREATE TABLE `customers` (
   `customer_fullname` varchar(100) DEFAULT '',
   `role_id` int(11) NOT NULL,
   `account_id` int(11) NOT NULL,
-  `gender` bit(1) DEFAULT 0 COMMENT 'Male: 0, Female: 1',
+  `gender` tinyint(1) DEFAULT 0 COMMENT 'Male: 0, Female: 1',
   `phone_number` varchar(20) DEFAULT '',
   `customer_email` varchar(200) DEFAULT '',
   `address` varchar(200) DEFAULT '' COMMENT 'Địa chỉ của khách hàng',
@@ -164,7 +164,7 @@ CREATE TABLE `staffs` (
   `staff_phone_number` varchar(20) NOT NULL,
   `staff_email` varchar(200) NOT NULL,
   `role_id` int(11) NOT NULL,
-  `gender` bit(1) DEFAULT 0 COMMENT 'Male: 0, Female: 1',
+  `gender` tinyint(1) DEFAULT 0 COMMENT 'Male: 0, Female: 1',
   `entry_date` date DEFAULT (now()),
   `is_active` tinyint(1) DEFAULT 1
 );

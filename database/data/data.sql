@@ -2,7 +2,18 @@ INSERT INTO `accounts` (`account_id`, `username`, `password`, `created_at`, `upd
 (1, 'TheHien', 'thehien123', '2024-02-28 21:37:42', '2024-02-01 21:36:37', 1),
 (2, 'QuocHuy', 'quochuy123', '2024-02-28 21:37:42', '2024-02-02 21:36:37', 1),
 (3, 'MinhLoc', 'minhloc123', '2024-02-28 21:39:01', '2024-02-03 21:38:37', 1),
-(4, 'HongPhong', 'hongphong123', '2024-02-28 21:39:45', '2024-02-10 21:39:27', 1);
+(4, 'HongPhong', 'hongphong123', '2024-02-28 21:39:45', '2024-02-10 21:39:27', 1),
+(5, 'ThiLan', 'thilan123', '2024-02-28 21:39:45', '2024-02-10 21:39:27', 1),
+(6, 'ThiLieu', 'thilieu123', '2024-02-28 21:39:45', '2024-02-10 21:39:27', 1),
+(7, 'ThiLai', 'thilai123', '2024-02-28 21:39:45', '2024-02-10 21:39:27', 1),
+(8, 'CamHuong', 'camhuong123', '2024-02-28 21:39:45', '2024-02-10 21:39:27', 1);
+
+INSERT INTO `customers` (`customer_id`, `customer_fullname`, `role_id`, `account_id`, `gender`, `phone_number`, `customer_email`, `address`, `date_of_birth`, `is_active`) VALUES 
+('1', 'Nguyễn Thị Lan', '5', '5', '1', '0988722525', 'lan@gmail.com', 'Quận 1, Thành Phố Hồ Chí Minh', '2003-06-12', '1'),
+('2', 'Nguyễn Thị Liễu', '5', '6', '1', '0988722526', 'lieu@gmail.com', 'Quận 2, Thành Phố Hồ Chí Minh', '2003-04-12', '1'),
+('3', 'Nguyễn Thị Lài', '5', '7', '1', '0988722527', 'lai@gmail.com', 'Quận 3, Thành Phố Hồ Chí Minh', '2004-02-11', '1'),
+('4', 'Nguyễn Thị Cẩm Hường', '5', '8', '1', '0988722528', 'camhuong@gmail.com', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1')
+;
 
 INSERT INTO `roles` (`role_id`, `role_name`, `is_active`) VALUES 
 ('1', 'Admin', '1'), 
@@ -12,10 +23,10 @@ INSERT INTO `roles` (`role_id`, `role_name`, `is_active`) VALUES
 ('5', 'Khách hàng', '1');
 
 INSERT INTO `staffs` (`staff_id`, `account_id`, `staff_fullname`, `staff_phone_number`, `staff_email`, `role_id`, `gender`, `entry_date`, `is_active`) VALUES 
-('1', '1', 'Lê Nguyễn Thế Hiển', '0988722521', 'hien@gmail.com', '1', b'0', current_timestamp(), '1'),
-('2', '2', 'Võ Quốc Huy', '0988722522', 'huy@gmail.com', '2', b'0', current_timestamp(), '1'),
-('3', '3', 'Khổng Minh Lộc', '0988722523', 'loc@gmail.com', '3', b'0', current_timestamp(), '1'),
-('4', '4', 'Lâm Hồng Phong', '0988722524', 'phong@gmail.com', '4', b'0', current_timestamp(), '1');
+('1', '1', 'Lê Nguyễn Thế Hiển', '0988722521', 'hien@gmail.com', '1', '0', current_timestamp(), '1'),
+('2', '2', 'Võ Quốc Huy', '0988722522', 'huy@gmail.com', '2', '0', current_timestamp(), '1'),
+('3', '3', 'Khổng Minh Lộc', '0988722523', 'loc@gmail.com', '3', '0', current_timestamp(), '1'),
+('4', '4', 'Lâm Hồng Phong', '0988722524', 'phong@gmail.com', '4', '0', current_timestamp(), '1');
 
 INSERT INTO `categories` (`categories_id`, `categories_name`, `is_active`) VALUES 
 ('1', 'Điện thoại', '1'),
@@ -66,3 +77,23 @@ INSERT INTO `brands` (`brand_id`, `brand_name`, `brand_logo`, `supplier_id`, `is
 ('16', 'Corsair', '', '16', '1'),
 ('17', 'Dareu', '', '17', '1'),
 ('18', 'Rapoo', '', '17', '1');
+
+INSERT INTO `functions` (`function_id`, `function_name`, `is_active`) VALUES 
+('1', 'Xem', '1'),
+('2', 'Thêm', '1'),
+('3', 'Sửa', '1'),
+('4', 'Xóa', '1');
+
+INSERT INTO `modules` (`module_id`, `module_name`, `is_active`) VALUES 
+('1', 'Tài khoản', '1'),
+('2', 'Nhân viên', '1'),
+('3', 'Khách hàng', '1'),
+('4', 'Sản phẩm', '1'),
+('5', 'Nhà cung cấp', '1'),
+('6', 'Kho hàng', '1'),
+('7', 'Nhập hàng', '1'),
+('8', 'Xuất hàng', '1'),
+('9', 'Hóa đơn', '1'),
+('10', 'Lương', '1'),
+('11', 'Thống kê', '1'),
+('12', 'Phân quyền', '1');
