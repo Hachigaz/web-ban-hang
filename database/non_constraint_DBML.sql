@@ -1,4 +1,3 @@
-
 Enum "orders_status_of_order_enum" {
   "Pending"
   "Processing"
@@ -20,18 +19,19 @@ Table "brands" {
   "brand_id" int(11) [pk, not null, increment]
   "brand_name" varchar(100) [default: "", note: "Ex: SANYO, TOSHIBA,..."]
   "brand_logo" varchar(300) [default: ""]
-  "supplier_id" int(11) [not null]
+  "supplier_id" varchar(20) [not null]
   "is_active" tinyint(1) [default: 1]
 }
 
 Table "categories" {
   "categories_id" int(11) [pk, not null, increment]
   "categories_name" varchar(100) [default: "", note: "Ex: Tủ lạnh, máy giặt,..."]
+  "category_logo" varchar(300) [default: ""]
   "is_active" tinyint(1) [default: 1]
 }
 
 Table "customers" {
-  "customer_id" int(11) [pk, not null, increment]
+  "customer_id" varchar(20) [pk, not null]
   "customer_fullname" varchar(100) [default: ""]
   "role_id" int(11) [not null]
   "account_id" int(11) [not null]
@@ -54,10 +54,8 @@ Table "decentralizations" {
 Table "exports" {
   "export_id" int(11) [pk, not null, increment]
   "staff_id" int(11) [not null]
-  "shipment_id" int(11) [not null]
   "export_date" datetime [default: `now()`]
   "total_price" decimal(10,2) [default: 0, note: "Không tự sinh đc như mysql"]
-  "reason_id" int(11) [not null, note: "bán - customer, trả - supllier"]
   "is_active" tinyint(1) [default: 1]
 }
 
@@ -78,7 +76,6 @@ Table "functions" {
 Table "imports" {
   "import_id" int(11) [pk, not null, increment]
   "staff_id" int(11) [not null]
-  "reason_id" int(11) [not null]
   "import_date" datetime [default: `now()`]
   "is_active" tinyint(1) [default: 1]
 }
@@ -125,11 +122,18 @@ Table "products" {
   "brand_id" int(11) [not null]
   "categories_id" int(11) [not null]
   "price" decimal(10,2) [default: 0, note: "Phải >= 0"]
+  "guarantee" int(11) [default: 0]
   "thumbnail" varchar(300) [default: "", note: "Phải có ảnh mặc định"]
   "description" longtext [default: "Đây là mô tả sản phẩm"]
   "created_at" datetime [default: `now()`]
   "updated_at" datetime
   "is_active" tinyint(1) [default: 1]
+}
+
+Table "like" {
+  "like_id" int(11) [pk, not null, increment]
+  "product_id" int(11) [not null]
+  "customer_id" varchar(20) [not null]
 }
 
 Table "product_images" {
@@ -188,7 +192,7 @@ Table "staffs" {
 Table "import_returns" {
   "import_return_id" int(11) [pk, not null, increment]
   "staff_id" int(11) [not null]
-  "customer_supplier_id" int(11) [not null]
+  "customer_supplier_id" varchar(20) [not null]
   "reason" varchar(100) [not null, note: "Nhập từ khách hàng, Trả về nhà cung cấp"]
 }
 
@@ -207,7 +211,7 @@ Table "statistics" {
 }
 
 Table "suppliers" {
-  "supplier_id" int(11) [pk, not null, increment]
+  "supplier_id" varchar(20) [pk, not null]
   "supplier_name" varchar(200) [not null]
   "phone_number_of_supplier" varchar(20) [not null]
   "address_of_supplier" varchar(200) [not null]
