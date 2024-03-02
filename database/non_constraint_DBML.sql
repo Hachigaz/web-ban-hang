@@ -1,3 +1,4 @@
+
 Enum "orders_status_of_order_enum" {
   "Pending"
   "Processing"
@@ -8,7 +9,7 @@ Enum "orders_status_of_order_enum" {
 
 Table "accounts" {
   "account_id" int(11) [pk, not null, increment]
-  "username" varchar(200) [not null]
+  "username" varchar(200) [unique, not null]
   "password" varchar(300) [not null]
   "created_at" datetime [default: `now()`]
   "updated_at" datetime
@@ -17,7 +18,7 @@ Table "accounts" {
 
 Table "brands" {
   "brand_id" int(11) [pk, not null, increment]
-  "brand_name" varchar(100) [default: "", note: "Ex: SANYO, TOSHIBA,..."]
+  "brand_name" varchar(100) [unique, default: "", note: "Ex: SANYO, TOSHIBA,..."]
   "brand_logo" varchar(300) [default: ""]
   "supplier_id" varchar(20) [not null]
   "is_active" tinyint(1) [default: 1]
@@ -36,8 +37,8 @@ Table "customers" {
   "role_id" int(11) [not null]
   "account_id" int(11) [not null]
   "gender" tinyint(1) [default: 0, note: "Male: 0, Female: 1"]
-  "phone_number" varchar(20) [default: ""]
-  "customer_email" varchar(200) [default: ""]
+  "phone_number" varchar(20) [unique, default: ""]
+  "customer_email" varchar(200) [unique, default: ""]
   "address" varchar(200) [default: "", note: "Địa chỉ của khách hàng"]
   "date_of_birth" date
   "is_active" tinyint(1) [default: 1]
@@ -170,7 +171,7 @@ Table "shipments" {
 
 Table "skus" {
   "sku_id" int(11) [pk, not null, increment]
-  "sku_code" varchar(100) [default: "", note: "Phải đủ số lượng ký tự của 1 sku code, nếu có enum về color thì sẽ dễ quản lý hơn"]
+  "sku_code" varchar(100) [unique, default: "", note: "Phải đủ số lượng ký tự của 1 sku code, nếu có enum về color thì sẽ dễ quản lý hơn"]
   "product_id" int(11) [not null]
   "color_of_product" varchar(20) [default: "", note: "Nên có enums"]
   "weight_of_product" float [default: 0, note: "Phải > 0"]
@@ -181,8 +182,8 @@ Table "staffs" {
   "staff_id" int(11) [pk, not null, increment]
   "account_id" int(11) [not null]
   "staff_fullname" varchar(100) [not null]
-  "staff_phone_number" varchar(20) [not null]
-  "staff_email" varchar(200) [not null]
+  "staff_phone_number" varchar(20) [unique, not null]
+  "staff_email" varchar(200) [unique, not null]
   "role_id" int(11) [not null]
   "gender" tinyint(1) [default: 0, note: "Male: 0, Female: 1"]
   "entry_date" date [default: `now()`]
@@ -213,9 +214,9 @@ Table "statistics" {
 Table "suppliers" {
   "supplier_id" varchar(20) [pk, not null]
   "supplier_name" varchar(200) [not null]
-  "phone_number_of_supplier" varchar(20) [not null]
+  "phone_number_of_supplier" varchar(20) [unique, not null]
   "address_of_supplier" varchar(200) [not null]
-  "email_of_supplier" varchar(100) [not null]
+  "email_of_supplier" varchar(100) [unique, not null]
   "is_active" tinyint(1) [default: 1]
 }
 

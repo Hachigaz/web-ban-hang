@@ -1,6 +1,6 @@
 CREATE TABLE `accounts` (
   `account_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `username` varchar(200) NOT NULL,
+  `username` varchar(200) UNIQUE NOT NULL,
   `password` varchar(300) NOT NULL,
   `created_at` datetime DEFAULT (now()),
   `updated_at` datetime,
@@ -9,7 +9,7 @@ CREATE TABLE `accounts` (
 
 CREATE TABLE `brands` (
   `brand_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `brand_name` varchar(100) DEFAULT '' COMMENT 'Ex: SANYO, TOSHIBA,...',
+  `brand_name` varchar(100) UNIQUE DEFAULT '' COMMENT 'Ex: SANYO, TOSHIBA,...',
   `brand_logo` varchar(300) DEFAULT '',
   `supplier_id` varchar(20) NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
@@ -28,8 +28,8 @@ CREATE TABLE `customers` (
   `role_id` int(11) NOT NULL,
   `account_id` int(11) NOT NULL,
   `gender` tinyint(1) DEFAULT 0 COMMENT 'Male: 0, Female: 1',
-  `phone_number` varchar(20) DEFAULT '',
-  `customer_email` varchar(200) DEFAULT '',
+  `phone_number` varchar(20) UNIQUE DEFAULT '',
+  `customer_email` varchar(200) UNIQUE DEFAULT '',
   `address` varchar(200) DEFAULT '' COMMENT 'Địa chỉ của khách hàng',
   `date_of_birth` date,
   `is_active` tinyint(1) DEFAULT 1
@@ -155,7 +155,7 @@ CREATE TABLE `shipments` (
 
 CREATE TABLE `skus` (
   `sku_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `sku_code` varchar(100) DEFAULT '' COMMENT 'Phải đủ số lượng ký tự của 1 sku code, nếu có enum về color thì sẽ dễ quản lý hơn',
+  `sku_code` varchar(100) UNIQUE DEFAULT '' COMMENT 'Phải đủ số lượng ký tự của 1 sku code, nếu có enum về color thì sẽ dễ quản lý hơn',
   `product_id` int(11) NOT NULL,
   `color_of_product` varchar(20) DEFAULT '' COMMENT 'Nên có enums',
   `weight_of_product` float DEFAULT 0 COMMENT 'Phải > 0',
@@ -166,8 +166,8 @@ CREATE TABLE `staffs` (
   `staff_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `account_id` int(11) NOT NULL,
   `staff_fullname` varchar(100) NOT NULL,
-  `staff_phone_number` varchar(20) NOT NULL,
-  `staff_email` varchar(200) NOT NULL,
+  `staff_phone_number` varchar(20) UNIQUE NOT NULL,
+  `staff_email` varchar(200) UNIQUE NOT NULL,
   `role_id` int(11) NOT NULL,
   `gender` tinyint(1) DEFAULT 0 COMMENT 'Male: 0, Female: 1',
   `entry_date` date DEFAULT (now()),
@@ -198,9 +198,9 @@ CREATE TABLE `statistics` (
 CREATE TABLE `suppliers` (
   `supplier_id` varchar(20) PRIMARY KEY NOT NULL,
   `supplier_name` varchar(200) NOT NULL,
-  `phone_number_of_supplier` varchar(20) NOT NULL,
+  `phone_number_of_supplier` varchar(20) UNIQUE NOT NULL,
   `address_of_supplier` varchar(200) NOT NULL,
-  `email_of_supplier` varchar(100) NOT NULL,
+  `email_of_supplier` varchar(100) UNIQUE NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
 );
 
