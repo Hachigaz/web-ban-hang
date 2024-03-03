@@ -46,6 +46,7 @@ CREATE TABLE `decentralizations` (
 CREATE TABLE `exports` (
   `export_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `staff_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
   `export_date` datetime DEFAULT (now()),
   `total_price` decimal(10,2) DEFAULT 0 COMMENT 'Không tự sinh đc như mysql',
   `is_active` tinyint(1) DEFAULT 1

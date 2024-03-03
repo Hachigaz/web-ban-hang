@@ -46,6 +46,7 @@ CREATE TABLE `decentralizations` (
 CREATE TABLE `exports` (
   `export_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `staff_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
   `export_date` datetime DEFAULT (now()),
   `total_price` decimal(10,2) DEFAULT 0 COMMENT 'Không tự sinh đc như mysql',
   `is_active` tinyint(1) DEFAULT 1
@@ -281,3 +282,5 @@ ALTER TABLE `import_returns` ADD FOREIGN KEY (`customer_supplier_id`) REFERENCES
 ALTER TABLE `like` ADD FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
 ALTER TABLE `like` ADD FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`);
+
+ALTER TABLE `exports` ADD FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);

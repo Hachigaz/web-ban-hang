@@ -1,4 +1,3 @@
-
 Enum "orders_status_of_order_enum" {
   "Pending"
   "Processing"
@@ -55,6 +54,7 @@ Table "decentralizations" {
 Table "exports" {
   "export_id" int(11) [pk, not null, increment]
   "staff_id" int(11) [not null]
+  "order_id" int(11) [not null]
   "export_date" datetime [default: `now()`]
   "total_price" decimal(10,2) [default: 0, note: "Không tự sinh đc như mysql"]
   "is_active" tinyint(1) [default: 1]

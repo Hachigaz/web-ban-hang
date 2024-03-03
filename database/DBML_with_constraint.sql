@@ -55,6 +55,7 @@ Table "decentralizations" {
 Table "exports" {
   "export_id" int(11) [pk, not null, increment]
   "staff_id" int(11) [not null]
+  "order_id" int(11) [not null]
   "export_date" datetime [default: `now()`]
   "total_price" decimal(10,2) [default: 0, note: "Không tự sinh đc như mysql"]
   "is_active" tinyint(1) [default: 1]
@@ -307,3 +308,5 @@ Ref: "customers"."customer_id" < "import_returns"."customer_supplier_id"
 Ref: "products"."product_id" < "like"."product_id"
 
 Ref: "customers"."customer_id" < "like"."customer_id"
+
+Ref: "orders"."order_id" < "exports"."order_id"
