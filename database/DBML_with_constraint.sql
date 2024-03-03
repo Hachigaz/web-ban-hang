@@ -94,13 +94,12 @@ Table "orders" {
   "receiver_name" varchar(100) [default: "", note: "Có thể giấu tên"]
   "email_of_receiver" varchar(100) [not null]
   "phone_number_of_receiver" varchar(20) [not null]
-  "address_of_receiver" varchar(200) [not null]
   "note" varchar(100) [default: ""]
   "order_date" datetime [default: `now()`]
   "status_of_order" orders_status_of_order_enum [default: "Pending"]
   "total_money" decimal(10,2) [default: 0]
   "shipping_method" varchar(100) [default: ""]
-  "shipping_address" varchar(200) [default: ""]
+  "shipping_address" varchar(200) [not null]
   "shipping_date" datetime
   "tracking_number" varchar(100) [default: ""]
   "payment_method" varchar(100) [default: ""]
@@ -113,7 +112,7 @@ Table "order_details" {
   "product_id" int(11) [not null]
   "price" decimal(10,2) [default: 0]
   "number_of_products" int(11) [default: 1, note: "Phải > 0"]
-  "total_money" float [default: 0, note: "Phải >= 0"]
+  // "total_money" float [default: 0, note: "Phải >= 0"]
   "color_of_product" varchar(20) [default: ""]
   // "is_active" tinyint(1) [default: 1]
 }

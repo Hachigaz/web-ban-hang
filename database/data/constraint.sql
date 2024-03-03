@@ -85,4 +85,35 @@ BEGIN
     END IF;
 END; //
 DELIMITER ;
--- 2. Kiểm tra 
+-- 2. Kiểm tra quantity_export > 0
+ALTER TABLE `export_details`
+ADD CONSTRAINT check_export_quantity_export_details CHECK (`export_details`.quantity_export > 0);
+-- 3. Kiểm tra xem total_price = unit_price_export*quantity_export không
+DELIMITER //
+CREATE TRIGGER calculate_total_price_exports_insert
+AFTER INSERT ON export_details
+FOR EACH ROW
+BEGIN
+    UPDATE `exports`
+    SET `exports`.total_price = (
+        SELECT SUM(unit_price_export * quantity_export)
+        FROM export_details
+        WHERE export_id = NEW.export_id
+    )
+    WHERE export_id = NEW.export_id;
+END; //
+DELIMITER ;
+DELIMITER //
+CREATE TRIGGER calculate_total_price_exports_update
+AFTER UPDATE ON export_details
+FOR EACH ROW
+BEGIN
+    UPDATE `exports`
+    SET `exports`.total_price = (
+        SELECT SUM(unit_price_export * quantity_export)
+        FROM export_details
+        WHERE export_id = NEW.export_id
+    )
+    WHERE export_id = NEW.export_id;
+END; //
+DELIMITER ;

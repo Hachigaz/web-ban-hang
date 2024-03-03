@@ -257,3 +257,11 @@ INSERT INTO `products` (`product_id`, `product_name`, `brand_id`, `categories_id
 ('25', 'Bàn phím Bluetooth Logitech K380', '14', '8', '750000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), '2024-03-01 15:33:35', '1'),
 ('26', 'Bàn Phím Có Dây DareU EK87', '17', '8', '650000', '24', '', 'Đây là mô tả sản phẩm', current_timestamp(), '2024-03-01 15:33:35', '1');
 
+
+INSERT INTO `orders` (`order_id`, `account_id`, `receiver_name`, `email_of_receiver`, `phone_number_of_receiver`, `address_of_receiver`, `note`, `order_date`, `status_of_order`, `total_money`, `shipping_method`, `shipping_address`, `shipping_date`, `tracking_number`, `payment_method`, `is_active`) VALUES 
+('1', '5', 'Anh Hiển', 'thehien@gmail.com', '0786705877', 'Tặng anh Hiển', current_timestamp(), 'Pending', '35990000', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '70L1-13579', 'COD', '1');
+
+INSERT INTO `order_details` (`order_detail_id`, `order_id`, `product_id`, `price`, `number_of_products`, `color_of_product`) VALUES 
+('1', '1', '1', '34990000', '1', 'Đen'),
+('2', '1', '9', '500000', '2', 'Đen');
+

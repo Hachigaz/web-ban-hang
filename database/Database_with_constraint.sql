@@ -85,13 +85,12 @@ CREATE TABLE `orders` (
   `receiver_name` varchar(100) DEFAULT '' COMMENT 'Có thể giấu tên',
   `email_of_receiver` varchar(100) NOT NULL,
   `phone_number_of_receiver` varchar(20) NOT NULL,
-  `address_of_receiver` varchar(200) NOT NULL,
   `note` varchar(100) DEFAULT '',
   `order_date` datetime DEFAULT (now()),
   `status_of_order` ENUM ('Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled') DEFAULT 'Pending',
   `total_money` decimal(10,2) DEFAULT 0,
   `shipping_method` varchar(100) DEFAULT '',
-  `shipping_address` varchar(200) DEFAULT '',
+  `shipping_address` varchar(200) NOT NULL,
   `shipping_date` datetime,
   `tracking_number` varchar(100) DEFAULT '',
   `payment_method` varchar(100) DEFAULT '',
@@ -104,7 +103,7 @@ CREATE TABLE `order_details` (
   `product_id` int(11) NOT NULL,
   `price` decimal(10,2) DEFAULT 0,
   `number_of_products` int(11) DEFAULT 1 COMMENT 'Phải > 0',
-  `total_money` float DEFAULT 0 COMMENT 'Phải >= 0',
+  -- `total_money` float DEFAULT 0 COMMENT 'Phải >= 0',
   `color_of_product` varchar(20) DEFAULT ''
 );
 
