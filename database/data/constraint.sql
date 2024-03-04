@@ -117,3 +117,45 @@ BEGIN
     WHERE export_id = NEW.export_id;
 END; //
 DELIMITER ;
+
+--------------------------------------- SHIPMENTS ----------------------------------------------
+-- 1.Kiểm tra xem số lượng sản phẩm ban đầu của mỗi lô có > 0
+ALTER TABLE `shipments`
+ADD CONSTRAINT check_quantity_shipment CHECK (`shipments`.quantity > 0);
+-- 2.Kiểm tra unit_price_import > 0
+ALTER TABLE `shipments`
+ADD CONSTRAINT check_unit_price_import_shipment CHECK (`shipments`.unit_price_import > 0);
+-- 3.Kiểm tra remain >= 0 và remain <= quantity
+ALTER TABLE `shipments`
+ADD CONSTRAINT check_remain_shipment CHECK (`shipments`.remain >= 0 AND `shipments`.remain <= `shipments`.quantity);
+-- 4.Kiểm tra mfg trước ngày exp
+ALTER TABLE `shipments`
+ADD CONSTRAINT check_mfg_shipment CHECK (`shipments`.mfg < `shipments`.exp);
+-- 5.Kiểm tra nếu thời gian hiện tại mà sau exp thì is_active = 0
+ALTER TABLE `shipments`
+ADD CONSTRAINT check_exp_shipments CHECK (`shipments`.exp < CURDATE())
+
+DELIMITER //
+CREATE TRIGGER check_exp_shipment_insert
+BEFORE INSERT ON `shipments`
+FOR EACH ROW
+BEGIN
+    IF (NEW.exp <= CURDATE()) THEN
+        SET NEW.is_active = 0;
+    ELSE 
+        SET NEW.is_active = 1;
+    END IF;
+END; //
+DELIMITER ;
+DELIMITER //
+CREATE TRIGGER check_exp_shipment_update
+BEFORE UPDATE ON `shipments`
+FOR EACH ROW
+BEGIN
+    IF (NEW.exp <= CURDATE()) THEN
+        SET NEW.is_active = 0;
+    ELSE 
+        SET NEW.is_active = 1;
+    END IF;
+END; //
+DELIMITER ;

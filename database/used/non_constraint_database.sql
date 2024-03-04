@@ -124,7 +124,8 @@ CREATE TABLE `products` (
 CREATE TABLE `like` (
   `like_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
-  `customer_id` varchar(20) NOT NULL
+  `customer_id` varchar(20) NOT NULL,
+  UNIQUE KEY `product_customer` (`product_id`,`customer_id`)
 );
 
 CREATE TABLE `product_images` (

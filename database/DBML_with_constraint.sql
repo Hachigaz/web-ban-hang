@@ -135,6 +135,9 @@ Table "like" {
   "like_id" int(11) [pk, not null, increment]
   "product_id" int(11) [not null]
   "customer_id" varchar(20) [not null]
+  Indexes {
+    (product_id, customer_id) [unique]
+  }
 }
 
 Table "product_images" {
