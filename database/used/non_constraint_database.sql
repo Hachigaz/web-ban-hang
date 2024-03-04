@@ -81,6 +81,7 @@ CREATE TABLE `modules` (
 
 CREATE TABLE `orders` (
   `order_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `staff_id` int(11) NOT NULL,
   `account_id` int(11) NOT NULL,
   `receiver_name` varchar(100) DEFAULT '' COMMENT 'Có thể giấu tên',
   `email_of_receiver` varchar(100) NOT NULL,
@@ -103,7 +104,6 @@ CREATE TABLE `order_details` (
   `product_id` int(11) NOT NULL,
   `price` decimal(10,2) DEFAULT 0,
   `number_of_products` int(11) DEFAULT 1 COMMENT 'Phải > 0',
-  -- `total_money` float DEFAULT 0 COMMENT 'Phải >= 0',
   `color_of_product` varchar(20) DEFAULT ''
 );
 
@@ -124,8 +124,7 @@ CREATE TABLE `products` (
 CREATE TABLE `like` (
   `like_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
-  `customer_id` varchar(20) NOT NULL,
-  UNIQUE KEY `product_customer` (`product_id`,`customer_id`)
+  `customer_id` varchar(20) NOT NULL
 );
 
 CREATE TABLE `product_images` (
@@ -220,3 +219,5 @@ CREATE TABLE `salary_details` (
   `number_of_days_off` int(11) DEFAULT 0,
   `payment_date` date DEFAULT (now())
 );
+
+CREATE UNIQUE INDEX `like_index_0` ON `like` (`product_id`, `customer_id`);

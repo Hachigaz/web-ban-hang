@@ -132,8 +132,8 @@ ADD CONSTRAINT check_remain_shipment CHECK (`shipments`.remain >= 0 AND `shipmen
 ALTER TABLE `shipments`
 ADD CONSTRAINT check_mfg_shipment CHECK (`shipments`.mfg < `shipments`.exp);
 -- 5.Kiểm tra nếu thời gian hiện tại mà sau exp thì is_active = 0
-ALTER TABLE `shipments`
-ADD CONSTRAINT check_exp_shipments CHECK (`shipments`.exp < CURDATE())
+-- ALTER TABLE `shipments`
+-- ADD CONSTRAINT check_exp_shipments CHECK (`shipments`.exp < CURDATE())
 
 DELIMITER //
 CREATE TRIGGER check_exp_shipment_insert
@@ -156,6 +156,99 @@ BEGIN
         SET NEW.is_active = 0;
     ELSE 
         SET NEW.is_active = 1;
+    END IF;
+END; //
+DELIMITER ;
+
+------------------------------------- ORDERS ----------------------------------------
+-- 1.Kiểm tra Phone number phải có 10 số và bắt đầu bằng số 0
+ALTER TABLE `orders`
+ADD CONSTRAINT check_phone_number_orders CHECK (`orders`.phone_number_of_receiver REGEXP '^0[0-9]{9}$');
+-- 2.Kiểm tra account_id phải có role_là 5(nếu không có customer nào có account_id đó thì không được tạo order)
+DELIMITER //
+CREATE TRIGGER check_account_orders_insert
+BEFORE INSERT ON `orders`
+FOR EACH ROW
+BEGIN
+    DECLARE role_id INT;
+    SELECT `customers`.`role_id` INTO role_id FROM `customers` WHERE `account_id` = NEW.account_id;
+    IF role_id IS NULL THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: Account ID not found in customers';
+    END IF;
+END; //
+DELIMITER ;
+DELIMITER //
+CREATE TRIGGER check_account_orders_update
+BEFORE UPDATE ON `orders`
+FOR EACH ROW
+BEGIN
+    DECLARE role_id INT;
+    SELECT `customers`.`role_id` INTO role_id FROM `customers` WHERE `account_id` = NEW.account_id;
+    IF role_id IS NULL THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: Account ID not found in customers';
+    END IF;
+END; //
+DELIMITER ;
+-- 3.Kiểm tra định dạng email
+ALTER TABLE `orders`
+ADD CONSTRAINT check_email_format_orders CHECK (`orders`.`email_of_receiver` REGEXP '^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$');
+-- 4.Kiểm tra number_of_product > 0
+ALTER TABLE `order_details`
+ADD CONSTRAINT check_number_of_product_order_details CHECK (`order_details`.number_of_products > 0);
+-- 5.Kiểm tra giá mỗi sản phẩm >= 0
+ALTER TABLE `order_details`
+ADD CONSTRAINT check_price_order_details CHECK (`order_details`.price >= 0);
+-- 6.Kiểm tra total_money = price*number_of_product
+DELIMITER //
+CREATE TRIGGER calculate_total_money_orders_insert
+AFTER INSERT ON order_details
+FOR EACH ROW
+BEGIN
+    UPDATE `orders`
+    SET `orders`.total_money = (
+        SELECT SUM(number_of_products * price)
+        FROM order_details
+        WHERE order_id = NEW.order_id
+    )
+    WHERE order_id = NEW.order_id;
+END; //
+DELIMITER ;
+DELIMITER //
+CREATE TRIGGER calculate_total_money_orders_update
+AFTER UPDATE ON order_details
+FOR EACH ROW
+BEGIN
+    UPDATE `orders`
+    SET `orders`.total_money = (
+        SELECT SUM(number_of_products * price)
+        FROM order_details
+        WHERE order_id = NEW.order_id
+    )
+    WHERE order_id = NEW.order_id;
+END; //
+DELIMITER ;
+-- 7.Kiểm tra shipping_date > ngày hiện tại
+DELIMITER //
+CREATE TRIGGER check_shipping_date_orders_insert
+BEFORE INSERT ON `orders`
+FOR EACH ROW
+BEGIN
+    IF (NEW.shipping_date <= CURDATE()) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: Shipping_date must bigger current date';
+    END IF;
+END; //
+DELIMITER ;
+DELIMITER //
+CREATE TRIGGER check_shipping_date_orders_update
+BEFORE UPDATE ON `orders`
+FOR EACH ROW
+BEGIN
+    IF (NEW.shipping_date <= CURDATE()) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: Shipping_date must bigger current date';
     END IF;
 END; //
 DELIMITER ;

@@ -90,6 +90,7 @@ Table "modules" {
 
 Table "orders" {
   "order_id" int(11) [pk, not null, increment]
+  "staff_id" int(11) [not null]
   "account_id" int(11) [not null]
   "receiver_name" varchar(100) [default: "", note: "Có thể giấu tên"]
   "email_of_receiver" varchar(100) [not null]
