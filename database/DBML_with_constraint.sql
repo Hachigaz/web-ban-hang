@@ -224,25 +224,44 @@ Table "suppliers" {
   "is_active" tinyint(1) [default: 1]
 }
 
-Table "salaries" {
-  "salary_id" int(11) [pk, not null, increment]
-  // "work_time" float [default: 0]
-  "base_salary" decimal(10,2) [default: 0]
-  // "allowance" decimal(10,2) [default: 0]
-  // "start_date" date
-  // "end_date" date
-  "is_active" tinyint(1) [default: 1]
+// Table "salaries" {
+//   "salary_id" int(11) [pk, not null, increment]
+//   // "work_time" float [default: 0]
+//   "base_salary" decimal(10,2) [default: 0]
+//   // "allowance" decimal(10,2) [default: 0]
+//   // "start_date" date
+//   // "end_date" date
+//   "is_active" tinyint(1) [default: 1]
+// }
+
+// Table "salary_details" {
+//   "salary_detail_id" int(11) [pk, not null, increment]
+//   "salary_id" int(11) [not null]
+//   "staff_id" int(11) [not null]
+//   "total_wage" decimal(10,2) [default: 0]
+//   "multiplier_salary" float [not null, note: "Dựa vào role của staff sẽ gắn hệ số lương riêng"]
+//   "number_of_days_off" int(11) [default: 0]
+//   "payment_date" date [default: `now()`]
+//   // "is_active" tinyint(1) [default: 1]
+// }
+
+Table "contracts" {
+  "contract_id" int(11) [pk, not null, increment]
+  "staff_id" int(11) [not null]
+  "start_date" date [not null]
+  "end_date" date [not null]
+  "salary" decimal(10,2) [not null]
 }
 
-Table "salary_details" {
-  "salary_detail_id" int(11) [pk, not null, increment]
-  "salary_id" int(11) [not null]
-  "staff_id" int(11) [not null]
-  "total_wage" decimal(10,2) [default: 0]
-  "multiplier_salary" float [not null, note: "Dựa vào role của staff sẽ gắn hệ số lương riêng"]
-  "number_of_days_off" int(11) [default: 0]
-  "payment_date" date [default: `now()`]
-  // "is_active" tinyint(1) [default: 1]
+Table "timesheets" {
+  "timesheet_id" int(11) [pk, not null, increment]
+  "contract_id" int(11) [not null]
+  "month" int(2) [not null]
+  "year" int(2) [not null]
+  "days_worked" int(2) [not null]
+  "days_off" int(2) [not null]
+  "days_late" int(2) [not null]
+  "total_salary" decimal(10,2) [not null]
 }
 
 Ref "brands_ibfk_1":"suppliers"."supplier_id" < "brands"."supplier_id"
@@ -279,9 +298,9 @@ Ref "skus_ibfk_1":"products"."product_id" < "skus"."product_id"
 
 Ref "staffs_ibfk_1":"roles"."role_id" < "staffs"."role_id"
 
-Ref "wage_details_ibfk_1":"staffs"."staff_id" < "salary_details"."staff_id"
+// Ref "wage_details_ibfk_1":"staffs"."staff_id" < "salary_details"."staff_id"
 
-Ref "wage_details_ibfk_2":"salaries"."salary_id" < "salary_details"."salary_id"
+// Ref "wage_details_ibfk_2":"salaries"."salary_id" < "salary_details"."salary_id"
 
 
 Ref: "imports"."import_id" < "shipments"."import_id"
@@ -315,3 +334,7 @@ Ref: "customers"."customer_id" < "like"."customer_id"
 Ref: "orders"."order_id" < "exports"."order_id"
 
 Ref: "staffs"."staff_id" < "orders"."staff_id"
+
+Ref: "contracts"."contract_id" < "timesheets"."contract_id"
+
+Ref: "staffs"."staff_id" < "contracts"."staff_id"

@@ -204,20 +204,23 @@ CREATE TABLE `suppliers` (
   `is_active` tinyint(1) DEFAULT 1
 );
 
-CREATE TABLE `salaries` (
-  `salary_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `base_salary` decimal(10,2) DEFAULT 0,
-  `is_active` tinyint(1) DEFAULT 1
+CREATE TABLE `contracts` (
+  `contract_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `staff_id` int(11) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `salary` decimal(10,2) NOT NULL
 );
 
-CREATE TABLE `salary_details` (
-  `salary_detail_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `salary_id` int(11) NOT NULL,
-  `staff_id` int(11) NOT NULL,
-  `total_wage` decimal(10,2) DEFAULT 0,
-  `multiplier_salary` float NOT NULL COMMENT 'Dựa vào role của staff sẽ gắn hệ số lương riêng',
-  `number_of_days_off` int(11) DEFAULT 0,
-  `payment_date` date DEFAULT (now())
+CREATE TABLE `timesheets` (
+  `timesheet_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `contract_id` int(11) NOT NULL,
+  `month` int(2) NOT NULL,
+  `year` int(2) NOT NULL,
+  `days_worked` int(2) NOT NULL,
+  `days_off` int(2) NOT NULL,
+  `days_late` int(2) NOT NULL,
+  `total_salary` decimal(10,2) NOT NULL
 );
 
 CREATE UNIQUE INDEX `like_index_0` ON `like` (`product_id`, `customer_id`);
