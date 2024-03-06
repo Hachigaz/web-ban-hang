@@ -387,3 +387,39 @@ ADD CONSTRAINT check_days_off_timesheets CHECK (`timesheets`.days_off >= 0 AND `
 -- 10.Kiểm tra days_late <= 26
 ALTER TABLE `timesheets`
 ADD CONSTRAINT check_days_late_timesheets CHECK (`timesheets`.days_late >= 0 AND `timesheets`.days_late <= 26);
+-- 11.Kiểm tra days_worked = 26 - days_off
+ALTER TABLE `timesheets`
+ADD CONSTRAINT check_days_worked_late_timesheets CHECK (`timesheets`.days_worked + `timesheets`.days_off = 26);
+--12.Kiểm tra total_salary = salary/26 * days_worked - (salary/26 * days_late * 30%)
+DELIMITER //
+CREATE TRIGGER update_total_salary_timesheets_insert
+AFTER INSERT ON timesheets
+FOR EACH ROW
+BEGIN
+    DECLARE total_days_worked INT;
+    DECLARE total_days_late INT;
+    DECLARE total_salary DECIMAL(10, 2);
+    SET total_days_worked = NEW.days_worked;
+    SET total_days_late = NEW.days_late;
+    SET total_salary = (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / 26 * total_days_worked
+                      - (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / 26 * total_days_late * 0.3;
+    UPDATE timesheets SET total_salary = total_salary WHERE contract_id = NEW.timesheet_id;
+END;
+//
+DELIMITER ;
+DELIMITER //
+CREATE TRIGGER update_total_salary_timesheets_update
+AFTER UPDATE ON timesheets
+FOR EACH ROW
+BEGIN
+    DECLARE total_days_worked INT;
+    DECLARE total_days_late INT;
+    DECLARE total_salary DECIMAL(10, 2);
+    SET total_days_worked = NEW.days_worked;
+    SET total_days_late = NEW.days_late;
+    SET total_salary = (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / 26 * total_days_worked
+                      - (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / 26 * total_days_late * 0.3;
+    UPDATE timesheets SET total_salary = total_salary WHERE contract_id = NEW.timesheet_id;
+END;
+//
+DELIMITER ;
