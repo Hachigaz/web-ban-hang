@@ -403,7 +403,8 @@ BEGIN
     SET total_days_late = NEW.days_late;
     SET total_salary = (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / 26 * total_days_worked
                       - (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / 26 * total_days_late * 0.3;
-    UPDATE timesheets SET total_salary = total_salary WHERE contract_id = NEW.timesheet_id;
+    INSERT INTO timesheet_details(timesheet_id, total_salary) VALUES (NEW.timesheet_id, total_salary);
+    UPDATE timesheet_details SET timesheet_details.total_salary = total_salary WHERE timesheet_details.timesheet_id = NEW.timesheet_id;
 END;
 //
 DELIMITER ;
@@ -419,7 +420,8 @@ BEGIN
     SET total_days_late = NEW.days_late;
     SET total_salary = (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / 26 * total_days_worked
                       - (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / 26 * total_days_late * 0.3;
-    UPDATE timesheets SET total_salary = total_salary WHERE contract_id = NEW.timesheet_id;
+    UPDATE timesheet_details SET timesheet_details.total_salary = total_salary WHERE timesheet_details.timesheet_id = NEW.timesheet_id;
 END;
 //
 DELIMITER ;
+

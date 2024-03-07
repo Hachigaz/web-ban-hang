@@ -261,5 +261,10 @@ Table "timesheets" {
   "days_worked" int(2) [not null]
   "days_off" int(2) [not null]
   "days_late" int(2) [not null]
+}
+
+Table "timesheet_details" {
+  "timesheet_detail_id" int(11) [pk, not null, increment]
+  "timesheet_id" int(11) [not null]
   "total_salary" decimal(10,2) [not null]
 }
