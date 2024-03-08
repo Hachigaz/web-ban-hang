@@ -1,4 +1,4 @@
----------------------------- ACCOUNTS ----------------------------
+-- ACCOUNTS ----------------------------
 -- 1.Dùng CHECK Kiểm tra mật khẩu có chứa username không
 ALTER TABLE `accounts`
 ADD CONSTRAINT check_password_accounts CHECK(INSTR(LOWER(password), LOWER(username)) = 0);
@@ -10,7 +10,7 @@ ALTER TABLE `accounts`
 ADD CONSTRAINT check_created_bigger_updated_accounts CHECK (created_at <= updated_at);
 
 
------------------------------ CUSTOMERS ---------------------------
+-- CUSTOMERS ---------------------------
 -- trong Check không được phép dùng hàm và biểu thức động như curdate() => nên dùng trigger
 -- ALTER TABLE `customers`
 -- ADD CONSTRAINT check_age_customers CHECK (TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) >= 13);
@@ -51,12 +51,12 @@ ALTER TABLE `customers`
 ADD CONSTRAINT check_role_customers CHECK (`customers`.role_id = 5);
 -- 5.Kiểm tra gender của khách hàng chỉ là 0 hoặc 1
 ALTER TABLE `customers`
-ADD CONSTRAINT check_gender_customers CHECK (`customers`.gender = 0 OR `customer`.gender = 1);
+ADD CONSTRAINT check_gender_customers CHECK (`customers`.gender = 0 OR `customers`.gender = 1);
 -- 6.Kiểm tra Phone number phải có 10 số và bắt đầu bằng số 0
 ALTER TABLE `customers`
 ADD CONSTRAINT check_phone_number_customers CHECK (`customers`.phone_number REGEXP '^0[0-9]{9}$');
 
------------------------------------- EXPORTS ----------------------------------------
+-- EXPORTS ----------------------------------------
 -- 1.Kiểm tra xem role_id của staff đang thực hiện phiếu xuất có phải là role 1,2,4 không
 -- Truy vấn phức tạp trên nhiều bảng thì phải dùng trigger
 DELIMITER //
@@ -118,7 +118,7 @@ BEGIN
 END; //
 DELIMITER ;
 
---------------------------------------- SHIPMENTS ----------------------------------------------
+-- SHIPMENTS ----------------------------------------------
 -- 1.Kiểm tra xem số lượng sản phẩm ban đầu của mỗi lô có > 0
 ALTER TABLE `shipments`
 ADD CONSTRAINT check_quantity_shipments CHECK (`shipments`.quantity > 0);
@@ -160,7 +160,7 @@ BEGIN
 END; //
 DELIMITER ;
 
-------------------------------------- ORDERS ----------------------------------------
+-- ORDERS ----------------------------------------
 -- 1.Kiểm tra Phone number phải có 10 số và bắt đầu bằng số 0
 ALTER TABLE `orders`
 ADD CONSTRAINT check_phone_number_orders CHECK (`orders`.phone_number_of_receiver REGEXP '^0[0-9]{9}$');
@@ -279,7 +279,7 @@ BEGIN
     END IF;
 END; //
 DELIMITER ;
------------------------------- PRODUCTS -------------------------------------
+-- PRODUCTS -------------------------------------
 -- 1.Kiểm tra giá sản phẩm > 0 (khác giá nhập hàng)
 ALTER TABLE `products`
 ADD CONSTRAINT check_price_products CHECK (price > 0);
@@ -290,7 +290,7 @@ ADD CONSTRAINT check_guarantee_products CHECK (guarantee >= 0);
 ALTER TABLE `products`
 ADD CONSTRAINT check_created_bigger_updated_products CHECK (created_at <= updated_at); 
 
-------------------------------- STAFFS -------------------------------------
+-- STAFFS -------------------------------------
 -- 1.Kiểm tra Fullname nhân viên chỉ chứa chữ(có Tiếng Việt) và khoảng trắng
 ALTER TABLE `staffs`
 ADD CONSTRAINT check_fullname_staffs CHECK (`staffs`.staff_fullname REGEXP '^[a-zA-z áàảãạÁÀẢÃẠăắằặẳẵĂẮẰẲẴẶâấầẩẫậÂẤẦẨẪẬéèẻẽẹÉÈẺẼẸêếềểễệÊẾỂỄỆíìỉĩịÍÌỈĨỊúùủũụÚÙỦŨỤưứừửữựƯỨỪỬỮỰóòỏõọÓÒỎÕỌôốồổỗộÔỐỒỔỖỘơớờởỡợƠỚỜỞỠỢđĐýỳỷỹỵÝỲỶỸỴ]+$');  
@@ -307,12 +307,12 @@ ADD CONSTRAINT check_role_staffs CHECK (`staffs`.role_id IN (1,2,3,4));
 ALTER TABLE `staffs`
 ADD CONSTRAINT check_gender_staffs CHECK (`staffs`.gender IN (0,1));
 
---------------------------------------- SUPPLIERS ---------------------------------------
+-- SUPPLIERS ---------------------------------------
 -- 1.Kiểm tra Phone number phải có 10 số và bắt đầu bằng số 0 (bỏ do nhà cung cấp có thể ở nước ngoài sđt sẽ khác VN)
 ALTER TABLE `suppliers`
 ADD CONSTRAINT check_email_suppliers CHECK (`suppliers`.email_of_supplier REGEXP '^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$');
 
------------------------------------------ CONTRACTS --------------------------------------
+-- CONTRACTS --------------------------------------
 -- 1.Kiểm tra thời hạn hợp đồng phải ít nhất là 3 tháng
 DELIMITER //
 CREATE TRIGGER check_start_end_date_contract_insert
@@ -336,39 +336,75 @@ BEGIN
     END IF;
 END; // 
 DELIMITER ;
--- 2.Kiểm tra salary > 0
+-- 2.Kiểm tra salary >= 0
 ALTER TABLE `contracts`
-ADD CONSTRAINT check_salary_contracts CHECK (`contracts`.salary > 0);
+ADD CONSTRAINT check_salary_contracts CHECK (`contracts`.salary >= 0);
 -- 3.Kiểm tra salary >= total_salary
-DELIMITER //
-CREATE TRIGGER check_salary_total_salary_contract_insert
-BEFORE INSERT ON `contracts`
-FOR EACH ROW
-BEGIN
-    DECLARE total_salary decimal(10,2);
-    SELECT `timesheets`.`total_salary` INTO total_salary FROM `timesheets` WHERE contract_id = NEW.contract_id;
-    IF NOT (NEW.salary >= total_salary) THEN 
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = "Error: Salary in contract must be over total_salary";
-    END IF;
-END; //
-DELIMITER ;
-DELIMITER //
-CREATE TRIGGER check_salary_total_salary_contract_update
-BEFORE UPDATE ON `contracts`
-FOR EACH ROW
-BEGIN
-    DECLARE total_salary decimal(10,2);
-    SELECT `timesheets`.`total_salary` INTO total_salary FROM `timesheets` WHERE contract_id = NEW.contract_id;
-    IF NOT (NEW.salary >= total_salary) THEN 
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = "Error: Salary in contract must be over total_salary";
-    END IF;
-END; //
-DELIMITER ;
+-- DELIMITER //
+-- CREATE TRIGGER check_salary_total_salary_contract_insert
+-- BEFORE INSERT ON `contracts`
+-- FOR EACH ROW
+-- BEGIN
+--     DECLARE total_salary decimal(10,2);
+--     SELECT `timesheet_details`.`total_salary` INTO total_salary FROM `timesheet_details` WHERE contract_id = NEW.contract_id;
+--     IF NOT (NEW.salary >= total_salary) THEN 
+--         SIGNAL SQLSTATE '45000'
+--         SET MESSAGE_TEXT = "Error: Salary in contract must be over total_salary";
+--     END IF;
+-- END; //
+-- DELIMITER ;
+-- DELIMITER //
+-- CREATE TRIGGER check_salary_total_salary_contract_update
+-- BEFORE UPDATE ON `contracts`
+-- FOR EACH ROW
+-- BEGIN
+--     DECLARE total_salary decimal(10,2);
+--     SELECT `timesheet_details`.`total_salary` INTO total_salary FROM `timesheet_details` WHERE contract_id = NEW.contract_id;
+--     IF NOT (NEW.salary >= total_salary) THEN 
+--         SIGNAL SQLSTATE '45000'
+--         SET MESSAGE_TEXT = "Error: Salary in contract must be over total_salary";
+--     END IF;
+-- END; //
+-- DELIMITER ;
+-- sửa
+-- DELIMITER //
+-- CREATE TRIGGER check_salary_total_salary_contract_insert
+-- BEFORE INSERT ON `contracts`
+-- FOR EACH ROW
+-- BEGIN
+--     DECLARE total_salary decimal(10,2);
+--     IF EXISTS (SELECT 1 FROM `timesheet_details` WHERE contract_id = NEW.contract_id) THEN
+--         SELECT `timesheet_details`.`total_salary` INTO total_salary FROM `timesheet_details` WHERE contract_id = NEW.contract_id;
+--     ELSE
+--         SET total_salary = 0;
+--     END IF;
+--     IF NOT (NEW.salary >= total_salary) THEN 
+--         SIGNAL SQLSTATE '45000'
+--         SET MESSAGE_TEXT = "Error: Salary in contract must be over total_salary";
+--     END IF;
+-- END; //
+-- DELIMITER ;
+-- DELIMITER //
+-- CREATE TRIGGER check_salary_total_salary_contract_update
+-- BEFORE UPDATE ON `contracts`
+-- FOR EACH ROW
+-- BEGIN
+--     DECLARE total_salary decimal(10,2);
+--     IF EXISTS (SELECT 1 FROM `timesheet_details` WHERE contract_id = NEW.contract_id) THEN
+--         SELECT `timesheet_details`.`total_salary` INTO total_salary FROM `timesheet_details` WHERE contract_id = NEW.contract_id;
+--     ELSE
+--         SET total_salary = 0;
+--     END IF;
+--     IF NOT (NEW.salary >= total_salary) THEN 
+--         SIGNAL SQLSTATE '45000'
+--         SET MESSAGE_TEXT = "Error: Salary in contract must be over total_salary";
+--     END IF;
+-- END; //
+-- DELIMITER ;
+
 -- 4.Kiểm tra total_salary >= 0
-ALTER TABLE `timesheets`
-ADD CONSTRAINT check_total_salary_timesheets CHECK (`timesheets`.total_salary >= 0);
+ALTER TABLE `timesheet_details`
+ADD CONSTRAINT check_total_salary_timesheet_details CHECK (`timesheet_details`.total_salary >= 0);
 -- 5.Kiểm tra staff_id chỉ là 2,3,4
 ALTER TABLE `contracts`
 ADD CONSTRAINT check_staff_id_contracts CHECK (`contracts`.staff_id IN (2,3,4));
@@ -390,7 +426,7 @@ ADD CONSTRAINT check_days_late_timesheets CHECK (`timesheets`.days_late >= 0 AND
 -- 11.Kiểm tra days_worked = 26 - days_off
 ALTER TABLE `timesheets`
 ADD CONSTRAINT check_days_worked_late_timesheets CHECK (`timesheets`.days_worked + `timesheets`.days_off = 26);
---12.Kiểm tra total_salary = salary/26 * days_worked - (salary/26 * days_late * 30%)
+-- 12.Kiểm tra total_salary = salary/26 * days_worked - (salary/26 * days_late * 30%)
 DELIMITER //
 CREATE TRIGGER update_total_salary_timesheets_insert
 AFTER INSERT ON timesheets
@@ -424,4 +460,3 @@ BEGIN
 END;
 //
 DELIMITER ;
-
