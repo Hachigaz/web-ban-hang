@@ -9,11 +9,26 @@
                 "Page" => "Home"
             ]);
         }
-        public function Show(){
-            $this->view("aodep", [
-                "Page"=>"News"
-            ]);
+        public function CreateProduct(){
+            // $this->view("master", [
+            //     "Page"=>"Home"
+            // ]);
             $this->productService->createProduct();
+        }
+        public function UpdateProduct(){
+            // $this->view("master",[
+            //     "Page" => "Home"
+            // ]);
+            $this->productService->updateProduct();
+        }
+        public function DeleteProduct(){
+            // $this->view("master",[
+            //     "Page" => "Home"
+            // ]);
+            $this->productService->deleteProduct();
+        }
+        public function GetAllProduct(){
+            $this->productService->getAllProduct();
         }
     }
 ?>
