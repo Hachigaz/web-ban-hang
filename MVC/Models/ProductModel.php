@@ -24,13 +24,6 @@
             $this->updated_at = $updated_at;
             $this->is_active = $is_active;
         }
-        function __construct($data) {
-            foreach ($data as $key => $value) {
-                if (property_exists($this, $key)) {
-                    $this->$key = $value;
-                }
-            }
-        }
         public function getProductId(){
             return $this->product_id;
         }
