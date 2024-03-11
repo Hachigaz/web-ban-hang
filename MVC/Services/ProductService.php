@@ -1,42 +1,43 @@
 <?php
+    require_once "./MVC/Models/ProductModel.php";
     class ProductService extends Service{
-        public $product;
+        public $productRepo;
         public function __construct(){
-            $this->product = $this->repository("ProductRepository");
+            $this->productRepo = $this->repository("ProductRepository");
         }
-        public function createProduct(){
-            $data = array(
-                "product_id" => "2",
-                "product_name" => "Điện thoại cao cấp 2",
-                "brand_id" => "1",
-                "categories_id" => "1",
-                "price" => "15000000"
-            );
-            $this->product->createProduct($data);
+        public function createProduct(){//$productDTO
+            // $data = array(
+            //     "product_name" => "Điện thoại cao cấp 2",
+            //     "brand_id" => "1",
+            //     "categories_id" => "1",
+            //     "price" => "15000000"
+            // );
+            $product = new ProductModel("Điện thoại cao cấp cứu", "1", "1", "15000000", "12");
+            $this->productRepo->createProduct($product);
         }
-        public function updateProduct(){
-            $id = "2";
-            $data = array(
-                "product_id" => $id,
-                "product_name" => "Điện thoại cùi bắp ghê"
+        public function updateProduct(){// by id (truyền DTO)
+            $productData = $this->productRepo->getProductById("30");
+            extract($productData);// gán các giá trị cho các key tương ứng với các biến
+            $product = new ProductModel(
+                "Hiển đẹp trai vãi", $brand_id, $categories_id, $price, $guarantee, $product_id, $thumbnail, $description, $created_at, $updated_at, $is_active
             );
-            $this->product->updateProduct($data, $id);
+            $this->productRepo->updateProduct($product, "30");
         }
         public function deleteProduct(){
             $id = "2";
-            $this->product->deleteProduct($id);
+            $this->productRepo->deleteProduct($id);
             echo "Xóa thành công sản phẩm có id = ".$id; 
         }
         public function getAllProduct(){
-            $this->product->getAllProduct();
+            $this->productRepo->getAllProduct();
         }
         // public function getFiveProductJSON(){
-        //     $a = $this->product->getRows();
+        //     $a = $this->productRepo->getRows();
         //     header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
         //     echo json_encode($rows);
         // }   
         // public function getFiveProductArray(){
-        //     $a = $this->product->getRows();
+        //     $a = $this->productRepo->getRows();
         //     header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
         //     echo json_encode($rows);
         // }  

@@ -26,8 +26,5 @@
         public function GetAllProduct(){
             $this->productService->getAllProduct();
         }
-        function a (){
-            
-        }
     }
 ?>

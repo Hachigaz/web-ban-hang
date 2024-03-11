@@ -11,13 +11,19 @@
             mysqli_select_db($this->con, $this->dbname);
             mysqli_query($this->con, "SET NAMES 'utf8'");// set Tiếng Việt
         }
-        public function create($table, $data) {
-            $fields = implode(',', array_keys($data));// lấy ra các tên cột và nối với các dấu ,
-            $values = "'" . implode("','", array_map([$this->con, 'real_escape_string'], $data)) . "'";// lấy ra các giá trị của cột và làm sạch chúng để tránh SQL Injection sau đó nối với nhau bằng dấu ,
+        public function create($table, $object) {
+            $data = $object->toArray();// chuyển đối tượng thành mảng key-value
+            $data = array_filter($data, function ($value) {// Loại bỏ các cột có giá trị null
+                return $value !== null;
+            });
+            $fields = implode(',', array_keys($data)); // lấy ra các tên cột và nối với các dấu ,
+            $values = "'" . implode("','", array_map([$this->con, 'real_escape_string'], $data)) . "'"; // lấy ra các giá trị của cột và làm sạch chúng để tránh SQL Injection sau đó nối với nhau bằng dấu ,
             $sql = "INSERT INTO $table ($fields) VALUES ($values)";
             return mysqli_query($this->con, $sql);
         }
-        public function update($table, $data, $where) {
+        
+        public function update($table, $object, $where) {
+            $data = $object->toArray();// chuyển đối tượng thành mảng key-value
             $set = '';
             foreach ($data as $field => $value) { // $data sẽ là 1 mảng có key và value
                 $set .= "$field = '".$this->con->real_escape_string($value)."',";// gán tương ứng key và value được làm sạch giống trong các bảng cho nhau ngăn cách bằng dấu ,   
@@ -40,14 +46,24 @@
             // header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             // echo json_encode($rows);
         }
-        public function getRows($table, $where){
-            $sql = "SELECT * FROM $table WHERE $where";
-            $result = mysql_query($this->con, $sql);
-            $rows = array();
-            while ($row = $result->fetch_assoc()) { // lấy từng trường trong bảng ra gán vào mảng
-                $rows[] = $row;
+        public function getByWhere($table, $where) {
+            $sql = "SELECT * FROM $table WHERE $where";// ở đây ghi rõ tên cột id
+            $result = mysqli_query($this->con, $sql);
+            if ($result->num_rows > 0) {
+                $data = $result->fetch_assoc(); // Trả về bản ghi đầu tiên nếu tìm thấy
+                return $data;
+            } else {
+                return null; // Trả về null nếu không tìm thấy bản ghi nào
             }
-            return $rows;
         }
+        // public function getRows($table, $where){
+        //     $sql = "SELECT * FROM $table WHERE $where";
+        //     $result = mysql_query($this->con, $sql);
+        //     $rows = array();
+        //     while ($row = $result->fetch_assoc()) { // lấy từng trường trong bảng ra gán vào mảng
+        //         $rows[] = $row;
+        //     }
+        //     return $rows;
+        // }
     }
 ?>
