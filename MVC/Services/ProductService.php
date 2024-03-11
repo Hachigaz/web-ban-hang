@@ -30,5 +30,15 @@
         public function getAllProduct(){
             $this->product->getAllProduct();
         }
+        // public function getFiveProductJSON(){
+        //     $a = $this->product->getRows();
+        //     header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+        //     echo json_encode($rows);
+        // }   
+        // public function getFiveProductArray(){
+        //     $a = $this->product->getRows();
+        //     header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+        //     echo json_encode($rows);
+        // }  
     }
 ?>

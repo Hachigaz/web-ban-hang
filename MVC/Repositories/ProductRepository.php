@@ -12,5 +12,8 @@
         public function getAllProduct(){
             $this->read("products");
         }
+        public function getProduct($where){
+            $this->getRows("products", );
+        }
     }
 ?>

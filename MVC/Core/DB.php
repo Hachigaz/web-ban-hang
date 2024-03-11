@@ -37,11 +37,17 @@
             while ($row = $result->fetch_assoc()) { // lấy từng trường trong bảng ra gán vào mảng
                 $rows[] = $row;
             }
-            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($rows);
+            // header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            // echo json_encode($rows);
         }
-        public function get($table, $where){
-            
+        public function getRows($table, $where){
+            $sql = "SELECT * FROM $table WHERE $where";
+            $result = mysql_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()) { // lấy từng trường trong bảng ra gán vào mảng
+                $rows[] = $row;
+            }
+            return $rows;
         }
     }
 ?>
