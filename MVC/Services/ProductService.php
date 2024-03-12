@@ -6,13 +6,7 @@
             $this->productRepo = $this->repository("ProductRepository");
         }
         public function createProduct(){//$productDTO
-            // $data = array(
-            //     "product_name" => "Điện thoại cao cấp 2",
-            //     "brand_id" => "1",
-            //     "categories_id" => "1",
-            //     "price" => "15000000"
-            // );
-            $product = new ProductModel("Điện thoại cao cấp cứu", "1", "1", "15000000", "12");
+            $product = new ProductModel("Điện thoại của chó Huy", "1", "1", "15000000", "12");
             $this->productRepo->createProduct($product);
         }
         public function updateProduct(){// by id (truyền DTO)
