@@ -4,6 +4,16 @@
         public function __construct(){
             $this->productService = $this->service("ProductService");
         }
+        public function SayHi(){
+            $this->view("master",[
+                "Page" => "Home"
+            ]);
+        }
+        public function List(){
+            $this->view("master",[
+                "Page" => "News"
+            ]);
+        }
         public function CreateProduct(){
             $this->productService->createProduct();
         }
