@@ -11,6 +11,7 @@
             mysqli_select_db($this->con, $this->dbname);
             mysqli_query($this->con, "SET NAMES 'utf8'");// set Tiếng Việt
         }
+
         public function create($table, $object) {
             $data = $object->toArray();// chuyển đối tượng thành mảng key-value
             $data = array_filter($data, function ($value) {// Loại bỏ các cột có giá trị null
@@ -32,22 +33,30 @@
             $sql = "UPDATE $table SET $set WHERE $where";
             return mysqli_query($this->con, $sql);
         }
-        public function delete($table, $where) {
-            $sql = "DELETE FROM $table WHERE $where";
+
+        public function delete($table, $where) {// chỉ thay đổi trạng thái active
+            $is_active = "is_active";
+            $sql = "UPDATE $table SET $is_active = '0' WHERE $where";
             return mysqli_query($this->con, $sql);
         }
-        public function read($table){// đọc hết dữ liệu trong bảng $table ra
-            $sql = "SELECT * FROM $table";
+
+        // tạo thêm 1 hàm delete thật
+
+        //
+        public function read($table){// đọc hết dữ liệu trong bảng $table ra(chi lay ra is_active = 1)
+            $is_active = "is_active";
+            $sql = "SELECT * FROM $table WHERE $is_active = '1' ";
             $result = mysqli_query($this->con, $sql);
             $rows = array();
             while ($row = $result->fetch_assoc()) { // lấy từng trường trong bảng ra gán vào mảng
                 $rows[] = $row;
             }
-            // header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            // echo json_encode($rows);
+            return $rows;
         }
-        public function getByWhere($table, $where) {
-            $sql = "SELECT * FROM $table WHERE $where";// ở đây ghi rõ tên cột id
+
+        public function getAllByWhere($table, $where) {// lấy ra các bản ghi đầy đủ thuộc tính (chi lay ra is_active = 1)
+            $is_active = "is_active";
+            $sql = "SELECT * FROM $table WHERE $where AND $is_active = '1'";// ở đây ghi rõ tên cột id
             $result = mysqli_query($this->con, $sql);
             if ($result->num_rows > 0) {
                 $data = $result->fetch_assoc(); // Trả về bản ghi đầu tiên nếu tìm thấy
@@ -56,14 +65,5 @@
                 return null; // Trả về null nếu không tìm thấy bản ghi nào
             }
         }
-        // public function getRows($table, $where){
-        //     $sql = "SELECT * FROM $table WHERE $where";
-        //     $result = mysql_query($this->con, $sql);
-        //     $rows = array();
-        //     while ($row = $result->fetch_assoc()) { // lấy từng trường trong bảng ra gán vào mảng
-        //         $rows[] = $row;
-        //     }
-        //     return $rows;
-        // }
     }
 ?>

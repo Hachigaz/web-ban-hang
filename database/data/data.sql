@@ -28,7 +28,7 @@ INSERT INTO `staffs` (`staff_id`, `account_id`, `staff_fullname`, `staff_phone_n
 ('3', '3', 'Khổng Minh Lộc', '0988722523', 'loc@gmail.com', '3', '0', current_timestamp(), '1'),
 ('4', '4', 'Lâm Hồng Phong', '0988722524', 'phong@gmail.com', '4', '0', current_timestamp(), '1');
 
-INSERT INTO `categories` (`categories_id`, `categories_name`, `category_logo`, `is_active`) VALUES 
+INSERT INTO `categories` (`category_id`, `category_name`, `category_logo`, `is_active`) VALUES 
 ('1', 'Điện thoại','', '1'),
 ('2', 'Laptop','', '1'),
 ('3', 'Smartwatch','', '1'),
@@ -229,7 +229,7 @@ INSERT INTO `decentralizations` (`decentralization_id`, `role_id`, `module_id`, 
 ('144', '4', '8', '4', '1'),
 ('145', '4', '10', '5', '1');
 
-INSERT INTO `products` (`product_id`, `product_name`, `brand_id`, `categories_id`, `price`, `guarantee`, `thumbnail`, `description`, `created_at`, `updated_at`, `is_active`) VALUES 
+INSERT INTO `products` (`product_id`, `product_name`, `brand_id`, `category_id`, `price`, `guarantee`, `thumbnail`, `description`, `created_at`, `updated_at`, `is_active`) VALUES 
 ('1', 'iPhone 15 Pro Max RAM 8GB/ROM 256GB', '1', '1', '34990000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
 ('2', 'Samsung Galaxy S23 FE 5G RAM 8GB/ROM 128GB', '2', '1', '14890000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
 ('3', 'Xiaomi Redmi Note 13 RAM 6GB/ROM 128GB', '3', '1', '4890000', '18', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),

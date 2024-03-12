@@ -3,7 +3,7 @@
         private $product_id;
         private $product_name;
         private $brand_id;
-        private $categories_id;
+        private $category_id;
         private $price;
         private $guarantee;
         private $thumbnail;
@@ -11,11 +11,11 @@
         private $created_at;
         private $updated_at;
         private $is_active;
-        public function __construct($product_name, $brand_id, $categories_id, $price, $guarantee, $product_id = null, $thumbnail = null, $description = null, $created_at = null, $updated_at = null, $is_active = null){
+        public function __construct($product_name, $brand_id, $category_id, $price, $guarantee, $product_id = null, $thumbnail = null, $description = null, $created_at = null, $updated_at = null, $is_active = null){
             $this->product_id = $product_id;
             $this->product_name = $product_name;
             $this->brand_id = $brand_id;
-            $this->categories_id = $categories_id;
+            $this->category_id = $category_id;
             $this->price = $price;
             $this->guarantee = $guarantee;
             $this->thumbnail = $thumbnail;
@@ -43,10 +43,10 @@
             $this->brand_id = $brand_id;
         }
         public function getCategoryId(){
-            return $this->categories_id;
+            return $this->category_id;
         }
-        public function setCategoryId($categories_id){
-            $this->categories_id = $categories_id;
+        public function setCategoryId($category_id){
+            $this->category_id = $category_id;
         }
         public function getPrice(){
             return $this->price;
@@ -95,7 +95,7 @@
                 'product_id' => $this->product_id,
                 'product_name' => $this->product_name,
                 'brand_id' => $this->brand_id,
-                'categories_id' => $this->categories_id,
+                'category_id' => $this->category_id,
                 'price' => $this->price,
                 'guarantee' => $this->guarantee,
                 'thumbnail' => $this->thumbnail,

@@ -3,7 +3,7 @@ CREATE TABLE `accounts` (
   `username` varchar(200) UNIQUE NOT NULL,
   `password` varchar(300) NOT NULL,
   `created_at` datetime DEFAULT (now()),
-  `updated_at` datetime,
+  `updated_at` datetime DEFAULT (now()),
   `is_active` tinyint(1) DEFAULT 1
 );
 
@@ -16,8 +16,8 @@ CREATE TABLE `brands` (
 );
 
 CREATE TABLE `categories` (
-  `categories_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `categories_name` varchar(100) DEFAULT '' COMMENT 'Ex: Tủ lạnh, máy giặt,...',
+  `category_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `category_name` varchar(100) DEFAULT '' COMMENT 'Ex: Tủ lạnh, máy giặt,...',
   `category_logo` varchar(300) DEFAULT '',
   `is_active` tinyint(1) DEFAULT 1
 );
@@ -111,13 +111,13 @@ CREATE TABLE `products` (
   `product_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `product_name` varchar(350) NOT NULL,
   `brand_id` int(11) NOT NULL,
-  `categories_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
   `price` decimal(10,2) DEFAULT 0 COMMENT 'Phải >= 0',
   `guarantee` int(11) DEFAULT 0,
   `thumbnail` varchar(300) DEFAULT '' COMMENT 'Phải có ảnh mặc định',
   `description` longtext DEFAULT 'Đây là mô tả sản phẩm',
   `created_at` datetime DEFAULT (now()),
-  `updated_at` datetime,
+  `updated_at` datetime DEFAULT (now()),
   `is_active` tinyint(1) DEFAULT 1
 );
 
@@ -252,7 +252,7 @@ ALTER TABLE `order_details` ADD CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`
 
 ALTER TABLE `products` ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`brand_id`);
 
-ALTER TABLE `products` ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`categories_id`) REFERENCES `categories` (`categories_id`);
+ALTER TABLE `products` ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`);
 
 ALTER TABLE `product_images` ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 

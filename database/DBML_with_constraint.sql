@@ -12,7 +12,7 @@ Table "accounts" {
   "username" varchar(200) [unique, not null]
   "password" varchar(300) [not null]
   "created_at" datetime [default: `now()`]
-  "updated_at" datetime
+  "updated_at" datetime [default: `now()`]
   "is_active" tinyint(1) [default: 1]
 }
 
@@ -25,8 +25,8 @@ Table "brands" {
 }
 
 Table "categories" {
-  "categories_id" int(11) [pk, not null, increment]
-  "categories_name" varchar(100) [default: "", note: "Ex: Tủ lạnh, máy giặt,..."]
+  "category_id" int(11) [pk, not null, increment]
+  "category_name" varchar(100) [default: "", note: "Ex: Tủ lạnh, máy giặt,..."]
   "category_logo" varchar(300) [default: ""]
   "is_active" tinyint(1) [default: 1]
 }
@@ -122,13 +122,13 @@ Table "products" {
   "product_id" int(11) [pk, not null, increment]
   "product_name" varchar(350) [not null]
   "brand_id" int(11) [not null]
-  "categories_id" int(11) [not null]
+  "category_id" int(11) [not null]
   "price" decimal(10,2) [default: 0, note: "Phải >= 0"]
   "guarantee" int(11) [default: 0]
   "thumbnail" varchar(300) [default: "", note: "Phải có ảnh mặc định"]
   "description" longtext [default: "Đây là mô tả sản phẩm"]
   "created_at" datetime [default: `now()`]
-  "updated_at" datetime
+  "updated_at" datetime [default: `now()`]
   "is_active" tinyint(1) [default: 1]
 }
 
@@ -293,7 +293,7 @@ Ref "order_details_ibfk_2":"products"."product_id" < "order_details"."product_id
 
 Ref "products_ibfk_1":"brands"."brand_id" < "products"."brand_id"
 
-Ref "products_ibfk_2":"categories"."categories_id" < "products"."categories_id"
+Ref "products_ibfk_2":"categories"."category_id" < "products"."category_id"
 
 Ref "product_images_ibfk_1":"products"."product_id" < "product_images"."product_id"
 
