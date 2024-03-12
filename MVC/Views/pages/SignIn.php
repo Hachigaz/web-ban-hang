@@ -1,6 +1,6 @@
-<link rel="stylesheet" href="./Public/css/globals/globals.css">
-<link rel="stylesheet" href="./Public/css/globals/components.css">
-<link rel="stylesheet" href="./Public/css/SignIn/style.css">
+<link rel="stylesheet" href="../Public/css/globals/globals.css">
+<link rel="stylesheet" href="../Public/css/globals/components.css">
+<link rel="stylesheet" href="../Public/css/SignIn/style.css">
 <div class="body two-subpanels">
     <div class="subpanel left-panel">
         <div class="widget-wrapper">
@@ -14,7 +14,7 @@
             <div class="form-title">
                 <div class="shop-name-display">
                     <div class="logo-wrapper">
-                        <img src="Public/img/logo/logo.png" width="100px" height="100px" alt="">
+                        <img src="../Public/img/logo/logo.png" width="100px" height="100px" alt="">
                     </div>
                     <div class="shop-name">
                         Electro-Goods
