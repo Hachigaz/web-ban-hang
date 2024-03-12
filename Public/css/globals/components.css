@@ -8,7 +8,7 @@
     }
 }
 
-@media screen and (orientation:portrait) {
+@media screen and ((max-width: 800px) or (orientation:portrait)){
     .two-subpanels{
         display:flex;
         flex-direction: column;
@@ -17,3 +17,4 @@
         width: 100%;
     }
 }
+

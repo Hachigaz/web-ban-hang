@@ -21,26 +21,21 @@
                     </div>    
                 </div>
                 <div class="form-title-message">
-                    Đăng nhập
+                    Đăng ký
                 </div>
             </div>
             <div class="form-message">
 
             </div>
-            <form class="sign-in-form" action="../SignIn/CheckSignIn" method="post">
-                <input type="text" id="input_username" placeholder="Email hoặc tên đăng nhập">
+            <form class="sign-in-form" action="SignUp/CreateAccount" method="post">
+                <input type="text" id="input_username" placeholder="Email">
                 <input type="password" id="input_password" placeholder="Mật khẩu">
-                <div class="sign-in-options">
-                    <div class="password-remember-wrapper">
-                        <input type="checkbox" id="input_remember_password">
-                        <label for="input_remember_password">Remember password</label>
-                    </div>
-                </div>
-                <input type="submit" value="Đăng nhập">            
+                <input type="password" id="input_confirm_password" placeholder="Nhập lại mật khẩu">
+                <input type="submit" value="Tạo tài khoản">            
             </form>
             <div class="sign-in-bottom-options">
-                Chưa có tài khoản?
-                <a href="../SignUp/">Đăng ký</a>
+                Đã có tài khoản?
+                <a href="../SignIn/">Đăng nhập</a>
             </div>
         </div>
     </div>
