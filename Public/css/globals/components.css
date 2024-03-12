@@ -1,0 +1,19 @@
+@media screen and (orientation:landscape){
+    .two-subpanels{
+        display:flex;
+        flex-direction: row;
+    }
+    .two-subpanels .subpanel{
+        width: 50%;
+    }
+}
+
+@media screen and (orientation:portrait) {
+    .two-subpanels{
+        display:flex;
+        flex-direction: column;
+    }
+    .two-subpanels .subpanel{
+        width: 100%;
+    }
+}
