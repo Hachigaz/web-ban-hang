@@ -55,17 +55,7 @@ ADD CONSTRAINT check_gender_customers CHECK (`customers`.gender = 0 OR `customer
 -- 6.Kiểm tra Phone number phải có 10 số và bắt đầu bằng số 0
 ALTER TABLE `customers`
 ADD CONSTRAINT check_phone_number_customers CHECK (`customers`.phone_number REGEXP '^0[0-9]{9}$');
-DELIMITER //
-CREATE TRIGGER auto_increment_id_customer
-BEFORE INSERT ON `customers`
-FOR EACH ROW
-BEGIN
-
-END; //
-DELIMITER ;
-
-
-------
+-- 7.Tạo ra id khách hàng tự tăng
 DELIMITER //
 CREATE TRIGGER auto_increment_id_customer
 BEFORE INSERT ON `customers`
@@ -75,11 +65,10 @@ BEGIN
   DECLARE new_id VARCHAR(10);
   
   SELECT MAX(CAST(SUBSTR(customer_id, 3) AS UNSIGNED)) INTO last_id
-  FROM customers
-  WHERE LENGTH(customer_id) = LENGTH(CONCAT('KH', LPAD(last_id, 4, '0')));
+  FROM customers;
   
   IF last_id IS NULL THEN
-    SET new_id = 'KH005';
+    SET new_id = 'KH001';
   ELSEIF last_id < 10 THEN
     SET new_id = CONCAT('KH00', last_id + 1);
   ELSEIF last_id < 100 THEN
