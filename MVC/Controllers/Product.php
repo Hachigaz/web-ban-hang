@@ -26,5 +26,8 @@
         public function GetAllProduct(){
             $this->productService->getAllProduct();
         }
+        public function GetProductById(){
+            $this->productService->GetProductById();
+        }
     }
 ?>
