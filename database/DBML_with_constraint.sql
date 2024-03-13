@@ -50,6 +50,9 @@ Table "decentralizations" {
   "module_id" int(11) [not null]
   "function_id" int(11) [not null]
   "is_active" tinyint(1) [default: 1]
+  Indexes {
+    (role_id, module_id, function_id) [unique]
+  }
 }
 
 Table "exports" {
@@ -130,6 +133,18 @@ Table "products" {
   "created_at" datetime [default: `now()`]
   "updated_at" datetime [default: `now()`]
   "is_active" tinyint(1) [default: 1]
+}
+
+Table "options" {
+  "option_id" int(11) [pk, not null, increment]
+  "product_id" int(11) [not null]
+  "ram" int(11) [note: "GB"]
+  "rom" int(11) [note: "GB"]
+  "chip" varchar(11)
+  "color" varchar(11)
+  "battery" int(11) [note: "mAh"]
+  "screen" float [note: "inch"]
+  "wh" int(11) [note: "Công suất tiêu thụ điện khi sạc"]
 }
 
 Table "like" {
@@ -345,3 +360,5 @@ Ref: "contracts"."contract_id" < "timesheets"."contract_id"
 Ref: "staffs"."staff_id" < "contracts"."staff_id"
 
 Ref: "timesheets"."timesheet_id" - "timesheet_details"."timesheet_id"
+
+Ref: "products"."product_id" < "options"."product_id"

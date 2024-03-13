@@ -121,6 +121,18 @@ CREATE TABLE `products` (
   `is_active` tinyint(1) DEFAULT 1
 );
 
+CREATE TABLE `options` (
+  `option_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `ram` int(11) COMMENT 'GB',
+  `rom` int(11) COMMENT 'GB',
+  `chip` varchar(11),
+  `color` varchar(11),
+  `battery` int(11) COMMENT 'mAh',
+  `screen` float COMMENT 'inch',
+  `wh` int(11) COMMENT 'Công suất tiêu thụ điện khi sạc'
+);
+
 CREATE TABLE `like` (
   `like_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
@@ -228,7 +240,9 @@ CREATE TABLE `timesheet_details` (
   `total_salary` decimal(10,2) NOT NULL
 );
 
-CREATE UNIQUE INDEX `like_index_0` ON `like` (`product_id`, `customer_id`);
+CREATE UNIQUE INDEX `decentralizations_index_0` ON `decentralizations` (`role_id`, `module_id`, `function_id`);
+
+CREATE UNIQUE INDEX `like_index_1` ON `like` (`product_id`, `customer_id`);
 
 ALTER TABLE `brands` ADD CONSTRAINT `brands_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`supplier_id`);
 
@@ -297,3 +311,5 @@ ALTER TABLE `timesheets` ADD FOREIGN KEY (`contract_id`) REFERENCES `contracts` 
 ALTER TABLE `contracts` ADD FOREIGN KEY (`staff_id`) REFERENCES `staffs` (`staff_id`);
 
 ALTER TABLE `timesheet_details` ADD FOREIGN KEY (`timesheet_id`) REFERENCES `timesheets` (`timesheet_id`);
+
+ALTER TABLE `options` ADD FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
