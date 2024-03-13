@@ -8,7 +8,7 @@
         }
         
         public function createCustomer(){
-            $customer = new CustomerModel("Nguyễn Thị Lệ", "5", "9", "1", "0936363639", "le@gmail.com", "Nghĩa Địa Gia Đôi", "2003-05-22");
+            $customer = new CustomerModel("Nguyễn Thị Leeeee", "5", "9", "1", "0922363119", "leee122@gmail.com", "Nghĩa Địa Gia Đôi", "2003-05-22");
             $this->customerRepo->createCustomer($customer);
         }
 
