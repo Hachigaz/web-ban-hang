@@ -69,9 +69,9 @@ BEGIN
   
   IF last_id IS NULL THEN
     SET new_id = 'KH001';
-  ELSEIF last_id < 10 THEN
+  ELSEIF last_id < 9 THEN
     SET new_id = CONCAT('KH00', last_id + 1);
-  ELSEIF last_id < 100 THEN
+  ELSEIF last_id < 99 THEN
     SET new_id = CONCAT('KH0', last_id + 1);
   ELSE
     SET new_id = CONCAT('KH', last_id + 1);
