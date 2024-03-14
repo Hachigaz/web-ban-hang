@@ -133,7 +133,7 @@ CREATE TABLE `options` (
   `wh` int(11) COMMENT 'Công suất tiêu thụ điện khi sạc'
 );
 
-CREATE TABLE `like` (
+CREATE TABLE `likes` (
   `like_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `customer_id` varchar(20) NOT NULL
@@ -190,7 +190,8 @@ CREATE TABLE `import_returns` (
   `import_return_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `staff_id` int(11) NOT NULL,
   `customer_supplier_id` varchar(20) NOT NULL,
-  `reason` varchar(100) NOT NULL COMMENT 'Nhập từ khách hàng, Trả về nhà cung cấp'
+  `reason` varchar(100) NOT NULL COMMENT 'Nhập từ khách hàng, Trả về nhà cung cấp',
+  `is_active` tinyint(1) DEFAULT 1
 );
 
 CREATE TABLE `import_return_details` (
@@ -242,4 +243,4 @@ CREATE TABLE `timesheet_details` (
 
 CREATE UNIQUE INDEX `decentralizations_index_0` ON `decentralizations` (`role_id`, `module_id`, `function_id`);
 
-CREATE UNIQUE INDEX `like_index_1` ON `like` (`product_id`, `customer_id`);
+CREATE UNIQUE INDEX `likes_index_1` ON `likes` (`product_id`, `customer_id`);

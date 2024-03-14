@@ -147,7 +147,7 @@ Table "options" {
   "wh" int(11) [note: "Công suất tiêu thụ điện khi sạc"]
 }
 
-Table "like" {
+Table "likes" {
   "like_id" int(11) [pk, not null, increment]
   "product_id" int(11) [not null]
   "customer_id" varchar(20) [not null]
@@ -214,6 +214,7 @@ Table "import_returns" {
   "staff_id" int(11) [not null]
   "customer_supplier_id" varchar(20) [not null]
   "reason" varchar(100) [not null, note: "Nhập từ khách hàng, Trả về nhà cung cấp"]
+  "is_active" tinyint(1) [default: 1]
 }
 
 Table "import_return_details" {
@@ -347,9 +348,9 @@ Ref: "suppliers"."supplier_id" < "import_returns"."customer_supplier_id"
 
 Ref: "customers"."customer_id" < "import_returns"."customer_supplier_id"
 
-Ref: "products"."product_id" < "like"."product_id"
+Ref: "products"."product_id" < "likes"."product_id"
 
-Ref: "customers"."customer_id" < "like"."customer_id"
+Ref: "customers"."customer_id" < "likes"."customer_id"
 
 Ref: "orders"."order_id" < "exports"."order_id"
 
