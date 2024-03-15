@@ -126,11 +126,12 @@ CREATE TABLE `options` (
   `product_id` int(11) NOT NULL,
   `ram` int(11) COMMENT 'GB',
   `rom` int(11) COMMENT 'GB',
-  `chip` varchar(11),
+  `chip` varchar(200),
   `color` varchar(11),
   `battery` int(11) COMMENT 'mAh',
   `screen` float COMMENT 'inch',
-  `wh` int(11) COMMENT 'Công suất tiêu thụ điện khi sạc'
+  `wh` int(11) COMMENT 'Công suất tiêu thụ điện khi sạc',
+  `is_active` tinyint(1) DEFAULT 1
 );
 
 CREATE TABLE `likes` (
@@ -142,8 +143,7 @@ CREATE TABLE `likes` (
 CREATE TABLE `product_images` (
   `product_image_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
-  `image_url` varchar(300) DEFAULT '' COMMENT 'Phải có ít nhất 1 ảnh mặc định',
-  `is_active` tinyint(1) DEFAULT 1
+  `image_url` varchar(300) DEFAULT '' COMMENT 'Phải có ít nhất 1 ảnh mặc định'
 );
 
 CREATE TABLE `roles` (
@@ -169,8 +169,7 @@ CREATE TABLE `skus` (
   `sku_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `sku_code` varchar(100) UNIQUE DEFAULT '' COMMENT 'Phải đủ số lượng ký tự của 1 sku code, nếu có enum về color thì sẽ dễ quản lý hơn',
   `product_id` int(11) NOT NULL,
-  `color_of_product` varchar(20) DEFAULT '' COMMENT 'Nên có enums',
-  `weight_of_product` float DEFAULT 0 COMMENT 'Phải > 0',
+  `option_id` int(11) NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
 );
 

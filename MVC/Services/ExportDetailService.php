@@ -28,13 +28,13 @@
 
         public function getAllExportDetail(){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->exportDetailRepo->getAllExportDetail());
+            echo json_encode($this->exportDetailRepo->getAllExportDetail(), JSON_UNESCAPED_UNICODE);
         }
 
         public function getExportDetailById(){
             $id = "1";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->exportDetailRepo->getExportDetailById($id));
+            echo json_encode($this->exportDetailRepo->getExportDetailById($id), JSON_UNESCAPED_UNICODE);
         }
     }
 ?>

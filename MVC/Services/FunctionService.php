@@ -28,13 +28,13 @@
 
         public function getAllFunction(){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->functionRepo->getAllFunction());
+            echo json_encode($this->functionRepo->getAllFunction(), JSON_UNESCAPED_UNICODE);
         }
 
         public function getFunctionById(){
             $id = "2";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->functionRepo->getFunctionById($id));
+            echo json_encode($this->functionRepo->getFunctionById($id), JSON_UNESCAPED_UNICODE);
         }
     }
 ?>

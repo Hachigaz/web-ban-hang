@@ -28,13 +28,13 @@
 
         public function getAllBrand(){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->brandRepo->getAllBrand());
+            echo json_encode($this->brandRepo->getAllBrand(), JSON_UNESCAPED_UNICODE);
         }
 
         public function getBrandById(){
             $id = "5";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->brandRepo->getBrandById($id));
+            echo json_encode($this->brandRepo->getBrandById($id), JSON_UNESCAPED_UNICODE);
         }
     }
 ?>

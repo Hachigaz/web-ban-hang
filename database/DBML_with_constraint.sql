@@ -1,4 +1,3 @@
-
 Enum "orders_status_of_order_enum" {
   "Pending"
   "Processing"
@@ -140,11 +139,12 @@ Table "options" {
   "product_id" int(11) [not null]
   "ram" int(11) [note: "GB"]
   "rom" int(11) [note: "GB"]
-  "chip" varchar(11)
+  "chip" varchar(200)
   "color" varchar(11)
   "battery" int(11) [note: "mAh"]
   "screen" float [note: "inch"]
   "wh" int(11) [note: "Công suất tiêu thụ điện khi sạc"]
+  "is_active" tinyint(1) [default: 1]
 }
 
 Table "likes" {
@@ -160,7 +160,6 @@ Table "product_images" {
   "product_image_id" int(11) [pk, not null, increment]
   "product_id" int(11) [not null]
   "image_url" varchar(300) [default: "", note: "Phải có ít nhất 1 ảnh mặc định"]
-  "is_active" tinyint(1) [default: 1]
 }
 
 // Table "reasons" {
@@ -192,8 +191,7 @@ Table "skus" {
   "sku_id" int(11) [pk, not null, increment]
   "sku_code" varchar(100) [unique, default: "", note: "Phải đủ số lượng ký tự của 1 sku code, nếu có enum về color thì sẽ dễ quản lý hơn"]
   "product_id" int(11) [not null]
-  "color_of_product" varchar(20) [default: "", note: "Nên có enums"]
-  "weight_of_product" float [default: 0, note: "Phải > 0"]
+  "option_id" int(11) [not null]
   "is_active" tinyint(1) [default: 1]
 }
 
@@ -363,3 +361,5 @@ Ref: "staffs"."staff_id" < "contracts"."staff_id"
 Ref: "timesheets"."timesheet_id" - "timesheet_details"."timesheet_id"
 
 Ref: "products"."product_id" < "options"."product_id"
+
+Ref: "options"."option_id" < "skus"."option_id"

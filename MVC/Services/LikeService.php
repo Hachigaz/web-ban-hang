@@ -19,13 +19,13 @@
 
         public function getAllLike(){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->likeRepo->getAllLike());
+            echo json_encode($this->likeRepo->getAllLike(), JSON_UNESCAPED_UNICODE);
         }
 
         public function getLikeById(){
             $id = "1";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->likeRepo->getLikeById($id));
+            echo json_encode($this->likeRepo->getLikeById($id), JSON_UNESCAPED_UNICODE);
         }
     }
 ?>

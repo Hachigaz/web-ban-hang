@@ -28,13 +28,13 @@
 
         public function getAllModule(){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->moduleRepo->getAllModule());
+            echo json_encode($this->moduleRepo->getAllModule(), JSON_UNESCAPED_UNICODE);
         }
 
         public function getModuleById(){
             $id = "14";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->moduleRepo->getModuleById($id));
+            echo json_encode($this->moduleRepo->getModuleById($id), JSON_UNESCAPED_UNICODE);
         }
     }
 ?>

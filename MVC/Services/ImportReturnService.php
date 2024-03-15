@@ -28,13 +28,13 @@
 
         public function getAllImportReturn(){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->importReturnRepo->getAllImportReturn());
+            echo json_encode($this->importReturnRepo->getAllImportReturn(), JSON_UNESCAPED_UNICODE);
         }
 
         public function getImportReturnById(){
             $id = "1";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->importReturnRepo->getImportReturnById($id));
+            echo json_encode($this->importReturnRepo->getImportReturnById($id), JSON_UNESCAPED_UNICODE);
         }
     }
 ?>

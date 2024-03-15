@@ -28,13 +28,13 @@
 
         public function getAllCustomer(){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->customerRepo->getAllCustomer());
+            echo json_encode($this->customerRepo->getAllCustomer(), JSON_UNESCAPED_UNICODE);
         }
 
         public function getCustomerById(){
             $id = "'KH002'";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->customerRepo->getCustomerById($id));
+            echo json_encode($this->customerRepo->getCustomerById($id), JSON_UNESCAPED_UNICODE);
         }
     }
 ?>
