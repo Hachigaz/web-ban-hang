@@ -39,28 +39,43 @@
             <div class="category-wrapper">
                 <div class="category-list">
                     <div class="category-item">
-                        item 1
+                        <div class="item-image-wrapper">
+                            <img src="../Public/img/logo/category_logo/keyboard.png" alt="" srcset="" width="100px" height="100px">
+                        </div>
+                        <div class="item-info-wrapper">
+                            <div class="large-text-info">
+                                Bàn phím
+                            </div>
+                            <div class="small-text-info">
+                                Giá chỉ từ 300.000đ đến 650.000đ
+                            </div>
+                        </div>
                     </div>
                     <div class="category-item">
-                        item 1
+                        <div class="item-image-wrapper">
+                            <img src="../Public/img/logo/category_logo/mouse.png" alt="" srcset="" width="100px" height="100px">
+                        </div>
+                        <div class="item-info-wrapper">
+                            <div class="large-text-info">
+                                Chuột
+                            </div>
+                            <div class="small-text-info">
+                                Giá chỉ từ 200.000đ đến 350.000đ
+                            </div>
+                        </div>
                     </div>
                     <div class="category-item">
-                        item 1
-                    </div>
-                    <div class="category-item">
-                        item 1
-                    </div>
-                    <div class="category-item">
-                        item 1
-                    </div>
-                    <div class="category-item">
-                        item 1
-                    </div>
-                    <div class="category-item">
-                        item 1
-                    </div>
-                    <div class="category-item">
-                        item 1
+                        <div class="item-image-wrapper">
+                            <img src="../Public/img/logo/category_logo/laptop.png" alt="" srcset="" width="100px" height="100px">
+                        </div>
+                        <div class="item-info-wrapper">
+                            <div class="large-text-info">
+                                Laptop
+                            </div>
+                            <div class="small-text-info">
+                                Giá chỉ từ 10.000.000đ đến 15.000.000đ
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
