@@ -203,7 +203,7 @@ CREATE TABLE `import_return_details` (
 CREATE TABLE `statistics` (
   `statistic_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `statistic_name` varchar(200) NOT NULL COMMENT 'Dùng các function, trigger, procedure, view,... Để tạo ra các dữ liệu muốn thống kê',
-  `value` float NOT NULL DEFAULT 0,
+  `value` longtext NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
 );
 

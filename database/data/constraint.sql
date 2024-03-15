@@ -338,6 +338,32 @@ ADD CONSTRAINT check_gender_staffs CHECK (`staffs`.gender IN (0,1));
 -- 1.Kiểm tra Phone number phải có 10 số và bắt đầu bằng số 0 (bỏ do nhà cung cấp có thể ở nước ngoài sđt sẽ khác VN)
 ALTER TABLE `suppliers`
 ADD CONSTRAINT check_email_suppliers CHECK (`suppliers`.email_of_supplier REGEXP '^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$');
+-- 2. Gán id tự tăng cho nhà cung cấp
+DELIMITER //
+CREATE TRIGGER auto_increment_id_supplier
+BEFORE INSERT ON `suppliers`
+FOR EACH ROW
+BEGIN
+  DECLARE last_id INT;
+  DECLARE new_id VARCHAR(10);
+  
+  SELECT MAX(CAST(SUBSTR(supplier_id, 4) AS UNSIGNED)) INTO last_id
+  FROM suppliers;
+  
+  IF last_id IS NULL THEN
+    SET new_id = 'NCC001';
+  ELSEIF last_id < 9 THEN
+    SET new_id = CONCAT('NCC00', last_id + 1);
+  ELSEIF last_id < 99 THEN
+    SET new_id = CONCAT('NCC0', last_id + 1);
+  ELSE
+    SET new_id = CONCAT('NCC', last_id + 1);
+  END IF;
+  
+  SET NEW.supplier_id = new_id;
+END; //
+DELIMITER ;
+
 
 -- CONTRACTS --------------------------------------
 -- 1.Kiểm tra thời hạn hợp đồng phải ít nhất là 3 tháng

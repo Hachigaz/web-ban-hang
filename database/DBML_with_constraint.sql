@@ -225,7 +225,7 @@ Table "import_return_details" {
 Table "statistics" {
   "statistic_id" int(11) [pk, not null, increment]
   "statistic_name" varchar(200) [not null, note: "Dùng các function, trigger, procedure, view,... Để tạo ra các dữ liệu muốn thống kê"]
-  "value" float [default: 0, not null]
+  "value" longtext [not null]
   "is_active" tinyint(1) [default: 1]
 }
 
