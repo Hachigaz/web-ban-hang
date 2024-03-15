@@ -6,6 +6,14 @@
     <title>Master</title>
 </head>
 <body>
+    <div class="dialog-container">
+        <div class="dialog-overlay">
+
+        </div>
+        <div class="dialog-message">
+
+        </div>
+    </div>
     <div class="main">
         <?php require_once "./MVC/Views/pages/".$data["Page"].".php" ?>
     </div>

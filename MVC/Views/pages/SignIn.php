@@ -1,12 +1,20 @@
 <link rel="stylesheet" href="../Public/css/globals/globals.css">
 <link rel="stylesheet" href="../Public/css/globals/components.css">
 <link rel="stylesheet" href="../Public/css/SignIn/style.css">
+
+<script src="../Public/scripts/components/jquery-3.7.1.min.js"></script>
+<script src="../Public/scripts/components/globals.js"></script>
+<script src="../Public/scripts/SignIn/script.js" defer></script>
 <div class="body two-subpanels">
     <div class="subpanel left-panel">
-        <div class="widget-wrapper">
+        <!-- <div class="widget-wrapper">
             <div class="widget">
-                Widget
+                <div class="widget">
+                </div>
             </div>
+        </div> -->
+        <div class="background-image-wrapper">
+            <img src="../Public/img/web_icons/shop_background.png" alt="" srcset="">
         </div>
     </div>
     <div class="subpanel right-panel">
@@ -27,13 +35,23 @@
             <div class="form-message">
 
             </div>
-            <form class="sign-in-form" action="../SignIn/CheckSignIn" method="post">
-                <input type="text" id="input_username" placeholder="Email hoặc tên đăng nhập">
-                <input type="password" id="input_password" placeholder="Mật khẩu">
+            <form class="sign-in-form" action="../SignIn/CheckSignIn" method="post" enctype="multipart/form-data">
+                <div class="c-input" id="input_username">
+                    <div class="input-error-message">
+                        
+                    </div>    
+                    <input name="input_username" type="text" placeholder="Email hoặc tên đăng nhập" onclick="(new InputElement(this.parentElement)).hideError()">
+                </div>
+                <div class="c-input" id="input_password">
+                    <div class="input-error-message">
+                        
+                    </div>    
+                    <input name="input_password" type="password" placeholder="Mật khẩu" onclick="(new InputElement(this.parentElement)).hideError()">
+                </div>
                 <div class="sign-in-options">
                     <div class="password-remember-wrapper">
                         <input type="checkbox" id="input_remember_password">
-                        <label for="input_remember_password">Remember password</label>
+                        <label for="input_remember_password" class="no-user-select">Remember password</label>
                     </div>
                 </div>
                 <input type="submit" value="Đăng nhập">            

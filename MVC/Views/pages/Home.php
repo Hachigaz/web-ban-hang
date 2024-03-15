@@ -74,10 +74,10 @@
                     <div class="product-list">
                         <div class="product-item">
                             <div class="product-image-wrapper">
-                                <img class="no-user-select" src="../Public/img/products/test/chillisauce.png" alt="" srcset="" width="200px" height="200px">
+                                <img class="no-user-select" src="../Public/img/products/test/nvidia-hi-end-graphics-card.png" alt="" srcset="" width="200px" height="200px">
                             </div>
                             <div class="product-display-name">
-                                Tương ớt trị ngu
+                                Card đồ họa GEFORCE RTX 3090
                             </div>
                             <div class="producer-display-name">
                                 Dream Factory
@@ -98,10 +98,10 @@
                         </div>
                         <div class="product-item">
                             <div class="product-image-wrapper">
-                                <img class="no-user-select" src="../Public/img/products/test/chillisauce.png" alt="" srcset="" width="200px" height="200px">
+                                <img class="no-user-select" src="../Public/img/products/test/nvidia-hi-end-graphics-card.png" alt="" srcset="" width="200px" height="200px">
                             </div>
                             <div class="product-display-name">
-                                Tương ớt trị ngu
+                                Card đồ họa GEFORCE RTX 3090
                             </div>
                             <div class="producer-display-name">
                                 Dream Factory
@@ -122,10 +122,10 @@
                         </div>
                         <div class="product-item">
                             <div class="product-image-wrapper">
-                                <img class="no-user-select" src="../Public/img/products/test/chillisauce.png" alt="" srcset="" width="200px" height="200px">
+                                <img class="no-user-select" src="../Public/img/products/test/nvidia-hi-end-graphics-card.png" alt="" srcset="" width="200px" height="200px">
                             </div>
                             <div class="product-display-name">
-                                Tương ớt trị ngu
+                                Card đồ họa GEFORCE RTX 3090
                             </div>
                             <div class="producer-display-name">
                                 Dream Factory
@@ -146,10 +146,10 @@
                         </div>
                         <div class="product-item">
                             <div class="product-image-wrapper">
-                                <img class="no-user-select" src="../Public/img/products/test/chillisauce.png" alt="" srcset="" width="200px" height="200px">
+                                <img class="no-user-select" src="../Public/img/products/test/nvidia-hi-end-graphics-card.png" alt="" srcset="" width="200px" height="200px">
                             </div>
                             <div class="product-display-name">
-                                Tương ớt trị ngu
+                                Card đồ họa GEFORCE RTX 3090
                             </div>
                             <div class="producer-display-name">
                                 Dream Factory
@@ -170,10 +170,10 @@
                         </div>
                         <div class="product-item">
                             <div class="product-image-wrapper">
-                                <img class="no-user-select" src="../Public/img/products/test/chillisauce.png" alt="" srcset="" width="200px" height="200px">
+                                <img class="no-user-select" src="../Public/img/products/test/nvidia-hi-end-graphics-card.png" alt="" srcset="" width="200px" height="200px">
                             </div>
                             <div class="product-display-name">
-                                Tương ớt trị ngu
+                                Card đồ họa GEFORCE RTX 3090
                             </div>
                             <div class="producer-display-name">
                                 Dream Factory
@@ -194,10 +194,10 @@
                         </div>
                         <div class="product-item">
                             <div class="product-image-wrapper">
-                                <img class="no-user-select" src="../Public/img/products/test/chillisauce.png" alt="" srcset="" width="200px" height="200px">
+                                <img class="no-user-select" src="../Public/img/products/test/nvidia-hi-end-graphics-card.png" alt="" srcset="" width="200px" height="200px">
                             </div>
                             <div class="product-display-name">
-                                Tương ớt trị ngu
+                                Card đồ họa GEFORCE RTX 3090
                             </div>
                             <div class="producer-display-name">
                                 Dream Factory
@@ -218,91 +218,10 @@
                         </div>
                         <div class="product-item">
                             <div class="product-image-wrapper">
-                                <img class="no-user-select" src="../Public/img/products/test/chillisauce.png" alt="" srcset="" width="200px" height="200px">
+                                <img class="no-user-select" src="../Public/img/products/test/nvidia-hi-end-graphics-card.png" alt="" srcset="" width="200px" height="200px">
                             </div>
                             <div class="product-display-name">
-                                Tương ớt trị ngu
-                            </div>
-                            <div class="producer-display-name">
-                                Dream Factory
-                            </div>
-                            <div class="product-info-display">
-                                <div class="price-display">
-                                    10.000k
-                                </div>
-                                <div class="rating-display">
-                                    <div class="rating-icon-wrapper">
-                                        <img class="no-user-select" src="../Public/img/web_icons/star.png" width="20" height="20" alt="" srcset="">
-                                    </div>
-                                    <div class="rating-value">
-                                        4.75
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="product-set set-1">
-                <div class="set-title style-panel-title">
-                    Tương ớt
-                </div>
-                <div class="product-list-wrapper">
-                    <div class="product-list">
-                        <div class="product-item">
-                            <div class="product-image-wrapper">
-                                <img class="no-user-select" src="../Public/img/products/test/chillisauce.png" alt="" srcset="" width="200px" height="200px">
-                            </div>
-                            <div class="product-display-name">
-                                Tương ớt trị ngu
-                            </div>
-                            <div class="producer-display-name">
-                                Dream Factory
-                            </div>
-                            <div class="product-info-display">
-                                <div class="price-display">
-                                    10.000k
-                                </div>
-                                <div class="rating-display">
-                                    <div class="rating-icon-wrapper">
-                                        <img class="no-user-select" src="../Public/img/web_icons/star.png" width="20" height="20" alt="" srcset="">
-                                    </div>
-                                    <div class="rating-value">
-                                        4.75
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-item">
-                            <div class="product-image-wrapper">
-                                <img class="no-user-select" src="../Public/img/products/test/chillisauce.png" alt="" srcset="" width="200px" height="200px">
-                            </div>
-                            <div class="product-display-name">
-                                Tương ớt trị ngu
-                            </div>
-                            <div class="producer-display-name">
-                                Dream Factory
-                            </div>
-                            <div class="product-info-display">
-                                <div class="price-display">
-                                    10.000k
-                                </div>
-                                <div class="rating-display">
-                                    <div class="rating-icon-wrapper">
-                                        <img class="no-user-select" src="../Public/img/web_icons/star.png" width="20" height="20" alt="" srcset="">
-                                    </div>
-                                    <div class="rating-value">
-                                        4.75
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-item">
-                            <div class="product-image-wrapper">
-                                <img class="no-user-select" src="../Public/img/products/test/chillisauce.png" alt="" srcset="" width="200px" height="200px">
-                            </div>
-                            <div class="product-display-name">
-                                Tương ớt trị ngu
+                                Card đồ họa GEFORCE RTX 3090
                             </div>
                             <div class="producer-display-name">
                                 Dream Factory
@@ -332,10 +251,10 @@
                     <div class="product-list">
                         <div class="product-item">
                             <div class="product-image-wrapper">
-                                <img class="no-user-select" src="../Public/img/products/test/chillisauce.png" alt="" srcset="" width="200px" height="200px">
+                                <img class="no-user-select" src="../Public/img/products/test/nvidia-hi-end-graphics-card.png" alt="" srcset="" width="200px" height="200px">
                             </div>
                             <div class="product-display-name">
-                                Tương ớt trị ngu
+                                Card đồ họa GEFORCE RTX 3090
                             </div>
                             <div class="producer-display-name">
                                 Dream Factory
@@ -356,10 +275,10 @@
                         </div>
                         <div class="product-item">
                             <div class="product-image-wrapper">
-                                <img class="no-user-select" src="../Public/img/products/test/chillisauce.png" alt="" srcset="" width="200px" height="200px">
+                                <img class="no-user-select" src="../Public/img/products/test/nvidia-hi-end-graphics-card.png" alt="" srcset="" width="200px" height="200px">
                             </div>
                             <div class="product-display-name">
-                                Tương ớt trị ngu
+                                Card đồ họa GEFORCE RTX 3090
                             </div>
                             <div class="producer-display-name">
                                 Dream Factory
@@ -380,10 +299,91 @@
                         </div>
                         <div class="product-item">
                             <div class="product-image-wrapper">
-                                <img class="no-user-select" src="../Public/img/products/test/chillisauce.png" alt="" srcset="" width="200px" height="200px">
+                                <img class="no-user-select" src="../Public/img/products/test/nvidia-hi-end-graphics-card.png" alt="" srcset="" width="200px" height="200px">
                             </div>
                             <div class="product-display-name">
-                                Tương ớt trị ngu
+                                Card đồ họa GEFORCE RTX 3090
+                            </div>
+                            <div class="producer-display-name">
+                                Dream Factory
+                            </div>
+                            <div class="product-info-display">
+                                <div class="price-display">
+                                    10.000k
+                                </div>
+                                <div class="rating-display">
+                                    <div class="rating-icon-wrapper">
+                                        <img class="no-user-select" src="../Public/img/web_icons/star.png" width="20" height="20" alt="" srcset="">
+                                    </div>
+                                    <div class="rating-value">
+                                        4.75
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="product-set set-1">
+                <div class="set-title style-panel-title">
+                    Tương ớt
+                </div>
+                <div class="product-list-wrapper">
+                    <div class="product-list">
+                        <div class="product-item">
+                            <div class="product-image-wrapper">
+                                <img class="no-user-select" src="../Public/img/products/test/nvidia-hi-end-graphics-card.png" alt="" srcset="" width="200px" height="200px">
+                            </div>
+                            <div class="product-display-name">
+                                Card đồ họa GEFORCE RTX 3090
+                            </div>
+                            <div class="producer-display-name">
+                                Dream Factory
+                            </div>
+                            <div class="product-info-display">
+                                <div class="price-display">
+                                    10.000k
+                                </div>
+                                <div class="rating-display">
+                                    <div class="rating-icon-wrapper">
+                                        <img class="no-user-select" src="../Public/img/web_icons/star.png" width="20" height="20" alt="" srcset="">
+                                    </div>
+                                    <div class="rating-value">
+                                        4.75
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-image-wrapper">
+                                <img class="no-user-select" src="../Public/img/products/test/nvidia-hi-end-graphics-card.png" alt="" srcset="" width="200px" height="200px">
+                            </div>
+                            <div class="product-display-name">
+                                Card đồ họa GEFORCE RTX 3090
+                            </div>
+                            <div class="producer-display-name">
+                                Dream Factory
+                            </div>
+                            <div class="product-info-display">
+                                <div class="price-display">
+                                    10.000k
+                                </div>
+                                <div class="rating-display">
+                                    <div class="rating-icon-wrapper">
+                                        <img class="no-user-select" src="../Public/img/web_icons/star.png" width="20" height="20" alt="" srcset="">
+                                    </div>
+                                    <div class="rating-value">
+                                        4.75
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-image-wrapper">
+                                <img class="no-user-select" src="../Public/img/products/test/nvidia-hi-end-graphics-card.png" alt="" srcset="" width="200px" height="200px">
+                            </div>
+                            <div class="product-display-name">
+                                Card đồ họa GEFORCE RTX 3090
                             </div>
                             <div class="producer-display-name">
                                 Dream Factory

@@ -73,3 +73,34 @@
     animation-name:widget-slide;
     animation-duration: 1s;
 }
+
+.dialog-container{
+    display:none;
+}
+
+.dialog-overlay{
+    display:none;
+
+    position: absolute;
+
+    width:100vw;
+    height:100vh;
+
+    background-color: rgba(0, 0, 0, 0.781);
+}
+
+.dialog-message{
+    display:none;
+    
+    position: absolute;
+    
+    width:50%;
+    height:50%;
+
+    background-color: white;
+
+    left: 50%; 
+    top:50%;
+
+    transform: translate(-50%, -50%);
+}

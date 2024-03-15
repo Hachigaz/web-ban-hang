@@ -48,7 +48,7 @@ div.main, div.body{
     }
 }
 
-.right-panel .sign-in-form-wrapper{
+.right-panel .sign-up-form-wrapper{
     width:75%;
     height:80%;
 
@@ -62,21 +62,21 @@ div.main, div.body{
     background-color: var(--light-contrast-color2);
 }
 
-.sign-in-form-wrapper .form-title{
+.sign-up-form-wrapper .form-title{
     margin-top: 35px;
 }
 
-.sign-in-form-wrapper .form-title .logo-wrapper{
+.sign-up-form-wrapper .form-title .logo-wrapper{
     width:100px;
     height:100px;
 }
 
-.sign-in-form-wrapper .form-title .logo-wrapper img{
+.sign-up-form-wrapper .form-title .logo-wrapper img{
     width:100%;
     height:100%;
 }
 
-.sign-in-form-wrapper .form-title .shop-name-display{
+.sign-up-form-wrapper .form-title .shop-name-display{
     display: flex;
     align-items: center;
     
@@ -84,7 +84,7 @@ div.main, div.body{
     font-weight: 650;
 }
 
-.sign-in-form-wrapper .form-title .form-title-message{
+.sign-up-form-wrapper .form-title .form-title-message{
     margin-top:2px;
     text-align: center;
 
@@ -94,7 +94,7 @@ div.main, div.body{
 
 
 
-.sign-in-form-wrapper .sign-in-form{
+.sign-up-form-wrapper .sign-up-form{
     padding: 10px 0;
     margin-top:50px;
 
@@ -108,14 +108,14 @@ div.main, div.body{
     background-color: rgb(205, 224, 236);
 }
 
-.sign-in-form-wrapper .sign-in-form > *{
+.sign-up-form-wrapper .sign-up-form > *{
     margin: 10px 0;
     width: 80%;
 }
 
-.sign-in-form-wrapper .sign-in-form input[type="text"], 
-.sign-in-form-wrapper .sign-in-form input[type="password"],
-.sign-in-form-wrapper .sign-in-form input[type="submit"]
+.sign-up-form-wrapper .sign-up-form input[type="text"], 
+.sign-up-form-wrapper .sign-up-form input[type="password"],
+.sign-up-form-wrapper .sign-up-form input[type="submit"]
 {
     height:45px;
 
@@ -125,31 +125,31 @@ div.main, div.body{
     border-radius: 15px;
 }
 
-.sign-in-form-wrapper .sign-in-form input[type="text"], 
-.sign-in-form-wrapper .sign-in-form input[type="password"]
-{  
+.sign-up-form-wrapper .sign-up-form input[type="text"], 
+.sign-up-form-wrapper .sign-up-form input[type="password"]
+{
     width:100%;
     text-indent: 20px;
 }
 
-.sign-in-form-wrapper .sign-in-form .password-remember-wrapper{
+.sign-up-form-wrapper .sign-up-form .password-remember-wrapper{
     display: flex;
     align-items: center;
 }
 
-.sign-in-form-wrapper .sign-in-form .password-remember-wrapper input[type="checkbox"]
+.sign-up-form-wrapper .sign-up-form .password-remember-wrapper input[type="checkbox"]
 {
     width:20px;
     height:20px;
 }
 
-.sign-in-form-wrapper .sign-in-form .password-remember-wrapper label
+.sign-up-form-wrapper .sign-up-form .password-remember-wrapper label
 {
     font-size: 12pt;
     color:rgb(117, 117, 117);
 }
 
-.sign-in-form-wrapper .sign-in-form input[type="submit"]
+.sign-up-form-wrapper .sign-up-form input[type="submit"]
 {
     font-size: 13pt;
     background-color: #83badf;
@@ -157,7 +157,7 @@ div.main, div.body{
 }
 
 
-.sign-in-form-wrapper .sign-in-form input[type="submit"]:hover
+.sign-up-form-wrapper .sign-up-form input[type="submit"]:hover
 {
     animation: button-transition;
     animation-duration: 0.3s;
@@ -165,7 +165,7 @@ div.main, div.body{
     color:white;
 }
 
-.sign-in-form-wrapper .sign-in-form input[type="submit"]:active
+.sign-up-form-wrapper .sign-up-form input[type="submit"]:active
 {
     background-color: #236fc7;
     color:white;
@@ -182,7 +182,7 @@ div.main, div.body{
     }
 }
 
-.sign-in-form-wrapper .sign-in-bottom-options{
+.sign-up-form-wrapper .sign-up-bottom-options{
     margin-top:50px;
     font-size: 12pt;
 }

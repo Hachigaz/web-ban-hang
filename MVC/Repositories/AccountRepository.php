@@ -19,5 +19,9 @@
             public function getAccountById($id){
                 return $this->getAllByWhere("accounts", "account_id = ".$id);
             }
+
+            public function getAccountByUsername($username){
+                return $this->getAllByWhere("accounts", "username = '".$username."'");
+            }
         }
     ?>

@@ -11,6 +11,10 @@
                 $this->controller = $arr[0]; // nếu tồn tại thì gán nó vào controller
                 unset($arr[0]);// bỏ khỏi arr để xuống dưới arr chỉ còn params
             }
+            else{
+                $url = "Home/";
+                header("Location: ".$url);
+            }
             require_once "./MVC/Controllers/".$this->controller.".php";// nhờ gán vào $controller nên url không tồn tại thì nó cũng mặc định là Home
             $this->controller = new $this->controller;// gán giá trị mới cho $controller là 1 đối tượng 
 

@@ -19,5 +19,13 @@
             public function getCustomerById($id){
                 return $this->getAllByWhere("customers", "customer_id = ".$id);
             }
+            
+            public function getCustomerByEmail($email){
+                return $this->getAllByWhere("customers","customers.customer_email = '".$email."'" );
+            }
+            
+            public function getCustomerByAccountId($account_id){
+                return $this->getAllByWhere("customers","customers.account_id = ".$account_id );
+            }
         }
     ?>
