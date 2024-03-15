@@ -32,7 +32,7 @@
         }
 
         public function getProductById(){
-            $id = "10";
+            $id = "1";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->productRepo->getProductById($id), JSON_UNESCAPED_UNICODE);
         }

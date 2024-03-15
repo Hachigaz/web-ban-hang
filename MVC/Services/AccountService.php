@@ -2,9 +2,11 @@
     require_once "./MVC/Models/AccountModel.php";
     class AccountService extends Service{
         public $accountRepo;
+        public $customerRepo;
 
         public function __construct(){
             $this->accountRepo = $this->repository("AccountRepository");
+            $this->customerRepo = $this->repository("CustomerRepository");
         }
         
         public function createAccount(){
@@ -35,6 +37,22 @@
             $id = "5";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->accountRepo->getAccountById($id), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function checkForAccount($login_details, $password){
+            $customer_account;
+            if(filter_var($login_details,FILTER_VALIDATE_EMAIL)){   
+                $customer = $this->customerRepo->getCustomerByEmail($login_details);
+                $account_id = $customer['account_id'];
+                $customer_account = $this->accountRepo->getAccountById($account_id);
+            }
+            else{
+                $customer_account = $this->accountRepo->getAccountByUsername($login_details);
+            }
+            if($customer_account==null){
+                return false;
+            }
+            return $customer_account;
         }
     }
 ?>

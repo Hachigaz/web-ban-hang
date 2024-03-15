@@ -2,9 +2,9 @@
     class DB{
         public $con;
         protected $servername = "localhost";
-        protected $username = "root";
-        protected $password = "";
-        protected $dbname = "electronic_supermarket_test";
+        protected $username = "admin";
+        protected $password = "Abc12345";
+        protected $dbname = "electronic_supermarket";
 
         function __construct(){
             $this->con = mysqli_connect($this->servername, $this->username, $this->password);
