@@ -9,6 +9,7 @@
     </head>
     <body>
         <?php require_once "./MVC/Views/blocks/header.php" ?>
+        <?php require_once "./MVC/Views/blocks/navbar.php" ?>
         <?php require_once "./MVC/Views/pages/".$data["Page"].".php" ?>
         <?php require_once "./MVC/Views/blocks/footer.php" ?>
     </body>
