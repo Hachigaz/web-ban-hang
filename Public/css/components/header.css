@@ -82,6 +82,8 @@
     border: none;
     width: 40px;
     height: 40px;
+    font-size: 16px;
+    color: #666;
 }
 .header .wrapper-components .profile .shopping-cart {
     text-decoration: none;
@@ -102,6 +104,10 @@
     border-radius: 12px;
 }
 .header .wrapper-components .profile button,
-a {
+.header .wrapper-components .profile a {
     margin-inline: 10px;
+}
+.header .wrapper-components .profile i {
+    font-size: 23px;
+    color: #666;
 }

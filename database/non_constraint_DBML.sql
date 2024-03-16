@@ -156,6 +156,16 @@ Table "likes" {
   }
 }
 
+Table "reviews" {
+  "review_id" int(11) [pk, not null, increment]
+  "product_id" int(11) [not null]
+  "customer_id" int(11) [not null]
+  "rating" float 
+  "comment" longtext
+  "review_date" datetime [default: `now()`]
+  "is_active" tinyint(1) [default: 1]
+}
+
 Table "product_images" {
   "product_image_id" int(11) [pk, not null, increment]
   "product_id" int(11) [not null]

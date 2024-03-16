@@ -13,13 +13,13 @@
             <form action="" class="form-search">
                 <input type="text" class="input-search" placeholder="Bạn cần tìm gì...">
                 <button class="btn-search">
-                    <i class="fi fi-rr-search"></i>
+                    <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </form>
         </div>
         <div class="profile">
-            <button class="like"><i class="fi fi-rr-heart"></i></button>
-            <a href="#" class="shopping-cart"><i class="fi fi-rr-shopping-cart"></i></a>
+            <button class="like"><i class="fa-regular fa-heart"></i></button>
+            <a href="#" class="shopping-cart"><i class="fa-solid fa-bag-shopping"></i></i></a>
             <a href="#" class="avatar"><img src="../Public/img/members/voquochuy.jpg" alt=""></a>
         </div>
     </div>

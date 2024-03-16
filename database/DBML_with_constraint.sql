@@ -156,6 +156,16 @@ Table "likes" {
   }
 }
 
+Table "reviews" {
+  "review_id" int(11) [pk, not null, increment]
+  "product_id" int(11) [not null]
+  "customer_id" int(11) [not null]
+  "rating" float 
+  "comment" longtext
+  "review_date" datetime [default: `now()`]
+  "is_active" tinyint(1) [default: 1]
+}
+
 Table "product_images" {
   "product_image_id" int(11) [pk, not null, increment]
   "product_id" int(11) [not null]
@@ -363,3 +373,7 @@ Ref: "timesheets"."timesheet_id" - "timesheet_details"."timesheet_id"
 Ref: "products"."product_id" < "options"."product_id"
 
 Ref: "options"."option_id" < "skus"."option_id"
+
+Ref: "products"."product_id" < "reviews"."product_id"
+
+Ref: "customers"."customer_id" < "reviews"."customer_id"

@@ -140,6 +140,16 @@ CREATE TABLE `likes` (
   `customer_id` varchar(20) NOT NULL
 );
 
+CREATE TABLE `reviews` (
+  `review_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `rating` float,
+  `comment` longtext,
+  `review_date` datetime DEFAULT (now()),
+  `is_active` tinyint(1) DEFAULT 1
+);
+
 CREATE TABLE `product_images` (
   `product_image_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
