@@ -28,13 +28,13 @@
 
         public function getAllProduct(){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->productRepo->getAllProduct());
+            echo json_encode($this->productRepo->getAllProduct(), JSON_UNESCAPED_UNICODE);
         }
 
         public function getProductById(){
             $id = "1";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->productRepo->getProductById($id));
+            echo json_encode($this->productRepo->getProductById($id), JSON_UNESCAPED_UNICODE);
         }
     }
 ?>

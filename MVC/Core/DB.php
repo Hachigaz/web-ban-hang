@@ -41,7 +41,10 @@
         }
 
         // tạo thêm 1 hàm delete thật
-
+        public function realDelete($table, $where) {// chỉ thay đổi trạng thái active
+            $sql = "DELETE FROM $table WHERE $where";
+            return mysqli_query($this->con, $sql);
+        }
         //
         public function read($table){// đọc hết dữ liệu trong bảng $table ra(chi lay ra is_active = 1)
             $is_active = "is_active";

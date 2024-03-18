@@ -30,13 +30,13 @@
 
         public function getAllAccount(){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->accountRepo->getAllAccount());
+            echo json_encode($this->accountRepo->getAllAccount(), JSON_UNESCAPED_UNICODE);
         }
 
         public function getAccountById(){
             $id = "5";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->accountRepo->getAccountById($id));
+            echo json_encode($this->accountRepo->getAccountById($id), JSON_UNESCAPED_UNICODE);
         }
 
         public function checkForAccount($login_details, $password){

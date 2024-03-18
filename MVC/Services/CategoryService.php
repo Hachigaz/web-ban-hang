@@ -28,13 +28,13 @@
 
         public function getAllCategory(){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->categoryRepo->getAllCategory());
+            echo json_encode($this->categoryRepo->getAllCategory(), JSON_UNESCAPED_UNICODE);
         }
 
         public function getCategoryById(){
             $id = "5";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->categoryRepo->getCategoryById($id));
+            echo json_encode($this->categoryRepo->getCategoryById($id), JSON_UNESCAPED_UNICODE);
         }
     }
 ?>

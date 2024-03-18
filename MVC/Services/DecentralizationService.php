@@ -28,13 +28,13 @@
 
         public function getAllDecentralization(){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->decentralizationRepo->getAllDecentralization());
+            echo json_encode($this->decentralizationRepo->getAllDecentralization(), JSON_UNESCAPED_UNICODE);
         }
 
         public function getDecentralizationById(){
             $id = "10";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->decentralizationRepo->getDecentralizationById($id));
+            echo json_encode($this->decentralizationRepo->getDecentralizationById($id), JSON_UNESCAPED_UNICODE);
         }
     }
 ?>

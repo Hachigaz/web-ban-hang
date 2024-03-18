@@ -23,13 +23,13 @@
 
         public function getAllContract(){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->contractRepo->getAllContract());
+            echo json_encode($this->contractRepo->getAllContract(), JSON_UNESCAPED_UNICODE);
         }
 
         public function getContractById(){
             $id = "2";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->contractRepo->getContractById($id));
+            echo json_encode($this->contractRepo->getContractById($id), JSON_UNESCAPED_UNICODE);
         }
     }
 ?>

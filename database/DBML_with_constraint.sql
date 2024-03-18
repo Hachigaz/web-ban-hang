@@ -1,4 +1,3 @@
-
 Enum "orders_status_of_order_enum" {
   "Pending"
   "Processing"
@@ -140,14 +139,15 @@ Table "options" {
   "product_id" int(11) [not null]
   "ram" int(11) [note: "GB"]
   "rom" int(11) [note: "GB"]
-  "chip" varchar(11)
+  "chip" varchar(200)
   "color" varchar(11)
   "battery" int(11) [note: "mAh"]
   "screen" float [note: "inch"]
   "wh" int(11) [note: "Công suất tiêu thụ điện khi sạc"]
+  "is_active" tinyint(1) [default: 1]
 }
 
-Table "like" {
+Table "likes" {
   "like_id" int(11) [pk, not null, increment]
   "product_id" int(11) [not null]
   "customer_id" varchar(20) [not null]
@@ -156,11 +156,20 @@ Table "like" {
   }
 }
 
+Table "reviews" {
+  "review_id" int(11) [pk, not null, increment]
+  "product_id" int(11) [not null]
+  "customer_id" int(11) [not null]
+  "rating" float 
+  "comment" longtext
+  "review_date" datetime [default: `now()`]
+  "is_active" tinyint(1) [default: 1]
+}
+
 Table "product_images" {
   "product_image_id" int(11) [pk, not null, increment]
   "product_id" int(11) [not null]
   "image_url" varchar(300) [default: "", note: "Phải có ít nhất 1 ảnh mặc định"]
-  "is_active" tinyint(1) [default: 1]
 }
 
 // Table "reasons" {
@@ -192,8 +201,7 @@ Table "skus" {
   "sku_id" int(11) [pk, not null, increment]
   "sku_code" varchar(100) [unique, default: "", note: "Phải đủ số lượng ký tự của 1 sku code, nếu có enum về color thì sẽ dễ quản lý hơn"]
   "product_id" int(11) [not null]
-  "color_of_product" varchar(20) [default: "", note: "Nên có enums"]
-  "weight_of_product" float [default: 0, note: "Phải > 0"]
+  "option_id" int(11) [not null]
   "is_active" tinyint(1) [default: 1]
 }
 
@@ -214,6 +222,7 @@ Table "import_returns" {
   "staff_id" int(11) [not null]
   "customer_supplier_id" varchar(20) [not null]
   "reason" varchar(100) [not null, note: "Nhập từ khách hàng, Trả về nhà cung cấp"]
+  "is_active" tinyint(1) [default: 1]
 }
 
 Table "import_return_details" {
@@ -226,7 +235,7 @@ Table "import_return_details" {
 Table "statistics" {
   "statistic_id" int(11) [pk, not null, increment]
   "statistic_name" varchar(200) [not null, note: "Dùng các function, trigger, procedure, view,... Để tạo ra các dữ liệu muốn thống kê"]
-  "value" float [default: 0, not null]
+  "value" longtext [not null]
   "is_active" tinyint(1) [default: 1]
 }
 
@@ -347,9 +356,9 @@ Ref: "suppliers"."supplier_id" < "import_returns"."customer_supplier_id"
 
 Ref: "customers"."customer_id" < "import_returns"."customer_supplier_id"
 
-Ref: "products"."product_id" < "like"."product_id"
+Ref: "products"."product_id" < "likes"."product_id"
 
-Ref: "customers"."customer_id" < "like"."customer_id"
+Ref: "customers"."customer_id" < "likes"."customer_id"
 
 Ref: "orders"."order_id" < "exports"."order_id"
 
@@ -362,3 +371,9 @@ Ref: "staffs"."staff_id" < "contracts"."staff_id"
 Ref: "timesheets"."timesheet_id" - "timesheet_details"."timesheet_id"
 
 Ref: "products"."product_id" < "options"."product_id"
+
+Ref: "options"."option_id" < "skus"."option_id"
+
+Ref: "products"."product_id" < "reviews"."product_id"
+
+Ref: "customers"."customer_id" < "reviews"."customer_id"

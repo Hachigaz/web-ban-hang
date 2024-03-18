@@ -126,24 +126,34 @@ CREATE TABLE `options` (
   `product_id` int(11) NOT NULL,
   `ram` int(11) COMMENT 'GB',
   `rom` int(11) COMMENT 'GB',
-  `chip` varchar(11),
+  `chip` varchar(200),
   `color` varchar(11),
   `battery` int(11) COMMENT 'mAh',
   `screen` float COMMENT 'inch',
-  `wh` int(11) COMMENT 'Công suất tiêu thụ điện khi sạc'
+  `wh` int(11) COMMENT 'Công suất tiêu thụ điện khi sạc',
+  `is_active` tinyint(1) DEFAULT 1
 );
 
-CREATE TABLE `like` (
+CREATE TABLE `likes` (
   `like_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `customer_id` varchar(20) NOT NULL
 );
 
+CREATE TABLE `reviews` (
+  `review_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `rating` float,
+  `comment` longtext,
+  `review_date` datetime DEFAULT (now()),
+  `is_active` tinyint(1) DEFAULT 1
+);
+
 CREATE TABLE `product_images` (
   `product_image_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
-  `image_url` varchar(300) DEFAULT '' COMMENT 'Phải có ít nhất 1 ảnh mặc định',
-  `is_active` tinyint(1) DEFAULT 1
+  `image_url` varchar(300) DEFAULT '' COMMENT 'Phải có ít nhất 1 ảnh mặc định'
 );
 
 CREATE TABLE `roles` (
@@ -169,8 +179,7 @@ CREATE TABLE `skus` (
   `sku_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `sku_code` varchar(100) UNIQUE DEFAULT '' COMMENT 'Phải đủ số lượng ký tự của 1 sku code, nếu có enum về color thì sẽ dễ quản lý hơn',
   `product_id` int(11) NOT NULL,
-  `color_of_product` varchar(20) DEFAULT '' COMMENT 'Nên có enums',
-  `weight_of_product` float DEFAULT 0 COMMENT 'Phải > 0',
+  `option_id` int(11) NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
 );
 
@@ -190,7 +199,8 @@ CREATE TABLE `import_returns` (
   `import_return_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `staff_id` int(11) NOT NULL,
   `customer_supplier_id` varchar(20) NOT NULL,
-  `reason` varchar(100) NOT NULL COMMENT 'Nhập từ khách hàng, Trả về nhà cung cấp'
+  `reason` varchar(100) NOT NULL COMMENT 'Nhập từ khách hàng, Trả về nhà cung cấp',
+  `is_active` tinyint(1) DEFAULT 1
 );
 
 CREATE TABLE `import_return_details` (
@@ -203,7 +213,7 @@ CREATE TABLE `import_return_details` (
 CREATE TABLE `statistics` (
   `statistic_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `statistic_name` varchar(200) NOT NULL COMMENT 'Dùng các function, trigger, procedure, view,... Để tạo ra các dữ liệu muốn thống kê',
-  `value` float NOT NULL DEFAULT 0,
+  `value` longtext NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
 );
 
@@ -242,4 +252,4 @@ CREATE TABLE `timesheet_details` (
 
 CREATE UNIQUE INDEX `decentralizations_index_0` ON `decentralizations` (`role_id`, `module_id`, `function_id`);
 
-CREATE UNIQUE INDEX `like_index_1` ON `like` (`product_id`, `customer_id`);
+CREATE UNIQUE INDEX `likes_index_1` ON `likes` (`product_id`, `customer_id`);

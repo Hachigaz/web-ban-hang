@@ -10,9 +10,6 @@
         public function UpdateContract(){
             $this->contractService->updateContract();
         }
-        public function DeleteContract(){
-            $this->contractService->deleteContract();
-        }
         public function GetAllContract(){
             $this->contractService->getAllContract();
         }
