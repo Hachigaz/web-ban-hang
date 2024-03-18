@@ -18,7 +18,7 @@
             </form>
         </div>
         <div class="profile">
-            <button class="like"><i class="fa-regular fa-heart"></i></button>
+            <button class="like"><i class="fa-regular fa-heart"></i><span></span></button>
             <a href="#" class="shopping-cart"><i class="fa-solid fa-bag-shopping"></i></i></a>
             <a href="#" class="avatar"><img src="../Public/img/members/voquochuy.jpg" alt=""></a>
         </div>

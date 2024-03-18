@@ -4,14 +4,9 @@
         public function __construct(){
             $this->accountService = $this->service("AccountService");
         }
-        public function SayHi(){
-            $this->view("master",[
-                "Page" => "Home"
-            ]);
-        }
-        public function List(){
-            $this->view("master",[
-                "Page" => "News"
+        public function LoginSignUp(){
+            $this->view("loginSignUp", [
+                "Page" => "LoginSignUp"
             ]);
         }
         public function CreateAccount(){
@@ -26,8 +21,20 @@
         public function GetAllAccount(){
             $this->accountService->getAllAccount();
         }
-        public function GetAccountById(){
-            $this->accountService->GetAccountById();
+        public function GetAccountById($id){
+            $this->accountService->getAccountById($id);
+        }
+        public function GetAccountByUsername($username){
+            $this->accountService->getAccountByUsername($username);
+        }
+        public function GetAccountByEmail($email){
+            $this->accountService->getAccountByEmail($email);
+        }
+        public function VerifyLogin($usernameOrEmail, $password){
+            $this->accountService->verifyLogin($usernameOrEmail, $password);
+        }
+        public function GetPassword($usernameOrEmail){
+            $this->accountService->getPassword($usernameOrEmail);
         }
     }
 ?>

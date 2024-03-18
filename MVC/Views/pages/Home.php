@@ -1,3 +1,5 @@
 <div class="home">
-    Trang chủ
+    <div class="wrapper-slider">
+        <img src="" alt="">
+    </div>
 </div>

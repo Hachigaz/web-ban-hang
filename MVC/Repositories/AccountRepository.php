@@ -19,5 +19,13 @@
             public function getAccountById($id){
                 return $this->getAllByWhere("accounts", "account_id = ".$id);
             }
+
+            public function getAccountByUsername($username){
+                return $this->getAllByWhere("accounts", "username = '".$username."'");
+            }
+
+            public function joinAccountCustomer($email){
+                return $this->joinTables("accounts", "customers", "account_id", "customer_email = ".$email);
+            }
         }
     ?>
