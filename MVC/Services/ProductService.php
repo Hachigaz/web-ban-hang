@@ -2,7 +2,7 @@
     require_once "./MVC/Models/ProductModel.php";
     class ProductService extends Service{
         public $productRepo;
-
+        
         public function __construct(){
             $this->productRepo = $this->repository("ProductRepository");
         }
@@ -35,6 +35,10 @@
             $id = "1";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->productRepo->getProductById($id), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function getProductByCount($productCount, $index){
+            return $this->productRepo->getAllByWhereOrderBy();
         }
     }
 ?>

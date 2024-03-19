@@ -21,7 +21,7 @@
             }
 
             public function getAccountByUsername($username){
-                return $this->getAllByWhere("accounts", "username = '".$username."'");
+                return $this->getAllByWhere("accounts", "username = '$username'");
             }
 
             public function joinAccountCustomer($email){
