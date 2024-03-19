@@ -1,6 +1,7 @@
 .header {
     margin: 0 auto; /*Căng giữa header*/
     max-width: 1200px; /*Hỗ trợ responsivce*/
+    height:100px;
 }
 .header .wrapper-components {
     display: flex;

@@ -31,3 +31,33 @@ class InputElement{
         this.inputElement.value = value
     }
 }
+
+function show_notification_dialog(notificationID){
+    notificationWrapperElement = document.querySelector(".notification-wrapper")
+
+    notificationBoxElement = notificationWrapperElement.querySelector(`#${notificationID}`)
+
+    notificationWrapperElement.style.display = "block"
+}
+
+function hide_notification_dialog(notificationID){
+    
+}
+
+function showSliderDialogMessage(message){
+    dialogElement = document.querySelector("#notifications-wrapper .slider-notification-wrapper")
+    dialogElement.style.display="block"
+    dialogElement.style.animation="slider-dialog-slide-down-effect 0.3s"
+    dialogElement.querySelector(".notification-message").innerText = message
+
+    setTimeout(() => {
+        closeSliderDialog(dialogElement)
+    }, 3000);
+}
+
+function closeSliderDialog(dialogElement){
+    dialogElement.style.animation="slider-dialog-slide-up-effect 0.3s"
+    setTimeout(function(){
+        dialogElement.style.display="none"
+    }, 300); 
+}

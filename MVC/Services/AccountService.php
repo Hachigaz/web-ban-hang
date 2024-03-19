@@ -43,6 +43,9 @@
             $customer_account;
             if(filter_var($login_details,FILTER_VALIDATE_EMAIL)){   
                 $customer = $this->customerRepo->getCustomerByEmail($login_details);
+                if($customer==null){
+                    return null;
+                }
                 $account_id = $customer['account_id'];
                 $customer_account = $this->accountRepo->getAccountById($account_id);
             }
@@ -50,8 +53,12 @@
                 $customer_account = $this->accountRepo->getAccountByUsername($login_details);
             }
             if($customer_account==null){
-                return false;
+                return null;
             }
+            if($password != $customer_account["password"]){
+                return null;
+            }
+                
             return $customer_account;
         }
     }

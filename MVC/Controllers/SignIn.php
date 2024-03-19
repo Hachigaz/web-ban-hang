@@ -8,7 +8,7 @@
         }
         public function SayHi(){
             $this->view("SignIn",[
-                "Page" => "SignIn"
+                "Page" => "SignIn/SignIn"
             ]);
         }
         public function CheckSignIn(){
@@ -17,13 +17,15 @@
             
             $logged_in_customer_account = $this->accountService->checkForAccount($input_login_details,$input_password);
             if($logged_in_customer_account==null){
-                $url = "../SignIn/";
-                header("Location: ".$url);    
+                $url = "../SignIn/?status=login_failed";
+                header("Location: ".$url);
+                return;
             }
             else{
                 $_SESSION["logged_in_customer"] = $this->customerService->getCustomerByAccountId($logged_in_customer_account["account_id"]);
                 $url = "../Home/";
-                header("Location: ".$url);    
+                header("Location: ".$url);
+                return;
             }
         }
     }

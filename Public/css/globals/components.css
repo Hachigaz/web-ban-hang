@@ -18,6 +18,8 @@
     }
 }
 
+
+/* widgets */
 .widget-container{
     position: relative;
 }
@@ -74,33 +76,152 @@
     animation-duration: 1s;
 }
 
-.dialog-container{
-    display:none;
+
+
+/* notifications */
+@keyframes slide-down-effect {
+    0%{
+        top:0%;
+        transform: translate(-50% , 0%)
+    }
+    100%{
+        top:50%;
+        left:50%;
+        transform: translate(-50% , -50%)
+    }
 }
 
-.dialog-overlay{
+#notifications-wrapper{
+    position:fixed;
+    left:0;
+    top:0;
+
+    
+    width:0;
+    height:0;
+}
+
+#notifications-wrapper .overlay-notification-wrapper
+{
     display:none;
-
-    position: absolute;
-
     width:100vw;
     height:100vh;
-
-    background-color: rgba(0, 0, 0, 0.781);
 }
 
-.dialog-message{
-    display:none;
-    
+
+#notifications-wrapper .notification-overlay{
     position: absolute;
+
+    background-color: rgba(0, 0, 0, 0.548);
+
     
-    width:50%;
-    height:50%;
+    width:100vw;
+    height:100vh;
+}
+
+#notifications-wrapper .notification-container{
+    display:block;
+    
+    position: fixed;
 
     background-color: white;
 
-    left: 50%; 
-    top:50%;
+    left:50vw; 
+    top:50vh;
+
+    width:50vw;
+    height:50vh;
 
     transform: translate(-50%, -50%);
+}
+
+@keyframes slider-dialog-slide-down-effect{
+    0%{
+        top:0vh;
+    }
+    100%{
+        top:10vh;
+    }
+}
+
+@keyframes slider-dialog-slide-up-effect{
+    0%{
+        top:10vh;
+    }
+    100%{
+        top:-10vh;
+    }
+}
+
+#notifications-wrapper .slider-notification-wrapper{
+    display:none;
+    
+    position:fixed;
+    left:50vw;
+    top:10vh;
+
+    transform: translate(-50%,0);
+
+    max-width:50vw;
+    max-height:50vh;
+
+    min-width: 25em;
+    
+    height: 5em;
+    background-color: rgb(255, 255, 255);
+
+    border-radius: 10px;
+
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.459);
+
+    overflow: hidden;
+}
+
+#notifications-wrapper .slider-notification-wrapper .notification-box{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+
+    width:100%;
+    height:100%;
+}
+
+#notifications-wrapper .slider-notification-wrapper .notification-header{
+    width:100%;
+    height:1em;
+    display:flex;
+
+    height:1em;
+
+    position: relative;
+
+    padding-top:8px;
+
+    background-color: rgba(194, 194, 194, 0.555);
+}
+
+#notifications-wrapper .slider-notification-wrapper .notification-header .exit-button{
+    position: absolute;
+
+    top:0;
+    right:8px;
+
+    height:20px;
+    padding: 0 6px;
+
+    font-size: 12pt;
+    text-decoration: underline;
+}
+
+#notifications-wrapper .slider-notification-wrapper .notification-info{
+    width:100%;
+    height:100%;
+
+    display:flex;
+    align-items: center;
+    justify-content:  center;
+}
+
+#notifications-wrapper .slider-notification-wrapper .notification-info .notification-message{
+    margin:0 10px;
 }
