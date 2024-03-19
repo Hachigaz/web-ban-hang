@@ -67,16 +67,25 @@
             return $rows;
         }
 
+        public function joinTables($table1, $table2, $commonField, $where){
+            $sql = "SELECT * FROM $table1 JOIN $table2 ON $table1.$commonField = $table2.$commonField WHERE $where";
+            $result = mysqli_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
+        }
+
         public function getAllByWhere($table, $where) {// lấy ra các bản ghi thỏa điều kiện đầy đủ thuộc tính (chi lay ra is_active = 1)
             $is_active = "is_active";
             $sql = "SELECT * FROM $table WHERE $where AND $is_active = '1'";// ở đây ghi rõ tên cột id
             $result = mysqli_query($this->con, $sql);
-            if ($result->num_rows > 0) {
-                $data = $result->fetch_assoc(); // Trả về bản ghi đầu tiên nếu tìm thấy
-                return $data;
-            } else {
-                return null; // Trả về null nếu không tìm thấy bản ghi nào
+            $rows = array();
+            while ($row = $result->fetch_assoc()){
+                $rows[] = $row;
             }
+            return $rows;
         }
 
         public function getAllDontHaveIsActive($table, $where){// lấy ra các bản ghi thỏa điều kiện không có cột is_active
@@ -88,6 +97,10 @@
             } else {
                 return null; // Trả về null nếu không tìm thấy bản ghi nào
             }
+        }
+
+        public function toString($string){
+            return "'".$string."'";
         }
     }
 ?>
