@@ -7,8 +7,8 @@
             $this->accountRepo = $this->repository("AccountRepository");
         }
         
-        public function createAccount(){
-            $account = new AccountModel("ThiLua", "lua123");
+        public function createAccount($usernameOrEmail, $password){
+            $account = new AccountModel($usernameOrEmail, $password);
             $this->accountRepo->createAccount($account);
         }
 
@@ -71,6 +71,17 @@
             }else{
                 header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
                 echo json_encode("Đăng nhập thất bại", JSON_UNESCAPED_UNICODE);   
+            }
+        }   
+
+        public function register($usernameOrEmail, $password, $retypePassword){
+            if($password == $retypePassword){
+                $this->createAccount($usernameOrEmail, $password);
+                header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+                echo json_encode("Đăng ký thành công", JSON_UNESCAPED_UNICODE);   
+            }else{
+                header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+                echo json_encode("Mật khẩu chưa trùng khớp", JSON_UNESCAPED_UNICODE);   
             }
         }
     }

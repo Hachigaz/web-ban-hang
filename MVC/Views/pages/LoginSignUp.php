@@ -39,17 +39,17 @@
             <div class="form-title">
                 <span>Đăng ký</span>
             </div>
-            <form class="form-inputs" method="post" autocomplete="off">
+            <form action="./Register" class="form-inputs" method="post" autocomplete="off">
                 <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Email hoặc username" required>
+                    <input type="text" name="username_register" class="input-field" placeholder="Username" required>
                     <i class="fa-solid fa-user icon"></i>
                 </div>
                 <div class="input-box">
-                    <input type="password" class="input-field" placeholder="Mật khẩu" required>
+                    <input type="password" name="password_register" class="input-field" placeholder="Mật khẩu" required>
                     <i class="fa-solid fa-lock icon"></i>
                 </div>
                 <div class="input-box">
-                    <input type="password" class="input-field" placeholder="Xác nhận mật khẩu" required>
+                    <input type="password" name="retype_password_register" class="input-field" placeholder="Xác nhận mật khẩu" required>
                     <i class="fa-solid fa-lock icon"></i>
                 </div>
                 <div class="forgot-pass">

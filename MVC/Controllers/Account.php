@@ -35,8 +35,11 @@
             $password = $_POST['password_login'];
             $this->accountService->verifyLogin($usernameOrEmail, $password);
         }
-        public function GetPassword($usernameOrEmail){
-            $this->accountService->getPassword($usernameOrEmail);
+        public function Register(){
+            $usernameOrEmail = $_POST['username_register'];
+            $password = $_POST['password_register'];
+            $retypePassword = $_POST['retype_password_register'];
+            $this->accountService->register($usernameOrEmail, $password, $retypePassword);
         }
     }
 ?>
