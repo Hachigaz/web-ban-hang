@@ -115,7 +115,7 @@ CREATE TABLE `products` (
   `price` decimal(10,2) DEFAULT 0 COMMENT 'Phải >= 0',
   `guarantee` int(11) DEFAULT 0,
   `thumbnail` varchar(300) DEFAULT '' COMMENT 'Phải có ảnh mặc định',
-  `description` longtext DEFAULT 'Đây là mô tả sản phẩm',
+  `description` longtext,
   `created_at` datetime DEFAULT (now()),
   `updated_at` datetime DEFAULT (now()),
   `is_active` tinyint(1) DEFAULT 1

@@ -42,25 +42,38 @@
             $_SESSION["vertification_code"]= $vertification_code;
             $_SESSION["vertification_code_time_created"]=time();
 
-            $userEmail = $_SESSION["user_email"];
-            $emailSubject = "Xác nhận email";
-            $message = "
-                Mã xác nhận email là:".$vertification_code.".";
-            
-            mail($userEmail,$emailSubject,$message);
+            //$userEmail = $_SESSION["signup_user_email"];
+            //$emailSubject = "Xác nhận email";
+            //$message = "
+            //    Mã xác nhận email là:".$vertification_code.".";
+            //
+            //mail($userEmail,$emailSubject,$message);
         }
-        private function DoVerifyEmail(){
-            if(time()-$_SESSION["vertification_code_time_created"]>300){
-
+        public function DoVerifyEmail(){
+            $codeCreatedTime = $_SESSION["vertification_code_time_created"];
+            if($codeCreatedTime!=null){
+                if(time()-$codeCreatedTime>10){
+                    header("Location: ../SignUp/VerifyAccount?status=timed_out");
+                }
+            }
+            else{
+                header("Location: ../SignUp/");
             }
             $vertification_code = $_POST["vertification_code"];
+            if($vertification_code!= $_SESSION["vertification_code"]){
+                header("Location: ../SignIn/");
+            }
+            else{
+                header("Location: ../SignUp/VerifyAccount?status=invalid_code");
+            }
         }
         public function VerifyAccount(){
             //if($_SESSION["vertification_code"]==null){
             //    header("Location: ../SignUp/");
             //}
-            $this->view("master",[
-                "Page" => "SignIn/VerifyAccount"
+            $this->view("SignIn",[
+                "Page" => "SignIn/VerifyAccount",
+                "vert_code" => $_SESSION["vertification_code"]
             ]);
         }
     }
