@@ -11,13 +11,13 @@
             <div class="form-title">
                 <span>Đăng nhập</span>
             </div>
-            <div class="form-inputs">
+            <form action="./VerifyLogin" class="form-inputs" method="post" autocomplete="off">
                 <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Email hoặc username" required>
+                    <input type="text" name="username_login" class="input-field" placeholder="Email hoặc username" required>
                     <i class="fa-solid fa-user icon"></i>
                 </div>
                 <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Mật khẩu" required>
+                    <input type="text" name="password_login" class="input-field" placeholder="Mật khẩu" required>
                     <i class="fa-solid fa-lock icon"></i>
                 </div>
                 <div class="forgot-pass">
@@ -29,7 +29,7 @@
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
-            </div>
+            </form>
             <div class="social-login">
                 <i class="fa-brands fa-google"></i>
                 <i class="fa-brands fa-facebook"></i>
@@ -39,7 +39,7 @@
             <div class="form-title">
                 <span>Đăng ký</span>
             </div>
-            <div class="form-inputs">
+            <form class="form-inputs" method="post" autocomplete="off">
                 <div class="input-box">
                     <input type="text" class="input-field" placeholder="Email hoặc username" required>
                     <i class="fa-solid fa-user icon"></i>
@@ -61,7 +61,7 @@
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
-            </div>
+            </form>
             <div class="social-login">
                 <i class="fa-brands fa-google"></i>
                 <i class="fa-brands fa-facebook"></i>

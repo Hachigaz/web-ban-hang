@@ -4,7 +4,7 @@
         public function __construct(){
             $this->accountService = $this->service("AccountService");
         }
-        public function LoginSignUp(){
+        public function SayHi(){
             $this->view("loginSignUp", [
                 "Page" => "LoginSignUp"
             ]);
@@ -30,7 +30,9 @@
         public function GetAccountByEmail($email){
             $this->accountService->getAccountByEmail($email);
         }
-        public function VerifyLogin($usernameOrEmail, $password){
+        public function VerifyLogin(){
+            $usernameOrEmail = $_POST['username_login'];
+            $password = $_POST['password_login'];
             $this->accountService->verifyLogin($usernameOrEmail, $password);
         }
         public function GetPassword($usernameOrEmail){
