@@ -1,10 +1,10 @@
 -- ACCOUNTS ----------------------------
 -- 1.Dùng CHECK Kiểm tra mật khẩu có chứa username không
-ALTER TABLE `accounts`
-ADD CONSTRAINT check_password_accounts CHECK(INSTR(LOWER(password), LOWER(username)) = 0);
+-- ALTER TABLE `accounts`
+-- ADD CONSTRAINT check_password_accounts CHECK(INSTR(LOWER(password), LOWER(username)) = 0);
 -- 2.Dùng check Kiểm tra ký tự đặc biệt của username
-ALTER TABLE `accounts`
-ADD CONSTRAINT check_special_character_accounts CHECK (username NOT REGEXP '[^a-zA-Z0-9]');
+-- ALTER TABLE `accounts`
+-- ADD CONSTRAINT check_special_character_accounts CHECK (username NOT REGEXP '[^a-zA-Z0-9]');
 -- 3.Dùng check Kiểm tra xem ngày tạo tk có trước ngày cập nhật tk không
 ALTER TABLE `accounts`
 ADD CONSTRAINT check_created_bigger_updated_accounts CHECK (created_at <= updated_at);
@@ -17,35 +17,35 @@ ADD CONSTRAINT check_created_bigger_updated_accounts CHECK (created_at <= update
 -- ALTER TABLE `customers`
 -- ADD CONSTRAINT check_age_customers CHECK (YEAR(CURDATE()) - YEAR(date_of_birth) > 13 OR (YEAR(CURDATE()) - YEAR(date_of_birth) = 13 AND DATE_FORMAT(date_of_birth, '%m-%d') <= DATE_FORMAT(CURDATE(), '%m-%d')))
 -- 1.Kiểm tra xem khách hàng có trên 13 tuổi không
-DELIMITER //
-CREATE TRIGGER check_age_customer_insert
-BEFORE INSERT ON `customers`
-FOR EACH ROW
-BEGIN
-    IF NOT TIMESTAMPDIFF(YEAR, NEW.date_of_birth, CURDATE()) >= 13 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = "Error: Customer's age must be over 13";
-    END IF;
-END; // 
-DELIMITER ;
-DELIMITER //
-CREATE TRIGGER check_age_customer_update
-BEFORE UPDATE ON `customers`
-FOR EACH ROW
-BEGIN
-    IF NOT TIMESTAMPDIFF(YEAR, NEW.date_of_birth, CURDATE()) >= 13 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = "Error: Customer's age must be over 13";
-    END IF;
-END; // 
-DELIMITER ;
+-- DELIMITER //
+-- CREATE TRIGGER check_age_customer_insert
+-- BEFORE INSERT ON `customers`
+-- FOR EACH ROW
+-- BEGIN
+--     IF NOT TIMESTAMPDIFF(YEAR, NEW.date_of_birth, CURDATE()) >= 13 THEN
+--         SIGNAL SQLSTATE '45000'
+--         SET MESSAGE_TEXT = "Error: Customer's age must be over 13";
+--     END IF;
+-- END; // 
+-- DELIMITER ;
+-- DELIMITER //
+-- CREATE TRIGGER check_age_customer_update
+-- BEFORE UPDATE ON `customers`
+-- FOR EACH ROW
+-- BEGIN
+--     IF NOT TIMESTAMPDIFF(YEAR, NEW.date_of_birth, CURDATE()) >= 13 THEN
+--         SIGNAL SQLSTATE '45000'
+--         SET MESSAGE_TEXT = "Error: Customer's age must be over 13";
+--     END IF;
+-- END; // 
+-- DELIMITER ;
 
 -- 2.Kiểm tra xem email nhập vào có đúng định dạng không
-ALTER TABLE `customers`
-ADD CONSTRAINT check_email_format_customers CHECK (`customers`.`customer_email` REGEXP '^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$');
+-- ALTER TABLE `customers`
+-- ADD CONSTRAINT check_email_format_customers CHECK (`customers`.`customer_email` REGEXP '^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$');
 -- 3.Kiểm Fullname khách hàng chỉ chứa chữ(có Tiếng Việt) và khoảng trắng
-ALTER TABLE `customers`
-ADD CONSTRAINT check_fullname_customers CHECK (`customers`.customer_fullname REGEXP '^[a-zA-z áàảãạÁÀẢÃẠăắằặẳẵĂẮẰẲẴẶâấầẩẫậÂẤẦẨẪẬéèẻẽẹÉÈẺẼẸêếềểễệÊẾỂỄỆíìỉĩịÍÌỈĨỊúùủũụÚÙỦŨỤưứừửữựƯỨỪỬỮỰóòỏõọÓÒỎÕỌôốồổỗộÔỐỒỔỖỘơớờởỡợƠỚỜỞỠỢđĐýỳỷỹỵÝỲỶỸỴ]+$');  
+-- ALTER TABLE `customers`
+-- ADD CONSTRAINT check_fullname_customers CHECK (`customers`.customer_fullname REGEXP '^[a-zA-z áàảãạÁÀẢÃẠăắằặẳẵĂẮẰẲẴẶâấầẩẫậÂẤẦẨẪẬéèẻẽẹÉÈẺẼẸêếềểễệÊẾỂỄỆíìỉĩịÍÌỈĨỊúùủũụÚÙỦŨỤưứừửữựƯỨỪỬỮỰóòỏõọÓÒỎÕỌôốồổỗộÔỐỒỔỖỘơớờởỡợƠỚỜỞỠỢđĐýỳỷỹỵÝỲỶỸỴ]+$');  
 -- 4.Kiểm tra Role_id của khách hàng phải là 5
 ALTER TABLE `customers`
 ADD CONSTRAINT check_role_customers CHECK (`customers`.role_id = 5);
@@ -53,33 +53,33 @@ ADD CONSTRAINT check_role_customers CHECK (`customers`.role_id = 5);
 ALTER TABLE `customers`
 ADD CONSTRAINT check_gender_customers CHECK (`customers`.gender = 0 OR `customers`.gender = 1);
 -- 6.Kiểm tra Phone number phải có 10 số và bắt đầu bằng số 0
-ALTER TABLE `customers`
-ADD CONSTRAINT check_phone_number_customers CHECK (`customers`.phone_number REGEXP '^0[0-9]{9}$');
+-- ALTER TABLE `customers`
+-- ADD CONSTRAINT check_phone_number_customers CHECK (`customers`.phone_number REGEXP '^0[0-9]{9}$');
 -- 7.Tạo ra id khách hàng tự tăng
-DELIMITER //
-CREATE TRIGGER auto_increment_id_customer
-BEFORE INSERT ON `customers`
-FOR EACH ROW
-BEGIN
-  DECLARE last_id INT;
-  DECLARE new_id VARCHAR(10);
+-- DELIMITER //
+-- CREATE TRIGGER auto_increment_id_customer
+-- BEFORE INSERT ON `customers`
+-- FOR EACH ROW
+-- BEGIN
+--   DECLARE last_id INT;
+--   DECLARE new_id VARCHAR(10);
   
-  SELECT MAX(CAST(SUBSTR(customer_id, 3) AS UNSIGNED)) INTO last_id
-  FROM customers;
+--   SELECT MAX(CAST(SUBSTR(customer_id, 3) AS UNSIGNED)) INTO last_id
+--   FROM customers;
   
-  IF last_id IS NULL THEN
-    SET new_id = 'KH001';
-  ELSEIF last_id < 9 THEN
-    SET new_id = CONCAT('KH00', last_id + 1);
-  ELSEIF last_id < 99 THEN
-    SET new_id = CONCAT('KH0', last_id + 1);
-  ELSE
-    SET new_id = CONCAT('KH', last_id + 1);
-  END IF;
+--   IF last_id IS NULL THEN
+--     SET new_id = 'KH001';
+--   ELSEIF last_id < 9 THEN
+--     SET new_id = CONCAT('KH00', last_id + 1);
+--   ELSEIF last_id < 99 THEN
+--     SET new_id = CONCAT('KH0', last_id + 1);
+--   ELSE
+--     SET new_id = CONCAT('KH', last_id + 1);
+--   END IF;
   
-  SET NEW.customer_id = new_id;
-END; //
-DELIMITER ;
+--   SET NEW.customer_id = new_id;
+-- END; //
+-- DELIMITER ;
 
 
 
@@ -339,30 +339,30 @@ ADD CONSTRAINT check_gender_staffs CHECK (`staffs`.gender IN (0,1));
 ALTER TABLE `suppliers`
 ADD CONSTRAINT check_email_suppliers CHECK (`suppliers`.email_of_supplier REGEXP '^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$');
 -- 2. Gán id tự tăng cho nhà cung cấp
-DELIMITER //
-CREATE TRIGGER auto_increment_id_supplier
-BEFORE INSERT ON `suppliers`
-FOR EACH ROW
-BEGIN
-  DECLARE last_id INT;
-  DECLARE new_id VARCHAR(10);
+-- DELIMITER //
+-- CREATE TRIGGER auto_increment_id_supplier
+-- BEFORE INSERT ON `suppliers`
+-- FOR EACH ROW
+-- BEGIN
+--   DECLARE last_id INT;
+--   DECLARE new_id VARCHAR(10);
   
-  SELECT MAX(CAST(SUBSTR(supplier_id, 4) AS UNSIGNED)) INTO last_id
-  FROM suppliers;
+--   SELECT MAX(CAST(SUBSTR(supplier_id, 4) AS UNSIGNED)) INTO last_id
+--   FROM suppliers;
   
-  IF last_id IS NULL THEN
-    SET new_id = 'NCC001';
-  ELSEIF last_id < 9 THEN
-    SET new_id = CONCAT('NCC00', last_id + 1);
-  ELSEIF last_id < 99 THEN
-    SET new_id = CONCAT('NCC0', last_id + 1);
-  ELSE
-    SET new_id = CONCAT('NCC', last_id + 1);
-  END IF;
+--   IF last_id IS NULL THEN
+--     SET new_id = 'NCC001';
+--   ELSEIF last_id < 9 THEN
+--     SET new_id = CONCAT('NCC00', last_id + 1);
+--   ELSEIF last_id < 99 THEN
+--     SET new_id = CONCAT('NCC0', last_id + 1);
+--   ELSE
+--     SET new_id = CONCAT('NCC', last_id + 1);
+--   END IF;
   
-  SET NEW.supplier_id = new_id;
-END; //
-DELIMITER ;
+--   SET NEW.supplier_id = new_id;
+-- END; //
+-- DELIMITER ;
 
 
 -- CONTRACTS --------------------------------------
@@ -513,3 +513,9 @@ BEGIN
 END;
 //
 DELIMITER ;
+
+
+-- CREATE VIEW PhieuBaoHanh_SanPham AS
+-- SELECT pb.MaPhieu, pb.SoSeri, pb.NgayBatDau, pb.NgayKetThuc, ctp.MaSP
+-- FROM PhieuBaoHanh pb
+-- JOIN ChiTietSanPham ctp ON pb.SoSeri = ctp.SoSeri;

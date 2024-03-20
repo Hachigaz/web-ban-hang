@@ -1,7 +1,7 @@
 <?php
     class ImportRepository extends DB{
         public function createImport($import){
-            $this->create("imports", $import);
+            $this->create("imports", $import, "import_id");
         }
 
         public function updateImport($import, $id){// by id

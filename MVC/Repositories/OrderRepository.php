@@ -1,7 +1,7 @@
 <?php
     class OrderRepository extends DB{
         public function createOrder($order){
-            $this->create("orders", $order);
+            $this->create("orders", $order, "order_id");
         }
 
         public function updateOrder($order, $id){// by id

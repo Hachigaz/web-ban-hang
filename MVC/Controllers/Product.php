@@ -29,5 +29,20 @@
         public function GetProductById(){
             $this->productService->GetProductById();
         }
+        public function GetAllBrandOfProduct(){
+            $this->productService->getAllBrandOfProduct();
+        }
+        public function GetAllBrandOfProductByCategory($category_id){
+            $this->productService->getAllBrandOfProductByCategory($category_id);
+        }
+        public function GetAllProductByCategory($category_id){
+            $this->productService->getAllProductByCategory($category_id);
+        }
+        public function GetAllProductByBrand($brand_id){
+            $this->productService->getAllProductByBrand($brand_id);
+        }
+        public function GetAllProductByCategoryWithBrand($category_id, $brand_id){
+            $this->productService->getAllProductByCategoryWithBrand($category_id, $brand_id);
+        }
     }
 ?>

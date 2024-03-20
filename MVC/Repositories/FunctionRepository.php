@@ -1,7 +1,7 @@
 <?php
         class FunctionRepository extends DB{
             public function createFunction($function){
-                $this->create("functions", $function);
+                $this->create("functions", $function, "function_id");
             }
 
             public function updateFunction($function, $id){// by id

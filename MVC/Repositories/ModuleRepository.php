@@ -1,7 +1,7 @@
 <?php
         class ModuleRepository extends DB{
             public function createModule($module){
-                $this->create("modules", $module);
+                $this->create("modules", $module, "module_id");
             }
 
             public function updateModule($module, $id){// by id

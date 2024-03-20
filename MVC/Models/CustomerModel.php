@@ -5,17 +5,15 @@
         private $role_id;
         private $account_id;
         private $gender;
-        private $phone_number;
         private $customer_email;
         private $address;
         private $date_of_birth;
         private $is_active;
-        public function __construct($customer_fullname, $role_id, $account_id, $gender, $phone_number, $customer_email, $address, $date_of_birth, $customer_id = null, $is_active = null){
+        public function __construct($account_id, $customer_email, $customer_fullname = null, $role_id = null, $gender = null,  $address = null, $date_of_birth = null, $customer_id = null, $is_active = null){
             $this->customer_fullname = $customer_fullname;
             $this->role_id = $role_id;
             $this->account_id = $account_id;
             $this->gender = $gender;
-            $this->phone_number = $phone_number;
             $this->customer_email = $customer_email;
             $this->address = $address;
             $this->date_of_birth = $date_of_birth;
@@ -52,12 +50,6 @@
         public function setGender($gender){
             $this->gender = $gender;
         }
-        public function getPhoneNumber(){
-            return $this->phone_number;
-        }
-        public function setPhoneNumber($phone_number){
-            $this->phone_number = $phone_number;
-        }
         public function getCustomerEmail(){
             return $this->customer_email;
         }
@@ -89,7 +81,6 @@
                 'role_id' => $this->role_id,
                 'account_id' => $this->account_id,
                 'gender' => $this->gender,
-                'phone_number' => $this->phone_number,
                 'customer_email' => $this->customer_email,
                 'address' => $this->address,
                 'date_of_birth' => $this->date_of_birth,

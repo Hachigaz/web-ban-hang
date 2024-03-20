@@ -1,7 +1,7 @@
 <?php
         class DecentralizationRepository extends DB{
             public function createDecentralization($decentralization){
-                $this->create("decentralizations", $decentralization);
+                $this->create("decentralizations", $decentralization, "decentralization_id");
             }
 
             public function updateDecentralization($decentralization, $id){// by id

@@ -1,7 +1,7 @@
 <?php
         class CategoryRepository extends DB{
             public function createCategory($category){
-                $this->create("categories", $category);
+                $this->create("categories", $category, "category_id");
             }
 
             public function updateCategory($category, $id){// by id

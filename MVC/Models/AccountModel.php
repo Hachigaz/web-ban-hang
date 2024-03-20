@@ -1,14 +1,14 @@
 <?php
     class AccountModel{
         private $account_id;
-        private $username;
+        private $phone_number;
         private $password;
         private $created_at;
         private $updated_at;
         private $is_active;
-        public function __construct($username, $password, $account_id = null, $created_at = null, $updated_at = null, $is_active = null){
+        public function __construct($phone_number, $password, $account_id = null, $created_at = null, $updated_at = null, $is_active = null){
             $this->account_id = $account_id;
-            $this->username = $username;
+            $this->phone_number = $phone_number;
             $this->password = $password;
             $this->created_at = $created_at;
             $this->updated_at = $updated_at;
@@ -20,11 +20,11 @@
         public function setAccountId($account_id){
             $this->account_id = $account_id;
         }
-        public function getUsername(){
-            return $this->username;
+        public function getPhoneNumber(){
+            return $this->phone_number;
         }
-        public function setUsername($username){
-            $this->username = $username;
+        public function setPhoneNumber($phone_number){
+            $this->phone_number = $phone_number;
         }
         public function getPassword(){
             return $this->password;
@@ -53,7 +53,7 @@
         public function toArray() {
             return array(
                 'account_id' => $this->account_id,
-                'username' => $this->username,
+                'phone_number' => $this->phone_number,
                 'password' => $this->password,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,

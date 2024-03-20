@@ -1,7 +1,7 @@
 <?php
     class StatisticRepository extends DB{
         public function createStatistic($statistic){
-            $this->create("statistics", $statistic);
+            $this->create("statistics", $statistic, "statistic_id");
         }
 
         public function updateStatistic($statistic, $id){// by id

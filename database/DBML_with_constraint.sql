@@ -8,7 +8,7 @@ Enum "orders_status_of_order_enum" {
 
 Table "accounts" {
   "account_id" int(11) [pk, not null, increment]
-  "username" varchar(200) [unique, not null]
+  "phone_number" varchar(20) [unique, not null]
   "password" varchar(300) [not null]
   "created_at" datetime [default: `now()`]
   "updated_at" datetime [default: `now()`]
@@ -19,7 +19,7 @@ Table "brands" {
   "brand_id" int(11) [pk, not null, increment]
   "brand_name" varchar(100) [unique, default: "", note: "Ex: SANYO, TOSHIBA,..."]
   "brand_logo" varchar(300) [default: ""]
-  "supplier_id" varchar(20) [not null]
+  "supplier_id" int(11) [not null]
   "is_active" tinyint(1) [default: 1]
 }
 
@@ -31,12 +31,11 @@ Table "categories" {
 }
 
 Table "customers" {
-  "customer_id" varchar(20) [pk, not null]
-  "customer_fullname" varchar(100) [default: ""]
-  "role_id" int(11) [not null]
+  "customer_id" int(11) [pk, not null, increment]
+  "customer_fullname" varchar(100) [not null, default: ""]
+  "role_id" int(11) [not null, default: 5]
   "account_id" int(11) [not null]
   "gender" tinyint(1) [default: 0, note: "Male: 0, Female: 1"]
-  "phone_number" varchar(20) [unique, default: ""]
   "customer_email" varchar(200) [unique, default: ""]
   "address" varchar(200) [default: "", note: "Địa chỉ của khách hàng"]
   "date_of_birth" date
@@ -131,8 +130,23 @@ Table "products" {
   "description" longtext [default: "Đây là mô tả sản phẩm"]
   "created_at" datetime [default: `now()`]
   "updated_at" datetime [default: `now()`]
+  "average_rating" float
   "is_active" tinyint(1) [default: 1]
 }
+
+Table "product_details" {
+  "serial_number" int(11) [pk, not null]
+  "product_id" int(11) [not null]
+  "sold" tinyint(1) [default: 0]
+}
+
+Table "guarantees" {
+  "guarantee_id" int(11) [pk, not null, increment]
+  "serial_number" int(11) [not null]
+  "start_date" date [default: `now()`]
+  "end_date" date
+}
+
 
 Table "options" {
   "option_id" int(11) [pk, not null, increment]
@@ -150,7 +164,7 @@ Table "options" {
 Table "likes" {
   "like_id" int(11) [pk, not null, increment]
   "product_id" int(11) [not null]
-  "customer_id" varchar(20) [not null]
+  "customer_id" int(11) [not null]
   Indexes {
     (product_id, customer_id) [unique]
   }
@@ -209,7 +223,6 @@ Table "staffs" {
   "staff_id" int(11) [pk, not null, increment]
   "account_id" int(11) [not null]
   "staff_fullname" varchar(100) [not null]
-  "staff_phone_number" varchar(20) [unique, not null]
   "staff_email" varchar(200) [unique, not null]
   "role_id" int(11) [not null]
   "gender" tinyint(1) [default: 0, note: "Male: 0, Female: 1"]
@@ -217,20 +230,20 @@ Table "staffs" {
   "is_active" tinyint(1) [default: 1]
 }
 
-Table "import_returns" {
-  "import_return_id" int(11) [pk, not null, increment]
-  "staff_id" int(11) [not null]
-  "customer_supplier_id" varchar(20) [not null]
-  "reason" varchar(100) [not null, note: "Nhập từ khách hàng, Trả về nhà cung cấp"]
-  "is_active" tinyint(1) [default: 1]
-}
+// -- Table "import_returns" {
+// --   "import_return_id" int(11) [pk, not null, increment]
+// --   "staff_id" int(11) [not null]
+// --   "customer_supplier_id" varchar(20) [not null]
+// --   "reason" varchar(100) [not null, note: "Nhập từ khách hàng, Trả về nhà cung cấp"]
+// --   "is_active" tinyint(1) [default: 1]
+// -- }
 
-Table "import_return_details" {
-  "import_return_detail_id" int(11) [pk, not null, increment]
-  "import_return_id" int(11) [not null]
-  "product_id" int(11) [not null]
-  "quantity" int(11) [default: 1, not null]
-}
+// -- Table "import_return_details" {
+// --   "import_return_detail_id" int(11) [pk, not null, increment]
+// --   "import_return_id" int(11) [not null]
+// --   "product_id" int(11) [not null]
+// --   "quantity" int(11) [default: 1, not null]
+// -- }
 
 Table "statistics" {
   "statistic_id" int(11) [pk, not null, increment]
@@ -240,7 +253,7 @@ Table "statistics" {
 }
 
 Table "suppliers" {
-  "supplier_id" varchar(20) [pk, not null]
+  "supplier_id" int(11) [pk, not null, increment]
   "supplier_name" varchar(200) [not null]
   "phone_number_of_supplier" varchar(20) [unique, not null]
   "address_of_supplier" varchar(200) [not null]
@@ -346,15 +359,6 @@ Ref: "exports"."export_id" < "export_details"."export_id"
 
 Ref: "shipments"."shipment_id" < "export_details"."export_detail_id"
 
-Ref: "staffs"."staff_id" < "import_returns"."staff_id"
-
-Ref: "import_returns"."import_return_id" < "import_return_details"."import_return_id"
-
-Ref: "products"."product_id" < "import_return_details"."product_id"
-
-Ref: "suppliers"."supplier_id" < "import_returns"."customer_supplier_id"
-
-Ref: "customers"."customer_id" < "import_returns"."customer_supplier_id"
 
 Ref: "products"."product_id" < "likes"."product_id"
 
@@ -377,3 +381,7 @@ Ref: "options"."option_id" < "skus"."option_id"
 Ref: "products"."product_id" < "reviews"."product_id"
 
 Ref: "customers"."customer_id" < "reviews"."customer_id"
+
+Ref: "product_details"."serial_number" < "guarantees"."serial_number"
+
+Ref: "products"."product_id" < "product_details"."product_id"

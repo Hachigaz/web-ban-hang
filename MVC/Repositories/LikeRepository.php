@@ -1,7 +1,7 @@
 <?php
         class LikeRepository extends DB{
             public function createLike($like){
-                $this->create("likes", $like);
+                $this->create("likes", $like, "like_id");
             }
 
             public function deleteLike($id){// by id

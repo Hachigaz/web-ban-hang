@@ -12,15 +12,32 @@
             mysqli_query($this->con, "SET NAMES 'utf8'");// set Tiếng Việt
         }
 
-        public function create($table, $object) {
-            $data = $object->toArray();// chuyển đối tượng thành mảng key-value
-            $data = array_filter($data, function ($value) {// Loại bỏ các cột có giá trị null
+        // public function create($table, $object) {
+        //     $data = $object->toArray();// chuyển đối tượng thành mảng key-value
+        //     $data = array_filter($data, function ($value) {// Loại bỏ các cột có giá trị null
+        //         return $value !== null;
+        //     });
+        //     $fields = implode(',', array_keys($data)); // lấy ra các tên cột và nối với các dấu ,
+        //     $values = "'" . implode("','", array_map([$this->con, 'real_escape_string'], $data)) . "'"; // lấy ra các giá trị của cột và làm sạch chúng để tránh SQL Injection sau đó nối với nhau bằng dấu ,
+        //     $sql = "INSERT INTO $table ($fields) VALUES ($values)";
+        //     return mysqli_query($this->con, $sql);
+        // }
+
+        public function create($table, $object, $idName) {
+            $data = $object->toArray(); // chuyển đối tượng thành mảng key-value
+            $data = array_filter($data, function ($value) { // Loại bỏ các cột có giá trị null
                 return $value !== null;
             });
             $fields = implode(',', array_keys($data)); // lấy ra các tên cột và nối với các dấu ,
             $values = "'" . implode("','", array_map([$this->con, 'real_escape_string'], $data)) . "'"; // lấy ra các giá trị của cột và làm sạch chúng để tránh SQL Injection sau đó nối với nhau bằng dấu ,
             $sql = "INSERT INTO $table ($fields) VALUES ($values)";
-            return mysqli_query($this->con, $sql);
+            if(mysqli_query($this->con, $sql)) {
+                $id = mysqli_insert_id($this->con); // lấy ID của bản ghi mới được thêm vào
+                $result = mysqli_query($this->con, "SELECT * FROM $table WHERE $idName"." = "."$id"); // truy vấn lại bản ghi vừa được thêm vào
+                return mysqli_fetch_assoc($result); // trả về mảng kết hợp của bản ghi
+            } else {
+                return false; // trả về false nếu có lỗi xảy ra
+            }
         }
         
         public function update($table, $object, $where) {
@@ -97,6 +114,20 @@
             } else {
                 return null; // Trả về null nếu không tìm thấy bản ghi nào
             }
+        }
+
+        public function getAllByDistinct($table, $column, $where){
+            if($where != ""){
+                $sql = "SELECT DISTINCT $column FROM $table WHERE $where";
+            }else{
+                $sql = "SELECT DISTINCT $column FROM $table";
+            }
+            $result = mysqli_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
         }
 
         public function toString($string){

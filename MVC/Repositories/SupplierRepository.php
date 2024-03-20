@@ -1,7 +1,7 @@
 <?php
     class SupplierRepository extends DB{
         public function createSupplier($supplier){
-            $this->create("suppliers", $supplier);
+            $this->create("suppliers", $supplier, "supplier_id");
         }
 
         public function updateSupplier($supplier, $id){// by id

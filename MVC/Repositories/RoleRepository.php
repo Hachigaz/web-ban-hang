@@ -1,7 +1,7 @@
 <?php
     class RoleRepository extends DB{
         public function createRole($role){
-            $this->create("roles", $role);
+            $this->create("roles", $role, "role_id");
         }
 
         public function updateRole($role, $id){// by id
