@@ -9,7 +9,6 @@ loginBtn.addEventListener("click", () => {
 
     loginForm.style.left = "50%";
     registerForm.style.left = "-50%";
-
     loginForm.style.opacity = 1;
     registerForm.style.opacity = 0;
 });
@@ -19,7 +18,6 @@ registerBtn.addEventListener("click", () => {
 
     loginForm.style.left = "150%";
     registerForm.style.left = "50%";
-
     loginForm.style.opacity = 0;
     registerForm.style.opacity = 1;
 });

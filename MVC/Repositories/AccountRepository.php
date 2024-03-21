@@ -1,7 +1,7 @@
 <?php
         class AccountRepository extends DB{
             public function createAccount($account){
-                $this->create("accounts", $account);
+                return $this->create("accounts", $account, "account_id");
             }
 
             public function updateAccount($account, $id){// by id
@@ -20,12 +20,13 @@
                 return $this->getAllByWhere("accounts", "account_id = ".$id);
             }
 
-            public function getAccountByUsername($username){
-                return $this->getAllByWhere("accounts", "username = '$username'");
+            public function getAccountByPhoneNumber($phoneNumber){
+                return $this->getAllByWhere("accounts", "phone_number = '".$phoneNumber."'");
             }
 
             public function joinAccountCustomer($email){
                 return $this->joinTables("accounts", "customers", "account_id", "customer_email = ".$email);
             }
+
         }
     ?>

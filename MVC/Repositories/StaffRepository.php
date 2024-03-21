@@ -1,7 +1,7 @@
 <?php
     class StaffRepository extends DB{
         public function createStaff($staff){
-            $this->create("staffs", $staff);
+            $this->create("staffs", $staff, "staff_id");
         }
 
         public function updateStaff($staff, $id){// by id

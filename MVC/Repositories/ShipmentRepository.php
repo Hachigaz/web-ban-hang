@@ -1,7 +1,7 @@
 <?php
     class ShipmentRepository extends DB{
         public function createShipment($shipment){
-            $this->create("shipments", $shipment);
+            $this->create("shipments", $shipment, "shipment_id");
         }
 
         public function updateShipment($shipment, $id){// by id

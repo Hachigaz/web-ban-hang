@@ -7,17 +7,18 @@
             <button class="btn btn-1" id="login">Sign In</button>
             <button class="btn btn-2" id="register">Sign Up</button>
         </div>
+        <!-- Đăng nhập -->
         <div class="login-form">
             <div class="form-title">
                 <span>Đăng nhập</span>
             </div>
             <form action="./VerifyLogin" class="form-inputs" method="post" autocomplete="off">
                 <div class="input-box">
-                    <input type="text" name="username_login" class="input-field" placeholder="Email hoặc username" required>
+                    <input type="text" name="phone_number_or_email_login" class="input-field" placeholder="Email hoặc số điện thoại" required>
                     <i class="fa-solid fa-user icon"></i>
                 </div>
                 <div class="input-box">
-                    <input type="text" name="password_login" class="input-field" placeholder="Mật khẩu" required>
+                    <input type="password" name="password_login" class="input-field" placeholder="Mật khẩu" required>
                     <i class="fa-solid fa-lock icon"></i>
                 </div>
                 <div class="forgot-pass">
@@ -35,13 +36,18 @@
                 <i class="fa-brands fa-facebook"></i>
             </div>
         </div>
+        <!-- Đăng ký -->
         <div class="register-form">
             <div class="form-title">
                 <span>Đăng ký</span>
             </div>
             <form action="./Register" class="form-inputs" method="post" autocomplete="off">
                 <div class="input-box">
-                    <input type="text" name="username_register" class="input-field" placeholder="Username" required>
+                    <input type="text" name="email_register" class="input-field" placeholder="Email" required>
+                    <i class="fa-solid fa-user icon"></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" name="phone_number_register" class="input-field" placeholder="Số điện thoại" required>
                     <i class="fa-solid fa-user icon"></i>
                 </div>
                 <div class="input-box">
@@ -62,10 +68,6 @@
                     </button>
                 </div>
             </form>
-            <div class="social-login">
-                <i class="fa-brands fa-google"></i>
-                <i class="fa-brands fa-facebook"></i>
-            </div>
         </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 <?php
     class ReviewRepository extends DB{
         public function createReview($review){
-            $this->create("reviews", $review);
+            $this->create("reviews", $review, "review_id");
         }
 
         public function updateReview($review, $id){// by id

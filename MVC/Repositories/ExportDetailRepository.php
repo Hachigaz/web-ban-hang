@@ -1,7 +1,7 @@
 <?php
     class ExportDetailRepository extends DB{
         public function createExportDetail($exportDetail){
-            $this->create("export_details", $exportDetail);
+            $this->create("export_details", $exportDetail, "export_detail_id");
         }
 
         public function updateExportDetail($exportDetail, $id){// by id

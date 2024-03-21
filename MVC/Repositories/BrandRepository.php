@@ -1,7 +1,7 @@
 <?php
         class BrandRepository extends DB{
             public function createBrand($brand){
-                $this->create("brands", $brand);
+                $this->create("brands", $brand, "brand_id");
             }
 
             public function updateBrand($brand, $id){// by id

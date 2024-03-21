@@ -1,6 +1,6 @@
 CREATE TABLE `accounts` (
   `account_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `username` varchar(200) UNIQUE NOT NULL,
+  `phone_number` varchar(20) UNIQUE NOT NULL,
   `password` varchar(300) NOT NULL,
   `created_at` datetime DEFAULT (now()),
   `updated_at` datetime DEFAULT (now()),
@@ -11,7 +11,7 @@ CREATE TABLE `brands` (
   `brand_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `brand_name` varchar(100) UNIQUE DEFAULT '' COMMENT 'Ex: SANYO, TOSHIBA,...',
   `brand_logo` varchar(300) DEFAULT '',
-  `supplier_id` varchar(20) NOT NULL,
+  `supplier_id` int(11) NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
 );
 
@@ -23,12 +23,11 @@ CREATE TABLE `categories` (
 );
 
 CREATE TABLE `customers` (
-  `customer_id` varchar(20) PRIMARY KEY NOT NULL,
-  `customer_fullname` varchar(100) DEFAULT '',
-  `role_id` int(11) NOT NULL,
+  `customer_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `customer_fullname` varchar(100) NOT NULL DEFAULT '',
+  `role_id` int(11) NOT NULL DEFAULT 5,
   `account_id` int(11) NOT NULL,
   `gender` tinyint(1) DEFAULT 0 COMMENT 'Male: 0, Female: 1',
-  `phone_number` varchar(20) UNIQUE DEFAULT '',
   `customer_email` varchar(200) UNIQUE DEFAULT '',
   `address` varchar(200) DEFAULT '' COMMENT 'Địa chỉ của khách hàng',
   `date_of_birth` date,
@@ -118,7 +117,21 @@ CREATE TABLE `products` (
   `description` longtext DEFAULT 'Đây là mô tả sản phẩm',
   `created_at` datetime DEFAULT (now()),
   `updated_at` datetime DEFAULT (now()),
+  `average_rating` float,
   `is_active` tinyint(1) DEFAULT 1
+);
+
+CREATE TABLE `product_details` (
+  `serial_number` int(11) PRIMARY KEY NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `sold` tinyint(1) DEFAULT 0
+);
+
+CREATE TABLE `guarantees` (
+  `guarantee_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `serial_number` int(11) NOT NULL,
+  `start_date` date DEFAULT (now()),
+  `end_date` date
 );
 
 CREATE TABLE `options` (
@@ -137,7 +150,7 @@ CREATE TABLE `options` (
 CREATE TABLE `likes` (
   `like_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
-  `customer_id` varchar(20) NOT NULL
+  `customer_id` int(11) NOT NULL
 );
 
 CREATE TABLE `reviews` (
@@ -187,27 +200,11 @@ CREATE TABLE `staffs` (
   `staff_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `account_id` int(11) NOT NULL,
   `staff_fullname` varchar(100) NOT NULL,
-  `staff_phone_number` varchar(20) UNIQUE NOT NULL,
   `staff_email` varchar(200) UNIQUE NOT NULL,
   `role_id` int(11) NOT NULL,
   `gender` tinyint(1) DEFAULT 0 COMMENT 'Male: 0, Female: 1',
   `entry_date` date DEFAULT (now()),
   `is_active` tinyint(1) DEFAULT 1
-);
-
-CREATE TABLE `import_returns` (
-  `import_return_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `staff_id` int(11) NOT NULL,
-  `customer_supplier_id` varchar(20) NOT NULL,
-  `reason` varchar(100) NOT NULL COMMENT 'Nhập từ khách hàng, Trả về nhà cung cấp',
-  `is_active` tinyint(1) DEFAULT 1
-);
-
-CREATE TABLE `import_return_details` (
-  `import_return_detail_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `import_return_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL DEFAULT 1
 );
 
 CREATE TABLE `statistics` (
@@ -218,7 +215,7 @@ CREATE TABLE `statistics` (
 );
 
 CREATE TABLE `suppliers` (
-  `supplier_id` varchar(20) PRIMARY KEY NOT NULL,
+  `supplier_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `supplier_name` varchar(200) NOT NULL,
   `phone_number_of_supplier` varchar(20) UNIQUE NOT NULL,
   `address_of_supplier` varchar(200) NOT NULL,

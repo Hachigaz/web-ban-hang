@@ -1,7 +1,7 @@
 <?php
         class OptionRepository extends DB{
             public function createOption($option){
-                $this->create("options", $option);
+                $this->create("options", $option, "option_id");
             }
 
             public function updateOption($option, $id){// by id

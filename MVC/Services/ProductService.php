@@ -37,8 +37,29 @@
             echo json_encode($this->productRepo->getProductById($id), JSON_UNESCAPED_UNICODE);
         }
 
-        public function getProductByCount($productCount, $index){
-            return $this->productRepo->getAllByWhereOrderBy();
+        public function getAllBrandOfProduct(){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->productRepo->getAllBrandOfProduct(), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function getAllBrandOfProductByCategory($category_id){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->productRepo->getAllBrandOfProductByCategory($category_id), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function getAllProductByCategory($category_id){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->productRepo->getAllProductByCategory($category_id), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function getAllProductByBrand($brand_id){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->productRepo->getAllProductByBrand($brand_id), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function getAllProductByCategoryWithBrand($category_id, $brand_id){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->productRepo->getAllProductByCategoryWithBrand($category_id, $brand_id), JSON_UNESCAPED_UNICODE);
         }
     }
 ?>

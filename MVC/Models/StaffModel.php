@@ -2,18 +2,16 @@
     class StaffModel{
         private $account_id;
         private $staff_fullname;
-        private $staff_phone_number;
         private $staff_email;
         private $role_id;
         private $gender;
         private $staff_id;
         private $entry_date;
         private $is_active;
-        public function __construct($account_id, $staff_fullname, $staff_phone_number, $staff_email, $role_id, $gender, $staff_id = null, $entry_date = null, $is_active = null)
+        public function __construct($account_id, $staff_fullname, $staff_email, $role_id, $gender, $staff_id = null, $entry_date = null, $is_active = null)
         {
             $this->account_id = $account_id;
             $this->staff_fullname = $staff_fullname;
-            $this->staff_phone_number = $staff_phone_number;
             $this->staff_email = $staff_email;
             $this->role_id = $role_id;
             $this->gender = $gender;
@@ -35,14 +33,6 @@
     
         public function setStaffFullname($staff_fullname){
             $this->staff_fullname = $staff_fullname;
-        }
-    
-        public function getStaffPhoneNumber(){
-            return $this->staff_phone_number;
-        }
-    
-        public function setStaffPhoneNumber($staff_phone_number){
-            $this->staff_phone_number = $staff_phone_number;
         }
     
         public function getStaffEmail(){
@@ -98,7 +88,6 @@
                 'staff_id' => $this->staff_id,
                 'account_id' => $this->account_id,
                 'staff_fullname' => $this->staff_fullname,
-                'staff_phone_number' => $this->staff_phone_number,
                 'staff_email' => $this->staff_email,
                 'role_id' => $this->role_id,
                 'gender' => $this->gender,

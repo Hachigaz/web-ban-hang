@@ -1,7 +1,7 @@
 <?php
     class TimesheetDetailRepository extends DB{
         public function createTimesheetDetail($timesheetDetail){
-            $this->create("timesheet_details", $timesheetDetail);
+            $this->create("timesheet_details", $timesheetDetail, "timesheet_detail_id");
         }
 
         public function updateTimesheetDetail($timesheetDetail, $id){// by id

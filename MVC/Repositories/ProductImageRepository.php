@@ -1,7 +1,7 @@
 <?php
     class ProductImageRepository extends DB{
         public function createProductImage($productImage){
-            $this->create("product_images", $productImage);
+            $this->create("product_images", $productImage, "product_image_id");
         }
 
         public function updateProductImage($productImage, $id){// by id

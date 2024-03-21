@@ -1,7 +1,7 @@
 <?php
     class SkuRepository extends DB{
         public function createSku($sku){
-            $this->create("skus", $sku);
+            $this->create("skus", $sku, "sku_id");
         }
 
         public function updateSku($sku, $id){// by id
