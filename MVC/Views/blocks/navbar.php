@@ -1,3 +1,4 @@
-<h1>
-    navbar
-</h1>
+<div class="navbar">
+    <div class="category">
+    </div>
+</div>

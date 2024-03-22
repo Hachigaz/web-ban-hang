@@ -31,10 +31,9 @@
             echo json_encode($this->productRepo->getAllProduct(), JSON_UNESCAPED_UNICODE);
         }
 
-        public function getProductById(){
-            $id = "1";
+        public function getProductById($product_id){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->productRepo->getProductById($id), JSON_UNESCAPED_UNICODE);
+            echo json_encode($this->productRepo->getProductById($product_id), JSON_UNESCAPED_UNICODE);
         }
 
         public function getProductByType($categoryName, $productCount = 20, $index = 0){
@@ -70,6 +69,11 @@
         public function getAllProductByCategoryWithBrand($category_id, $brand_id){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->productRepo->getAllProductByCategoryWithBrand($category_id, $brand_id), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function getBrandLogoByCategory($category_id){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->productRepo->getBrandLogoByCategory($category_id), JSON_UNESCAPED_UNICODE);
         }
     }
 ?>

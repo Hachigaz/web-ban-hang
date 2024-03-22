@@ -151,6 +151,25 @@
             return $rows;
         }
 
+        public function joinTableDistinct($table1, $table2, $distinctField, $commonField, $where){
+            $sql = "SELECT DISTINCT $distinctField FROM $table1 JOIN $table2 ON $table1.$commonField = $table2.$commonField WHERE $where";
+            $result = mysqli_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
+        }
+        public function joinTableDistinctToGetAll($table1, $table2, $commonField, $distinctField){
+            $sql = "SELECT DISTINCT $distinctField FROM $table1 JOIN $table2 ON $table1.$commonField = $table2.$commonField";
+            $result = mysqli_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
+        }
+
         public function toString($string){
             return "'".$string."'";
         }

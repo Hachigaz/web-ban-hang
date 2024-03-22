@@ -19,5 +19,7 @@
             public function getBrandById($id){
                 return $this->getAllByWhere("brands", "brand_id = ".$id);
             }
+
+            
         }
     ?>

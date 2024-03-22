@@ -26,8 +26,8 @@
         public function GetAllProduct(){
             $this->productService->getAllProduct();
         }
-        public function GetProductById(){
-            $this->productService->GetProductById();
+        public function GetProductById($product_id){
+            $this->productService->GetProductById($product_id);
         }
         public function GetAllBrandOfProduct(){
             $this->productService->getAllBrandOfProduct();
@@ -43,6 +43,9 @@
         }
         public function GetAllProductByCategoryWithBrand($category_id, $brand_id){
             $this->productService->getAllProductByCategoryWithBrand($category_id, $brand_id);
+        }
+        public function GetBrandLogoByCategory($category_id){
+            $this->productService->getBrandLogoByCategory($category_id);
         }
     }
 ?>
