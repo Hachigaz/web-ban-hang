@@ -59,24 +59,24 @@ INSERT INTO `suppliers` (`supplier_id`, `supplier_name`, `phone_number_of_suppli
 ('18', 'Rapoo Store Việt Nam', '0918001209', '104 Đ. Nguyễn Văn Trỗi, Phường 8, Phú Nhuận, Thành phố Hồ Chí Minh', 'rapoostorevn@gmail.com', '1');
 
 INSERT INTO `brands` (`brand_id`, `brand_name`, `brand_logo`, `supplier_id`, `is_active`) VALUES 
-('1', 'Apple', '', '1', '1'),
-('2', 'Samsung', '', '2', '1'),
-('3', 'Xiaomi', '', '3', '1'),
-('4', 'OPPO', '', '4', '1'),
-('5', 'Acer', '', '5', '1'),
-('6', 'HP', '', '6', '1'),
-('7', 'ASUS', '', '7', '1'),
-('8', 'Lenovo', '', '8', '1'),
-('9', 'AVA+', '', '9', '1'),
-('10', 'Xmobile', '', '10', '1'),
-('11', 'Baseus', '', '11', '1'),
-('12', 'JBL', '', '12', '1'),
-('13', 'Sony', '', '13', '1'),
-('14', 'Logitech', '', '14', '1'),
-('15', 'Genius', '', '15', '1'),
-('16', 'Corsair', '', '16', '1'),
-('17', 'Dareu', '', '17', '1'),
-('18', 'Rapoo', '', '18', '1');
+('1', 'Apple', 'apple.jpg', '1', '1'),
+('2', 'Samsung', 'samsung.png', '2', '1'),
+('3', 'Xiaomi', 'xiaomi.png', '3', '1'),
+('4', 'OPPO', 'oppo.jpg', '4', '1'),
+('5', 'Acer', 'acer.png', '5', '1'),
+('6', 'HP', 'hp.png', '6', '1'),
+('7', 'ASUS', 'asus.png', '7', '1'),
+('8', 'Lenovo', 'lenovo.png', '8', '1'),
+('9', 'AVA+', 'ava.jpg', '9', '1'),
+('10', 'Xmobile', 'xmobile.jpg', '10', '1'),
+('11', 'Baseus', 'baseus.jpg', '11', '1'),
+('12', 'JBL', 'jbl.jpg', '12', '1'),
+('13', 'Sony', 'sony.jpg', '13', '1'),
+('14', 'Logitech', 'logitech.jpeg', '14', '1'),
+('15', 'Genius', 'genius.jpg', '15', '1'),
+('16', 'Corsair', 'corsair.jpg', '16', '1'),
+('17', 'Dareu', 'dareu.png', '17', '1'),
+('18', 'Rapoo', 'rapoo.png', '18', '1');
 
 INSERT INTO `functions` (`function_id`, `function_name`, `is_active`) VALUES 
 ('1', 'Xem', '1'),
