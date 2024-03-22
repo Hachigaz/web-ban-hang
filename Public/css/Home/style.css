@@ -2,10 +2,7 @@
 
 /* globals */
 .style-panel-title{
-    padding-top: 10px;
-    padding-bottom: 10px;
-
-    text-indent: 10px;
+    text-indent: 15px;
 
     font-size: 14pt;
     font-weight: 650;
@@ -26,32 +23,68 @@
     
 }
 
+/* widget */
+@keyframes ad-widget-slide-left {
+    0%{
+        translate: 0 0;
+    }
+    100%{
+        translate: 60vw 0;
+    }
+}
+@keyframes ad-widget-slide-right {
+    0%{
+        translate: 0 0;
+    }
+    100%{
+        translate: -60vw 0;
+    }
+}
+@keyframes ad-widget-slide-to-start {
+    0%{
+        translate: 0% 0;
+    }
+    100%{
+        translate: calc(100% - 60vw) 0;
+    }
+}
+@keyframes ad-widget-slide-to-end {
+    0%{
+        translate: 0% 0;
+    }
+    100%{
+        translate: calc(0px - (100% - 60vw)) 0;
+    }
+}
+
 .widget-panel{
     width:100%;
 
     display: flex;
     align-items: center;
     justify-content: center;
-
-    background-color: rgb(104, 153, 109);
 }
 
 .widget-panel .widget-container{
-    width:500px;
-    height:200px;
+    width:60vw;
+}
 
-    background-color: rgb(206, 195, 195);
+.widget-panel .widget-container .widget-list-wrapper{
+    width:60vw;
 }
 
 .widget-panel .widget-container .widget-list{
-    height: 100%;
     display:inline-flex;
 }
 
 .widget-panel .widget-container .widget-item{
-    width:500px;
-    height:100%;
-    background-color: rgb(129, 114, 114);
+    width:60vw;
+
+    cursor: pointer;
+}
+
+.widget-panel .widget-container .widget-item img{
+    width:60vw;
 }
 
 .widget-panel .widget-container .widget-button{
@@ -95,7 +128,7 @@
 .categories-panel .category-wrapper .category-item{
     width:20vw;
     min-width: 200px;
-    max-width: 280px;
+    max-width: 300px;
 
     aspect-ratio: 2/0.85;
 
@@ -103,15 +136,15 @@
 
     border-radius: 10px;
 
-    padding: 10px 10px;
+    padding: 0px 10px;
 
     display:flex;
     align-items: center;
+
+    cursor: pointer;
 }
 
 .categories-panel .category-wrapper .category-item > *{
-    padding: 10px 10px;
-    
     height: calc(100% - 20px);
 }
 
@@ -127,17 +160,17 @@
 .categories-panel .category-item .item-info-wrapper{
     display:flex;
     flex-direction: column;
+    padding-left:10px;
+    padding-top:8px;
 }
 
 .categories-panel .category-item .item-info-wrapper .large-text-info{
-    margin-top:10px;
-
     font-size:calc(12px + 0.6vw);
     font-weight: 650;
 }
 
 .categories-panel .category-item .item-info-wrapper .small-text-info{
-    margin-top:5px;
+    margin-top:8px;
     
     font-size:calc(9px + 0.4vw);
 }
@@ -162,15 +195,18 @@
 .featured-products-panel .product-set{
     width:100%;
     margin:30px;
+    background-color: var(--secondary-light-color);
 }
 
 .featured-products-panel .set-title{
+    padding-top: 10px;
+    margin: 5px 0;
     width:100%;
 }
 
 .featured-products-panel .product-list-wrapper{
     width:100%;
-    overflow-x: hidden;
+    overflow-x: scroll;
 }
 
 .featured-products-panel .product-list{
@@ -178,8 +214,6 @@
     
     display:inline-flex;
     align-items: center;
-
-    gap:1.5vw;
 }
 
 .featured-products-panel .product-set .product-item{
@@ -192,14 +226,16 @@
 
     border-radius: 10px;
 
-    background-color: var(--secondary-light-color);   
+    background-color: var(--primary-light-color);   
 
     cursor:pointer;
+
+    margin:10px 10px;
 }
 
 @keyframes on_hover_item {
     0%{
-        background-color: var(--secondary-light-color);   
+        background-color: var(--primary-light-color);   
     }
     100%{
         background-color: var(--light-contrast-color2);
@@ -222,11 +258,17 @@
     aspect-ratio: 1/1;
 
     align-self: center;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--primary-light-color);
 }
 
 .featured-products-panel .product-item .product-image-wrapper img{
     width: 100%;
-    height:100%;
+    padding:5px 5px;
 }
 
 
@@ -235,7 +277,11 @@
     margin-top: 10px;
 
     font-size: 12pt;
-    font-weight: 650;
+    font-weight: 550;
+    
+    height: 3em;
+    
+    overflow-y:hidden;
 }
 
 .featured-products-panel .product-item .producer-display-name{
@@ -244,7 +290,7 @@
 
     font-size:11pt;
     font-weight: 400;
-    color:rgb(82, 79, 79)
+    color:rgb(0, 0, 0)
 }
 
 .featured-products-panel .product-item .product-info-display{
@@ -257,7 +303,7 @@
     margin-bottom: 15px;
 
     font-size: 12pt;
-    font-weight: 650;
+    font-weight: 550;
 }
 
 
@@ -274,6 +320,12 @@
     gap:5px;
 
     justify-self: left;
+}
+
+.featured-products-panel .product-item .rating-value{
+    vertical-align: middle;
+    line-height: normal;
+    
 }
 
 .featured-products-panel .product-item .rating-icon-wrapper{

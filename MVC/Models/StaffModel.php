@@ -8,11 +8,10 @@
         private $staff_id;
         private $entry_date;
         private $is_active;
-        public function __construct($account_id, $staff_fullname, $staff_email, $role_id, $gender, $staff_id = null, $entry_date = null, $is_active = null)
+        public function __construct($account_id, $staff_fullname, $role_id, $gender, $staff_id = null, $entry_date = null, $is_active = null)
         {
             $this->account_id = $account_id;
             $this->staff_fullname = $staff_fullname;
-            $this->staff_email = $staff_email;
             $this->role_id = $role_id;
             $this->gender = $gender;
             $this->staff_id = $staff_id;
@@ -33,14 +32,6 @@
     
         public function setStaffFullname($staff_fullname){
             $this->staff_fullname = $staff_fullname;
-        }
-    
-        public function getStaffEmail(){
-            return $this->staff_email;
-        }
-    
-        public function setStaffEmail($staff_email){
-            $this->staff_email = $staff_email;
         }
     
         public function getRoleId(){

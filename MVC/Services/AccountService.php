@@ -4,7 +4,6 @@
     class AccountService extends Service{
         public $accountRepo;
         public $customerRepo;
-        public $customerRepo;
 
         public function __construct(){
             $this->accountRepo = $this->repository("AccountRepository");
@@ -100,15 +99,10 @@
         public function checkForAccount($login_details, $password){
             $customer_account;
             if(filter_var($login_details,FILTER_VALIDATE_EMAIL)){   
-                $customer = $this->customerRepo->getCustomerByEmail($login_details);
-                if($customer==null){
-                    return null;
-                }
-                $account_id = $customer['account_id'];
-                $customer_account = $this->accountRepo->getAccountById($account_id);
+                $customer_account = $this->accountRepo->getAccountByEmail($login_details);
             }
             else{
-                $customer_account = $this->accountRepo->getAccountByUsername($login_details);
+                $customer_account = $this->accountRepo->getAccountByPhone($login_details);
             }
             if($customer_account==null){
                 return null;
@@ -118,6 +112,10 @@
             }
                 
             return $customer_account;
+        }
+        
+        public function createNewAccount($email,$password){
+            
         }
     }
 ?>

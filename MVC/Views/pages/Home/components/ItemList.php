@@ -2,34 +2,60 @@
     <div class="set-title style-panel-title">
         <?= $set_title ?>
     </div>
-    <div class="product-list-wrapper">
-        <?php foreach($itemList as $key=>$item): ?>
-            <div class="product-list">
-                <a class="product-item">
+    <div class="product-list-wrapper no-scrollbar">
+        <div class="product-list">
+            <?php foreach($productList as $product): ?>
+                <a href="#" class="product-item no-style">
                     <div class="product-image-wrapper">
-                        <img class="no-user-select" src="../Public/img/products/<?= $item->product_type ?>/<?= $item->product_thumbnail ?>" alt="" srcset="" width="200px" height="200px">
+                        <img class="no-user-select" src="../Public/img/products/<?= $product["thumbnail"] ?>" alt="" srcset="">
                     </div>
                     <div class="product-display-name">
-                        <?= $item->product_name ?>
+                        <?= $product["product_name"] ?>
                     </div>
                     <div class="producer-display-name">
-                        <?= $item->producer_name ?>
+                        <?= $product["brand_name"] ?>
                     </div>
                     <div class="product-info-display">
                         <div class="price-display">
-                            <?= $item->price ?>
+                            <?= number_format($product["price"], 0, '.', ',') ?>₫
                         </div>
                         <div class="rating-display">
                             <div class="rating-icon-wrapper">
-                                <img class="no-user-select" src="../Public/img/web_icons/star.png" width="20" height="20" alt="" srcset="">
+                                <img class="no-user-select" src="../Public/img/web_icons/star.png" width="18" height="18" alt="" srcset="">
                             </div>
                             <div class="rating-value">
-                                4.75
+                                <?= $product["average_rating"] ?>
                             </div>
                         </div>
                     </div>
                 </a>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+            <?php foreach($productList as $product): ?>
+                <a href="#" class="product-item no-style">
+                    <div class="product-image-wrapper">
+                        <img class="no-user-select" src="../Public/img/products/<?= $product["thumbnail"] ?>" alt="" srcset="">
+                    </div>
+                    <div class="product-display-name">
+                        <?= $product["product_name"] ?>
+                    </div>
+                    <div class="producer-display-name">
+                        <?= $product["brand_name"] ?>
+                    </div>
+                    <div class="product-info-display">
+                        <div class="price-display">
+                            <?= number_format($product["price"], 0, '.', ',') ?>₫
+                        </div>
+                        <div class="rating-display">
+                            <div class="rating-icon-wrapper">
+                                <img class="no-user-select" src="../Public/img/web_icons/star.png" width="18" height="18" alt="" srcset="">
+                            </div>
+                            <div class="rating-value">
+                                <?= $product["average_rating"] ?>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        </div>
     </div>
 </div>

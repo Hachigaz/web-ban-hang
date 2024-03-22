@@ -56,3 +56,12 @@ a:hover{
     color:rgb(13, 128, 182);
     font-weight: 700;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+.no-scrollbar {
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;  /* Firefox */
+}

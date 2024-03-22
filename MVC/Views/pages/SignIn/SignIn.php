@@ -4,6 +4,7 @@
 
 <script src="../Public/scripts/components/jquery-3.7.1.min.js"></script>
 <script src="../Public/scripts/components/globals.js"></script>
+
 <script src="../Public/scripts/SignIn/SignIn/script.js" defer></script>
 
 <div class="body two-subpanels">

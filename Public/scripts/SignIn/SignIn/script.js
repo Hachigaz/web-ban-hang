@@ -7,6 +7,9 @@ function setup(){
     if(status == "login_failed"){
         showSliderDialogMessage("Thông tin đăng nhập không chính xác")
     }
+    else if(status == "verify_success"){
+        showSliderDialogMessage("Xác nhận email thành công")
+    }
     for (key in searchParams.keys()){
         searchParams.delete(key)
     }

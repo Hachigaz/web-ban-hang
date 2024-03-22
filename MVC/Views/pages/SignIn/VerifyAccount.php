@@ -5,13 +5,7 @@
 <script src="../Public/scripts/components/jquery-3.7.1.min.js"></script>
 <script src="../Public/scripts/components/globals.js"></script>
 <script src="../Public/scripts/SignIn/VerifyAccount/script.js" defer></script>
-<?php
-    echo(
-        "<script>
-            showSliderDialogMessage('Mã xác nhận: ".$data["vert_code"]."')
-        </script>
-    ")
-?>
+
 <div class="body">
     <div class="title">
         Xác nhận email

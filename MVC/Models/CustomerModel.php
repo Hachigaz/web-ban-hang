@@ -5,16 +5,14 @@
         private $role_id;
         private $account_id;
         private $gender;
-        private $customer_email;
         private $address;
         private $date_of_birth;
         private $is_active;
-        public function __construct($account_id, $customer_email, $customer_fullname = null, $role_id = null, $gender = null,  $address = null, $date_of_birth = null, $customer_id = null, $is_active = null){
+        public function __construct($account_id, $customer_fullname = null, $role_id = null, $gender = null,  $address = null, $date_of_birth = null, $customer_id = null, $is_active = null){
             $this->customer_fullname = $customer_fullname;
             $this->role_id = $role_id;
             $this->account_id = $account_id;
             $this->gender = $gender;
-            $this->customer_email = $customer_email;
             $this->address = $address;
             $this->date_of_birth = $date_of_birth;
             $this->customer_id = $customer_id;
@@ -49,12 +47,6 @@
         }
         public function setGender($gender){
             $this->gender = $gender;
-        }
-        public function getCustomerEmail(){
-            return $this->customer_email;
-        }
-        public function setCustomerEmail($customer_email){
-            $this->customer_email = $customer_email;
         }
         public function getAddress(){
             return $this->address;

@@ -2,11 +2,12 @@
     class AccountModel{
         private $account_id;
         private $phone_number;
+        private $email;
         private $password;
         private $created_at;
         private $updated_at;
         private $is_active;
-        public function __construct($phone_number, $password, $account_id = null, $created_at = null, $updated_at = null, $is_active = null){
+        public function __construct($phone_number, $email, $password, $account_id = null, $created_at = null, $updated_at = null, $is_active = null){
             $this->account_id = $account_id;
             $this->phone_number = $phone_number;
             $this->password = $password;
@@ -25,6 +26,12 @@
         }
         public function setPhoneNumber($phone_number){
             $this->phone_number = $phone_number;
+        }
+        public function getEmail(){
+            return $this->email;
+        }
+        public function setEmail($email){
+            $this->phone_number = $email;
         }
         public function getPassword(){
             return $this->password;
@@ -54,6 +61,7 @@
             return array(
                 'account_id' => $this->account_id,
                 'phone_number' => $this->phone_number,
+                'email' => $this->email,
                 'password' => $this->password,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,

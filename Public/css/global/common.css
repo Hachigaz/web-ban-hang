@@ -47,3 +47,10 @@ body {
     --primary-color-blue-opacity: rgba(56, 122, 223, 0.2);
     --primary-color-yellow: #fba834;
 }
+
+a.no-style, a.no-style:hover, a.no-style:visited, a.no-style:focus, a.no-style:active  {
+    text-decoration: none;
+    color: inherit;
+    outline: 0;
+    cursor: auto;
+  }

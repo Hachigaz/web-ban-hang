@@ -17,11 +17,43 @@
             }
             
             public function getAccountById($id){
-                return $this->getAllByWhere("accounts", "account_id = ".$id);
+                $account = $this->getAllByWhere("accounts", "account_id = ".$id);
+                if(sizeof($account)==0){
+                    return null;
+                }
+                else{
+                    return $account[0];
+                }
             }
 
             public function getAccountByPhoneNumber($phoneNumber){
-                return $this->getAllByWhere("accounts", "phone_number = '".$phoneNumber."'");
+                $account = $this->getAllByWhere("accounts", "phone_number = '".$phoneNumber."'");
+                if(sizeof($account)==0){
+                    return null;
+                }
+                else{
+                    return $account[0];
+                }
+            }
+
+            public function getAccountByEmail($email){
+                $account = $this->getAllByWhere("accounts","accounts.email = '$email'");
+                if(sizeof($account)==0){
+                    return null;
+                }
+                else{
+                    return $account[0];
+                }
+            }
+
+            public function getAccountByPhone($phoneNumber){
+                $account = $this->getAllByWhere("accounts","accounts.phone_number = '$phoneNumber'");
+                if(sizeof($account)==0){
+                    return null;
+                }
+                else{
+                    return $account[0];
+                }
             }
 
             public function joinAccountCustomer($email){
