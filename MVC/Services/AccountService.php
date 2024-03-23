@@ -10,8 +10,8 @@
             $this->customerRepo = $this->repository("CustomerRepository");
         }
         
-        public function createAccount($phoneNumber, $password){
-            $account = new AccountModel($phoneNumber, $password);
+        public function createAccount($phoneNumber, $email, $password){
+            $account = new AccountModel($phoneNumber, $email, $password);
             return $this->accountRepo->createAccount($account);
         }
 
@@ -69,7 +69,7 @@
         }
 
         public function checkForAccount($login_details, $password){
-            $customer_account;
+            $customer_account = [];
             if(filter_var($login_details,FILTER_VALIDATE_EMAIL)){   
                 $customer_account = $this->accountRepo->getAccountByEmail($login_details);
             }
