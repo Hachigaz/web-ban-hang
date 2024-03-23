@@ -11,6 +11,7 @@ Table "accounts" {
   "phone_number" varchar(20) [unique, not null]
   "email" varchar(200) [unique, default: ""]
   "password" varchar(300) [not null]
+  "avatar" varchar(300) [default: ""]
   "created_at" datetime [default: `now()`]
   "updated_at" datetime [default: `now()`]
   "is_active" tinyint(1) [default: 1]
@@ -150,13 +151,7 @@ Table "guarantees" {
 Table "options" {
   "option_id" int(11) [pk, not null, increment]
   "product_id" int(11) [not null]
-  "ram" int(11) [note: "GB"]
-  "rom" int(11) [note: "GB"]
-  "chip" varchar(200)
-  "color" varchar(11)
-  "battery" int(11) [note: "mAh"]
-  "screen" float [note: "inch"]
-  "wh" int(11) [note: "Công suất tiêu thụ điện khi sạc"]
+  "specifications" longtext [not null]
   "is_active" tinyint(1) [default: 1]
 }
 

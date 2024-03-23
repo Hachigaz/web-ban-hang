@@ -3,6 +3,7 @@ CREATE TABLE `accounts` (
   `phone_number` varchar(20) UNIQUE NOT NULL,
   `email` varchar(200) UNIQUE DEFAULT '',
   `password` varchar(300) NOT NULL,
+  `avatar` varchar(300) DEFAULT '',
   `created_at` datetime DEFAULT (now()),
   `updated_at` datetime DEFAULT (now()),
   `is_active` tinyint(1) DEFAULT 1
@@ -137,13 +138,7 @@ CREATE TABLE `guarantees` (
 CREATE TABLE `options` (
   `option_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
-  `ram` int(11) COMMENT 'GB',
-  `rom` int(11) COMMENT 'GB',
-  `chip` varchar(200),
-  `color` varchar(11),
-  `battery` int(11) COMMENT 'mAh',
-  `screen` float COMMENT 'inch',
-  `wh` int(11) COMMENT 'Công suất tiêu thụ điện khi sạc',
+  `specifications` longtext NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
 );
 
