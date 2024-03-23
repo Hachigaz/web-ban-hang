@@ -11,7 +11,7 @@ Table "accounts" {
   "phone_number" varchar(20) [unique, not null]
   "email" varchar(200) [unique, default: ""]
   "password" varchar(300) [not null]
-  "avatar" varchar(300) [default: ""]
+  "avatar" varchar(300)
   "created_at" datetime [default: `now()`]
   "updated_at" datetime [default: `now()`]
   "is_active" tinyint(1) [default: 1]

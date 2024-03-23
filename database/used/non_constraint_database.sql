@@ -3,7 +3,7 @@ CREATE TABLE `accounts` (
   `phone_number` varchar(20) UNIQUE NOT NULL,
   `email` varchar(200) UNIQUE DEFAULT '',
   `password` varchar(300) NOT NULL,
-  `avatar` varchar(300) DEFAULT '',
+  `avatar` varchar(300),
   `created_at` datetime DEFAULT (now()),
   `updated_at` datetime DEFAULT (now()),
   `is_active` tinyint(1) DEFAULT 1
