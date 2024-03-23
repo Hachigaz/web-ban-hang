@@ -10,6 +10,7 @@
         public function __construct($phone_number, $email, $password, $account_id = null, $created_at = null, $updated_at = null, $is_active = null){
             $this->account_id = $account_id;
             $this->phone_number = $phone_number;
+            $this->email = $email;
             $this->password = $password;
             $this->created_at = $created_at;
             $this->updated_at = $updated_at;

@@ -68,34 +68,6 @@
             }
         }
 
-        public function verifyLogin($phoneNumber, $password){
-            $verifyPhoneNumber = $this->getAccountByPhoneNumber($phoneNumber);
-            $verifyEmail = $this->getAccountByEmail($phoneNumber);
-            $passwordPhoneNumber = json_decode($this->getAccountByPhoneNumber($phoneNumber), true);
-            $passwordEmail = json_decode($this->getAccountByEmail($phoneNumber), true);
-            if(($verifyPhoneNumber && ($passwordPhoneNumber[0]['password'] == $password)) || ($verifyEmail &&  ($passwordEmail[0]['password'] == $password))){
-                header("location: ../Home/SayHi");
-            }else{
-                header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-                echo json_encode("Đăng nhập thất bại", JSON_UNESCAPED_UNICODE);   
-            }
-        }   
-
-        public function register($email, $phoneNumber, $password, $retypePassword){
-            $existingAccountByPhoneNumber = $this->getAccountByPhoneNumber($phoneNumber);
-            $existingAccountByEmail = $this->getAccountByEmail($email);
-            if($existingAccountByEmail != null){
-                header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-                echo json_encode("Email này đã được đăng ký", JSON_UNESCAPED_UNICODE);   
-            }elseif($existingAccountByPhoneNumber != null){
-                header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-                echo json_encode("Số điện thoại này đã được đăng ký", JSON_UNESCAPED_UNICODE);   
-            }elseif($password != $retypePassword){
-                header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-                echo json_encode("Mật khẩu chưa trùng khớp", JSON_UNESCAPED_UNICODE);   
-            }
-        }
-
         public function checkForAccount($login_details, $password){
             $customer_account;
             if(filter_var($login_details,FILTER_VALIDATE_EMAIL)){   
