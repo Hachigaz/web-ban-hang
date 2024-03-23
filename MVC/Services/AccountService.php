@@ -110,12 +110,12 @@
             if($password != $customer_account["password"]){
                 return null;
             }
-                
             return $customer_account;
         }
         
         public function createNewAccount($email,$password){
-            
+            $account = new AccountModel(null,$email,$password);
+            $this->accountRepo->createAccount($account);
         }
     }
 ?>

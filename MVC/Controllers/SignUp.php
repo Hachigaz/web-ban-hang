@@ -23,7 +23,7 @@
             }
 
             //kiem tra email ton tai chua
-            if($this->customerService->customerRepo->getCustomerByEmail($input_email)!=null){
+            if($this->accountService->accountRepo->getAccountByEmail($input_email)!=null){
                 header("Location: ../SignUp/?status=signup_email_exists");
                 return;
             };
@@ -52,7 +52,7 @@
         public function DoVerifyEmail(){
             $codeCreatedTime = $_SESSION["vertification_code_time_created"];
             if($codeCreatedTime!=null){
-                if(time()-$codeCreatedTime>10){
+                if(time()-$codeCreatedTime>300){
                     header("Location: ../SignUp/VerifyAccount?status=timed_out");
                 }
             }
@@ -61,11 +61,12 @@
             }
             $vertification_code = $_POST["vertification_code"];
             if($vertification_code!= $_SESSION["vertification_code"]){
-                header("Location: ../SignIn/?status=verify_success");
+                // $this->accountService->createNewAccount($_SESSION["signup_user_email"],$_SESSION["signup_user_password"]);
                 unset($_SESSION["signup_user_email"]);
                 unset($_SESSION["signup_user_password"]);
                 unset($_SESSION["vertification_code"]); 
                 unset($_SESSION["vertification_code_time_created"]);
+                header("Location: ../SignIn/?status=verify_success");
             }
             else{
                 header("Location: ../SignUp/VerifyAccount?status=invalid_code");
