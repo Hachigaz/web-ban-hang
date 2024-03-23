@@ -9,6 +9,7 @@ Enum "orders_status_of_order_enum" {
 Table "accounts" {
   "account_id" int(11) [pk, not null, increment]
   "phone_number" varchar(20) [unique, not null]
+  "email" varchar(200) [unique, default: ""]
   "password" varchar(300) [not null]
   "created_at" datetime [default: `now()`]
   "updated_at" datetime [default: `now()`]
@@ -36,7 +37,6 @@ Table "customers" {
   "role_id" int(11) [not null, default: 5]
   "account_id" int(11) [not null]
   "gender" tinyint(1) [default: 0, note: "Male: 0, Female: 1"]
-  "customer_email" varchar(200) [unique, default: ""]
   "address" varchar(200) [default: "", note: "Địa chỉ của khách hàng"]
   "date_of_birth" date
   "is_active" tinyint(1) [default: 1]
@@ -134,8 +134,6 @@ Table "products" {
   "is_active" tinyint(1) [default: 1]
 }
 
-
-
 Table "product_details" {
   "serial_number" int(11) [pk, not null]
   "product_id" int(11) [not null]
@@ -148,8 +146,6 @@ Table "guarantees" {
   "start_date" date [default: `now()`]
   "end_date" date
 }
-
-
 
 Table "options" {
   "option_id" int(11) [pk, not null, increment]
@@ -226,7 +222,6 @@ Table "staffs" {
   "staff_id" int(11) [pk, not null, increment]
   "account_id" int(11) [not null]
   "staff_fullname" varchar(100) [not null]
-  "staff_email" varchar(200) [unique, not null]
   "role_id" int(11) [not null]
   "gender" tinyint(1) [default: 0, note: "Male: 0, Female: 1"]
   "entry_date" date [default: `now()`]

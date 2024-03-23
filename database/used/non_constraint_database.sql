@@ -1,6 +1,7 @@
 CREATE TABLE `accounts` (
   `account_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `phone_number` varchar(20) UNIQUE NOT NULL,
+  `email` varchar(200) UNIQUE DEFAULT '',
   `password` varchar(300) NOT NULL,
   `created_at` datetime DEFAULT (now()),
   `updated_at` datetime DEFAULT (now()),
@@ -28,7 +29,6 @@ CREATE TABLE `customers` (
   `role_id` int(11) NOT NULL DEFAULT 5,
   `account_id` int(11) NOT NULL,
   `gender` tinyint(1) DEFAULT 0 COMMENT 'Male: 0, Female: 1',
-  `customer_email` varchar(200) UNIQUE DEFAULT '',
   `address` varchar(200) DEFAULT '' COMMENT 'Địa chỉ của khách hàng',
   `date_of_birth` date,
   `is_active` tinyint(1) DEFAULT 1
@@ -200,7 +200,6 @@ CREATE TABLE `staffs` (
   `staff_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `account_id` int(11) NOT NULL,
   `staff_fullname` varchar(100) NOT NULL,
-  `staff_email` varchar(200) UNIQUE NOT NULL,
   `role_id` int(11) NOT NULL,
   `gender` tinyint(1) DEFAULT 0 COMMENT 'Male: 0, Female: 1',
   `entry_date` date DEFAULT (now()),
