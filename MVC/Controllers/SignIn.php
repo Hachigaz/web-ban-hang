@@ -42,6 +42,7 @@
             $account = $this->accountService->accountRepo->getAccountByEmail($email);
             if($account==null){
                 header("Location: ../SignIn/ForgotPassword?status=email_not_exist");
+                return;
             }
             $_SESSION["password_change_user_data"]=["email"=>$email];
 
@@ -58,10 +59,12 @@
             if(time()-$codeCreatedTime>=30){
                 $result = $this->GenerateVerificationCode();
                 $resendStatus=["resend_status"=>"success"];
+                return;
             }
             else{
                 header('Content-Type: application/json');
                 $resendStatus=["resend_status"=>"resend_too_soon"];
+                return;
             }
             echo(json_encode($resendStatus));
         }
