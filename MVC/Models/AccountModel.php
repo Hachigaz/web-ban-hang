@@ -7,7 +7,7 @@
         private $created_at;
         private $updated_at;
         private $is_active;
-        public function __construct($phone_number, $email, $password, $account_id = null, $created_at = null, $updated_at = null, $is_active = null){
+        public function __construct($email, $password,$phone_number=null, $account_id = null, $created_at = null, $updated_at = null, $is_active = null){
             $this->account_id = $account_id;
             $this->phone_number = $phone_number;
             $this->email = $email;
@@ -22,9 +22,11 @@
         public function setAccountId($account_id){
             $this->account_id = $account_id;
         }
+    
         public function getPhoneNumber(){
             return $this->phone_number;
         }
+    
         public function setPhoneNumber($phone_number){
             $this->phone_number = $phone_number;
         }
@@ -61,7 +63,7 @@
         public function toArray() {
             return array(
                 'account_id' => $this->account_id,
-                'phone_number' => $this->phone_number,
+                'phone_number'=>$this->phone_number,
                 'email' => $this->email,
                 'password' => $this->password,
                 'created_at' => $this->created_at,

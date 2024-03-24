@@ -1,10 +1,8 @@
-<link rel="stylesheet" href="../Public/css/globals/globals.css">
-<link rel="stylesheet" href="../Public/css/globals/components.css">
 <link rel="stylesheet" href="../Public/css/SignIn/SignUp/style.css">
+<link rel="stylesheet" href="../Public/css/globals/input-components.css">
 
 <script src="../Public/scripts/components/jquery-3.7.1.min.js"></script>
 <script src="../Public/scripts/components/validate.min.js"></script>
-<script src="../Public/scripts/components/globals.js"></script>
 <script src="../Public/scripts/SignIn/SignUp/script.js" defer></script>
 <div class="body two-subpanels">
     <div class="subpanel left-panel">
@@ -38,21 +36,30 @@
             </div>
             <form class="sign-up-form" action="../SignUp/CreateAccount" method="post">
                 <div class="c-input" id="input_email">
-                    <div class="input-error-message">
-                        
-                    </div>    
+                    <div class="input-label-wrapper">
+                        <label for="input_email">Email</label>
+                        <div class="input-error-message">
+                            
+                        </div>    
+                    </div>
                     <input name="input_email" type="text" placeholder="Nhập email" onclick="(new InputElement(this.parentElement)).hideError()">
                 </div>
                 <div class="c-input" id="input_password">
-                    <div class="input-error-message">
-                        
-                    </div>    
+                    <div class="input-label-wrapper">
+                        <label for="input_password">Mật khẩu</label>
+                        <div class="input-error-message">
+                            
+                        </div>
+                    </div>
                     <input name="input_password" type="password" placeholder="Nhập mật khẩu" onclick="(new InputElement(this.parentElement)).hideError()">
                 </div>
                 <div class="c-input" id="input_confirm_password">
-                    <div class="input-error-message">
-                        
-                    </div>    
+                    <div class="input-label-wrapper">
+                        <label for="input_confirm_password">Nhập lại mật khẩu</label>
+                        <div class="input-error-message">
+                            
+                        </div>  
+                    </div>  
                     <input name="input_confirm_password" type="password" placeholder="Nhập lại mật khẩu" onclick="(new InputElement(this.parentElement)).hideError()">
                 </div>
                 <input type="submit" value="Tạo tài khoản">            

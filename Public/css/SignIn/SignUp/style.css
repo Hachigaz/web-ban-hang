@@ -111,23 +111,9 @@ div.main, div.body{
     width: 80%;
 }
 
-.sign-up-form-wrapper .sign-up-form input[type="text"], 
-.sign-up-form-wrapper .sign-up-form input[type="password"],
-.sign-up-form-wrapper .sign-up-form input[type="submit"]
-{
-    height:45px;
-
-    font-size: 11pt;
-    font-weight: 550;
-
-    border-radius: 15px;
-}
-
-.sign-up-form-wrapper .sign-up-form input[type="text"], 
-.sign-up-form-wrapper .sign-up-form input[type="password"]
-{
-    width:100%;
-    text-indent: 20px;
+.sign-up-form-wrapper .sign-up-form > input{
+    margin: 10px 0;
+    width: 50%;
 }
 
 .sign-up-form-wrapper .sign-up-form .password-remember-wrapper{
@@ -183,4 +169,7 @@ div.main, div.body{
 .sign-up-form-wrapper .sign-up-bottom-options{
     margin-top:50px;
     font-size: 12pt;
+}
+.sign-up-form-wrapper .sign-up-bottom-options a{
+    color:#143455
 }

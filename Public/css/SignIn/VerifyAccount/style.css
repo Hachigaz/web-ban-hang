@@ -15,7 +15,7 @@
     margin-bottom: 20px;
 }
 
-.email-vertification-form{
+.email-verification-form{
     width:50vw;
     height:50vh;
     background-color: var(--secondary-light-color);
@@ -29,18 +29,18 @@
     justify-content: center;
 }
 
-/* .email-vertification-form .code-input{
+/* .email-verification-form .code-input{
     width:2vw;
 } */
 
-.email-vertification-form .form-message{
+.email-verification-form .form-message{
     margin-bottom:10px;
 }
 
-.email-vertification-form .code-input{
+.email-verification-form .code-input{
     margin-bottom: 10px;
 }
 
-.email-vertification-form .submit-wrapper{
+.email-verification-form .submit-wrapper{
     display:flex;
 }

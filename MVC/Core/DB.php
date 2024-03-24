@@ -2,9 +2,9 @@
     class DB{
         public $con;
         protected $servername = "localhost";
-        protected $username = "root";
-        protected $password = "";
-        protected $dbname = "electronic_supermarket_test_do_an";
+        protected $username = "admin";
+        protected $password = "Abc12345";
+        protected $dbname = "electronic_supermarket";
         // protected $servername = "localhost";
         // protected $username = "admin";
         // protected $password = "Abc12345";

@@ -1,7 +1,7 @@
 CREATE TABLE `accounts` (
   `account_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `phone_number` varchar(20) UNIQUE NOT NULL,
-  `email` varchar(200) UNIQUE DEFAULT '',
+  `phone_number` varchar(20) UNIQUE,
+  `email` varchar(200) UNIQUE NOT NULL,
   `password` varchar(300) NOT NULL,
   `avatar` varchar(300),
   `created_at` datetime DEFAULT (now()),
@@ -115,7 +115,7 @@ CREATE TABLE `products` (
   `price` decimal(10,2) DEFAULT 0 COMMENT 'Phải >= 0',
   `guarantee` int(11) DEFAULT 0,
   `thumbnail` varchar(300) DEFAULT '' COMMENT 'Phải có ảnh mặc định',
-  `description` longtext DEFAULT 'Đây là mô tả sản phẩm',
+  `description` longtext,
   `created_at` datetime DEFAULT (now()),
   `updated_at` datetime DEFAULT (now()),
   `average_rating` float,

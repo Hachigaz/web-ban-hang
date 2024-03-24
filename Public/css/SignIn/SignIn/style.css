@@ -111,28 +111,24 @@ div.main, div.body{
     width: 80%;
 }
 
-.sign-in-form-wrapper .sign-in-form input[type="text"], 
-.sign-in-form-wrapper .sign-in-form input[type="password"],
-.sign-in-form-wrapper .sign-in-form input[type="submit"]
-{
-    height:45px;
-
-    font-size: 11pt;
-    font-weight: 550;
-
-    border-radius: 15px;
+.sign-in-form-wrapper .sign-in-form > input{
+    margin: 10px 0;
+    width: 50%;
 }
 
-.sign-in-form-wrapper .sign-in-form input[type="text"], 
-.sign-in-form-wrapper .sign-in-form input[type="password"]
-{  
-    width:100%;
-    text-indent: 20px;
+.sign-in-form-wrapper .sign-in-form .sign-in-options{
+    padding: 4px 0;
+    display:flex;
+    align-items: center;
+    position:relative;
 }
 
 .sign-in-form-wrapper .sign-in-form .password-remember-wrapper{
     display: flex;
     align-items: center;
+
+    position:absolute;
+    left:10px;
 }
 
 .sign-in-form-wrapper .sign-in-form .password-remember-wrapper input[type="checkbox"]
@@ -147,6 +143,12 @@ div.main, div.body{
     color:rgb(117, 117, 117);
 }
 
+.sign-in-form-wrapper .sign-in-form .forgot-password-option{
+    position: absolute;
+    right:10px;
+    color:#143455
+}
+
 .sign-in-form-wrapper .sign-in-form input[type="submit"]
 {
     font-size: 13pt;
@@ -158,7 +160,7 @@ div.main, div.body{
 .sign-in-form-wrapper .sign-in-form input[type="submit"]:hover
 {
     animation: button-transition;
-    animation-duration: 0.3s;
+    animation-duration: 0.2s;
     background-color: #236fc7;
     color:white;
 }
@@ -183,4 +185,8 @@ div.main, div.body{
 .sign-in-form-wrapper .sign-in-bottom-options{
     margin-top:50px;
     font-size: 12pt;
+}
+
+.sign-in-form-wrapper .sign-in-bottom-options a{
+    color:#143455
 }

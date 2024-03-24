@@ -1,6 +1,5 @@
-<link rel="stylesheet" href="../Public/css/globals/globals.css">
-<link rel="stylesheet" href="../Public/css/globals/components.css">
 <link rel="stylesheet" href="../Public/css/SignIn/SignIn/style.css">
+<link rel="stylesheet" href="../Public/css/globals/input-components.css">
 
 <script src="../Public/scripts/components/jquery-3.7.1.min.js"></script>
 <script src="../Public/scripts/components/globals.js"></script>
@@ -39,22 +38,29 @@
             </div>
             <form class="sign-in-form" action="../SignIn/CheckSignIn" method="post" enctype="multipart/form-data">
                 <div class="c-input" id="input_username">
-                    <div class="input-error-message">
-                        
-                    </div>    
-                    <input name="input_username" type="text" placeholder="Email hoặc tên đăng nhập" onclick="(new InputElement(this.parentElement)).hideError()">
+                    <div class="input-label-wrapper">
+                        <label for="input_username">Email hoặc số điện thoại</label>
+                        <div class="input-error-message">
+                            
+                        </div>    
+                    </div>
+                    <input name="input_username" type="text" placeholder="Email hoặc Số điện thoại" onclick="(new InputElement(this.parentElement)).hideError()">
                 </div>
                 <div class="c-input" id="input_password">
-                    <div class="input-error-message">
-                        
-                    </div>    
-                    <input name="input_password" type="password" placeholder="Mật khẩu" onclick="(new InputElement(this.parentElement)).hideError()">
+                    <div class="input-label-wrapper">
+                        <label for="input_password">Mật khẩu</label>
+                        <div class="input-error-message">
+                            
+                        </div>    
+                    </div>
+                    <input name="input_password" type="password" placeholder="Nhập mật khẩu" onclick="(new InputElement(this.parentElement)).hideError()">
                 </div>
                 <div class="sign-in-options">
                     <div class="password-remember-wrapper">
                         <input type="checkbox" id="input_remember_password">
                         <label for="input_remember_password" class="no-user-select">Lưu mật khẩu</label>
                     </div>
+                    <a href="../SignIn/ForgotPassword" class="forgot-password-option">Quên mật khẩu</a>
                 </div>
                 <input type="submit" value="Đăng nhập">            
             </form>

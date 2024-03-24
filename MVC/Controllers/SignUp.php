@@ -29,28 +29,68 @@
             };
 
             //very
-            $this->GenerateVertificationCode();
-
+            $result = $this->GenerateVerificationCode();
+            
             header("Location: ../SignUp/VerifyAccount");
 
+            $signUpData = [
+                "email"=>$input_email,
+                "password" =>$input_password,
+            ];
             
-            $_SESSION["signup_user_email"]= $input_email;
-            $_SESSION["signup_user_password"]= $input_password;
+            $_SESSION["signup_user_data"] = $signUpData;
         }
-        public function GenerateVertificationCode(){
-            $vertification_code = substr(md5(rand()), 0, 6);
-            $_SESSION["vertification_code"]= $vertification_code;
-            $_SESSION["vertification_code_time_created"]=time();
+        public function ResendVerificationCode(){
+            $codeCreatedTime = $_SESSION["verification_code"]["time_created"];
+            $resendStatus;
+            if(time()-$codeCreatedTime>=30){
+                $result = $this->GenerateVerificationCode();
+                $resendStatus=["resend_status"=>"success"];
+            }
+            else{
+                header('Content-Type: application/json');
+                $resendStatus=["resend_status"=>"resend_too_soon"];
+            }
+            echo(json_encode($resendStatus));
+        }
+        private function GenerateVerificationCode(){
+            $verification_code = substr(md5(rand()), 0, 6);
 
-            $userEmail = $_SESSION["signup_user_email"];
+            $verificationData = [
+                "time_created"=>time(),
+                "code"=>$verification_code
+            ];
+
+            $_SESSION["verification_code"]= $verificationData;
+
+            $userEmail = $_SESSION["signup_user_data"]["email"];
             $emailSubject = "Xác nhận email";
             $message = "
-                Mã xác nhận email là:".$vertification_code.".";
+                Mã xác nhận email là: $verification_code.";
             
-            mail($userEmail,$emailSubject,$message);
+            //return mail($userEmail,$emailSubject,$message);
+        }
+        public function VerifyAccount(){
+            if($_SESSION["verification_code"]==null){
+               header("Location: ../SignUp/");  
+            }
+
+            $codeCreatedTime = $_SESSION["verification_code"]["time_created"];
+            if($codeCreatedTime!=null){
+                if(time()-$codeCreatedTime>300){
+                    unset($_SESSION["signup_user_data"]);
+                    unset($_SESSION["verification_code"]); 
+                    header("Location: ../SignUp/");
+                }
+            }
+
+            $this->view("SignIn",[
+                "Page" => "SignIn/FormWrapper",
+                "Form" => "SignIn/VerifyAccount"
+            ]);
         }
         public function DoVerifyEmail(){
-            $codeCreatedTime = $_SESSION["vertification_code_time_created"];
+            $codeCreatedTime = $_SESSION["verification_code"]["time_created"];
             if($codeCreatedTime!=null){
                 if(time()-$codeCreatedTime>300){
                     header("Location: ../SignUp/VerifyAccount?status=timed_out");
@@ -59,26 +99,14 @@
             else{
                 header("Location: ../SignUp/");
             }
-            $vertification_code = $_POST["vertification_code"];
-            if($vertification_code!= $_SESSION["vertification_code"]){
-                // $this->accountService->createNewAccount($_SESSION["signup_user_email"],$_SESSION["signup_user_password"]);
-                unset($_SESSION["signup_user_email"]);
-                unset($_SESSION["signup_user_password"]);
-                unset($_SESSION["vertification_code"]); 
-                unset($_SESSION["vertification_code_time_created"]);
-                header("Location: ../SignIn/?status=verify_success");
-            }
-            else{
+            $verification_code = $_POST["verification_code"];
+            if($verification_code!= $_SESSION["verification_code"]["code"]){
                 header("Location: ../SignUp/VerifyAccount?status=invalid_code");
             }
-        }
-        public function VerifyAccount(){
-            if($_SESSION["vertification_code"]==null){
-               header("Location: ../SignUp/");
+            else{
+                // $this->accountService->createNewAccount($_SESSION["signup_user_email"],$_SESSION["signup_user_password"]);
+                header("Location: ../SignIn/?status=verify_success");
             }
-            $this->view("SignIn",[
-                "Page" => "SignIn/VerifyAccount"
-            ]);
         }
     }
 ?>

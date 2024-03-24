@@ -15,8 +15,8 @@
             return $this->accountRepo->createAccount($account);
         }
 
-        public function createCustomer($account_id ,$email){
-            $customer = new CustomerModel($account_id, $email);
+        public function createCustomer($account_id){
+            $customer = new CustomerModel($account_id);
             return $this->customerRepo->createCustomer($customer);
         }
 
@@ -83,11 +83,6 @@
                 return null;
             }
             return $customer_account;
-        }
-        
-        public function createNewAccount($email,$password){
-            $account = new AccountModel(null,$email,$password);
-            $this->accountRepo->createAccount($account);
         }
     }
 ?>

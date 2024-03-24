@@ -49,7 +49,7 @@ function showSliderDialogMessage(message){
     dialogElement.style.display="block"
     dialogElement.style.animation="slider-dialog-slide-down-effect 0.3s"
     dialogElement.querySelector(".notification-message").innerText = message
-
+    
     setTimeout(() => {
         closeSliderDialog(dialogElement)
     }, 3000);

@@ -5,27 +5,6 @@ body{
     font-family: "Roboto", sans-serif;
 }
 
-input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    font-family: "Roboto", sans-serif;
-    font-weight: 450;
-}
-
-input.input-error-highlight{
-    border-color: red;
-    border-width: 3px;
-}
-
-div.c-input {
-    display:flex;
-    flex-direction: column;
-}
-div.c-input .input-error-message{
-    display:none;
-    color:red;
-    text-indent: 20px;
-    font-weight: 500;
-}
-
 :root{
     --primary-light-color:rgb(255, 255, 255);
     --secondary-light-color:rgb(227, 235, 238);
@@ -64,4 +43,12 @@ a:hover{
 .no-scrollbar {
 -ms-overflow-style: none;  /* IE and Edge */
 scrollbar-width: none;  /* Firefox */
+}
+
+input,
+input:focus{
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    outline: none;
 }
