@@ -65,7 +65,7 @@
             }
             
             public function getRoleByAccountId($account_id){
-                return $this->unionTables("customers", "staffs", "role_id", "account_id = ".$account_id, "account_id = ".$account_id);
+                return $this->unionTables("customers", "staffs", "role_id", "account_id = ".$account_id, "account_id = ".$account_id)[0]["role_id"];
             }
 
         }

@@ -58,22 +58,17 @@
         }
 
         public function getAccountByEmail($email){  
-            $accountCustomer = $this->accountRepo->joinAccountCustomer($this->toString($email));// lấy ra mảng chứa data của account có email = $email bằng cách join 2 bảng on account_id
-            $accountStaff = $this->accountRepo->joinAccountStaff($this->toString($email));
-            if($accountCustomer){ // nếu mảng khác null
+            $account = $this->accountRepo->getAccountByEmail($email);//lấy ra mảng chứa data của account có username = $username
+            if($account){// nếu mảng khác null
                 header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-                return json_encode($accountCustomer, JSON_UNESCAPED_UNICODE);   // trả về json data
-            }elseif($accountStaff){
-                header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-                return json_encode($accountStaff, JSON_UNESCAPED_UNICODE);
+                return json_encode($account, JSON_UNESCAPED_UNICODE); // trả về json data
             }else{
                 return null;
             }
         }
 
         public function getRoleByAccountId($account_id){
-            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            return json_encode($this->accountRepo->getRoleByAccountId($account_id), JSON_UNESCAPED_UNICODE);
+            return $this->accountRepo->getRoleByAccountId($account_id);
         }
 
         public function checkForAccount($login_details, $password){
@@ -91,33 +86,6 @@
                 return null;
             }
             return $customer_account;
-        }
-        // public function verifyLogin($phoneNumber, $password){
-        //     $verifyPhoneNumber = $this->getAccountByPhoneNumber($phoneNumber);
-        //     $verifyEmail = $this->getAccountByEmail($phoneNumber);
-        //     $passwordPhoneNumber = json_decode($this->getAccountByPhoneNumber($phoneNumber), true);
-        //     $passwordEmail = json_decode($this->getAccountByEmail($phoneNumber), true);
-        //     // header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-        //     // echo json_decode($passwordPhoneNumber[0]['account_id'], JSON_UNESCAPED_UNICODE);   // trả về json data
-        //     if(($verifyPhoneNumber && ($passwordPhoneNumber[0]['password'] == $password)) || ($verifyEmail &&  ($passwordEmail[0]['password'] == $password))){
-        //         if($passwordPhoneNumber){
-        //             $_SESSION["account_id"] = $passwordPhoneNumber[0]['account_id']; // 1
-        //             $_SESSION["role_id"] = $this->getRoleByAccountId($_SESSION["account_id"]);
-        //         }else{
-        //             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-        //             $_SESSION["account_id"] = $passwordEmail[0]['account_id']; // 1
-        //             $_SESSION["role_id"] = $this->getRoleByAccountId($_SESSION["account_id"]);
-        //         }
-        //         if($_SESSION["role_id"] == 5){
-        //             header("location: ../Home/SayHi");
-        //         }else{
-        //             header("location: ../InternalManager/SayHi");
-        //         }
-        //     }else{
-        //         header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-        //         // echo json_encode("Đăng nhập thất bại", JSON_UNESCAPED_UNICODE);   
-        //         echo $passwordEmail;
-        //     }
-        // }   
+        } 
     }
 ?>
