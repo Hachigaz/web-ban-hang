@@ -30,5 +30,8 @@
         public function GetAccountByEmail($email){
             $this->accountService->getAccountByEmail($email);
         }
+        public function GetRoleByAccountId($account_id){
+            $this->accountService->getRoleByAccountId($account_id);
+        }
     }
 ?>

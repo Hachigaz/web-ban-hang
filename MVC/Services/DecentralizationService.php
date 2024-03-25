@@ -36,5 +36,9 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->decentralizationRepo->getDecentralizationById($id), JSON_UNESCAPED_UNICODE);
         }
+        public function getAllModuleByRole($role_id){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->decentralizationRepo->getAllModuleByRole($role_id), JSON_UNESCAPED_UNICODE);
+        }
     }
 ?>

@@ -19,5 +19,9 @@
             public function getDecentralizationById($id){
                 return $this->getAllByWhere("decentralizations", "decentralization_id = ".$id);
             }
+
+            public function getAllModuleByRole($role_id){
+                return $this->getAllByDistinct("decentralizations", "module_id", "role_id = ".$role_id);
+            }
         }
     ?>

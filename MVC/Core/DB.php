@@ -2,9 +2,9 @@
     class DB{
         public $con;
         protected $servername = "localhost";
-        protected $username = "admin";
-        protected $password = "Abc12345";
-        protected $dbname = "electronic_supermarket";
+        protected $username = "root";
+        protected $password = "";
+        protected $dbname = "do_an_electronic_supermarket_test";
         // protected $servername = "localhost";
         // protected $username = "admin";
         // protected $password = "Abc12345";
@@ -177,5 +177,16 @@
         public function toString($string){
             return "'".$string."'";
         }
+
+        public function unionTables($table1, $table2, $column, $where1, $where2){
+            $sql = "SELECT $column FROM $table1 WHERE $where1 
+                    UNION SELECT $column FROM $table2 WHERE $where2";
+            $result = mysqli_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
+        }  
     }
 ?>

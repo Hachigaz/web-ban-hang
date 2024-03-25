@@ -19,5 +19,8 @@
         public function GetDecentralizationById(){
             $this->decentralizationService->GetDecentralizationById();
         }
+        public function GetAllModuleByRole($role_id){// lấy ra các module
+            $this->decentralizationService->getAllModuleByRole($role_id);
+        }
     }
 ?>
