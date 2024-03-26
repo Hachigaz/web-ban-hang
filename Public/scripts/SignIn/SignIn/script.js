@@ -20,7 +20,18 @@ function setup(){
     window.history.pushState({},document.title,newURL)
 
     //cookies
+    let formElement = document.querySelector('form.sign-in-form')
+    let usernameInput = new InputElement(formElement.querySelector('#input_username'))
+    let passwordInput = new InputElement(formElement.querySelector('#input_password'))
+    let isRememberPasswordInput = new InputElement(formElement.querySelector('#input_remember_password'))
     
+    const rememberUsername = getCookie("remember_username")
+    const rememberPassword = getCookie("remember_password")
+    if(rememberUsername!=""){
+        usernameInput.setInputValue(rememberUsername)
+        passwordInput.setInputValue(rememberPassword)
+        isRememberPasswordInput.setChecked(true)
+    }
 }
 
 function processSignIn(){
@@ -28,7 +39,7 @@ function processSignIn(){
         let formElement = document.querySelector('form.sign-in-form')
         let usernameInput = new InputElement(formElement.querySelector('#input_username'))
         let passwordInput = new InputElement(formElement.querySelector('#input_password'))
-        let isRememberPassword = formElement.querySelector('#input_remember_password').value
+        let isRememberPasswordInput = new InputElement(formElement.querySelector('#input_remember_password'))
 
         if(usernameInput.getInputValue()==""){
             usernameInput.showError("Thông tin đăng nhập không được để trống")
@@ -46,3 +57,19 @@ function processSignIn(){
         return false
     }
 }
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }

@@ -30,6 +30,14 @@ class InputElement{
     setInputValue(value){
         this.inputElement.value = value
     }
+
+    isChecked(){
+        return this.inputElement.checked
+    }
+
+    setChecked(boolVal){
+        this.inputElement.checked = boolVal
+    }
 }
 
 function show_notification_dialog(notificationID){

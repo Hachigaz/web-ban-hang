@@ -79,7 +79,38 @@ function processSignUp(){
                 return false
             }
         }
-        return true
+        
+
+        let checkEmailData = new FormData()
+        checkEmailData.append("user_email",emailInput.getInputValue())
+
+        let checkEmailRequest = new XMLHttpRequest();
+        checkEmailRequest.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                let responseData = JSON.parse(this.responseText)
+                let status = responseData["exist_status"]
+                if(status=="non_exists"){
+                    let signUpData = new FormData()
+                    signUpData.append("input_email",emailInput.getInputValue())
+                    signUpData.append("input_password",passwordInput.getInputValue())
+                    signUpData.append("input_confirm_password",confirmPasswordInput.getInputValue())
+            
+                    let signUpRequest = new XMLHttpRequest();
+                    signUpRequest.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            window.location= "../SignUp/VerifyAccount"
+                        }
+                    };
+                    signUpRequest.open("POST", "../SignUp/CreateAccount", true);
+                    signUpRequest.send(signUpData);
+                }
+                else if(status=="email_exists"){
+                    showSliderDialogMessage("Email đã được sử dụng, vui lòng sử dụng email khác.")
+                }
+            }
+        };
+        checkEmailRequest.open("POST", "../SignUp/CheckEmailExist", true);
+        checkEmailRequest.send(checkEmailData);
     }
     catch(e){
         console.log(e)

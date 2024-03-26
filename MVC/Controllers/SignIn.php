@@ -14,6 +14,7 @@
         public function CheckSignIn(){
             $input_login_details = $_POST["input_username"];
             $input_password = $_POST["input_password"];
+            $input_remember_password = $_POST["input_remember_password"];
             
             $logged_in_customer_account = $this->accountService->checkForAccount($input_login_details,$input_password);
             if($logged_in_customer_account==null){
@@ -23,6 +24,10 @@
             }
             
             else{
+                if($input_remember_password){
+                    setcookie("remember_username",$input_login_details,0,"../SignIn/");
+                    setcookie("remember_password",$input_password,0,"../SignIn/");
+                }
                 $_SESSION["logged_in_customer"] = $this->customerService->getCustomerByAccountId($logged_in_customer_account["account_id"]);
                 $url = "../Home/";
                 header("Location: ".$url);

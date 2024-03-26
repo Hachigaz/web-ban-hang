@@ -56,8 +56,15 @@
                 </div>
                 <div class="sign-in-options">
                     <div class="password-remember-wrapper">
-                        <input type="checkbox" id="input_remember_password">
-                        <label for="input_remember_password" class="no-user-select">Lưu mật khẩu</label>
+                        <div class="c-input" id="input_remember_password">
+                            <div class="input-label-wrapper">
+                                <label for="input_remember_password" class="no-user-select">Lưu mật khẩu</label>
+                                <div class="input-error-message">
+                                    
+                                </div>    
+                            </div>
+                            <input type="checkbox" name="input_remember_password">
+                        </div>
                     </div>
                     <a href="../SignIn/ForgotPassword" class="forgot-password-option">Quên mật khẩu</a>
                 </div>

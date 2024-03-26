@@ -36,8 +36,6 @@
             
             $_SESSION["signup_user_data"] = $signUpData;
             $result = $this->GenerateVerificationCode();
-            
-            header("Location: ../SignUp/VerifyAccount");
         }
         public function ResendVerificationCode(){
             $codeCreatedTime = $_SESSION["verification_code"]["time_created"];
@@ -121,7 +119,7 @@
                 $this->accountService->createAccount($newAccount);
                 $newAccount = $this->accountService->accountRepo->getAccountByEmail($userData["email"]);
                 
-                $newCustomer = new CustomerModel($newAccount["email"]);
+                $newCustomer = new CustomerModel($newAccount["account_id"]);
                 $this->customerService->createCustomer($newCustomer);
 
                 
@@ -129,9 +127,24 @@
                 unset($_SESSION["verification_code"]); 
 
 
-                //header("Location: ../SignIn/?status=verify_success");
+                header("Location: ../SignIn/?status=verify_success");
                 return;
             }
+        }
+
+        public function CheckEmailExist(){
+            $userEmail = $_POST["user_email"];
+
+            //kiem tra email ton tai chua
+            if($this->accountService->accountRepo->getAccountByEmail($userEmail)!=null){
+                $returnStatus = ["exist_status"=>"email_exists"];
+            }
+            else{
+                $returnStatus = ["exist_status"=>"non_exists"];
+            }
+            
+            header('Content-Type: application/json');
+            echo(json_encode($returnStatus));
         }
     }
 ?>

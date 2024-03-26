@@ -34,7 +34,7 @@
             <div class="form-message">
 
             </div>
-            <form class="sign-up-form" action="../SignUp/CreateAccount" method="post">
+            <form class="sign-up-form" action="#" method="post">
                 <div class="c-input" id="input_email">
                     <div class="input-label-wrapper">
                         <label for="input_email">Email</label>
@@ -62,7 +62,7 @@
                     </div>  
                     <input name="input_confirm_password" type="password" placeholder="Nhập lại mật khẩu" onclick="(new InputElement(this.parentElement)).hideError()">
                 </div>
-                <input type="submit" value="Tạo tài khoản">            
+                <input type="button" value="Tạo tài khoản" onclick="processSignUp()">            
             </form>
             <div class="sign-up-bottom-options">
                 Đã có tài khoản?
