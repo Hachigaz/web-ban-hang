@@ -19,5 +19,9 @@
         public function getOrderById($id){
             return $this->getAllByWhere("orders", "order_id = ".$id);
         }
+
+        public function getQuantityAllOrder(){
+            return $this->getCountColumn("orders", "order_id", "");
+        }
     }
 ?>

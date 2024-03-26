@@ -4,11 +4,7 @@
         protected $servername = "localhost";
         protected $username = "root";
         protected $password = "";
-        protected $dbname = "do_an_electronic_supermarket_test";
-        // protected $servername = "localhost";
-        // protected $username = "admin";
-        // protected $password = "Abc12345";
-        // protected $dbname = "electronic_supermarket";
+        protected $dbname = "electronic_supermarket_test";
 
         function __construct(){
             $this->con = mysqli_connect($this->servername, $this->username, $this->password);
@@ -109,27 +105,6 @@
             return $rows;
         }
 
-
-        public function getAllByWhereOrderBy($table, $where, $order_by) {// lấy ra các bản ghi thỏa điều kiện đầy đủ thuộc tính (chi lay ra is_active = 1)
-            $is_active = "is_active";
-            $sql = "SELECT * FROM $table WHERE $where AND $is_active = '1' ORDER BY $order_by";// ở đây ghi rõ tên cột id
-            $result = mysqli_query($this->con, $sql);
-            $rows = array();
-            while ($row = $result->fetch_assoc()){
-                $rows[] = $row;
-            }
-            return $rows;
-        }
-
-        public function get($sql) {// lấy ra các bản ghi thỏa điều kiện đầy đủ thuộc tính (chi lay ra is_active = 1)
-            $result = mysqli_query($this->con, $sql);
-            $rows = array();
-            while ($row = $result->fetch_assoc()){
-                $rows[] = $row;
-            }
-            return $rows;
-        }
-
         public function getAllDontHaveIsActive($table, $where){// lấy ra các bản ghi thỏa điều kiện không có cột is_active
             $sql = "SELECT * FROM $table WHERE $where";// ở đây ghi rõ tên cột id
             $result = mysqli_query($this->con, $sql);
@@ -174,10 +149,6 @@
             return $rows;
         }
 
-        public function toString($string){
-            return "'".$string."'";
-        }
-
         public function unionTables($table1, $table2, $column, $where1, $where2){
             $sql = "SELECT $column FROM $table1 WHERE $where1 
                     UNION SELECT $column FROM $table2 WHERE $where2";
@@ -187,6 +158,21 @@
                 $rows[] = $row;
             }
             return $rows;
-        }  
+        }   
+
+        public function toString($string){
+            return "'".$string."'";
+        }
+
+        public function getCountColumn($table, $column, $where){
+            if($where != ""){
+                $sql = "SELECT COUNT($column) FROM $table WHERE $where";
+            }else{
+                $sql = "SELECT COUNT($column) FROM $table";
+            }
+            $result = mysqli_query($this->con, $sql);
+            $row = mysqli_fetch_assoc($result);
+            return $row["COUNT($column)"];            
+        }
     }
 ?>

@@ -19,5 +19,9 @@
         public function getStaffById($id){
             return $this->getAllByWhere("staffs", "staff_id = ".$id);
         }
+
+        public function getQuantityAllStaff(){
+            return $this->getCountColumn("staffs", "staff_id", "");
+        }
     }
 ?>
