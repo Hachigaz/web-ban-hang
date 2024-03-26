@@ -31,6 +31,10 @@
             echo json_encode($this->orderRepo->getAllOrder(), JSON_UNESCAPED_UNICODE);
         }
 
+        public function getQuantityAllOrder(){
+            return $this->orderRepo->getQuantityAllOrder();
+        }
+
         public function getOrderById(){
             $id = "3";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json

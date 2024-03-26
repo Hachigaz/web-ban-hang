@@ -1,4 +1,4 @@
-    <?php
+<?php
         class ProductRepository extends DB{
             public function createProduct($product){
                 $this->create("products", $product, "product_id");
@@ -42,6 +42,10 @@
 
             public function getBrandLogoByCategory($category_id){// lấy ra tất cả logo thương hiệu theo loại sản phẩm
                 return $this->joinTableDistinct("products", "brands", "brand_logo", "brand_id", "category_id = ".$category_id);
+            }
+
+            public function getQuantityAllProduct(){// lấy ra số lượng mặt hàng mà cửa hàng đang bán
+                return $this->getCountColumn("products", "product_id", "");
             }
         }
     ?>

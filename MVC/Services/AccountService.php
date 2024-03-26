@@ -58,13 +58,17 @@
         }
 
         public function getAccountByEmail($email){  
-            $account = $this->accountRepo->joinAccountCustomer($this->toString($email));// lấy ra mảng chứa data của account có email = $email bằng cách join 2 bảng on account_id
-            if($account){ // nếu mảng khác null
+            $account = $this->accountRepo->getAccountByEmail($email);//lấy ra mảng chứa data của account có username = $username
+            if($account){// nếu mảng khác null
                 header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-                return json_encode($account, JSON_UNESCAPED_UNICODE);   // trả về json data
+                return json_encode($account, JSON_UNESCAPED_UNICODE); // trả về json data
             }else{
                 return null;
             }
+        }
+
+        public function getRoleByAccountId($account_id){
+            return $this->accountRepo->getRoleByAccountId($account_id);
         }
 
         public function checkForAccount($login_details, $password){

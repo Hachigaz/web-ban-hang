@@ -31,6 +31,10 @@
             echo json_encode($this->staffRepo->getAllStaff(), JSON_UNESCAPED_UNICODE);
         }
 
+        public function getQuantityAllStaff(){
+            return $this->staffRepo->getQuantityAllStaff();
+        }
+
         public function getStaffById(){
             $id = "5";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json

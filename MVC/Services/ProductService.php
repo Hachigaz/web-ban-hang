@@ -2,7 +2,7 @@
     require_once "./MVC/Models/ProductModel.php";
     class ProductService extends Service{
         public $productRepo;
-        
+
         public function __construct(){
             $this->productRepo = $this->repository("ProductRepository");
         }
@@ -31,19 +31,13 @@
             echo json_encode($this->productRepo->getAllProduct(), JSON_UNESCAPED_UNICODE);
         }
 
+        public function getQuantityAllProduct(){
+            return $this->productRepo->getQuantityAllProduct();
+        }
+
         public function getProductById($product_id){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->productRepo->getProductById($product_id), JSON_UNESCAPED_UNICODE);
-        }
-
-        public function getProductByType($categoryName, $productCount = 20, $index = 0){
-            $sql = "SELECT products.product_name, categories.category_name, brands.brand_name, products.price, products.description, products.thumbnail, products.guarantee, products.average_rating
-                FROM products join brands on products.brand_id = brands.brand_id join categories on products.category_id = categories.category_id
-                WHERE categories.category_name = '$categoryName'
-                ORDER BY products.updated_at DESC
-                LIMIT $productCount;";
-
-            return $this->productRepo->get($sql);
         }
 
         public function getAllBrandOfProduct(){
@@ -74,6 +68,15 @@
         public function getBrandLogoByCategory($category_id){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->productRepo->getBrandLogoByCategory($category_id), JSON_UNESCAPED_UNICODE);
+        }
+        public function getProductByType($categoryName, $productCount = 20, $index = 0){
+            $sql = "SELECT products.product_name, categories.category_name, brands.brand_name, products.price, products.description, products.thumbnail, products.guarantee, products.average_rating
+                FROM products join brands on products.brand_id = brands.brand_id join categories on products.category_id = categories.category_id
+                WHERE categories.category_name = '$categoryName'
+                ORDER BY products.updated_at DESC
+                LIMIT $productCount;";
+
+            return $this->productRepo->get($sql);
         }
     }
 ?>

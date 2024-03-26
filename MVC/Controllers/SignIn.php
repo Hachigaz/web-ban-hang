@@ -29,9 +29,18 @@
                     setcookie("remember_password",$input_password,0,"../SignIn/");
                 }
                 $_SESSION["logged_in_customer"] = $this->customerService->getCustomerByAccountId($logged_in_customer_account["account_id"]);
-                $url = "../Home/";
-                header("Location: ".$url);
-                return;
+                $account = json_decode($this->accountService->getAccountByEmail($input_login_details), true);
+                $_SESSION["role_id"] = $this->accountService->getRoleByAccountId($account['account_id']);
+                // echo "role: ".$_SESSION["role_id"];
+                if($_SESSION["role_id"] == 5){
+                    $url = "../Home/";
+                    header("Location: ".$url);
+                    return;
+                }else{
+                    header("Location: ../InternalManager/SayHi");
+                    return;
+                }
+                
             }
         }
 
