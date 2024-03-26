@@ -31,31 +31,6 @@ function processSignUp(){
         password = password.length!=0?password:null
         confirm_password = confirm_password.length!=0?confirm_password:null
 
-        // if(emailInput.getInputValue()==""){
-        //     emailInput.showError("Email không được để trống")
-        //     return false
-        // }
-        
-        // if(passwordInput.getInputValue()==""){
-        //     passwordInput.showError("Mật khẩu không được để trống")
-        //     return false
-        // }
-        // if(passwordInput.getInputValue().length < 8){
-        //     passwordInput.showError("Mật khẩu phải chứa ít nhất 8 ký tự")
-        //     return false
-        // }
-        
-        // if(confirmPasswordInput.getInputValue()==""){
-        //     confirmPasswordInput.showError("Mật khẩu không được để trống")
-        //     return false
-        // }
-        // else if(confirmPasswordInput.getInputValue()!=passwordInput.getInputValue()){
-        //     confirmPasswordInput.showError("Mật khẩu không trùng khớp")
-        //     return false
-        // }
-
-        
-
         let constraints = {
             email: {
                 presence:{

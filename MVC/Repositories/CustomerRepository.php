@@ -1,7 +1,7 @@
 <?php
         class CustomerRepository extends DB{
             public function createCustomer($customer){
-                $this->create("customers", $customer, "customer_id");
+                return $this->create("customers", $customer, "customer_id");
             }
 
             public function updateCustomer($customer, $id){// by id

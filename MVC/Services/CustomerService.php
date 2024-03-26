@@ -7,8 +7,7 @@
             $this->customerRepo = $this->repository("CustomerRepository");
         }
         
-        public function createCustomer(){
-            $customer = new CustomerModel("Nguyễn Thị Leeeee", "5", "9", "1", "0922363119", "leee122@gmail.com", "Nghĩa Địa Gia Đôi", "2003-05-22");
+        public function createCustomer($customer){
             $this->customerRepo->createCustomer($customer);
         }
 

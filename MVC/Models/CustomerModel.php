@@ -73,7 +73,6 @@
                 'role_id' => $this->role_id,
                 'account_id' => $this->account_id,
                 'gender' => $this->gender,
-                'customer_email' => $this->customer_email,
                 'address' => $this->address,
                 'date_of_birth' => $this->date_of_birth,
                 'is_active' => $this->is_active

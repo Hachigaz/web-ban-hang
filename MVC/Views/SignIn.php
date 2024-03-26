@@ -6,7 +6,8 @@
     <title>Master</title>
     
     <link rel="stylesheet" href="../Public/css/globals/globals.css">
-    <link rel="stylesheet" href="../Public/css/globals/components.css"> 
+    <link rel="stylesheet" href="../Public/css/globals/components.css">
+    
     <script src="../Public/scripts/components/globals.js"></script>
 </head>
 <body>

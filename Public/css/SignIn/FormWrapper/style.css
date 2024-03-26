@@ -13,3 +13,10 @@ div.main{
 
     background-color: rgba(201, 231, 255, 0.24);
 }
+
+
+
+hr.form-separation{
+    margin: 0 0;
+    border-bottom: 1px solid black;
+}

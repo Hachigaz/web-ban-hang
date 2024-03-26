@@ -83,5 +83,10 @@
             }
             return $customer_account;
         }
+
+        public function changeAccountPassword($account_email,$new_password){
+            $sql = "UPDATE accounts set accounts.password = '$new_password' where email='$account_email'";
+            $this->accountRepo->set($sql);
+        }
     }
 ?>

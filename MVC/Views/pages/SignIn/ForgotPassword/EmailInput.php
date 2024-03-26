@@ -9,31 +9,29 @@
         <div class="title">
             Quên mật khẩu
         </div>
-        <br>
         <hr class="form-separation">
-        <br>
-        <div class="form-message">
-            Nhập Email của tài khoản để gửi mã xác nhận
-        </div>
-        <br>
-        <div class="c-input" id="input_email">
-            <div class="input-label-wrapper">
-                <div class="input-error-message">
-                    
-                </div>    
+        <div class="form-content-wrapper">
+            <div class="form-message">
+                Nhập Email của tài khoản để gửi mã xác nhận
             </div>
-            <input type="text" name="input_email" placeholder="Nhập Email" onclick="(new InputElement(this.parentElement)).hideError()" autocomplete="off">
+            <br>
+            <div class="c-input" id="input_email">
+                <div class="input-label-wrapper">
+                    <div class="input-error-message">
+                        
+                    </div>    
+                </div>
+                <input type="text" name="input_email" placeholder="Nhập Email" onclick="(new InputElement(this.parentElement)).hideError()" autocomplete="off">
+            </div>
         </div>
-        
-        <br>
         <hr class="form-separation">
-        <br>
-
-        <div class="submit-wrapper">
-            <input type="submit" value="Gửi">
-        </div>
-        <div class="form-bottom-options">
-            <a class="option" href="../SignIn/">Quay lại đăng nhập</a>
+        <div class="form-bottom-wrapper">
+            <div class="submit-wrapper">
+                <input type="submit" value="Gửi">
+            </div>
+            <div class="form-bottom-options">
+                <a class="option" href="../SignIn/">Quay lại đăng nhập</a>
+            </div>
         </div>
     </form>
 </div>

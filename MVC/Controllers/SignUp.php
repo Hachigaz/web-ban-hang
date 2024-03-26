@@ -41,17 +41,15 @@
         }
         public function ResendVerificationCode(){
             $codeCreatedTime = $_SESSION["verification_code"]["time_created"];
-            $resendStatus;
+            $resendStatus=[];
             if(time()-$codeCreatedTime>=30){
                 $result = $this->GenerateVerificationCode();
                 $resendStatus=["resend_status"=>"success"];
-                return;
             }
             else{
-                header('Content-Type: application/json');
                 $resendStatus=["resend_status"=>"resend_too_soon"];
-                return;
             }
+            header('Content-Type: application/json');
             echo(json_encode($resendStatus));
         }
         private function GenerateVerificationCode(){
@@ -69,7 +67,8 @@
             $message = "
                 Mã xác nhận email là: $verification_code.";
             
-            return mail($userEmail,$emailSubject,$message);
+            //return mail($userEmail,$emailSubject,$message);
+            return true;
         }
         public function VerifyAccount(){
             if($_SESSION["verification_code"]==null){
@@ -86,6 +85,8 @@
                     return;
                 }
             }
+            $code = $_SESSION["verification_code"]["code"];
+            echo("code $code");
 
             $this->view("SignIn",[
                 "Page" => "SignIn/FormWrapper",
@@ -93,6 +94,11 @@
             ]);
         }
         public function DoVerifyEmail(){
+            if(!isset($_SESSION["verification_code"])){
+               header("Location: ../SignUp/");  
+               return;
+            }
+
             $codeCreatedTime = $_SESSION["verification_code"]["time_created"];
             if($codeCreatedTime!=null){
                 if(time()-$codeCreatedTime>300){
@@ -113,7 +119,17 @@
                 $userData = $_SESSION["signup_user_data"];
                 $newAccount = new AccountModel($userData["email"],$userData["password"]);
                 $this->accountService->createAccount($newAccount);
-                header("Location: ../SignIn/?status=verify_success");
+                $newAccount = $this->accountService->accountRepo->getAccountByEmail($userData["email"]);
+                
+                $newCustomer = new CustomerModel($newAccount["email"]);
+                $this->customerService->createCustomer($newCustomer);
+
+                
+                unset($_SESSION["signup_user_data"]);
+                unset($_SESSION["verification_code"]); 
+
+
+                //header("Location: ../SignIn/?status=verify_success");
                 return;
             }
         }

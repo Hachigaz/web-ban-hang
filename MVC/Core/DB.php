@@ -121,6 +121,10 @@
             return $rows;
         }
 
+        public function set($sql){
+            return mysqli_query($this->con, $sql);
+        }
+
         public function get($sql) {// lấy ra các bản ghi thỏa điều kiện đầy đủ thuộc tính (chi lay ra is_active = 1)
             $result = mysqli_query($this->con, $sql);
             $rows = array();

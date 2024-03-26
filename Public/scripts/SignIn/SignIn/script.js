@@ -10,6 +10,9 @@ function setup(){
     else if(status == "verify_success"){
         showSliderDialogMessage("Xác nhận email thành công")
     }
+    else if(status == "change_password_success"){
+        showSliderDialogMessage("Đổi mật khẩu thành công")
+    }
     for (key in searchParams.keys()){
         searchParams.delete(key)
     }

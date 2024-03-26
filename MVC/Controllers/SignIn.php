@@ -31,14 +31,64 @@
         }
 
         public function ForgotPassword(){
-            $this->view("SignIn",[
-                "Page" => "SignIn/FormWrapper",
-                "Form" => "SignIn/ForgotPassword/EmailInput"
-            ]);
+            $uri = parse_url($_SERVER['REQUEST_URI']);
+            if(isset($uri["query"])){            
+                parse_str($uri["query"],$urlParams);
+            }
+            
+            if(!isset($urlParams["action"])){
+                $this->view("SignIn",[
+                   "Page" => "SignIn/FormWrapper",
+                   "Form" => "SignIn/ForgotPassword/EmailInput"
+                ]);
+                return;
+            }
+            if($_SESSION["password_change_user_data"]==null){
+                header("Location: ../SignIn/");
+                return;
+            }
+            $verification_data = $_SESSION["password_change_verification_code"];
+            if($verification_data==null){                    
+                header("Location: ../SignIn/");
+                return;
+            }
+
+            if(time() - $verification_data["time_created"] > 300){     
+                unset($_SESSION["password_change_verification_code"]);   
+                unset($_SESSION["password_change_user_data"]);   
+                header("Location: ../SignIn/ForgotPassword?status=verification_timed_out");
+                return;
+            }
+
+            $action = $urlParams["action"];
+            if($action == "ConfirmEmail"){
+                if($verification_data["is_verified"]){
+                    header("Location: ../SignIn/ForgotPassword?action=ChangePassword");
+                    return;
+                }
+                $this->view("SignIn",[
+                    "Page" => "SignIn/FormWrapper",
+                    "Form" => "SignIn/ForgotPassword/ConfirmEmail"
+                ]);
+            }
+            else if($action=="ChangePassword"){
+                if(!$verification_data["is_verified"]){
+                    header("Location: ../SignIn/ForgotPassword?action=ConfirmEmail");
+                    return;
+                }
+                $this->view("SignIn",[
+                    "Page" => "SignIn/FormWrapper",
+                    "Form" => "SignIn/ForgotPassword/ChangePassword"
+                ]);
+                return;
+            }
         }
 
         public function SendVerificationEmail(){
             $email = $_POST["input_email"];
+            if($email==null){
+                header("Location: ../SignIn/");
+            }
             $account = $this->accountService->accountRepo->getAccountByEmail($email);
             if($account==null){
                 header("Location: ../SignIn/ForgotPassword?status=email_not_exist");
@@ -48,32 +98,17 @@
 
             $this->GenerateVerificationCode();
 
-            $this->view("SignIn",[
-                "Page" => "SignIn/FormWrapper",
-                "Form" => "SignIn/ForgotPassword/ConfirmEmail"
-            ]);
+            $code = $_SESSION["password_change_verification_code"]["code"];
+            header("Location: ../SignIn/ForgotPassword?action=ConfirmEmail&code=$code");
         }
-        public function ResendVerificationEmail(){
-            $codeCreatedTime = $_SESSION["password_change_verification_code"]["time_created"];
-            $resendStatus;
-            if(time()-$codeCreatedTime>=30){
-                $result = $this->GenerateVerificationCode();
-                $resendStatus=["resend_status"=>"success"];
-                return;
-            }
-            else{
-                header('Content-Type: application/json');
-                $resendStatus=["resend_status"=>"resend_too_soon"];
-                return;
-            }
-            echo(json_encode($resendStatus));
-        }
+
         private function GenerateVerificationCode(){
             $verification_code = substr(md5(rand()), 0, 6);
 
             $verificationData = [
                 "time_created"=>time(),
-                "code"=>$verification_code
+                "code"=>$verification_code,
+                "is_verified"=>false
             ];
 
             $_SESSION["password_change_verification_code"]= $verificationData;
@@ -85,6 +120,58 @@
                 Mã xác nhận email là: $verification_code.";
             
             //return mail($userEmail,$emailSubject,$message);
+        }
+
+        public function VerifyCode(){
+            $verificationCode = $_POST["input-verification-code"];
+            
+            if(!isset($_SESSION["password_change_verification_code"])){
+                header("Location: ../SignIn/");
+                return;
+            }
+            $verificationData = $_SESSION["password_change_verification_code"];
+            $userData = $_SESSION["password_change_user_data"];
+
+            if(time() - $verificationData["time_created"] > 300){
+                unset($_SESSION["password_change_verification_code"]);
+                unset($_SESSION["password_change_user_data"]);
+                header("Location: ../SignIn/ForgotPassword?status=verification_timed_out");
+                return;
+            }
+
+            if($verificationData["code"]!=$verificationCode){
+                header("Location: ../SignIn/ForgotPassword?action=ConfirmEmail&status=invalid_code");
+                return;
+            }
+            else{
+                $_SESSION["password_change_verification_code"]["is_verified"]=true;
+                
+                var_dump($_SESSION["password_change_verification_code"]);
+                header("Location: ../SignIn/ForgotPassword?action=ChangePassword");
+                return;
+            }
+        }
+
+        public function ChangePassword(){
+            if(!isset($_SESSION["password_change_verification_code"])){
+                header("Location: ../SignIn/");
+                return;
+            }
+            $newPassword = $_POST["input_new_password"];
+            if(!isset($newPassword)){
+                header("Location: ../SignIn/ForgotPassword?action=ChangePassword");
+                return;
+            }
+            
+            $email = $_SESSION["password_change_user_data"]["email"];
+            $this->accountService->changeAccountPassword($email,$newPassword);
+
+            
+            unset($_SESSION["password_change_verification_code"]);
+            unset($_SESSION["password_change_user_data"]);
+
+            header("Location: ../SignIn/?status=change_password_success");
+            return;
         }
     }
 ?>

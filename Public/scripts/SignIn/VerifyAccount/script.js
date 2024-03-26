@@ -26,9 +26,10 @@ function setup(){
 
 function doVerifyCode(){
     try{
-        const codeInputElement = document.querySelector(`input.code-input`)
+        const formElement = document.querySelector("form")
+        const codeInputElement = new InputElement(formElement.querySelector(`#input-verification-code`))
     
-        let verificationCode = codeInputElement.value 
+        let verificationCode = codeInputElement.getInputValue()
         
         let constraints = {
             code:{
@@ -47,7 +48,7 @@ function doVerifyCode(){
         const result = validate(inputs, constraints,{fullMessages:false});
         if(result!=undefined){
             if(result["code"]){
-                showSliderDialogMessage(result["code"])
+                codeInputElement.showError(result["code"])
                 return false
             }
         }
@@ -65,7 +66,6 @@ function doResendVerificationCode(){
         if (this.readyState == 4 && this.status == 200) {
             let responseData = JSON.parse(this.responseText)
             let resendStatus = responseData["resend_status"]
-            console.log(responseData)
             if(resendStatus=="success"){
                 showSliderDialogMessage("Gửi lại mã xác nhận thành công")
             }

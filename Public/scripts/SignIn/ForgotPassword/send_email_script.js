@@ -6,6 +6,9 @@ function setup(){
     if(status == "email_not_exist"){
         showSliderDialogMessage("Không tìm thấy email liên kết đến tài khoản")
     }
+    if(status == "verification_timed_out"){
+        showSliderDialogMessage("Thời gian xác nhận email hết hạn")
+    }
     for (key in searchParams.keys()){
         searchParams.delete(key)
     }
