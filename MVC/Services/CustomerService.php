@@ -40,5 +40,8 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->customerRepo->getCustomerById($id), JSON_UNESCAPED_UNICODE);
         }
+        public function getCustomerByAccountId($account_id){
+            return $this->customerRepo->getCustomerByAccountId($account_id);
+        }
     }
 ?>
