@@ -28,7 +28,9 @@
         </div>
         <div class="categories-panel">
             <div class="categories-panel style-panel-title">
-                Xem các danh mục
+                <div class="set-title-name">
+                        Xem các danh mục
+                </div>
             </div>
             <div class="category-wrapper">
                 <div class="category-list">

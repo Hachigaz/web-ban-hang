@@ -70,7 +70,7 @@
             echo json_encode($this->productRepo->getBrandLogoByCategory($category_id), JSON_UNESCAPED_UNICODE);
         }
         public function getProductByType($categoryName, $productCount = 20, $index = 0){
-            $sql = "SELECT products.product_name, categories.category_name, brands.brand_name, products.price, products.description, products.thumbnail, products.guarantee, products.average_rating
+            $sql = "SELECT products.product_id, products.product_name, categories.category_name, brands.brand_name, products.price, products.description, products.thumbnail, products.guarantee, products.average_rating
                 FROM products join brands on products.brand_id = brands.brand_id join categories on products.category_id = categories.category_id
                 WHERE categories.category_name = '$categoryName'
                 ORDER BY products.updated_at DESC

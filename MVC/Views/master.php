@@ -15,7 +15,6 @@
         <?php require_once "./MVC/Views/blocks/navbar.php" ?>
         <?php require_once "./MVC/Views/pages/".$data["Page"].".php" ?>
         <?php require_once "./MVC/Views/blocks/footer.php" ?>
-        <script src="../Public/js/test.js"></script>
         <script src="../Public/js/navbar.js"></script>
     </body>
 </html>
