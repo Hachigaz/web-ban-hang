@@ -9,7 +9,8 @@
         public function SayHi(){
             $ProductLists = [
                 "Laptop" => $this->productService->getProductByType('Laptop'),
-                "SmartPhone" => $this->productService->getProductByType('Điện thoại')
+                "SmartPhone" => $this->productService->getProductByType('Điện thoại'),
+                "SmartPhone" => $this->productService->getProductByType('Smartwatch')
             ];
             $BannerList = [
                 "Banners"=>glob("Public/img/banners/*")
