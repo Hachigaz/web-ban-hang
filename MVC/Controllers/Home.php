@@ -11,9 +11,13 @@
                 "Laptop" => $this->productService->getProductByType('Laptop'),
                 "SmartPhone" => $this->productService->getProductByType('Điện thoại')
             ];
+            $BannerList = [
+                "Banners"=>glob("Public/img/banners/*")
+            ];
             $this->view("master",[
                 "Page" => "Home/Home",
-                "ProductLists" => $ProductLists
+                "ProductLists" => $ProductLists,
+                "BannerList"=>$BannerList
             ]);
         }
     }

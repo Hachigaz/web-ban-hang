@@ -10,7 +10,7 @@
             <span class="phone-number">1800 6109</span>
         </div>
         <div class="search-bar">
-            <form action="" class="form-search">
+            <form action="#" class="form-search">
                 <input type="text" class="input-search" placeholder="Bạn cần tìm gì...">
                 <button class="btn-search">
                     <i class="fa-solid fa-magnifying-glass"></i>

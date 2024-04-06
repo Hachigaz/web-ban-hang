@@ -40,7 +40,6 @@
                     header("Location: ../InternalManager/SayHi");
                     return;
                 }
-                
             }
         }
 

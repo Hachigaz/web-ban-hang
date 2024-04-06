@@ -1,25 +1,21 @@
 <link rel="stylesheet" href="../Public/css/globals/globals.css">
 <link rel="stylesheet" href="../Public/css/globals/components.css">
 <link rel="stylesheet" href="../Public/css/Home/style.css">
+<link rel="stylesheet" href="../Public/css/Home/product_item.css">
 
 <script src="../Public/scripts/components/widgets.js" defer></script>
 <script src="../Public/scripts/Home/script.js"></script>
-
 <div class="home-page">
     <div class="content-wrapper">
         <div class="widget-panel">
             <div id="ad-widget" class="widget-container">
                 <div class="widget-list-wrapper">
                     <div class="widget-list">
-                        <a href="#" class="widget-item no-style" style="background-color:rgb(185, 112, 112)">
-                            <img src="../Public/img/banners/banner1.png" alt="" srcset="">
-                        </a>
-                        <a href="#" class="widget-item no-style" style="background-color:rgb(78, 206, 95)">
-                            <img src="../Public/img/banners/banner2.png" alt="" srcset="">
-                        </a>
-                        <a href="#" class="widget-item no-style" style="background-color:rgb(91, 128, 196)">
-                            <img src="../Public/img/banners/banner3.png" alt="" srcset="">
-                        </a>
+                        <?php foreach($data["BannerList"]["Banners"] as $bannerPath): ?>
+                            <a href="#" class="widget-item no-style" style="">
+                                <img src="../<?=$bannerPath?>" alt="" srcset="">
+                            </a>
+                        <?php endforeach?>
                     </div>
                 </div>
                 <button class="widget-button left-widget-button no-user-select" onclick="this.parentElement.itemWidget.moveToPrevItem()">❮</button>

@@ -1,0 +1,139 @@
+.body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+}
+
+.body-wrapper{
+    overflow-x: hidden;  
+}
+
+@media screen and ((max-width:1000px) or (orientation:portrait)){
+    .body-content{
+        grid-template-columns: 100%;
+        grid-template-rows: auto 1fr;
+    }
+    .body-wrapper{
+        
+    }
+}
+
+
+@media screen and ((min-width: 1000px) and (orientation:landscape)){
+    .body-content{
+        grid-template-columns: 250px min-content;
+    }
+}
+
+.body-content{
+    margin:10px 0;
+    display:grid;
+    gap: 10px;
+}
+
+
+
+.filter-panel{
+    background-color: rgb(245, 245, 245);
+    min-width: 200px;
+
+    border-radius: 5px;
+
+    display:flex;
+    flex-direction: column;
+    padding: 10px 10px;
+    gap:10px;
+}
+
+.filter-panel .filter-panel-title{
+
+}
+
+.filter-panel .filter-element-container{
+
+}
+
+.filter-element-container .filter-title{
+    
+}
+
+.filter-element-container .filter-content{
+
+}
+
+.filter-element-container .filter-content label{
+    display:block;
+}
+
+.product-display-panel{
+    width:100%;
+}
+
+
+
+.product-display-panel .panel-wrapper{
+    border-radius: 5px;
+    
+    background-color: rgb(245, 245, 245);
+    display:flex;
+    flex-direction: column;
+    gap:8px;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.product-display-panel .panel-wrapper > * {
+    margin-left:20px;
+    margin-right: 20px;
+}
+
+.product-display-panel .panel-wrapper .product-display-title{
+    font-size: 15pt;
+    font-weight: 600;
+
+    border-radius: 5px;
+
+    padding:10px 10px;
+
+    background-color: white;
+}
+
+.product-display-panel .panel-wrapper .product-list{
+    display: grid;
+    width:fit-content;
+    justify-items:center;
+    align-self: center;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+@media screen and ((max-width: 600px)){
+    .product-display-panel .product-list{
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media screen and ((min-width: 600px) and (max-width: 1000px)){
+    .product-display-panel .product-list{
+        grid-template-columns: repeat(3,1fr);
+    }
+}
+
+@media screen and ((min-width: 1000px) and (max-width: 1600px)){
+    .product-display-panel .product-list{
+        grid-template-columns: repeat(4,180px);
+    }
+}
+
+@media screen and ((min-width: 1600px)){
+    .product-display-panel .product-list{
+        grid-template-columns: repeat(6,180px);
+    }
+}
+
+.product-display-panel .product-item{
+    min-width: 180px;
+    width:100%;
+    max-width: 220px;
+}
