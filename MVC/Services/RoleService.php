@@ -31,6 +31,11 @@
             echo json_encode($this->roleRepo->getAllRole(), JSON_UNESCAPED_UNICODE);
         }
 
+        public function getAllRoleStaff(){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            return $this->roleRepo->getAllRoleStaff();
+        }
+
         public function getRoleById(){
             $id = "2";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json

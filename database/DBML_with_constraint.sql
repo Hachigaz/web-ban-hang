@@ -219,6 +219,7 @@ Table "staffs" {
   "staff_fullname" varchar(100) [not null]
   "role_id" int(11) [not null]
   "gender" tinyint(1) [default: 0, note: "Male: 0, Female: 1"]
+  "address" varchar(200)
   "entry_date" date [default: `now()`]
   "is_active" tinyint(1) [default: 1]
 }

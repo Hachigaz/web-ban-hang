@@ -197,6 +197,7 @@ CREATE TABLE `staffs` (
   `staff_fullname` varchar(100) NOT NULL,
   `role_id` int(11) NOT NULL,
   `gender` tinyint(1) DEFAULT 0 COMMENT 'Male: 0, Female: 1',
+  `address` varchar(200),
   `entry_date` date DEFAULT (now()),
   `is_active` tinyint(1) DEFAULT 1
 );

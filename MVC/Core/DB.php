@@ -3,8 +3,8 @@
         public $con;
         protected $servername = "localhost";
         protected $username = "root";
-        protected $password = "Abc12345";
-        protected $dbname = "electronic_supermarket";
+        protected $password = "";
+        protected $dbname = "do_an_electronic_supermarket_test";
 
         function __construct(){
             $this->con = mysqli_connect($this->servername, $this->username, $this->password);
@@ -40,7 +40,18 @@
             }
         }
         
-        public function update($table, $object, $where) {
+        // public function update($table, $object, $where) {
+        //     $data = $object->toArray();// chuyển đối tượng thành mảng key-value
+        //     $set = '';
+        //     foreach ($data as $field => $value) { // $data sẽ là 1 mảng có key và value
+        //         $set .= "$field = '".$this->con->real_escape_string($value)."',";// gán tương ứng key và value được làm sạch giống trong các bảng cho nhau ngăn cách bằng dấu ,   
+        //     }
+        //     $set = rtrim($set, ',');// loại bỏ đi dấu , cuối cùng
+        //     $sql = "UPDATE $table SET $set WHERE $where";
+        //     return mysqli_query($this->con, $sql);
+        // }
+
+        public function update($table, $object, $where, $idName) {
             $data = $object->toArray();// chuyển đối tượng thành mảng key-value
             $set = '';
             foreach ($data as $field => $value) { // $data sẽ là 1 mảng có key và value
@@ -48,9 +59,14 @@
             }
             $set = rtrim($set, ',');// loại bỏ đi dấu , cuối cùng
             $sql = "UPDATE $table SET $set WHERE $where";
-            return mysqli_query($this->con, $sql);
+            if(mysqli_query($this->con, $sql)) {
+                $id = mysqli_insert_id($this->con); // lấy ID của bản ghi mới được thêm vào
+                $result = mysqli_query($this->con, "SELECT * FROM $table WHERE $idName"." = "."$id"); // truy vấn lại bản ghi vừa được thêm vào
+                return mysqli_fetch_assoc($result); // trả về mảng kết hợp của bản ghi
+            } else {
+                return false; // trả về false nếu có lỗi xảy ra
+            }
         }
-
         public function delete($table, $where) {// chỉ thay đổi trạng thái active
             $is_active = "is_active";
             $sql = "UPDATE $table SET $is_active = '0' WHERE $where";
@@ -93,6 +109,21 @@
             }
             return $rows;
         }
+
+        public function join3Tables($table1, $table2, $table3, $on1, $on2, $where){
+            $sql = "SELECT * 
+            FROM $table1 
+            JOIN $table2 ON $on1 
+            JOIN $table3 ON $on2
+            WHERE $where";
+            $result = mysqli_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
+        }
+
 
         public function getAllByWhere($table, $where) {// lấy ra các bản ghi thỏa điều kiện đầy đủ thuộc tính (chi lay ra is_active = 1)
             $is_active = "is_active";
@@ -190,10 +221,11 @@
         }
 
         public function getCountColumn($table, $column, $where){
+            $is_active = "is_active";
             if($where != ""){
-                $sql = "SELECT COUNT($column) FROM $table WHERE $where";
+                $sql = "SELECT COUNT($column) FROM $table WHERE $where AND $is_active = '1'";
             }else{
-                $sql = "SELECT COUNT($column) FROM $table";
+                $sql = "SELECT COUNT($column) FROM $table WHERE $is_active = '1'";
             }
             $result = mysqli_query($this->con, $sql);
             $row = mysqli_fetch_assoc($result);

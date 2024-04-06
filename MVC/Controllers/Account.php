@@ -25,10 +25,10 @@
             $this->accountService->getAccountById($id);
         }
         public function GetAccountByPhoneNumber($phoneNumber){
-            $this->accountService->getAccountByPhoneNumber($phoneNumber);
+            echo $this->accountService->getAccountByPhoneNumber($phoneNumber);
         }
         public function GetAccountByEmail($email){
-            $this->accountService->getAccountByEmail($email);
+            echo $this->accountService->getAccountByEmail($email);
         }
         public function GetRoleByAccountId($account_id){
             $this->accountService->getRoleByAccountId($account_id);
