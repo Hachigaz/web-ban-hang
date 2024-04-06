@@ -23,11 +23,12 @@
                 $filterQueries.=" AND products.category_id IN (".implode(",",$queryItems).")";
             }
 
-            if(isset($urlParams["brand"])){
-                $queryItems = explode(",",$urlParams["brand"]);
+            if(isset($urlParams["brands"])){
+                $queryItems = explode(",",$urlParams["brands"]);
                 $filterQueries.=" AND products.brand_id IN (".implode(",",$queryItems).")";
             }
             
+            echo($filterQueries);
             $searchQueries = "";
             if(isset($urlParams["search-query"])){
                 $searchValue = $urlParams["search-query"];
