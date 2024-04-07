@@ -5,7 +5,7 @@
             }
 
             public function updateAccount($account, $id){// by id
-                $this->update("accounts", $account, "account_id = ".$id);
+                $this->update("accounts", $account, "account_id = ".$id, "account_id");
             }
 
             public function deleteAccount($id){// by id
@@ -38,6 +38,15 @@
 
             public function getAccountByEmail($email){
                 $account = $this->getAllByWhere("accounts","accounts.email = '$email'");
+                if(sizeof($account)==0){
+                    return null;
+                }
+                else{
+                    return $account[0];
+                }
+            }
+            public function getAccountByEmail1($email){
+                $account = $this->getAllByWhere("accounts","accounts.email = $email");
                 if(sizeof($account)==0){
                     return null;
                 }

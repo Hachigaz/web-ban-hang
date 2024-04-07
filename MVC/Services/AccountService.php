@@ -10,7 +10,8 @@
             $this->customerRepo = $this->repository("CustomerRepository");
         }
         
-        public function createAccount($account){
+        public function createAccount($phoneNumber, $password){
+            $account = new AccountModel($phoneNumber, $password, "");
             return $this->accountRepo->createAccount($account);
         }
 

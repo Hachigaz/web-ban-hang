@@ -1,40 +1,40 @@
 <div class="card-box">
-    <!-- <div class="card">
+    <div class="card">
         <div>
-            <div class="numbers">1,504</div>
-            <div class="card-name">Daily Views</div>
+            <div class="numbers"></div>
+            <div class="card-name"></div>
         </div>
-        <div class="icon-box">
-            <i class="fi fi-rr-eye"></i>
+        <div class="icon-box product-icon">
+            <i class="fi fi-rr-box-open"></i>
         </div>
     </div>
     <div class="card">
         <div>
-            <div class="numbers">82</div>
-            <div class="card-name">Sales</div>
+            <div class="numbers"></div>
+            <div class="card-name"></div>
         </div>
-        <div class="icon-box">
+        <div class="icon-box customer-icon">
+            <i class="fi fi-rr-users-alt"></i>
+        </div>
+    </div>
+    <div class="card">
+        <div>
+            <div class="numbers"></div>
+            <div class="card-name"></div>
+        </div>
+        <div class="icon-box order-icon">
             <i class="fi fi-rr-point-of-sale-bill"></i>
         </div>
     </div>
     <div class="card">
         <div>
-            <div class="numbers">284</div>
-            <div class="card-name">Comments</div>
+            <div class="numbers"></div>
+            <div class="card-name"></div>
         </div>
-        <div class="icon-box">
-            <i class="fi fi-rr-comment-alt-dots"></i>
+        <div class="icon-box staff-icon">
+            <i class="fi fi-rr-users"></i>
         </div>
     </div>
-    <div class="card">
-        <div>
-            <div class="numbers">$7,000</div>
-            <div class="card-name">Earning</div>
-        </div>
-        <div class="icon-box">
-            <i class="fi fi-rr-sack-dollar"></i>
-        </div>
-    </div> -->
 </div>
 
 <div class="details">

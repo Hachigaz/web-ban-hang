@@ -11,6 +11,7 @@
                 "Page" => "SignIn/SignIn"
             ]);
         }
+
         public function CheckSignIn(){
             $input_login_details = $_POST["input_username"];
             $input_password = $_POST["input_password"];
@@ -31,13 +32,14 @@
                 $_SESSION["logged_in_customer"] = $this->customerService->getCustomerByAccountId($logged_in_customer_account["account_id"]);
                 $account = json_decode($this->accountService->getAccountByEmail($input_login_details), true);
                 $_SESSION["role_id"] = $this->accountService->getRoleByAccountId($account['account_id']);
+                $_SESSION["account_id"] = $account['account_id'];
                 // echo "role: ".$_SESSION["role_id"];
                 if($_SESSION["role_id"] == 5){
                     $url = "../Home/";
                     header("Location: ".$url);
                     return;
                 }else{
-                    header("Location: ../InternalManager/SayHi");
+                    header("Location: ../InternalManager/HomeManager");
                     return;
                 }
                 

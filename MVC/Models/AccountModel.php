@@ -8,7 +8,7 @@
         private $created_at;
         private $updated_at;
         private $is_active;
-        public function __construct($email, $password,$phone_number=null, $avatar = null, $account_id = null, $created_at = null, $updated_at = null, $is_active = null){
+        public function __construct($email, $password,  $avatar,$phone_number=null, $account_id = null, $created_at = null, $updated_at = null, $is_active = null){
             $this->account_id = $account_id;
             $this->phone_number = $phone_number;
             $this->email = $email;

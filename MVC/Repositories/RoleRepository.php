@@ -5,7 +5,7 @@
         }
 
         public function updateRole($role, $id){// by id
-            $this->update("roles", $role, "role_id = ".$id);
+            // $this->update("roles", $role, "role_id = ".$id);
         }
 
         public function deleteRole($id){// by id
@@ -18,6 +18,10 @@
         
         public function getRoleById($id){
             return $this->getAllByWhere("roles", "role_id = ".$id);
+        }
+
+        public function getAllRoleStaff(){
+            return $this->getAllByWhere("roles", "role_id != 5");
         }
     }
 ?>
