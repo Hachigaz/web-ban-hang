@@ -42,7 +42,6 @@
                     header("Location: ../InternalManager/HomeManager");
                     return;
                 }
-                
             }
         }
 

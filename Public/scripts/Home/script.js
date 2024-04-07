@@ -4,8 +4,8 @@ setInterval(() => {
 
 function showMoreProducts(productSetElement){
     const productListElement = productSetElement.querySelector('.product-list')
-    productListElement.classList.remove("hide")
-    productListElement.classList.add("show")
+    productListElement.classList.toggle("hide")
+    productListElement.classList.toggle("show")
 
     const showButton = productSetElement.querySelector('.show-more-button')
     const hideButton = productSetElement.querySelector('.hide-button')
@@ -15,8 +15,8 @@ function showMoreProducts(productSetElement){
 
 function hideProducts(productSetElement){
     const productListElement = productSetElement.querySelector('.product-list')
-    productListElement.classList.remove("show")
-    productListElement.classList.add("hide")
+    productListElement.classList.toggle("show")
+    productListElement.classList.toggle("hide")
 
     const showButton = productSetElement.querySelector('.show-more-button')
     const hideButton = productSetElement.querySelector('.hide-button')

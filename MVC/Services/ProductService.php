@@ -78,5 +78,9 @@
 
             return $this->productRepo->get($sql);
         }
+
+        public function getProductsQuery($sqlQuery){
+            return $this->productRepo->get($sqlQuery);
+        }
     }
 ?>
