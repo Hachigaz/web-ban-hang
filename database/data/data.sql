@@ -263,3 +263,24 @@ INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `em
 INSERT INTO `order_details` (`order_detail_id`, `order_id`, `product_id`, `price`, `number_of_products`, `color_of_product`) VALUES 
 ('1', '1', '1', '34990000', '1', 'Đen'),
 ('2', '1', '9', '500000', '2', 'Đen');
+
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-128G-Y', '128GB - Vàng', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-256G-Y', '256GB - Vàng', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-128G-S', '128GB - Bạc', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-256G-S', '256GB - Bạc', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-128G-P', '128GB - Hồng', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-256G-P', '256GB - Hồng', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-128G-B', '128GB - Đen', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-256G-B', '256GB - Đen', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-128G-S', '128GB - Bạc', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-256G-S', '256GB - Bạc', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-128G-R', '128GB - Đỏ', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-256G-R', '256GB - Đỏ', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-128G-Y', '128GB - Vàng', '3');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-256G-Y', '256GB - Vàng', '3');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-128G-P', '128GB - Hồng', '3');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-256G-P', '256GB - Hồng', '3');
+INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('5-D', '5');
+INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('6-D', '6');
+INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('7-D', '7');
+INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('8-D', '8');

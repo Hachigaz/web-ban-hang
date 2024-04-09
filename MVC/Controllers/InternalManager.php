@@ -43,6 +43,9 @@
                 "Page" => "ProductManager",
                 "Title" => "Sản phẩm"
             ]);
+            echo("
+            <script defer>moveTo('Menu')</script>
+            ");
         }
         public function SupplierManager(){
             $this->view("internalManager", [
@@ -115,6 +118,22 @@
             $data = array("cardValue" => $cardValue, "infoStaff" => $infoStaff, "roleStaff" => $roleStaff);
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE);   
+        }
+        public function GetPage(){
+            $uri = parse_url($_SERVER['REQUEST_URI']);
+
+            $urlParams = null;
+            if(isset($uri["query"])){            
+                parse_str(urldecode($uri["query"]),$urlParams);
+            }
+            if(isset($urlParams["action"])){
+                $action = $urlParams["action"];
+                header("Content-Type: text/html");
+                echo file_get_contents("./MVC/Views/pages/Manager/ProductManagers/$action.php");
+            }
+            else{
+                header("Location: ../InternalManager/HomeManager");
+            }
         }
     }
 ?>

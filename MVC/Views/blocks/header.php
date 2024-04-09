@@ -1,3 +1,5 @@
+<script src="../Public/scripts/Catalog/CatalogFunctions.js"></script>
+<script src="../Public/scripts/header/script.js" defer></script>
 <div class="header">
     <div class="wrapper-components">
         <div class="logo">
@@ -10,12 +12,12 @@
             <span class="phone-number">1800 6109</span>
         </div>
         <div class="search-bar">
-            <form action="#" class="form-search">
+            <div class="form-search">
                 <input type="text" class="input-search" placeholder="Bạn cần tìm gì...">
                 <button class="btn-search">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
-            </form>
+            </div>
         </div>
         <div class="profile">
             <button class="like"><i class="fa-regular fa-heart"></i><span></span></button>

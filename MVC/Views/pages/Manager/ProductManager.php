@@ -1,1 +1,3 @@
-<h1>Sản phẩm</h1>
+<div id="tab">
+
+</div>

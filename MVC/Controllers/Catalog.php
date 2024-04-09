@@ -71,7 +71,6 @@
             unset($sqlQuery);
             unset($filterQueries);
             unset($searchQueries);
-
             $isLast = true;
             if(count($resultList)==$queryCount){
                 $isLast = false;
@@ -127,7 +126,7 @@
                 $searchQueries.=" AND products.product_name LIKE '%{$searchValue}%'";
             }
 
-            if($urlParams["context"]!="categories"){
+            if((isset($urlParams["context"]) && $urlParams["context"]!="categories") || !isset($urlParams["context"])){
                 $sqlQuery = "SELECT DISTINCT categories.category_id as opt_id, categories.category_name as opt_name
                 FROM categories join products on products.category_id = categories.category_id
                 WHERE categories.is_active = 1 $searchQueries
@@ -145,7 +144,7 @@
                 }
             }
 
-            if($urlParams["context"]!="brands"){
+            if((isset($urlParams["context"]) && $urlParams["context"]!="brands") || !isset($urlParams["context"])){
                 $filterQueries = "";
                 if(isset($urlParams["categories"])){
                     $queryItems = explode(",",$urlParams["categories"]);
@@ -197,6 +196,11 @@
             $priceRangeValue = $this->ProcessPriceRange($urlParams);
 
             $message = "Danh mục sản phẩm";
+            if(isset($urlParams["search-query"])){
+                $name = $urlParams["search-query"];
+                $message="Kết quả tìm kiểm cho $name";
+                unset($name);
+            }
 
             $this->view("master",[
                 "Page" => "Catalog/Catalog",
