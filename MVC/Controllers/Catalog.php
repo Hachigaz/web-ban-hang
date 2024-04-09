@@ -127,9 +127,19 @@
             }
 
             if((isset($urlParams["context"]) && $urlParams["context"]!="categories") || !isset($urlParams["context"])){
+                $filterQueries = "";
+                if(isset($urlParams["categories"])){
+                    $queryItems = explode(",",$urlParams["brands"]);
+                    $filterQueries.=" AND products.category_id IN (".implode(",",$queryItems).")";
+
+                    if(isset($urlParams["brands"])){
+                        $queryItems = explode(",",$urlParams["categories"]);
+                        $filterQueries.=" OR brands.brand_id IN (".implode(",",$queryItems).")";
+                    }
+                }
                 $sqlQuery = "SELECT DISTINCT categories.category_id as opt_id, categories.category_name as opt_name
                 FROM categories join products on products.category_id = categories.category_id
-                WHERE categories.is_active = 1 $searchQueries
+                WHERE categories.is_active = 1 $searchQueries $filterQueries
                 ORDER BY categories.category_name ASC
                 ";
                 $result = $this->productService->productRepo->get($sqlQuery);
