@@ -52,3 +52,10 @@ input:focus{
     border-color: black;
     outline: none;
 }
+
+a.no-style, a.no-style:hover, a.no-style:visited, a.no-style:focus, a.no-style:active  {
+    text-decoration: none;
+    color: inherit;
+    outline: 0;
+    cursor: auto;
+  }
