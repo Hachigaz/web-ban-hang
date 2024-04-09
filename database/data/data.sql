@@ -1,12 +1,12 @@
-INSERT INTO `accounts` (`account_id`, `phone_number`, `email`, `password`, `created_at`, `updated_at`, `is_active`) VALUES
-(1, '0988722521', 'hien@gmail.com', 'thien123', current_timestamp(), current_timestamp(), 1),
-(2, '0988722522', 'huy@gmail.com', 'qhuy123', current_timestamp(), current_timestamp(), 1),
-(3, '0988722523', 'loc@gmail.com', 'mloc123', current_timestamp(), current_timestamp(), 1),
-(4, '0988722524', 'phong@gmail.com', 'hphong123',current_timestamp(), current_timestamp(), 1),
-(5, '0988722525', 'lan@gmail.com', 'tlan123', current_timestamp(), current_timestamp(), 1),
-(6, '0988722526', 'lieu@gmail.com', 'tlieu123', current_timestamp(), current_timestamp(), 1),
-(7, '0988722527', 'lai@gmail.com', 'tlai123', current_timestamp(), current_timestamp(), 1),
-(8, '0988722528', 'camhuong@gmail.com', 'chuong123', current_timestamp(), current_timestamp(), 1);
+INSERT INTO `accounts` (`account_id`, `phone_number`, `email`, `password`, `avatar`, `created_at`, `updated_at`, `is_active`) VALUES
+(1, '0988722521', 'hien@gmail.com', 'thien123', 'avatar_0988722521.jpg', current_timestamp(), current_timestamp(), 1),
+(2, '0988722522', 'huy@gmail.com', 'qhuy123', 'avatar_0988722522.jpg',current_timestamp(), current_timestamp(), 1),
+(3, '0988722523', 'loc@gmail.com', 'mloc123', 'avatar_0988722523.jpg',current_timestamp(), current_timestamp(), 1),
+(4, '0988722524', 'phong@gmail.com', 'hphong123','avatar_0988722524.jpg',current_timestamp(), current_timestamp(), 1),
+(5, '0988722525', 'lan@gmail.com', 'tlan123', '',current_timestamp(), current_timestamp(), 1),
+(6, '0988722526', 'lieu@gmail.com', 'tlieu123', '',current_timestamp(), current_timestamp(), 1),
+(7, '0988722527', 'lai@gmail.com', 'tlai123', '',current_timestamp(), current_timestamp(), 1),
+(8, '0988722528', 'camhuong@gmail.com', 'chuong123', '',current_timestamp(), current_timestamp(), 1);
 
 INSERT INTO `customers` (`customer_id`, `customer_fullname`, `role_id`, `account_id`, `gender`, `address`, `date_of_birth`, `is_active`) VALUES 
 ('1', 'Nguyễn Thị Lan', '5', '5', '1', 'Quận 1, Thành Phố Hồ Chí Minh', '2003-06-12', '1'),
@@ -22,11 +22,11 @@ INSERT INTO `roles` (`role_id`, `role_name`, `is_active`) VALUES
 ('4', 'Nhân viên kho', '1'),
 ('5', 'Khách hàng', '1');
 
-INSERT INTO `staffs` (`staff_id`, `account_id`, `staff_fullname`, `role_id`, `gender`, `entry_date`, `is_active`) VALUES 
-('1', '1', 'Lê Nguyễn Thế Hiển', '1', '0', current_timestamp(), '1'),
-('2', '2', 'Võ Quốc Huy', '2', '0', current_timestamp(), '1'),
-('3', '3', 'Khổng Minh Lộc', '3', '0', current_timestamp(), '1'),
-('4', '4', 'Lâm Hồng Phong', '4', '0', current_timestamp(), '1');
+INSERT INTO `staffs` (`staff_id`, `account_id`, `staff_fullname`, `role_id`, `gender`, `address`,`entry_date`, `is_active`) VALUES 
+('1', '1', 'Lê Nguyễn Thế Hiển', '1', '0', 'Tây Ninh', current_timestamp(), '1'),
+('2', '2', 'Võ Quốc Huy', '2', '0', 'Cần Thơ',current_timestamp(), '1'),
+('3', '3', 'Khổng Minh Lộc','3', '0', 'Nha Trang',current_timestamp(), '1'),
+('4', '4', 'Lâm Hồng Phong', '4', '0', 'Vũng Tàu', current_timestamp(), '1');
 
 INSERT INTO `categories` (`category_id`, `category_name`, `category_logo`, `is_active`) VALUES 
 ('1', 'Điện thoại','', '1'),

@@ -5,15 +5,17 @@
         private $staff_email;
         private $role_id;
         private $gender;
+        private $address;
         private $staff_id;
         private $entry_date;
         private $is_active;
-        public function __construct($account_id, $staff_fullname, $role_id, $gender, $staff_id = null, $entry_date = null, $is_active = null)
+        public function __construct($account_id, $staff_fullname, $role_id, $gender, $address, $staff_id = null, $entry_date = null, $is_active = null)
         {
             $this->account_id = $account_id;
             $this->staff_fullname = $staff_fullname;
             $this->role_id = $role_id;
             $this->gender = $gender;
+            $this->address = $address;
             $this->staff_id = $staff_id;
             $this->entry_date = $entry_date;
             $this->is_active = $is_active;
@@ -49,6 +51,14 @@
         public function setGender($gender){
             $this->gender = $gender;
         }
+
+        public function getAdress(){
+            return $this->address;
+        }
+    
+        public function setAddress($address){
+            $this->address = $address;
+        }
     
         public function getStaffId(){
             return $this->staff_id;
@@ -79,9 +89,9 @@
                 'staff_id' => $this->staff_id,
                 'account_id' => $this->account_id,
                 'staff_fullname' => $this->staff_fullname,
-                'staff_email' => $this->staff_email,
                 'role_id' => $this->role_id,
                 'gender' => $this->gender,
+                'address' => $this->address,
                 'entry_date' => $this->entry_date,
                 'is_active' => $this->is_active
             );

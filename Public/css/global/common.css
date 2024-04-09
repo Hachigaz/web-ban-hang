@@ -1,5 +1,5 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap"); */
-/* @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"); */
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css");
 /*reset-css*/
 *,
 *:before,
@@ -47,15 +47,11 @@ body {
     --primary-color-blue-opacity: rgba(56, 122, 223, 0.2);
     --primary-bg-color: rgba(43, 190, 249, 0.2);
     --primary-color-yellow: #fba834;
+    --primary-color-bg: #f6f6f6;
+    --primary-color-green: #9bcf53;
+    --primary-color-red: #e26e70;
 }
-
-a.no-style, a.no-style:hover, a.no-style:visited, a.no-style:focus, a.no-style:active  {
-    text-decoration: none;
-    color: inherit;
-    outline: 0;
-    cursor: auto;
-  }
-  ::-webkit-scrollbar {
+::-webkit-scrollbar {
     width: 8px;
 }
 ::-webkit-scrollbar-thumb {
