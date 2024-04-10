@@ -5,7 +5,7 @@
         }
 
         public function updateExport($export, $id){// by id
-            $this->update("exports", $export, "export_id = ".$id);
+            $this->update("exports", $export, "export_id = ".$id,"export_id" );
         }
 
         public function deleteExport($id){// by id

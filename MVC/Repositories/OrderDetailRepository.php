@@ -5,7 +5,7 @@
         }
 
         public function updateOrderDetail($orderDetail, $id){// by id
-            $this->update("order_details", $orderDetail, "order_detail_id = ".$id);
+            $this->update("order_details", $orderDetail, "order_detail_id = ".$id,"order_detail_id");
         }
 
         public function deleteOrderDetail($id){// by id
