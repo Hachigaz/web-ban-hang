@@ -1,7 +1,6 @@
 <?php
     class OrderDetailModel{
         private $order_id;
-        // private $product_id;
         private $serial_number;
         private $price;
         private $color_of_product;
@@ -9,7 +8,6 @@
         public function __construct($order_id, $serial_number, $price, $color_of_product, $order_detail_id = null)
         {
             $this->order_id = $order_id;
-            // $this->product_id = $product_id;
             $this->serial_number= $serial_number;
             $this->price = $price;
             $this->color_of_product = $color_of_product;

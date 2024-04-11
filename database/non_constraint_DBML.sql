@@ -6,10 +6,15 @@ Enum "orders_status_of_order_enum" {
   "Cancelled"
 }
 
+Table "noti" {
+  "noti_id" int(11) [not null]
+  "account_id" int(11) [not null]
+  "status" tinyint(1) [default: 0]
+}
+
 Table "accounts" {
   "account_id" int(11) [pk, not null, increment]
   "phone_number" varchar(20) [unique, not null]
-  "email" varchar(200) [unique, default: ""]
   "password" varchar(300) [not null]
   "avatar" varchar(300)
   "created_at" datetime [default: `now()`]
@@ -38,6 +43,7 @@ Table "customers" {
   "role_id" int(11) [not null, default: 5]
   "account_id" int(11) [not null]
   "gender" tinyint(1) [default: 0, note: "Male: 0, Female: 1"]
+  "customer_email" varchar(200) [unique, default: ""]
   "address" varchar(200) [default: "", note: "Địa chỉ của khách hàng"]
   "date_of_birth" date
   "is_active" tinyint(1) [default: 1]
@@ -112,12 +118,10 @@ Table "orders" {
 Table "order_details" {
   "order_detail_id" int(11) [pk, not null, increment]
   "order_id" int(11) [not null]
-  "product_id" int(11) [not null]
+  "sku_id" int(11) [not null]
   "price" decimal(10,2) [default: 0]
   "number_of_products" int(11) [default: 1, note: "Phải > 0"]
-  // "total_money" float [default: 0, note: "Phải >= 0"]
   "color_of_product" varchar(20) [default: ""]
-  // "is_active" tinyint(1) [default: 1]
 }
 
 Table "products" {
@@ -137,16 +141,19 @@ Table "products" {
 
 Table "product_details" {
   "serial_number" int(11) [pk, not null]
-  "product_id" int(11) [not null]
+  "shipment_id" int(11) [not null]
+  "sku_id" int(11) [not null]
   "sold" tinyint(1) [default: 0]
 }
 
 Table "guarantees" {
   "guarantee_id" int(11) [pk, not null, increment]
   "serial_number" int(11) [not null]
+  "order_id" int(11) [not null]
   "start_date" date [default: `now()`]
   "end_date" date
 }
+
 
 Table "options" {
   "option_id" int(11) [pk, not null, increment]
@@ -207,9 +214,9 @@ Table "shipments" {
 
 Table "skus" {
   "sku_id" int(11) [pk, not null, increment]
+  "sku_name" varchar(100)
   "sku_code" varchar(100) [unique, default: "", note: "Phải đủ số lượng ký tự của 1 sku code, nếu có enum về color thì sẽ dễ quản lý hơn"]
   "product_id" int(11) [not null]
-  "option_id" int(11) [not null]
   "is_active" tinyint(1) [default: 1]
 }
 
@@ -217,6 +224,7 @@ Table "staffs" {
   "staff_id" int(11) [pk, not null, increment]
   "account_id" int(11) [not null]
   "staff_fullname" varchar(100) [not null]
+  "staff_email" varchar(200) [unique, not null]
   "role_id" int(11) [not null]
   "gender" tinyint(1) [default: 0, note: "Male: 0, Female: 1"]
   "address" varchar(200)
