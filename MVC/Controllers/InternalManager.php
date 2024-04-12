@@ -6,6 +6,8 @@
         public $orderService;
         public $staffService;
         public $roleService;
+        public $supplierService;
+        public $accountService;
         public function __construct(){
             $this->internalManagerService = $this->service("InternalManagerService");
             $this->productService = $this->service("ProductService");
@@ -13,6 +15,8 @@
             $this->orderService = $this->service("OrderService");
             $this->staffService = $this->service("StaffService");
             $this->roleService = $this->service("RoleService");
+            $this->supplierService = $this->service("SupplierService");
+            $this->accountService = $this->service("AccountService");
         }
         public function HomeManager(){
             $this->view("internalManager", [
@@ -115,6 +119,33 @@
             $data = array("cardValue" => $cardValue, "infoStaff" => $infoStaff, "roleStaff" => $roleStaff);
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE);   
+        }
+
+        public function GetAllDataCustomer(){
+            $cardValue = array(
+                "countAllCustomer" => $this->customerService->getQuantityAllCustomer(),
+                "countMaleCustomer" => $this->customerService->getQuantityMaleCustomer(),
+                "countFemaleCustomer" => $this->customerService->getQuantityFemaleCustomer(),
+                "averageAgeCustomer" => $this->customerService->calculateAverageAgeCustomer()
+            );
+            $infoCustomer = $this->customerService->getInfoCustomer();
+            $data = array("cardValue" => $cardValue, "infoCustomer" => $infoCustomer);  
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE);   
+        }
+
+        public function GetAllDataSupplier(){
+            $infoSupplier = $this->supplierService->getAllSupplier();
+            $data = array("infoSupplier" => $infoSupplier);
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE); 
+        }
+
+        public function GetAllDataAccount(){
+            $infoAccount = $this->accountService->getAllAccount();
+            $data = array("infoSupplier" => $infoAccount);
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE); 
         }
     }
 ?>
