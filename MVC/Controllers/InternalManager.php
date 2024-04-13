@@ -8,6 +8,7 @@
         public $roleService;
         public $supplierService;
         public $accountService;
+        public $decentralizationService;
         public function __construct(){
             $this->internalManagerService = $this->service("InternalManagerService");
             $this->productService = $this->service("ProductService");
@@ -17,6 +18,7 @@
             $this->roleService = $this->service("RoleService");
             $this->supplierService = $this->service("SupplierService");
             $this->accountService = $this->service("AccountService");
+            $this->decentralizationService = $this->service("DecentralizationService");
         }
         public function HomeManager(){
             $this->view("internalManager", [
@@ -144,6 +146,13 @@
         public function GetAllDataAccount(){
             $infoAccount = $this->accountService->getAllAccount();
             $data = array("infoSupplier" => $infoAccount);
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE); 
+        }
+        public function GetAllDataDecentralization(){
+            $moduleNames = $this->decentralizationService->getAllModule();
+            $roleNames = $this->decentralizationService->getAllRole();
+            $data = array("modules" => $moduleNames, "roles" => $roleNames);
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
         }

@@ -15,6 +15,7 @@ Table "noti" {
 Table "accounts" {
   "account_id" int(11) [pk, not null, increment]
   "phone_number" varchar(20) [unique, not null]
+  "email" varchar(200) [unique, not null]
   "password" varchar(300) [not null]
   "avatar" varchar(300)
   "created_at" datetime [default: `now()`]
@@ -43,7 +44,6 @@ Table "customers" {
   "role_id" int(11) [not null, default: 5]
   "account_id" int(11) [not null]
   "gender" tinyint(1) [default: 0, note: "Male: 0, Female: 1"]
-  "customer_email" varchar(200) [unique, default: ""]
   "address" varchar(200) [default: "", note: "Địa chỉ của khách hàng"]
   "date_of_birth" date
   "is_active" tinyint(1) [default: 1]
@@ -53,10 +53,9 @@ Table "decentralizations" {
   "decentralization_id" int(11) [pk, not null, increment]
   "role_id" int(11) [not null]
   "module_id" int(11) [not null]
-  "function_id" int(11) [not null]
   "is_active" tinyint(1) [default: 1]
   Indexes {
-    (role_id, module_id, function_id) [unique]
+    (role_id, module_id) [unique]
   }
 }
 
@@ -75,12 +74,6 @@ Table "export_details" {
   "shipment_id" int(11) [not null]
   "unit_price_export" decimal(10,2) [default: 0]
   "quantity_export" int(50) [default: 0]
-}
-
-Table "functions" {
-  "function_id" int(11) [pk, not null, increment]
-  "function_name" varchar(100) [default: ""]
-  "is_active" tinyint(1) [default: 1]
 }
 
 Table "imports" {
@@ -224,7 +217,6 @@ Table "staffs" {
   "staff_id" int(11) [pk, not null, increment]
   "account_id" int(11) [not null]
   "staff_fullname" varchar(100) [not null]
-  "staff_email" varchar(200) [unique, not null]
   "role_id" int(11) [not null]
   "gender" tinyint(1) [default: 0, note: "Male: 0, Female: 1"]
   "address" varchar(200)

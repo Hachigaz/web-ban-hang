@@ -7,6 +7,7 @@ CREATE TABLE `noti` (
 CREATE TABLE `accounts` (
   `account_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `phone_number` varchar(20) UNIQUE NOT NULL,
+  `email` varchar(200) UNIQUE DEFAULT '',
   `password` varchar(300) NOT NULL,
   `avatar` varchar(300),
   `created_at` datetime DEFAULT (now()),
@@ -35,7 +36,6 @@ CREATE TABLE `customers` (
   `role_id` int(11) NOT NULL DEFAULT 5,
   `account_id` int(11) NOT NULL,
   `gender` tinyint(1) DEFAULT 0 COMMENT 'Male: 0, Female: 1',
-  `customer_email` varchar(200) UNIQUE DEFAULT '',
   `address` varchar(200) DEFAULT '' COMMENT 'Địa chỉ của khách hàng',
   `date_of_birth` date,
   `is_active` tinyint(1) DEFAULT 1
@@ -45,7 +45,6 @@ CREATE TABLE `decentralizations` (
   `decentralization_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `role_id` int(11) NOT NULL,
   `module_id` int(11) NOT NULL,
-  `function_id` int(11) NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
 );
 
@@ -64,12 +63,6 @@ CREATE TABLE `export_details` (
   `shipment_id` int(11) NOT NULL,
   `unit_price_export` decimal(10,2) DEFAULT 0,
   `quantity_export` int(50) DEFAULT 0
-);
-
-CREATE TABLE `functions` (
-  `function_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `function_name` varchar(100) DEFAULT '',
-  `is_active` tinyint(1) DEFAULT 1
 );
 
 CREATE TABLE `imports` (
@@ -203,7 +196,6 @@ CREATE TABLE `staffs` (
   `staff_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `account_id` int(11) NOT NULL,
   `staff_fullname` varchar(100) NOT NULL,
-  `staff_email` varchar(200) UNIQUE NOT NULL,
   `role_id` int(11) NOT NULL,
   `gender` tinyint(1) DEFAULT 0 COMMENT 'Male: 0, Female: 1',
   `address` varchar(200),
@@ -251,6 +243,6 @@ CREATE TABLE `timesheet_details` (
   `total_salary` decimal(10,2) NOT NULL
 );
 
-CREATE UNIQUE INDEX `decentralizations_index_0` ON `decentralizations` (`role_id`, `module_id`, `function_id`);
+CREATE UNIQUE INDEX `decentralizations_index_0` ON `decentralizations` (`role_id`, `module_id`);
 
 CREATE UNIQUE INDEX `likes_index_1` ON `likes` (`product_id`, `customer_id`);

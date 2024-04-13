@@ -5,13 +5,16 @@
             $this->roleService = $this->service("RoleService");
         }
         public function CreateRole(){
-            $this->roleService->createRole();
+            $roleName = $_POST["role_name_add_form"];
+            $this->roleService->createRole($roleName);
+            header("location: ../InternalManager/DecentralizationManager");
         }
         public function UpdateRole(){
             $this->roleService->updateRole();
         }
-        public function DeleteRole(){
-            $this->roleService->deleteRole();
+        public function DeleteRole($id){
+            $this->roleService->deleteRole($id);
+            header("location: ../../InternalManager/DecentralizationManager");
         }
         public function GetAllRole(){
             $this->roleService->getAllRole();

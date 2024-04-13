@@ -3,14 +3,12 @@
         private $decentralization_id;
         private $role_id;
         private $module_id;
-        private $function_id;
         private $is_active;
 
-        public function __construct($role_id, $module_id, $function_id, $decentralization_id = null, $is_active = null){
+        public function __construct($role_id, $module_id, $decentralization_id = null, $is_active = null){
             $this->decentralization_id = $decentralization_id;
             $this->role_id = $role_id;
             $this->module_id = $module_id;
-            $this->function_id = $function_id;
             $this->is_active = $is_active;
         }
         public function getDecentralizationId(){
@@ -31,12 +29,6 @@
         public function setModuleId($module_id){
             $this->module_id = $module_id;
         }
-        public function getFunctionId(){
-            return $this->function_id;
-        }
-        public function setFunctionId($function_id){
-            $this->function_id = $function_id;
-        }
         public function getIsActive(){
             return $this->is_active;
         }
@@ -48,7 +40,6 @@
                 'decentralization_id' => $this->decentralization_id,
                 'role_id' => $this->role_id,
                 'module_id' => $this->module_id,
-                'function_id' => $this->function_id,
                 'is_active' => $this->is_active
             );
         }

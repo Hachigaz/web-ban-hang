@@ -250,5 +250,20 @@
             }
             return $rows;
         }
+
+        public function selectManyColumn($table, $columns, $where){
+            $is_active = "is_active";
+            if($where != ""){
+                $sql = "SELECT $columns FROM $table WHERE $where AND $is_active = '1'";
+            }else{
+                $sql = "SELECT $columns FROM $table WHERE $is_active = '1'";
+            }
+            $result = mysqli_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
+        }
     }
 ?>
