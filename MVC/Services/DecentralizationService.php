@@ -7,8 +7,8 @@
             $this->decentralizationRepo = $this->repository("DecentralizationRepository");
         }
         
-        public function createDecentralization(){//$decentralizationDTO
-            $decentralization = new DecentralizationModel("11", "11", "11");
+        public function createDecentralization($roleId, $moduleId){
+            $decentralization = new DecentralizationModel($roleId, $moduleId);
             $this->decentralizationRepo->createDecentralization($decentralization);
         }
 
@@ -21,9 +21,8 @@
             $this->decentralizationRepo->updateDecentralization($decentralization, "146");
         }
 
-        public function deleteDecentralization(){
-            $id = "146";
-            $this->decentralizationRepo->deleteDecentralization($id);
+        public function deleteDecentralization($roleId, $moduleId){
+            $this->decentralizationRepo->deleteDecentralization($roleId, $moduleId);
         }
 
         public function getAllDecentralization(){
@@ -39,6 +38,12 @@
         public function getAllModuleByRole($role_id){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->decentralizationRepo->getAllModuleByRole($role_id), JSON_UNESCAPED_UNICODE);
+        }
+        public function getAllModule(){
+            return $this->decentralizationRepo->getAllModule();
+        }
+        public function getAllRole(){
+            return $this->decentralizationRepo->getAllRole();
         }
     }
 ?>

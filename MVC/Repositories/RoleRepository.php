@@ -4,24 +4,20 @@
             $this->create("roles", $role, "role_id");
         }
 
-        public function updateRole($role, $id){// by id
-            // $this->update("roles", $role, "role_id = ".$id);
-        }
-
         public function deleteRole($id){// by id
-            $this->delete("roles", "role_id = ".$id);
+            $this->realDelete("roles", "role_id = ".$id);
         }
 
         public function getAllRole(){
             return $this->read("roles");
         }
-        
-        public function getRoleById($id){
-            return $this->getAllByWhere("roles", "role_id = ".$id);
-        }
 
         public function getAllRoleStaff(){
             return $this->getAllByWhere("roles", "role_id != 5");
+        }
+        
+        public function getRoleById($id){
+            return $this->getAllByWhere("roles", "role_id = ".$id);
         }
     }
 ?>

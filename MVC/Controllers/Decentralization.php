@@ -5,13 +5,17 @@
             $this->decentralizationService = $this->service("DecentralizationService");
         }
         public function CreateDecentralization(){
-            $this->decentralizationService->createDecentralization();
+            $roleId = $_POST['role_id'];
+            $moduleId = $_POST['module_id'];
+            $this->decentralizationService->createDecentralization($roleId, $moduleId);
         }
         public function UpdateDecentralization(){
             $this->decentralizationService->updateDecentralization();
         }
         public function DeleteDecentralization(){
-            $this->decentralizationService->deleteDecentralization();
+            $roleId = $_POST['role_id'];
+            $moduleId = $_POST['module_id'];
+            $this->decentralizationService->deleteDecentralization($roleId, $moduleId);
         }
         public function GetAllDecentralization(){
             $this->decentralizationService->getAllDecentralization();

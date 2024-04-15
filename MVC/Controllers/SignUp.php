@@ -115,8 +115,7 @@
             }
             else{
                 $userData = $_SESSION["signup_user_data"];
-                $newAccount = new AccountModel($userData["email"],$userData["password"]);
-                $this->accountService->createAccount($newAccount);
+                $this->accountService->createAccount($userData["email"],$userData["password"]);
                 $newAccount = $this->accountService->accountRepo->getAccountByEmail($userData["email"]);
                 
                 $newCustomer = new CustomerModel($newAccount["account_id"]);
