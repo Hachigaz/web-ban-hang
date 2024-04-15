@@ -98,6 +98,12 @@
                 "Title" => "Phân quyền"
             ]);
         }
+        public function LeaveApplicationManager(){
+            $this->view("internalManager", [
+                "Page" => "LeaveApplicationManager",
+                "Title" => "Đơn xin nghỉ"
+            ]);
+        }
         public function GetAllDataHome(){// lấy ra các thông số cơ bản
             $cardValue = array(
                 "countProduct" => $this->productService->getQuantityAllProduct(),
