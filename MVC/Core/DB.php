@@ -102,7 +102,11 @@
         }
 
         public function joinTables($table1, $table2, $commonField, $where){
-            $sql = "SELECT * FROM $table1 JOIN $table2 ON $table1.$commonField = $table2.$commonField WHERE $where";
+            if($where == ""){
+                $sql = "SELECT * FROM $table1 JOIN $table2 ON $table1.$commonField = $table2.$commonField";
+            }else{
+                $sql = "SELECT * FROM $table1 JOIN $table2 ON $table1.$commonField = $table2.$commonField WHERE $where";
+            }
             $result = mysqli_query($this->con, $sql);
             $rows = array();
             while ($row = $result->fetch_assoc()){
@@ -231,6 +235,36 @@
             $result = mysqli_query($this->con, $sql);
             $row = mysqli_fetch_assoc($result);
             return $row["COUNT($column)"];            
+        }
+        
+        public function getOneColumnTable($table, $column, $where){
+            $is_active = "is_active";
+            if($where != ""){
+                $sql = "SELECT $column FROM $table WHERE $where AND $is_active = '1'";
+            }else{
+                $sql = "SELECT $column FROM $table WHERE $is_active = '1'";
+            }
+            $result = mysqli_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
+        }
+
+        public function selectManyColumn($table, $columns, $where){
+            $is_active = "is_active";
+            if($where != ""){
+                $sql = "SELECT $columns FROM $table WHERE $where AND $is_active = '1'";
+            }else{
+                $sql = "SELECT $columns FROM $table WHERE $is_active = '1'";
+            }
+            $result = mysqli_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
         }
     }
 ?>

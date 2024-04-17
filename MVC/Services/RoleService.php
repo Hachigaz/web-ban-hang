@@ -7,8 +7,8 @@
             $this->roleRepo = $this->repository("RoleRepository");
         }
         
-        public function createRole(){//$roleDTO
-            $role = new RoleModel("Nhân viên cao cấp");
+        public function createRole($roleName){//$roleDTO
+            $role = new RoleModel($roleName);
             $this->roleRepo->createRole($role);
         }
 
@@ -21,14 +21,8 @@
             $this->roleRepo->updateRole($role, "6");
         }
 
-        public function deleteRole(){
-            $id = "6";
+        public function deleteRole($id){
             $this->roleRepo->deleteRole($id);
-        }
-
-        public function getAllRole(){
-            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->roleRepo->getAllRole(), JSON_UNESCAPED_UNICODE);
         }
 
         public function getAllRoleStaff(){

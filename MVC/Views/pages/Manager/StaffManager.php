@@ -68,6 +68,9 @@
             <input type="date" name="" id="end-date" name="end-date" placeholder="Ngày kết thúc">
         </div>
     </div>
+    <div class="update">
+        <a href="../InternalManager/LeaveApplicationManager"><button class="update-btn" title="Đơn xin nghỉ">Đơn xin nghỉ</button></a>
+    </div>
 </div>
 
 

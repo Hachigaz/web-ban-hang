@@ -1,7 +1,13 @@
+CREATE TABLE `noti` (
+  `noti_id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `status` tinyint(1) DEFAULT 0
+);
+
 CREATE TABLE `accounts` (
   `account_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `phone_number` varchar(20) UNIQUE,
-  `email` varchar(200) UNIQUE NOT NULL,
+  `phone_number` varchar(20) UNIQUE NOT NULL,
+  `email` varchar(200) UNIQUE DEFAULT '',
   `password` varchar(300) NOT NULL,
   `avatar` varchar(300),
   `created_at` datetime DEFAULT (now()),
@@ -39,7 +45,6 @@ CREATE TABLE `decentralizations` (
   `decentralization_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `role_id` int(11) NOT NULL,
   `module_id` int(11) NOT NULL,
-  `function_id` int(11) NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
 );
 
@@ -58,12 +63,6 @@ CREATE TABLE `export_details` (
   `shipment_id` int(11) NOT NULL,
   `unit_price_export` decimal(10,2) DEFAULT 0,
   `quantity_export` int(50) DEFAULT 0
-);
-
-CREATE TABLE `functions` (
-  `function_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `function_name` varchar(100) DEFAULT '',
-  `is_active` tinyint(1) DEFAULT 1
 );
 
 CREATE TABLE `imports` (
@@ -101,7 +100,7 @@ CREATE TABLE `orders` (
 CREATE TABLE `order_details` (
   `order_detail_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
+  `sku_id` int(11) NOT NULL,
   `price` decimal(10,2) DEFAULT 0,
   `number_of_products` int(11) DEFAULT 1 COMMENT 'Phải > 0',
   `color_of_product` varchar(20) DEFAULT ''
@@ -115,7 +114,7 @@ CREATE TABLE `products` (
   `price` decimal(10,2) DEFAULT 0 COMMENT 'Phải >= 0',
   `guarantee` int(11) DEFAULT 0,
   `thumbnail` varchar(300) DEFAULT '' COMMENT 'Phải có ảnh mặc định',
-  `description` longtext,
+  `description` longtext DEFAULT 'Đây là mô tả sản phẩm',
   `created_at` datetime DEFAULT (now()),
   `updated_at` datetime DEFAULT (now()),
   `average_rating` float,
@@ -124,13 +123,15 @@ CREATE TABLE `products` (
 
 CREATE TABLE `product_details` (
   `serial_number` int(11) PRIMARY KEY NOT NULL,
-  `product_id` int(11) NOT NULL,
+  `shipment_id` int(11) NOT NULL,
+  `sku_id` int(11) NOT NULL,
   `sold` tinyint(1) DEFAULT 0
 );
 
 CREATE TABLE `guarantees` (
   `guarantee_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `serial_number` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
   `start_date` date DEFAULT (now()),
   `end_date` date
 );
@@ -185,9 +186,9 @@ CREATE TABLE `shipments` (
 
 CREATE TABLE `skus` (
   `sku_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `sku_name` varchar(100),
   `sku_code` varchar(100) UNIQUE DEFAULT '' COMMENT 'Phải đủ số lượng ký tự của 1 sku code, nếu có enum về color thì sẽ dễ quản lý hơn',
   `product_id` int(11) NOT NULL,
-  `option_id` int(11) NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
 );
 
@@ -242,7 +243,7 @@ CREATE TABLE `timesheet_details` (
   `total_salary` decimal(10,2) NOT NULL
 );
 
-CREATE UNIQUE INDEX `decentralizations_index_0` ON `decentralizations` (`role_id`, `module_id`, `function_id`);
+CREATE UNIQUE INDEX `decentralizations_index_0` ON `decentralizations` (`role_id`, `module_id`);
 
 CREATE UNIQUE INDEX `likes_index_1` ON `likes` (`product_id`, `customer_id`);
 
@@ -254,8 +255,6 @@ ALTER TABLE `decentralizations` ADD CONSTRAINT `decentralizations_ibfk_1` FOREIG
 
 ALTER TABLE `decentralizations` ADD CONSTRAINT `decentralizations_ibfk_2` FOREIGN KEY (`module_id`) REFERENCES `modules` (`module_id`);
 
-ALTER TABLE `decentralizations` ADD CONSTRAINT `decentralizations_ibfk_3` FOREIGN KEY (`function_id`) REFERENCES `functions` (`function_id`);
-
 ALTER TABLE `exports` ADD CONSTRAINT `exports_ibfk_1` FOREIGN KEY (`staff_id`) REFERENCES `staffs` (`staff_id`);
 
 ALTER TABLE `imports` ADD CONSTRAINT `imports_ibfk_1` FOREIGN KEY (`staff_id`) REFERENCES `staffs` (`staff_id`);
@@ -263,8 +262,6 @@ ALTER TABLE `imports` ADD CONSTRAINT `imports_ibfk_1` FOREIGN KEY (`staff_id`) R
 ALTER TABLE `orders` ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`);
 
 ALTER TABLE `order_details` ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
-
-ALTER TABLE `order_details` ADD CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
 ALTER TABLE `products` ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`brand_id`);
 
@@ -306,12 +303,20 @@ ALTER TABLE `timesheet_details` ADD FOREIGN KEY (`timesheet_id`) REFERENCES `tim
 
 ALTER TABLE `options` ADD FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
-ALTER TABLE `skus` ADD FOREIGN KEY (`option_id`) REFERENCES `options` (`option_id`);
-
 ALTER TABLE `reviews` ADD FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
 ALTER TABLE `reviews` ADD FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`);
 
 ALTER TABLE `guarantees` ADD FOREIGN KEY (`serial_number`) REFERENCES `product_details` (`serial_number`);
 
-ALTER TABLE `product_details` ADD FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+ALTER TABLE `guarantees` ADD FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
+
+ALTER TABLE `order_details` ADD FOREIGN KEY (`sku_id`) REFERENCES `skus` (`sku_id`);
+
+ALTER TABLE `product_details` ADD FOREIGN KEY (`sku_id`) REFERENCES `skus` (`sku_id`);
+
+ALTER TABLE `product_details` ADD FOREIGN KEY (`shipment_id`) REFERENCES `shipments` (`shipment_id`);
+
+ALTER TABLE `noti` ADD FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`);
+
+ALTER TABLE `export_details` ADD FOREIGN KEY (`shipment_id`) REFERENCES `shipments` (`shipment_id`);

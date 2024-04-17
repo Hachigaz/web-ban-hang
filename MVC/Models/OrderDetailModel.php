@@ -1,18 +1,18 @@
 <?php
     class OrderDetailModel{
         private $order_id;
-        // private $product_id;
-        private $serial_number;
+        private $sku_id;
         private $price;
         private $color_of_product;
+        private $number_of_product;
         private $order_detail_id;
-        public function __construct($order_id, $serial_number, $price, $color_of_product, $order_detail_id = null)
+        public function __construct($order_id, $sku_id, $price, $number_of_product, $color_of_product, $order_detail_id = null)
         {
             $this->order_id = $order_id;
-            // $this->product_id = $product_id;
-            $this->serial_number= $serial_number;
+            $this->sku_id = $sku_id;
             $this->price = $price;
             $this->color_of_product = $color_of_product;
+            $this->number_of_product = $number_of_product;
             $this->order_detail_id = $order_detail_id;
         }
         public function getOrderId(){
@@ -23,12 +23,13 @@
             $this->order_id = $order_id;
         }
     
-        public function getSerialNumber(){
-            return $this->serial_number;
+
+        public function getSkuId(){
+            return $this->sku_id;
         }
     
-        public function setSerialNumber($serial_number){
-            $this->serial_number = $serial_number;
+        public function setSkuId($sku_id){
+            $this->sku_id = $sku_id;
         }
     
         public function getPrice(){
@@ -48,6 +49,7 @@
             $this->color_of_product = $color_of_product;
         }
 
+
         public function getOrderDetailId(){
             return $this->order_detail_id;
         }
@@ -60,9 +62,9 @@
             return array(
                 'order_detail_id' => $this->order_detail_id,
                 'order_id' => $this->order_id,
-                // 'product_id' => $this->product_id,
-                'serial_number' => $this->serial_number,
+                'sku_id' => $this->sku_id,
                 'price' => $this->price,
+                'number_of_product' => $this->number_of_product,
                 'color_of_product' => $this->color_of_product
             );
         }

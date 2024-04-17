@@ -6,10 +6,16 @@ Enum "orders_status_of_order_enum" {
   "Cancelled"
 }
 
+Table "noti" {
+  "noti_id" int(11) [not null]
+  "account_id" int(11) [not null]
+  "status" tinyint(1) [default: 0]
+}
+
 Table "accounts" {
   "account_id" int(11) [pk, not null, increment]
   "phone_number" varchar(20) [unique, not null]
-  "email" varchar(200) [unique, default: ""]
+  "email" varchar(200) [unique, not null]
   "password" varchar(300) [not null]
   "avatar" varchar(300)
   "created_at" datetime [default: `now()`]
@@ -47,13 +53,11 @@ Table "decentralizations" {
   "decentralization_id" int(11) [pk, not null, increment]
   "role_id" int(11) [not null]
   "module_id" int(11) [not null]
-  "function_id" int(11) [not null]
   "is_active" tinyint(1) [default: 1]
   Indexes {
-    (role_id, module_id, function_id) [unique]
+    (role_id, module_id) [unique]
   }
 }
-
 Table "exports" {
   "export_id" int(11) [pk, not null, increment]
   "staff_id" int(11) [not null]
@@ -69,12 +73,6 @@ Table "export_details" {
   "shipment_id" int(11) [not null]
   "unit_price_export" decimal(10,2) [default: 0]
   "quantity_export" int(50) [default: 0]
-}
-
-Table "functions" {
-  "function_id" int(11) [pk, not null, increment]
-  "function_name" varchar(100) [default: ""]
-  "is_active" tinyint(1) [default: 1]
 }
 
 Table "imports" {
@@ -112,12 +110,10 @@ Table "orders" {
 Table "order_details" {
   "order_detail_id" int(11) [pk, not null, increment]
   "order_id" int(11) [not null]
-  "product_id" int(11) [not null]
+  "sku_id" int(11) [not null]
   "price" decimal(10,2) [default: 0]
   "number_of_products" int(11) [default: 1, note: "Phải > 0"]
-  // "total_money" float [default: 0, note: "Phải >= 0"]
   "color_of_product" varchar(20) [default: ""]
-  // "is_active" tinyint(1) [default: 1]
 }
 
 Table "products" {
@@ -137,16 +133,19 @@ Table "products" {
 
 Table "product_details" {
   "serial_number" int(11) [pk, not null]
-  "product_id" int(11) [not null]
+  "shipment_id" int(11) [not null]
+  "sku_id" int(11) [not null]
   "sold" tinyint(1) [default: 0]
 }
 
 Table "guarantees" {
   "guarantee_id" int(11) [pk, not null, increment]
   "serial_number" int(11) [not null]
+  "order_id" int(11) [not null]
   "start_date" date [default: `now()`]
   "end_date" date
 }
+
 
 Table "options" {
   "option_id" int(11) [pk, not null, increment]
@@ -207,9 +206,9 @@ Table "shipments" {
 
 Table "skus" {
   "sku_id" int(11) [pk, not null, increment]
+  "sku_name" varchar(100)
   "sku_code" varchar(100) [unique, default: "", note: "Phải đủ số lượng ký tự của 1 sku code, nếu có enum về color thì sẽ dễ quản lý hơn"]
   "product_id" int(11) [not null]
-  "option_id" int(11) [not null]
   "is_active" tinyint(1) [default: 1]
 }
 
@@ -308,8 +307,6 @@ Ref "decentralizations_ibfk_1":"roles"."role_id" < "decentralizations"."role_id"
 
 Ref "decentralizations_ibfk_2":"modules"."module_id" < "decentralizations"."module_id"
 
-Ref "decentralizations_ibfk_3":"functions"."function_id" < "decentralizations"."function_id"
-
 Ref "exports_ibfk_1":"staffs"."staff_id" < "exports"."staff_id"
 
 Ref "imports_ibfk_1":"staffs"."staff_id" < "imports"."staff_id"
@@ -319,8 +316,6 @@ Ref "imports_ibfk_1":"staffs"."staff_id" < "imports"."staff_id"
 Ref "orders_ibfk_1":"accounts"."account_id" < "orders"."account_id"
 
 Ref "order_details_ibfk_1":"orders"."order_id" < "order_details"."order_id"
-
-Ref "order_details_ibfk_2":"products"."product_id" < "order_details"."product_id"
 
 Ref "products_ibfk_1":"brands"."brand_id" < "products"."brand_id"
 
@@ -370,12 +365,22 @@ Ref: "timesheets"."timesheet_id" - "timesheet_details"."timesheet_id"
 
 Ref: "products"."product_id" < "options"."product_id"
 
-Ref: "options"."option_id" < "skus"."option_id"
 
 Ref: "products"."product_id" < "reviews"."product_id"
 
 Ref: "customers"."customer_id" < "reviews"."customer_id"
 
-Ref: "product_details"."serial_number" < "guarantees"."serial_number"
+Ref: "product_details"."serial_number" - "guarantees"."serial_number"
 
-Ref: "products"."product_id" < "product_details"."product_id"
+
+Ref: "orders"."order_id" < "guarantees"."order_id"
+
+Ref: "skus"."sku_id" < "order_details"."sku_id"
+
+Ref: "skus"."sku_id" < "product_details"."sku_id"
+
+Ref: "shipments"."shipment_id" < "product_details"."shipment_id"
+
+Ref: "noti"."account_id" > "accounts"."account_id"
+
+Ref: "shipments"."shipment_id" < "export_details"."shipment_id"

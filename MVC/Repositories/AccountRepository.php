@@ -66,11 +66,11 @@
             }
 
             public function joinAccountCustomer($email){
-                return $this->joinTables("accounts", "customers", "account_id", "customer_email = ".$email);
+                return $this->joinTables("accounts", "customers", "account_id", "");
             }
 
             public function joinAccountStaff($email){
-                return $this->joinTables("accounts", "staffs", "account_id", "staff_email = ".$email);
+                return $this->joinTables("accounts", "staffs", "account_id", "");
             }
             
             public function getRoleByAccountId($account_id){
