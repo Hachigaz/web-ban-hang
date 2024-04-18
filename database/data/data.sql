@@ -1,26 +1,25 @@
-INSERT INTO `accounts` (`account_id`, `phone_number`, `email`, `password`, `avatar`, `created_at`, `updated_at`, `is_active`) VALUES
-(1, '0988722521', 'hien@gmail.com', 'thien123', 'avatar_0988722521.jpg', current_timestamp(), current_timestamp(), 1),
-(2, '0988722522', 'huy@gmail.com', 'qhuy123', 'avatar_0988722522.jpg',current_timestamp(), current_timestamp(), 1),
-(3, '0988722523', 'loc@gmail.com', 'mloc123', 'avatar_0988722523.jpg',current_timestamp(), current_timestamp(), 1),
-(4, '0988722524', 'phong@gmail.com', 'hphong123','avatar_0988722524.jpg',current_timestamp(), current_timestamp(), 1),
-(5, '0988722525', 'lan@gmail.com', 'tlan123', '',current_timestamp(), current_timestamp(), 1),
-(6, '0988722526', 'lieu@gmail.com', 'tlieu123', '',current_timestamp(), current_timestamp(), 1),
-(7, '0988722527', 'lai@gmail.com', 'tlai123', '',current_timestamp(), current_timestamp(), 1),
-(8, '0988722528', 'camhuong@gmail.com', 'chuong123', '',current_timestamp(), current_timestamp(), 1);
-
-INSERT INTO `customers` (`customer_id`, `customer_fullname`, `role_id`, `account_id`, `gender`, `address`, `date_of_birth`, `is_active`) VALUES 
-('1', 'Nguyễn Thị Lan', '5', '5', '1', 'Quận 1, Thành Phố Hồ Chí Minh', '2003-06-12', '1'),
-('2', 'Nguyễn Thị Liễu', '5', '6', '1', 'Quận 2, Thành Phố Hồ Chí Minh', '2003-04-12', '1'),
-('3', 'Nguyễn Thị Lài', '5', '7', '1', 'Quận 3, Thành Phố Hồ Chí Minh', '2004-02-11', '1'),
-('4', 'Nguyễn Thị Cẩm Hường', '5', '8', '1', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1')
-;
-
 INSERT INTO `roles` (`role_id`, `role_name`, `is_active`) VALUES 
 ('1', 'Admin', '1'), 
 ('2', 'Nhân viên quản lý', '1'),
 ('3', 'Nhân viên bán hàng', '1'),
 ('4', 'Nhân viên kho', '1'),
 ('5', 'Khách hàng', '1');
+
+INSERT INTO `accounts` (`account_id`, `phone_number`, `email`, `password`, `created_at`, `updated_at`, `is_active`) VALUES
+(1, '0988722521', 'hien@gmail.com', 'thien123', current_timestamp(), current_timestamp(), 1),
+(2, '0988722522', 'huy@gmail.com', 'qhuy123', current_timestamp(), current_timestamp(), 1),
+(3, '0988722523', 'loc@gmail.com', 'mloc123', current_timestamp(), current_timestamp(), 1),
+(4, '0988722524', 'phong@gmail.com', 'hphong123',current_timestamp(), current_timestamp(), 1),
+(5, '0988722525', 'lan@gmail.com', 'tlan123', current_timestamp(), current_timestamp(), 1),
+(6, '0988722526', 'lieu@gmail.com', 'tlieu123', current_timestamp(), current_timestamp(), 1),
+(7, '0988722527', 'lai@gmail.com', 'tlai123', current_timestamp(), current_timestamp(), 1),
+(8, '0988722528', 'camhuong@gmail.com', 'chuong123', current_timestamp(), current_timestamp(), 1);
+
+INSERT INTO `customers` (`customer_id`, `customer_fullname`, `role_id`, `account_id`, `gender`, `address`, `date_of_birth`, `is_active`) VALUES 
+('1', 'Nguyễn Thị Lan', '5', '5', '1', 'Quận 1, Thành Phố Hồ Chí Minh', '2003-06-12', '1'),
+('2', 'Nguyễn Thị Liễu', '5', '6', '1', 'Quận 2, Thành Phố Hồ Chí Minh', '2003-04-12', '1'),
+('3', 'Nguyễn Thị Lài', '5', '7', '1', 'Quận 3, Thành Phố Hồ Chí Minh', '2004-02-11', '1'),
+('4', 'Nguyễn Thị Cẩm Hường', '5', '8', '1', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1');
 
 INSERT INTO `staffs` (`staff_id`, `account_id`, `staff_fullname`, `role_id`, `gender`, `address`,`entry_date`, `is_active`) VALUES 
 ('1', '1', 'Lê Nguyễn Thế Hiển', '1', '0', 'Tây Ninh', current_timestamp(), '1'),
@@ -150,6 +149,135 @@ INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `em
 INSERT INTO `order_details` (`order_detail_id`, `order_id`, `product_id`, `price`, `number_of_products`, `color_of_product`) VALUES 
 ('1', '1', '1', '34990000', '1', 'Đen'),
 ('2', '1', '9', '500000', '2', 'Đen');
+
+INSERT INTO suppliers (supplier_id, supplier_name, phone_number_of_supplier, address_of_supplier, email_of_supplier) VALUES ('19', 'Dell Store Việt Nam', '0923020320', '1230123902103', 'dellstorevn@gamil.com');
+INSERT INTO brands (brand_id, brand_name, brand_logo,supplier_id,is_active) VALUES ('19', 'Dell', 'dell_inspiron.png','19','1');
+--LAPTOP DELL
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('27', 'Laptop Dell Inspiron 15 3520 i5 1235U/16GB/512GB/120Hz/OfficeHS/KYHD/Win11', '19', '2', '154900', '24', 'laptop/dell_inspiron.png', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('28', 'Laptop Dell Vostro 14 3430 i5 1335U/8GB/512GB/2GB MX550/OfficeHS/Win11', '19', '2', '119900', '24', 'laptop/dell_vostro.png', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('29', 'Laptop Dell Precision 14 3480 i7 12800H/32GB/1TB/4GB RTXA500/Win11 Pro', '19', '2', '507900', '24', 'laptop/dell_precision.png', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+--LAPTOP LENOVO
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('30', 'Laptop Lenovo IdeaPad 1 15AMN7 R5 7520U/8GB/256GB/Win11', '8', '2', '98900', '24', 'laptop/lenovo-ideapad-1-15amn7-r5-82vg0061vn-glr-2.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('31', 'Laptop Lenovo V14 G3 ABA R5 5625U/8GB/512GB/Win11', '8', '2', '98900', '24', 'laptop/lenovo-v14-g3-aba-r5-82tu006svn-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('32', 'Laptop Lenovo Yoga 7 14IRL8 i5 1340P/16GB/512GB/Touch/Pen/OfficeHS/Win11', '8', '2', '98900', '24', 'laptop/vi-vn-lenovo-yoga-7-14irl8-i5-82yl006avn-slider-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+--LAPTOP ACER
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('33', 'Laptop Acer Aspire 3 A315 510P 32EF i3 N305/8GB/256GB/Win11', '5', '2', '89900', '24', 'laptop/acer-aspire-3-a315-510p-32ef-i3-nxkdhsv001-glr-2.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('34', 'Laptop Acer Gaming Aspire 7 A715 43G R8GA R5 5625U/8GB/512GB/4GB RTX3050/144Hz/Win11', '5', '2', '159900', '24', 'laptop/acer-aspire-7-gaming-a715-43g-r8ga-r5-nhqhdsv002-2-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('35', 'Laptop Acer Aspire Lite 15 51M 55NB i5 1155G7/8GB/512GB/Win11', '5', '2', '119900', '24', 'laptop/acer-aspire-lite-15-51m-55nb-i5-nxkrssv001-2.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+--LAPTOP HP
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('36', 'Laptop HP 245 G10 R5 7520U/8GB/512GB/Win11', '6', '2', '114900', '24', 'laptop/hp-245-g10-r5-8f155pa-glr-2.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('37', 'Laptop HP 15s fq5229TU i3 1215U/8GB/512GB/Win11', '6', '2', '104900', '24', 'laptop/hp-15s-fq5229tu-i3-8u237pa-glr-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('38', 'Laptop HP Pavilion 14 dv2073TU i5 1235U/16GB/512GB/Win11 ', '6', '2', '175900', '24', 'laptop/hp-pavilion-14-dv2073tu-i5-7c0p2pa-2-2.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+--LAPTOP ASUS
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('39', 'Laptop ASUS Zenbook 14 OLED UM3402YA-KM405W', '7', '2', '204900', '24', 'laptop/text_ng_n_16__3_10.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('40', 'Laptop Asus TUF Gaming FX507ZC4-HN095W i5 12500H/16GB/512GB/15.6"/Nvidia RTX 3050 4GB/Win11', '7', '2', '209900', '24', 'laptop/638249405783488795_Asus TUF Gaming FX507ZC4-HN095W 1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('41', 'Laptop Asus TUF Gaming FX506HC-HN144W i5 11400H/8GB/512GB/15.6"FHD/GeForce RTX 3050 4GB/Win 11', '7', '2', '174900', '24', 'laptop/ASUS-TUF-Gaming-F15-2021-black-fpt-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+--DTH APPLE
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('42', 'Điện thoại iPhone 15 Pro Max 256GB', '1', '2', '299900', '24', 'smartphone/iphone-15-pro-max-blue-1-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('43', 'Điện thoại iPhone 14 Pro Max 128GB', '1', '2', '273900', '24', 'smartphone/iphone-14-pro-max-purple-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('44', 'Điện thoại iPhone 12 64GB', '1', '2', '120900', '24', 'smartphone/iphone-12-trang-1-1-org.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+
+
+--DTH SAMSUNG
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('45', 'Điện thoại Samsung Galaxy S24 5G 256GB', '2', '2', '170900', '24', 'smartphone/samsung-galaxy-s24-sliderr-11-1020x570.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('46', 'Điện thoại Samsung Galaxy S23 FE 5G 128GB - Màu Đặc Quyền', '2', '2', '123900', '24', 'smartphone/samsung-galaxy-s23-fe-sld-1-1020x570.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('47', 'Điện thoại Samsung Galaxy Z Flip5 5G 256GB', '2', '2', '216900', '24', 'smartphone/samsung-galaxy-z-flip5-5g-sld-1021x570.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+
+--DTH XIAOMI
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('48', 'Điện thoại Xiaomi 14 5G 512GB', '3', '2', '224900', '24', 'smartphone/vi-vn-xiaomi-14-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('49', 'Điện thoại Xiaomi Redmi Note 13 Pro 5G', '3', '2', '89900', '24', 'smartphone/xiaomi-redmi-note-13-pro-sliderr-99-2048x1144.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('50', 'Điện thoại Xiaomi Redmi Note 13 Pro 256GB', '3', '2', '74900', '24', 'smartphone/xiaomi-redmi-note-13-pro-8-256638441930939443824.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+
+--DTH OPPO
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('51', 'Điện thoại OPPO Reno11 5G', '4', '2', '299900', '24', 'smartphone/oppo-reno11-f-5g638453188556795907.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('52', 'Điện thoại OPPO A18 64GB ', '4', '2', '32900', '24', 'smartphone/oppo-a18-12-1020x570.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('53', 'Điện thoại OPPO A57 128GB ', '4', '2', '36900', '24', 'smartphone/oppo-a57-4g637916782091781459-1020x570.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+--LOA JBL
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('54', 'Loa Bluetooth JBL Flip 6', '12', '6', '28400', '24', 'speaker/bluetooth-jbl-flip-6-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('55', 'Loa Bluetooth JBL Pulse 5', '12', '6', '63500', '24', 'speaker/loa-bluetooth-jbl-pulse-5-1-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('56', 'Loa Bluetooth JBL Partybox On The Go', '12', '6', '54900', '24', 'speaker/bluetooth-jbl-partybox-on-the-go-600x600-1-org.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('57', 'Loa Bluetooth JBL Authentics AUTH500 ', '12', '6', '160000', '24', 'speaker/loa-bluetooth-jbl-authentics-auth500-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('58', 'Loa Bluetooth JBL Authentics 300', '12', '6', '112900', '24', 'speaker/loa-bluetooth-jbl-authentics-a300-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('59', 'Loa Bluetooth JBL Partybox Encore 2Mic', '12', '6', '103900', '24', 'speaker/loa-bluetooth-jbl-partybox-encore-2mic-5.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('60', 'Loa Bluetooth JBL Xtreme 3', '12', '6', '62600', '24', 'speaker/loa-bluetooth-jbl-xtreme-3-den-7.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('61', 'Loa Bluetooth JBL Boombox 3 ', '12', '6', '113900', '24', 'speaker/loa-bluetooth-jbl-boombox-3-01.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('62', 'Loa Bluetooth JBL Partybox 310 ', '12', '6', '149000', '24', 'speaker/loa-bluetooth-jbl-partybox-310-2.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('63', 'Loa Bluetooth JBL Partybox 110 ', '12', '6', '109000', '24', 'speaker/loa-bluetooth-jbl-partybox-110-imei-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+--TAINGHE SONY
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('64', 'Tai nghe Bluetooth True Wireless Sony WF-C700N ', '13', '5', '21900', '24', 'bluetooth_headphone/tai-nghe-bluetooth-true-wireless-sony-wf-c700n-den-2.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('65', 'Tai nghe Bluetooth True Wireless Sony WF-C500  ', '13', '5', '15200', '24', 'bluetooth_headphone/bluetooth-true-wireless-sony-wf-c500-den-1-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('66', 'Tai nghe Bluetooth chụp tai Sony WH-1000XM4 ', '13', '5', '51900', '24', 'bluetooth_headphone/group_17333.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('67', 'Tai nghe Bluetooth chụp tai Sony WH-1000XM5 ', '13', '5', '65900', '24', 'bluetooth_headphone/tai-nghe-chup-tai-sony-wh-1000xm5-4.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('68', 'Tai nghe Gaming chụp tai không dây Sony INZONE H5 ', '13', '5', '29900', '24', 'bluetooth_headphone/tai-nghe-chup-tai-sony-inzone-h5_5_.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+--CHUOT LOGITECH
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('69', 'Chuột Bluetooth Silent Logitech M240 ', '14', '7', '3400', '24', 'mouse/chuot-bluetooth-silent-logitech-m240-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('70', 'Chuột Không dây Logitech M190 ', '14', '7', '2900', '24', 'mouse/chuot-khong-day-logitech-m190-xanh-den-1-org.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('71', 'Chuột Có dây Gaming Logitech G102 Gen2 Lightsync  ', '14', '7', '4050', '24', 'mouse/chuot-gaming-logitech-g102-gen2-lightsync-den-1-org.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('72', 'Chuột Không dây Logitech M185 ', '14', '7', '2350', '24', 'mouse/chuot-khong-day-logitech-m185-xanh-1-org.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('73', 'Chuột Không dây Bluetooth Silent Logitech Signature M650 ', '14', '7', '6900', '24', 'mouse/chuot-khong-day-logitech-signature-m650-den-size-m-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('74', 'Chuột Không Dây Logitech M171  ', '14', '7', '3000', '24', 'mouse/chuot-khong-day-logitech-m171-hong-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('75', 'Chuột Không dây Silent Logitech M331  ', '14', '7', '3400', '24', 'mouse/chuot-khong-day-silent-logitech-m331-den-1-org.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('76', 'Chuột Không dây Bluetooth Logitech MX Anywhere 2S Đen ', '14', '7', '11900', '24', 'mouse/chuot-khong-day-logitech-mx-anywhere-2s-den-2-org.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('77', 'Chuột Không dây Logitech Silent M220 ', '14', '7', '3000', '24', 'mouse/chuot-khong-day-logitech-silent-m220-den-2-org.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('78', 'Chuột Không dây Logitech M170  ', '14', '7', '2650', '24', 'mouse/chuot-khong-day-logitech-m170-den-2-org.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+--BANPHIM LOGITECH
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('79', 'Bàn phím Bluetooth Logitech K380s  ', '14', '8', '7900', '24', 'keyboard/ban-phim-bluetooth-logitech-k380s-hong-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('80', 'Bộ Bàn Phím Chuột Không Dây Logitech MK240  ', '14', '8', '4900', '24', 'keyboard/bo-ban-phim-chuot-khong-day-logitech-mk240-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('81', 'Bàn Phím Có Dây Logitech K120 ', '14', '8', '2000', '24', 'keyboard/ban-phim-co-day-logitech-k120-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('82', 'Bàn phím Logitech G715 TKL Off White Tactile ', '14', '8', '43390', '24', 'keyboard/ry-2_7af4effd78704121b18c73e248e8c837_dc5da1862ff54f40b5a3ca4c1588b460_424c03d1e5b6411fa4f795ec1153ace7_grande.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('83', 'Bàn phím Logitech G512 GX RGB Tactile ', '14', '8', '19900', '24', 'keyboard/thumbphim_849d9bd31e594549b4cdce2e5fb3e375_f6b2f16edca047db8ae41f652391e5e8_grande.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('84', 'Bàn phím Logitech G Pro X TKL Light Speed Tactile Switch Black ', '14', '8', '39900', '24', 'keyboard/1_5b2f7891bf434a7aab9f1abdba56c17e_grande.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('85', 'Bàn phím Logitech G Pro X Gaming - Đen ', '14', '8', '22900', '24', 'keyboard/thumbphim_9fb12e4f19d94b31aeb8cc81546d86df_b2aa143d682b4850a8f2abe30706a659_grande.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('86', 'Bàn phím cơ Logitech MX Mechanical Graphite Tactile Silent 920-010760 ', '14', '8', '39900', '24', 'keyboard/hanical-keyboard-top-view-graphite-us_602a1fb095904851880b1da99a10fb6a_c609e86185f249e78554c198895da48f_grande.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('87', 'Bàn phím Logitech Pebble Keys 2 K380S White ', '14', '8', '7200', '24', 'keyboard/2_32cbb3f99f4e460cb0dbb41ac19450d0_grande.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('88', 'Bàn Phím Bluetooth Logitech K380 Black ', '14', '8', '6090', '24', 'keyboard/hinh-1_8c2dd4e8724c4e6b80d6709e92a9f6e1_5f112479df724affa1ce4f649a40ad43_grande.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
+
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TX', 'Titan xanh', '42');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TD', 'Titan den', '42');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TN', 'Titan tu nhien', '42');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TW', 'Titan trang', '42');
+
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-W', 'Trang', '44');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-XL', 'Xanh lá', '44');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-D', 'Đen', '44');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-T', 'Tím', '44');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-XD', 'Xanh dương', '44');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-R', 'Đỏ', '44');
+
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-V', 'Vàng', '45');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-X', 'Xám', '45');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-D', 'Đen', '45');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-T', 'Tím', '45');
+
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('46-W', 'Trang', '46');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('46-X', 'Xanh mint', '46');
+
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-X', 'Xanh mint', '47');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-T', 'Tím', '47');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-G', 'Xám', '47');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-K', 'Kem', '47');
+
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-W', 'Trang', '48');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-XL', 'Xanh lá', '48');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-D', 'Đen', '48');
+
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('49-X', 'Xanh', '49');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('49-D', 'Đen', '49');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('49-T', 'Tím', '49');
+
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-XL', 'Xanh lá', '50');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-D', 'Đen', '50');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-T', 'Tím', '50');
+
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-D', 'Đen', '52');
+--INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-XD', 'Xanh dương', '52');
 
 INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-128G-Y', '128GB - Vàng', '1');
 INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-256G-Y', '256GB - Vàng', '1');
