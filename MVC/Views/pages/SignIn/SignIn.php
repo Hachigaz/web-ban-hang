@@ -25,7 +25,7 @@
                         <img src="../Public/img/logo/logo.png" width="100px" height="100px" alt="">
                     </div>
                     <div class="shop-name">
-                        Electro-Goods
+                        Techshop
                     </div>    
                 </div>
                 <div class="form-title-message">

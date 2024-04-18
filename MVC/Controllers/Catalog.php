@@ -208,7 +208,7 @@
             $message = "Danh mục sản phẩm";
             if(isset($urlParams["search-query"])){
                 $name = $urlParams["search-query"];
-                $message="Kết quả tìm kiểm cho $name";
+                $message="Kết quả tìm kiếm cho $name";
                 unset($name);
             }
 
