@@ -37,9 +37,11 @@ function fillSelectedData(element){
     infoPanelElement.querySelector("#remove-product-button").classList.remove("disabled")
 
     getProductSKUs(productID)
+    getProductImages(productID)
     document.querySelector(".sku-panel .sku-info-options .add-sku").classList.remove("disabled")
     currentSelectedSKU = null
     disableSkuOptions()
+    disableProductImageOptions()
 
     document.querySelector(".info-tab-list .product-info-tab-wrapper").classList.remove("hidden")
     document.querySelector(".info-tab-list .no-product-select-tab").classList.add("hidden")
@@ -398,7 +400,7 @@ function showInfoTab(element){
         }
     })
 }
-currentSelectedSKU = null
+let currentSelectedSKU = null
 function enableSkuOptions(element){            
     let skuOptionsElement = document.querySelector(".sku-panel .sku-info-options")
     skuOptionsElement.querySelector(".edit-sku").classList.remove("disabled")
@@ -563,7 +565,7 @@ function removeSKU(element){
     }
 }
 
-skuInfo = null
+let skuInfo = null
 function fillSkuEditInfo(element){
     let skuCode = element.querySelector(".row-element[attrib='sku_code']").getAttribute("value")
     let skuName = element.querySelector(".row-element[attrib='sku_name']").getAttribute("value")
@@ -598,4 +600,119 @@ function setFilter(filterElement, filterValue){
         redirectURL+=`?${encodeURI(searchParams.toString())}`
     }
     window.location.replace(redirectURL)
+}
+
+function fillProductImage(element){
+
+}
+
+function getProductImages(productID){
+    let reqData = new FormData()
+    reqData.append("product_id",productID)
+
+    let req = new XMLHttpRequest()
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let productImageListElement = document.querySelector(".product-images-panel .product-image-list")
+            productImageListElement.innerHTML = ""
+            productImageListElement.innerHTML = this.responseText
+        }
+    };
+    req.open("POST", "../DataRequest/GetProductImages", true);
+    req.send(reqData);
+    disableProductImageOptions();
+    productImageInfo=null
+}
+
+let productImageInfo = null
+function fillProductImageEditInfo(element){
+    let productID = element.querySelector(".hidden span[attrib='product_id']").getAttribute("value")
+    let productImageID = element.querySelector(".hidden span[attrib='product_image_id']").getAttribute("value")
+    let imgDir = element.querySelector(".row-element[attrib='image_url']").getAttribute("value")
+
+    enableProductImageOptions(element);
+
+    productImageInfo = {
+        "product_id":productID,
+        "product_image_id":productImageID,
+        "image_url":imgDir
+    }
+
+    let imagePreviewElement = document.querySelector(".product-images-panel .image-preview-wrapper img")
+    imagePreviewElement.setAttribute("src",`../Public/img/products/${imgDir}`)
+}
+
+let currentSelectedProductImg = null
+function enableProductImageOptions(element){            
+    let optionElement = document.querySelector(".product-images-panel .product-image-options")
+    optionElement.querySelector(".rem-img").classList.remove("disabled")
+    if(currentSelectedProductImg){
+        currentSelectedProductImg.classList.remove("selected")
+    }
+    element.classList.add("selected")
+    currentSelectedProductImg = element
+}
+
+function disableProductImageOptions(){            
+    let optionElement = document.querySelector(".product-images-panel .product-image-options")
+    optionElement.querySelector(".rem-img").classList.add("disabled")
+
+    let imagePreviewElement = document.querySelector(".product-images-panel .image-preview-wrapper img")
+    imagePreviewElement.setAttribute("src","../Public/img/products/_common/not-found.png")
+}
+
+function addProductImage(element){
+
+    let reqData = new FormData()
+    reqData.append("table","product_images")
+    reqData.append("product_id",productInfo["product_id"])
+    
+    let imgExtension = element.name.split(".")
+    let newImgPath = `${productInfo["category_id"]}/${productInfo["product_id"]}/${imgExtension[imgExtension.length-2].trim().toLowerCase()}.${imgExtension[imgExtension.length-1]}`
+    reqData.append("image_url",element,newImgPath)
+
+    let req = new XMLHttpRequest()
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText)
+            let responseData = JSON.parse(this.responseText)
+            if(responseData["status"]=="success"){
+                window.location.reload()
+            }
+        }
+    };
+
+    req.open("POST", "../DataRequest/Add", true);
+    req.send(reqData);
+}
+
+function removeProductImage(element){
+    if(!element.classList.contains("disabled")){
+        let productImageID = productImageInfo["product_image_id"]
+        
+        let reqData = new FormData()
+        reqData.append("table","product_images")
+        reqData.append("table_id","product_image_id")
+        reqData.append("product_image_id",productImageID)
+        
+        
+        
+        let req = new XMLHttpRequest()
+        req.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+                let responseData = JSON.parse(this.responseText)
+                console.log(responseData)
+                if(responseData["status"]=="success"){
+                    window.location.reload()
+                }
+            }
+        };
+        req.open("POST", "../DataRequest/TrueDelete", true);
+        if(confirm("Xác nhận xóa hình ảnh"))
+            req.send(reqData);
+    }
+    else{
+        
+    }
 }

@@ -137,6 +137,9 @@
                         <div class="option" panel="sku-panel" onclick="showInfoPanel(this)">
                             Các đơn vị lưu
                         </div>
+                        <div class="option" panel="product-images-panel" onclick="showInfoPanel(this)">
+                            Hình ảnh sản phẩm
+                        </div>
                     </div>
                     <div class="tab-content-wrapper">
                         <div class="info-tab-content info-panel">
@@ -317,6 +320,32 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-tab-content product-images-panel hidden">
+                            <div class="image-preview-wrapper">
+                                <img src="../Public/img/products/_common/not-found.png" alt="" srcset="">
+                            </div>
+                            <div class="product-image-table-wrapper">
+                                <div class="product-image-title row-element-display-header">
+                                    <div class="row-element">
+                                        Hình ảnh sản phẩm
+                                    </div>
+                                </div>
+                                <div class="product-image-wrapper">
+                                    <div class="product-image-list">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-image-options no-user-select">
+                                <div class="option add-img">
+                                    <input name="input-product-image" type="file" accept="image/*" multiple="false" onchange="addProductImage(this.files[0])">
+                                    Thêm hình ảnh mới
+                                </div>
+                                <div class="option rem-img" onclick="removeProductImage(this)">
+                                    Xóa hình đã chọn
                                 </div>
                             </div>
                         </div>

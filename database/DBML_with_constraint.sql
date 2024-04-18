@@ -150,7 +150,8 @@ Table "guarantees" {
 Table "options" {
   "option_id" int(11) [pk, not null, increment]
   "product_id" int(11) [not null]
-  "specifications" longtext [not null]
+  "option_name" varchar(128) [not null]
+  "option_value" longtext [not null]
   "is_active" tinyint(1) [default: 1]
 }
 

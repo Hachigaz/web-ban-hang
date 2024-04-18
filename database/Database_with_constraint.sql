@@ -139,12 +139,14 @@ CREATE TABLE `guarantees` (
 CREATE TABLE `options` (
   `option_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
-  `specifications` longtext NOT NULL,
+  `option_name` varchar(128) NOT NULL,
+  `option_value` longtext NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
 );
 
 CREATE TABLE `likes` (
   `like_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `number`
   `product_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL
 );

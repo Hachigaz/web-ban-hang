@@ -18,6 +18,21 @@
             unset($skuList);
             unset($productID);
         }
+        public function GetProductImages(){
+            $productID = $_POST["product_id"];
+            $sql = "SELECT product_images.product_image_id, product_images.product_id, product_images.image_url
+                FROM product_images
+                WHERE product_images.product_id = $productID
+                ORDER BY product_images.image_url;
+            ";
+
+            $resultData = $this->productService->productRepo->get($sql);
+            $productImageList = $resultData;
+
+            include("./MVC/Views/pages/Manager/ProductManagers/productImageRender.php");
+            unset($productImageList);
+            unset($productID);
+        }
         public function Add(){
             $table = $_POST["table"];
 
@@ -34,7 +49,9 @@
                 $imgPath = $_FILES["$key"]["full_path"];
                 $imgData = file_get_contents($_FILES["$key"]["tmp_name"]);
                 
-                $imgDir = explode("/",$imgPath);
+                $fileNameSep = strrpos($imgPath, '/'); 
+                $imgDir = [substr($imgPath, 0, $fileNameSep),substr($imgPath, $fileNameSep + 1)];
+
                 $storePath = "./Public/img/products/".$imgDir[0]."/";
                 
                 $fileNameInfo = explode(".",$imgDir[1]);
@@ -60,6 +77,7 @@
                 unset($imgPath);
                 unset($imgDir);
                 unset($storePath);
+                unset($fileNameSep);
             }
 
             $sql = "INSERT INTO $table(".implode(",",$arrayKeys).") VALUES(".implode(",",$arrayValues).")";
@@ -69,6 +87,7 @@
             unset($updateKeys);
             unset($table);
         }
+
         public function Update(){
             $table = $_POST["table"];
             $tableKey = $_POST["table_id"];
@@ -99,7 +118,8 @@
                 $imgPath = $_FILES["$key"]["full_path"];
                 $imgData = file_get_contents($_FILES["$key"]["tmp_name"]);
                 
-                $imgDir = explode("/",$imgPath);
+                $fileNameSep = strrpos($imgPath, '/'); 
+                $imgDir = [substr($imgPath, 0, $fileNameSep),substr($imgPath, $fileNameSep + 1)];
                 $storePath = "./Public/img/products/".$imgDir[0]."/";
                 
                 $fileNameInfo = explode(".",$imgDir[1]);
@@ -124,6 +144,7 @@
                 unset($imgPath);
                 unset($imgDir);
                 unset($storePath);
+                unset($fileNameSep);
             }
             $sql .= implode(",",$updateKeys);
             $sql .= " WHERE $table.$tableKey = ".$_POST["$tableKey"];
@@ -134,6 +155,11 @@
             unset($updateKeys);
             unset($table);
         }
+
+        public $imagePossesionList = [
+            //"products"=>["thumbnail"],
+            "product_images"=>["image_url"]
+        ];
         public function Delete(){
             $table = $_POST["table"];
             $tableKey = $_POST["table_id"];
@@ -148,6 +174,41 @@
             unset($tableKey);
             unset($keyValue);
             unset($sql);
+        }
+
+        public function TrueDelete(){
+            $table = $_POST["table"];
+            $tableKey = $_POST["table_id"];
+            $keyValue = $_POST["$tableKey"];
+            
+            if(array_key_exists($table,$this->imagePossesionList)){
+                $possesionCols = $this->imagePossesionList["$table"];
+                foreach ($possesionCols as $col){
+                    $fileDeleteSQL = "SELECT $table.$col from $table WHERE $table.$tableKey = '$keyValue'";
+                    $imgPath = $this->productService->productRepo->get($fileDeleteSQL)[0]["$col"];
+                    $imgPath = "./Public/img/products/$imgPath";
+                    if(file_exists($imgPath)){
+                        unlink($imgPath);
+                    }
+                    unset($fileDeleteSQL);
+                    unset($imgPath);
+                }
+                unset($possesionCols);
+            }
+
+            $sql = "DELETE FROM $table WHERE $table.$tableKey = '$keyValue'";
+
+            $this->productService->productRepo->set($sql);
+
+            echo(json_encode(["status"=>"success"]));
+            unset($table);
+            unset($tableKey);
+            unset($keyValue);
+            unset($sql);
+        }
+
+        public function DeleteImage(){
+
         }
     }
 ?>
