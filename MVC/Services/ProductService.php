@@ -40,6 +40,10 @@
             echo json_encode($this->productRepo->getProductById($product_id), JSON_UNESCAPED_UNICODE);
         }
 
+        public function getProductById2($product_id){
+            return $this->productRepo->getProductById($product_id);
+        }
+
         public function getAllBrandOfProduct(){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->productRepo->getAllBrandOfProduct(), JSON_UNESCAPED_UNICODE);
