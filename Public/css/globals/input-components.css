@@ -29,21 +29,27 @@ div.c-input .input-label-wrapper label{
 }
 
 div.c-input .input-error-message{
-    display:none;
     color:red;
     font-weight: 500;
+    display:none;
 }
 
+textarea,
 input[type="text"],
 input[type="password"]{
     height: 2.4em;
-
-    
     font-size: 11pt;
-
+}
+input[type="text"],
+input[type="password"]{
     text-indent: 20px;
 }
 
+textarea{
+    resize:none;
+}
+
+textarea:focus,
 input[type="text"]:focus,
 input[type="password"]:focus{
     outline-width: 1px;
@@ -58,6 +64,7 @@ input[type="button"]{
     font-weight: 550;
 }
 
+textarea,
 input[type="text"],
 input[type="password"],
 input[type="submit"],

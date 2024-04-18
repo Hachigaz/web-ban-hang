@@ -39,19 +39,43 @@
             ]);
         }
         public function CustomerManager(){
+
             $this->view("internalManager", [
                 "Page" => "CustomerManager",
                 "Title" => "Khách hàng"
             ]);
         }
         public function ProductManager(){
+            $uri = parse_url($_SERVER['REQUEST_URI']);
+
+            $urlParams = null;
+            if(isset($uri["query"])){            
+                parse_str(urldecode($uri["query"]),$urlParams);
+            }
+            unset($uri);
+            
+            $resultProductList = $this->productService->GetFilteredProducts($urlParams);
+            
+            $sql = "SELECT category_id,category_name
+            FROM categories
+            WHERE categories.is_active = '1'";
+            $resultCategoryList = $this->productService->getProductsQuery($sql);
+            unset($sql);
+            
+            $sql = "SELECT brand_id,brand_name
+            FROM brands
+            WHERE brands.is_active = '1'";
+            $resultBrandList = $this->productService->getProductsQuery($sql);
+            unset($sql);
+
             $this->view("internalManager", [
                 "Page" => "ProductManager",
-                "Title" => "Sản phẩm"
+                "Title" => "Sản phẩm",
+                "ProductList"=>$resultProductList,
+                "CategoryList"=>$resultCategoryList,
+                "BrandList"=>$resultBrandList,
+                "URLParams"=>$urlParams
             ]);
-            echo("
-            <script defer>moveTo('Menu')</script>
-            ");
         }
         public function SupplierManager(){
             $this->view("internalManager", [
@@ -182,4 +206,4 @@
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
         }
     }
-?>
+ 
