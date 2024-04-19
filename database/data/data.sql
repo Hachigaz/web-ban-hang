@@ -239,42 +239,34 @@ INSERT INTO products (product_id, product_name, brand_id, category_id, price, gu
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('87', 'Bàn phím Logitech Pebble Keys 2 K380S White ', '14', '8', '7200', '24', 'keyboard/2_32cbb3f99f4e460cb0dbb41ac19450d0_grande.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('88', 'Bàn Phím Bluetooth Logitech K380 Black ', '14', '8', '6090', '24', 'keyboard/hinh-1_8c2dd4e8724c4e6b80d6709e92a9f6e1_5f112479df724affa1ce4f649a40ad43_grande.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TX', 'Titan xanh', '42');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TD', 'Titan den', '42');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TN', 'Titan tu nhien', '42');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TW', 'Titan trang', '42');
-
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-W', 'Trang', '44');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-XL', 'Xanh lá', '44');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-D', 'Đen', '44');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-T', 'Tím', '44');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-XD', 'Xanh dương', '44');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-R', 'Đỏ', '44');
-
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-V', 'Vàng', '45');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-X', 'Xám', '45');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-D', 'Đen', '45');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-T', 'Tím', '45');
-
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('46-W', 'Trang', '46');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('46-X', 'Xanh mint', '46');
-
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-X', 'Xanh mint', '47');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-T', 'Tím', '47');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-G', 'Xám', '47');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-K', 'Kem', '47');
-
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-W', 'Trang', '48');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-XL', 'Xanh lá', '48');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-D', 'Đen', '48');
-
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('49-X', 'Xanh', '49');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('49-D', 'Đen', '49');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('49-T', 'Tím', '49');
-
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-XL', 'Xanh lá', '50');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-D', 'Đen', '50');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-T', 'Tím', '50');
-
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-D', 'Đen', '52');
---INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-XD', 'Xanh dương', '52');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('1','42-TX', 'Titan xanh', '42');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('2','42-TD', 'Titan den', '42');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('3','42-TN', 'Titan tu nhien', '42');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('4','42-TW', 'Titan trang', '42');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('5','44-W', 'Trang', '44');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('6','44-XL', 'Xanh lá', '44');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('7','44-D', 'Đen', '44');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('8','44-T', 'Tím', '44');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('9','44-XD', 'Xanh dương', '44');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('10','44-R', 'Đỏ', '44');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('11','45-V', 'Vàng', '45');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('12','45-X', 'Xám', '45');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('13','45-D', 'Đen', '45');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('14','45-T', 'Tím', '45');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('15','46-W', 'Trang', '46');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('16','46-X', 'Xanh mint', '46');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('17','47-X', 'Xanh mint', '47');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('18','47-T', 'Tím', '47');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('19','47-G', 'Xám', '47');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('20','47-K', 'Kem', '47');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('21','48-W', 'Trang', '48');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('22','48-XL', 'Xanh lá', '48');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('23','48-D', 'Đen', '48');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('24','49-X', 'Xanh', '49');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('25','49-D', 'Đen', '49');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('26','49-T', 'Tím', '49');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('27','50-XL', 'Xanh lá', '50');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('28','50-D', 'Đen', '50');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('29','50-T', 'Tím', '50');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('30','52-D', 'Đen', '52');
+INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('31','52-XD', 'Xanh dương', '52');
