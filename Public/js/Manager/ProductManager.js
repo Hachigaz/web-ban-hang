@@ -589,12 +589,17 @@ function fillSkuEditInfo(element){
 
 function setFilter(filterElement, filterValue){
     let searchParams = new URLSearchParams(decodeURI(window.location.search))
-    if(searchParams.has(filterElement)){
-        searchParams.set(filterElement,filterValue)
-    }
-    else{
-        searchParams.append(filterElement,filterValue)
-    }
+        if(searchParams.has(filterElement)){
+            if(filterValue != ""){
+                searchParams.set(filterElement,filterValue)
+            }
+            else{
+                searchParams.delete(filterElement)
+            }
+        }
+        else{
+            searchParams.append(filterElement,filterValue)
+        }
     let redirectURL = `${window.location.href.replace(window.location.search,"")}`
     if(searchParams.size>0){
         redirectURL+=`?${encodeURI(searchParams.toString())}`

@@ -54,7 +54,7 @@
             }
             unset($uri);
             
-            $resultProductList = $this->productService->GetFilteredProducts($urlParams);
+            $resultProductList = $this->productService->GetFilteredProducts($urlParams, "" , "products.product_id ASC");
             
             $sql = "SELECT category_id,category_name
             FROM categories
@@ -77,6 +77,37 @@
                 "URLParams"=>$urlParams
             ]);
         }
+
+        public function DecodeURL(){
+            $uri = parse_url($_SERVER['REQUEST_URI']);
+
+            $urlParams = null;
+            if(isset($uri["query"])){            
+                parse_str(urldecode($uri["query"]),$urlParams);
+            }
+            return $urlParams;
+        }
+
+        public function GetMoreProducts(){
+            $urlParams = $this->DecodeURL();
+
+            $resultProductList = $this->productService->GetFilteredProducts($urlParams, "", "products.product_id ASC");
+
+            ob_start();
+            $productList = $resultProductList["ProductList"];
+            include("./MVC/Views/Pages/Manager/ProductManagers/ProductPrint.php");
+            $htmlData=ob_get_contents();
+            unset($productList); 
+            ob_end_clean();
+
+            $responseData = [
+                "ProductsHTML"=>$htmlData,
+                "StatusData"=>["IsLast"=>$resultProductList["IsLast"]]
+            ];
+            header('Content-Type: application/json');
+            echo json_encode($responseData);
+        }
+
         public function SupplierManager(){
             $this->view("internalManager", [
                 "Page" => "SupplierManager",

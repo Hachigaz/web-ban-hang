@@ -114,7 +114,7 @@ CREATE TABLE `products` (
   `price` decimal(10,2) DEFAULT 0 COMMENT 'Phải >= 0',
   `guarantee` int(11) DEFAULT 0,
   `thumbnail` varchar(300) DEFAULT '' COMMENT 'Phải có ảnh mặc định',
-  `description` longtext DEFAULT 'Đây là mô tả sản phẩm',
+  `description` longtext,
   `created_at` datetime DEFAULT (now()),
   `updated_at` datetime DEFAULT (now()),
   `average_rating` float,
@@ -146,7 +146,7 @@ CREATE TABLE `options` (
 
 CREATE TABLE `likes` (
   `like_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `number`
+  `number` int,
   `product_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL
 );

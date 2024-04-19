@@ -4,6 +4,7 @@
 <script src="../Public/scripts/components/validate.min.js"></script>
 <script src="../Public/scripts/components/jquery-3.7.1.min.js"></script>
 <script src="../Public/scripts/components/globals.js"></script>
+<script src="../Public/js/Manager/ProductManager/load.js" defer></script>
 <div class="tab">
     <div class="tab-header">
         <div class="menu-options-wrapper no-user-select header-options">
@@ -19,7 +20,7 @@
         </div>
         <div class="filter-options-wrapper no-user-select header-options">
             <div class="title">
-                Phân loại sản phẩm
+                Phân loại
             </div>
             <div class="option">
                 <?php 
@@ -58,9 +59,27 @@
         </div>
         <div class="header-search-bar no-user-select header-options">
             <div class="title">
-                Tìm kiếm sản phẩm
+                Tìm kiếm
             </div>
-            <input type="text" name="" id="">
+            <input placeholder="Nhập tên sản phẩm" type="text" name="" id="" value="<?php if(isset($data["URLParams"]["search-query"]))echo $data["URLParams"]["search-query"]?>">
+        </div>
+        <div class="order-options-wrapper no-user-select header-options">
+            <div class="title">
+                Sắp xếp
+            </div>
+            <div class="option">
+                <select name="" id="" onchange="setFilter('order-by',`${this.value}`)">
+                    <?php $orderByValue = $data["URLParams"]["order-by"]; ?>
+                    <option value="">Mặc định</option>
+                    <option value="brand-a-z" <?php if($orderByValue=="brand-a-z") echo "selected" ?> >Hãng sản xuất</option>
+                    <option value="category-a-z" <?php if($orderByValue=="category-a-z") echo "selected" ?>>Loại sản phẩm</option>
+                    <option value="price-asc" <?php if($orderByValue=="price-asc") echo "selected" ?>>Giá tăng dần</option>
+                    <option value="price-desc" <?php if($orderByValue=="price-desc") echo "selected" ?>>Giá giảm dần</option>
+                    <option value="updated-at-desc" <?php if($orderByValue=="updated-at-desc") echo "selected" ?>>Ngày thay đổi mới nhất</option>
+                    <option value="updated-at-asc" <?php if($orderByValue=="updated-at-asc") echo "selected" ?>>Ngày thay đổi cũ nhất</option>
+                    <?php unset($orderByValue); ?>
+                </select>
+            </div>
         </div>
     </div>
     <div class="tab-content products-tab">
@@ -81,42 +100,23 @@
                 <div class="row-element">
                     Hãng 
                 </div>
+                <div class="row-element">
+                    Ngày chỉnh sửa
+                </div>
             </div>
             <div class="product-list">
-                <?php foreach($data["ProductList"]["ProductList"] as $product): ?>
-                <div class="product-item row-element-display" onclick="fillSelectedData(this)">
-                    <div class="row-element" attrib="product_id" value="<?= $product["product_id"]?>">
-                        <?= $product["product_id"] ?>
-                    </div>
-                    <div class="row-element" attrib="product_name"value="<?= $product["product_name"]?>">
-                        <?= $product["product_name"] ?>
-                    </div>
-                    <div class="row-element" attrib="category_name" value="<?= $product["category_id"]?>">
-                        <?= $product["category_name"] ?>
-                    </div>
-                    <div class="row-element" attrib="price" value="<?= $product["price"]?>">
-                        <?= number_format($product["price"], 0, '.', ',') ?>₫
-                    </div>
-                    <div class="row-element" attrib="brand_name" value="<?= $product["brand_id"] ?>">
-                        <?= $product["brand_name"] ?>
-                    </div>
-                    <div class="hidden">
-                        <?php 
-                            $thumbnail = $product["thumbnail"];
-                            if($thumbnail==""){
-                                $thumbnail = "_common/no-image.jpg";
-                            }
-                        ?>
-                        <span attrib="thumbnail" value="../Public/img/products/<?= $thumbnail?>"></span>
-                        <?php 
-                            unset($thumbnail);
-                        ?>
-                        <span attrib="average_rating" value="<?= $product["average_rating"]?>"></span>
-                        <span attrib="guarantee" value="<?= $product["guarantee"]?>"></span>
-                        <span attrib="description" value="<?= $product["description"]?>"></span>
-                    </div>
+                <div class="product-list-container">
+                    <?php 
+                        $productList = $data["ProductList"]["ProductList"];
+                        include("./MVC/Views/Pages/Manager/ProductManagers/ProductPrint.php");
+                        unset($productList);
+                    ?>
                 </div>
-                <?php endforeach; ?>
+                <?php if(!$data["ProductList"]["IsLast"]):?>
+                <div class="show-more-product-button no-user-select" onclick="showMoreProducts(this)">
+                    Xem thêm sản phẩm
+                </div>
+                <?php endif; ?>
             </div>
         </div>
         <div class="info-tab-list">
