@@ -5,7 +5,7 @@
         }
 
         public function updateStatistic($statistic, $id){// by id
-            $this->update("statistics", $statistic, "statistic_id = ".$id);
+            $this->update("statistics", $statistic, "statistic_id = ".$id, "statistic_id");
         }
 
         public function deleteStatistic($id){// by id
