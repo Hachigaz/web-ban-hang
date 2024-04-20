@@ -20,7 +20,7 @@
                         
                     </div>    
                 </div>
-                <input type="text" name="verification-code-input" id="verification-code-input" class="code-input" maxlength="6" placeholder="Nhập mã xác nhận" autocomplete="off" onclick="(new InputElement(this.parentElement)).hideError()">
+                <input class="input" type="text" name="verification-code-input" id="verification-code-input" class="code-input" maxlength="6" placeholder="Nhập mã xác nhận" autocomplete="off" onclick="(new InputElement(this.parentElement)).hideError()">
             </div>
         </div>
         <hr class="form-separation">

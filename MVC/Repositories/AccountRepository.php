@@ -37,7 +37,7 @@
             }
 
             public function getAccountByEmail($email){
-                $account = $this->getAllByWhere("accounts","accounts.email = '".$email."'");
+                $account = $this->getAllByWhere("accounts","accounts.email = '$email'");
                 if(sizeof($account)==0){
                     return null;
                 }
@@ -46,7 +46,7 @@
                 }
             }
             public function getAccountByEmail1($email){
-                $account = $this->getAllByWhere("accounts","accounts.email = '".$email."'");
+                $account = $this->getAllByWhere("accounts","accounts.email = $email");
                 if(sizeof($account)==0){
                     return null;
                 }
@@ -56,7 +56,7 @@
             }
 
             public function getAccountByPhone($phoneNumber){
-                $account = $this->getAllByWhere("accounts","accounts.phone_number = '".$phoneNumber."'");
+                $account = $this->getAllByWhere("accounts","accounts.phone_number = '$phoneNumber'");
                 if(sizeof($account)==0){
                     return null;
                 }

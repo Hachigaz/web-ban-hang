@@ -146,10 +146,100 @@ INSERT INTO `products` (`product_id`, `product_name`, `brand_id`, `category_id`,
 INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `email_of_receiver`, `phone_number_of_receiver`, `note`, `order_date`, `status_of_order`, `total_money`, `shipping_method`, `shipping_address`, `shipping_date`, `tracking_number`, `payment_method`, `is_active`) VALUES 
 ('1', '3', '5', 'Anh Hiển', 'thehien@gmail.com', '0786705877', 'Tặng anh Hiển', current_timestamp(), 'Pending', '35990000', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '70L1-13579', 'COD', '1');
 
-INSERT INTO `order_details` (`order_detail_id`, `order_id`, `product_id`, `price`, `number_of_products`, `color_of_product`) VALUES 
-('1', '1', '1', '34990000', '1', 'Đen'),
-('2', '1', '9', '500000', '2', 'Đen');
+-- INSERT INTO `order_details` (`order_detail_id`, `order_id`, `product_id`, `price`, `number_of_products`, `color_of_product`) VALUES 
+-- ('1', '1', '1', '34990000', '1', 'Đen'),
+-- ('2', '1', '9', '500000', '2', 'Đen');
 
+INSERT INTO `leave_application` (`leave_application_id`, `staff_id`, `start_date`, `end_date`, `reason`, `status`) VALUES 
+('1', '1', '2024-04-15', '2024-04-15', 'Lý do cá nhân', '0'),
+('2', '2', '2024-04-15', '2024-04-15', 'Ốm đau, thai sản', '0'),
+('3', '3', '2024-04-15', '2024-04-15', 'Ốm đau, thai sản', '0'),
+('4', '2', '2024-04-16', '2024-04-16', 'Lý do cá nhân', '0'),
+('5', '1', '2024-04-16', '2024-04-16', 'Ốm đau, thai sản', '0'),
+('6', '3', '2024-04-16', '2024-04-16', 'Ốm đau, thai sản', '0');
+
+INSERT INTO `contracts` (`contract_id`, `staff_id`, `start_date`, `end_date`, `salary`) VALUES 
+('1', '1', '2024-04-01', '2025-04-01', '20000000'), 
+('2', '2', '2024-04-01', '2025-04-01', '18000000'),
+('3', '3', '2024-04-01', '2025-04-01', '13000000'),
+('4', '4', '2024-04-01', '2025-04-01', '15000000');
+
+INSERT INTO `timesheets` (`timesheet_id`, `contract_id`, `month`, `year`, `days_worked`, `days_off`, `days_leave`, `days_late`) VALUES ('1', '1', '4', '2025', '22', '1', '1', '2'),
+('2', '2', '4', '2025', '26', '0', '0', '0'),
+('3', '3', '4', '2025', '23', '0', '1', '2'),
+('4', '4', '4', '2025', '25', '0', '1', '0');
+
+INSERT INTO `attendance` (`attendance_id`, `timesheet_id`, `date`, `status`, `leave_application_id`) VALUES 
+('1', '1', '2024-04-16', 'Present', '1'),
+('2', '2', '2024-04-16', 'Present', '2'),
+('3', '3', '2024-04-16', 'Present', '3');
+
+-- INSERT INTO `attendance` (`attendance_id`, `timesheet_id`, `date`, `status`) VALUES 
+-- ('1', '1', '2024-04-01', 'Present'),
+-- ('2', '1', '2024-04-02', 'Present'),
+-- ('3', '1', '2024-04-03', 'Present'),
+-- ('4', '1', '2024-04-04', 'Present'),
+-- ('5', '1', '2024-04-05', 'Present'),
+-- ('6', '1', '2024-04-06', 'Present'),
+-- ('7', '1', '2024-04-07', 'Present'),
+-- ('8', '1', '2024-04-08', 'Present'),
+-- ('9', '1', '2024-04-09', 'Present'),
+-- ('10', '1', '2024-04-10', 'Present'),
+-- ('11', '1', '2024-04-11', 'Present'),
+-- ('12', '1', '2024-04-12', 'Present'),
+-- ('13', '1', '2024-04-13', 'Present'),
+-- ('14', '1', '2024-04-14', 'Present'),
+-- ('15', '1', '2024-04-15', 'Present'),
+-- ('16', '1', '2024-04-16', 'Present'),
+-- ('17', '1', '2024-04-17', 'Present'),
+-- ('18', '1', '2024-04-18', 'Present'),
+-- ('19', '1', '2024-04-19', 'Present'),
+-- ('20', '1', '2024-04-20', 'Present'),
+-- ('21', '1', '2024-04-21', 'Present'),
+-- ('22', '1', '2024-04-22', 'Present'),
+-- ('23', '1', '2024-04-23', 'Present'),
+-- ('24', '1', '2024-04-24', 'Present'),
+-- ('25', '1', '2024-04-25', 'Present'),
+-- ('26', '1', '2024-04-26', 'Present'),
+-- ('27', '1', '2024-04-27', 'Present'),
+-- ('28', '1', '2024-04-28', 'Present'),
+-- ('29', '1', '2024-04-29', 'Present'),
+-- ('30', '1', '2024-04-30', 'Present');
+
+-- 12.Kiểm tra total_salary = salary/26 * days_worked - (salary/26 * days_late * 30%)
+DELIMITER //
+CREATE TRIGGER update_total_salary_timesheets_insert
+AFTER INSERT ON timesheets
+FOR EACH ROW
+BEGIN
+    DECLARE total_days_worked INT;
+    DECLARE total_days_late INT;
+    DECLARE total_salary DECIMAL(10, 2);
+    SET total_days_worked = NEW.days_worked;
+    SET total_days_late = NEW.days_late;
+    SET total_salary = (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / 26 * total_days_worked
+                      - (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / 26 * total_days_late * 0.3;
+    INSERT INTO timesheet_details(timesheet_id, total_salary) VALUES (NEW.timesheet_id, total_salary);
+    UPDATE timesheet_details SET timesheet_details.total_salary = total_salary WHERE timesheet_details.timesheet_id = NEW.timesheet_id;
+END;
+//
+DELIMITER ;
+DELIMITER //
+CREATE TRIGGER update_total_salary_timesheets_update
+AFTER UPDATE ON timesheets
+FOR EACH ROW
+BEGIN
+    DECLARE total_days_worked INT;
+    DECLARE total_days_late INT;
+    DECLARE total_salary DECIMAL(10, 2);
+    SET total_days_worked = NEW.days_worked;
+    SET total_days_late = NEW.days_late;
+    SET total_salary = (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / 26 * total_days_worked
+                      - (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / 26 * total_days_late * 0.3;
+    UPDATE timesheet_details SET timesheet_details.total_salary = total_salary WHERE timesheet_details.timesheet_id = NEW.timesheet_id;
+END;
+//
+DELIMITER ;
 INSERT INTO suppliers (supplier_id, supplier_name, phone_number_of_supplier, address_of_supplier, email_of_supplier) VALUES ('19', 'Dell Store Việt Nam', '0923020320', '1230123902103', 'dellstorevn@gamil.com');
 INSERT INTO brands (brand_id, brand_name, brand_logo,supplier_id,is_active) VALUES ('19', 'Dell', 'dell_inspiron.png','19','1');
 --LAPTOP DELL
