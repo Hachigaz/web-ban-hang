@@ -4,7 +4,7 @@
         protected $servername = "localhost";
         protected $username = "root";
         protected $password = "Abc12345";
-        protected $dbname = "electronic_supermarket";
+        protected $dbname = "shopping_web";
 
 
         function __construct(){
