@@ -42,6 +42,7 @@ $productRatingEL.rateYo({
 // onSet     : null,
 // starSvg   : null
 
+setup()
 function setup(){
     let ratingValue = document.querySelector("#product-star-rating-value").getAttribute("value")
     $productRatingEL.rateYo("method","rating", ratingValue);

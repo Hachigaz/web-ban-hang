@@ -73,14 +73,9 @@
             ]);
         }
         public function ProductManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
-                $this->view("internalManager", [
-                    "Page" => "ProductManager",
-                    "Title" => "Sản phẩm"
-                ]);
-            }else{
+            if(!isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
                 header('Location: ../SignIn/SayHi');
-            }
+            }   
             
             $uri = parse_url($_SERVER['REQUEST_URI']);
 
@@ -91,7 +86,6 @@
             unset($uri);
             
             $resultProductList = $this->productService->GetFilteredProducts($urlParams, "" , "products.product_id ASC");
-            
             $sql = "SELECT category_id,category_name
             FROM categories
             WHERE categories.is_active = '1'";

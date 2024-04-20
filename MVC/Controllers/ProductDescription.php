@@ -19,19 +19,61 @@
         public function SayHi(){
             $urlParams = $this->DecodeURL();
             $id = $urlParams["id"];
-            $product = $this->productService->GetProductById2($id);
-            $category_id=$product[0]["category_id"];
+
+            $sqlQuery="SELECT products.product_id, products.product_name, categories.category_name, brands.brand_name, products.price, products.description, products.thumbnail, products.guarantee, products.average_rating, categories.category_id, brands.brand_id,products.total_reviews
+            FROM products join brands on products.brand_id = brands.brand_id join categories on products.category_id = categories.category_id
+            where product_id = $id";
+            $product = $this->productService->productRepo->get($sqlQuery)[0];
+
+
+            
+            $sqlQuery = "SELECT * 
+            FROM product_images
+            WHERE product_images.product_id = $id";
+            
+            $productImages =  $this->productService->productRepo->get($sqlQuery);
+
+            
+            $sqlQuery = "SELECT skus.sku_id, skus.sku_code, skus.sku_name, IFNULL(SUM(shipments.remain), 0) AS remain
+            FROM skus LEFT OUTER JOIN shipments on skus.sku_id = shipments.sku_id
+            WHERE skus.product_id = $id
+            GROUP BY skus.sku_id
+            ";
+
+            
+            $productSkus =  $this->productService->productRepo->get($sqlQuery);
+
+            
+            $sqlQuery = "SELECT options.option_name, options.option_value
+            FROM options
+            WHERE options.product_id = $id
+            ";
+
+            
+            $productOptions =  $this->productService->productRepo->get($sqlQuery);
+
+
+            $category_id=$product["category_id"];
+            
             $sqlQuery = "SELECT products.product_id, products.product_name, categories.category_name, brands.brand_name, products.price, products.description, products.thumbnail, products.guarantee, products.average_rating, categories.category_id, brands.brand_id
             FROM products join brands on products.brand_id = brands.brand_id join categories on products.category_id = categories.category_id
             WHERE products.is_active = 1 and products.category_id = $category_id and products.product_id!=$id
             LIMIT 6;";
-            $resultList =  $this->productService->GetProductsQuery($sqlQuery);
-            //echo var_dump($product);
+            
+            $similarProductList =  $this->productService->productRepo->get($sqlQuery);
+            
             $this->view("master",[
                 "Page" => "ProductDescription/ProductDescription",
-                "Info_product" => $product[0],
-                "ProductList_same_category_id" => $resultList
+                "Product" => $product,
+                "ProductImages" => $productImages,
+                "ProductSkus" => $productSkus,
+                "ProductOptions" => $productOptions,
+                "SimilarProductList" => $similarProductList
             ]);
+            
+            unset($sqlQuery);
+            unset($product);
+            unset($id);
         }
     }
 ?>

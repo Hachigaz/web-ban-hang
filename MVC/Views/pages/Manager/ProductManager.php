@@ -116,7 +116,7 @@
                 <div class="show-more-product-button no-user-select" onclick="showMoreProducts(this)">
                     Xem thêm sản phẩm
                 </div>
-                <?php endif; ?>
+                <?php endif; ?> 
             </div>
         </div>
         <div class="info-tab-list">
