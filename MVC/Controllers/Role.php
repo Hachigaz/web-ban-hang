@@ -22,5 +22,11 @@
         public function GetRoleById(){
             $this->roleService->GetRoleById();
         }
+        public function GetRoleByName(){
+            $roleName = $_POST["role_name"];
+            if($this->roleService->getRoleByName($roleName) != null){
+                echo "Tên chức vụ đã tồn tại";
+            }
+        }
     }
 ?>

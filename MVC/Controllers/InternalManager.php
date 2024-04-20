@@ -9,6 +9,8 @@
         public $supplierService;
         public $accountService;
         public $decentralizationService;
+        public $attendanceService;
+        public $leaveApplicationService;
         public function __construct(){
             $this->internalManagerService = $this->service("InternalManagerService");
             $this->productService = $this->service("ProductService");
@@ -19,26 +21,51 @@
             $this->supplierService = $this->service("SupplierService");
             $this->accountService = $this->service("AccountService");
             $this->decentralizationService = $this->service("DecentralizationService");
+            $this->attendanceService = $this->service("AttendanceService");
+            $this->leaveApplicationService = $this->service("LeaveApplicationService");
         }
         public function HomeManager(){
-            $this->view("internalManager", [
-                "Page" => "HomeManager",
-                "Title" => "Trang chủ"
-            ]);
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+                $this->view("internalManager", [
+                    "Page" => "HomeManager",
+                    "Title" => "Trang chủ"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
         }
         public function AccountManager(){
-            $this->view("internalManager", [
-                "Page" => "AccountManager",
-                "Title" => "Tài khoản"
-            ]);
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+                $this->view("internalManager", [
+                    "Page" => "AccountManager",
+                    "Title" => "Tài khoản"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
+            
+            
         }
         public function StaffManager(){
-            $this->view("internalManager", [
-                "Page" => "StaffManager",
-                "Title" => "Nhân viên"
-            ]);
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+                $this->view("internalManager", [
+                    "Page" => "StaffManager",
+                    "Title" => "Nhân viên"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
+            
         }
         public function CustomerManager(){
+            // if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            //     $this->view("internalManager", [
+            //         "Page" => "CustomerManager",
+            //         "Title" => "Khách hàng"
+            //     ]);
+            // }else{
+            //     header('Location: ../SignIn/SayHi');
+            // }
 
             $this->view("internalManager", [
                 "Page" => "CustomerManager",
@@ -46,6 +73,15 @@
             ]);
         }
         public function ProductManager(){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+                $this->view("internalManager", [
+                    "Page" => "ProductManager",
+                    "Title" => "Sản phẩm"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
+            
             $uri = parse_url($_SERVER['REQUEST_URI']);
 
             $urlParams = null;
@@ -109,58 +145,114 @@
         }
 
         public function SupplierManager(){
-            $this->view("internalManager", [
-                "Page" => "SupplierManager",
-                "Title" => "Nhà cung cấp"
-            ]);
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+                $this->view("internalManager", [
+                    "Page" => "SupplierManager",
+                    "Title" => "Nhà cung cấp"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
+            
         }
         public function WarehouseManager(){
-            $this->view("internalManager", [
-                "Page" => "WarehouseManager",
-                "Title" => "Kho"
-            ]);
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+                $this->view("internalManager", [
+                    "Page" => "WarehouseManager",
+                    "Title" => "Kho"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
         }
         public function ImportManager(){
-            $this->view("internalManager", [
-                "Page" => "ImportManager",
-                "Title" => "Nhập hàng"
-            ]);
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+                $this->view("internalManager", [
+                    "Page" => "ImportManager",
+                    "Title" => "Nhập hàng"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
         }
         public function ExportManager(){
-            $this->view("internalManager", [
-                "Page" => "ExportManager",
-                "Title" => "Xuất hàng"
-            ]);
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+                $this->view("internalManager", [
+                    "Page" => "ExportManager",
+                    "Title" => "Xuất hàng"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
         }
         public function OrderManager(){
-            $this->view("internalManager", [
-                "Page" => "OrderManager",
-                "Title" => "Hóa đơn"
-            ]);
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+                $this->view("internalManager", [
+                    "Page" => "OrderManager",
+                    "Title" => "Hóa đơn"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
         }
         public function SalaryManager(){
-            $this->view("internalManager", [
-                "Page" => "SalaryManager",
-                "Title" => "Lương"
-            ]);
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+                $this->view("internalManager", [
+                    "Page" => "SalaryManager",
+                    "Title" => "Lương"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
         }
         public function StatisticManager(){
-            $this->view("internalManager", [
-                "Page" => "StatisticManager",
-                "Title" => "Thống kê"
-            ]);
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+                $this->view("internalManager", [
+                    "Page" => "StatisticManager",
+                    "Title" => "Thống kê"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
         }
         public function DecentralizationManager(){
-            $this->view("internalManager", [
-                "Page" => "DecentralizationManager",
-                "Title" => "Phân quyền"
-            ]);
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+                $this->view("internalManager", [
+                    "Page" => "DecentralizationManager",
+                    "Title" => "Phân quyền"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
         }
         public function LeaveApplicationManager(){
-            $this->view("internalManager", [
-                "Page" => "LeaveApplicationManager",
-                "Title" => "Đơn xin nghỉ"
-            ]);
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+                $this->view("internalManager", [
+                    "Page" => "LeaveApplicationManager",
+                    "Title" => "Đơn xin nghỉ"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
+        }
+        public function PersonalInfoManager(){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+                $this->view("internalManager", [
+                    "Page" => "PersonalInfoManager",
+                    "Title" => "Thông tin cá nhân"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
+        }
+        public function Logout(){
+            session_start();
+            // Hủy tất cả các biến session
+            session_unset();
+            // Hủy toàn bộ session
+            session_destroy();
+            // Chuyển hướng người dùng về trang đăng nhập
+            header('Location: ../SignIn/SayHi');
         }
         public function GetAllDataHome(){// lấy ra các thông số cơ bản
             $cardValue = array(
@@ -233,6 +325,18 @@
             $moduleNames = $this->decentralizationService->getAllModule();
             $roleNames = $this->decentralizationService->getAllRole();
             $data = array("modules" => $moduleNames, "roles" => $roleNames);
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE); 
+        }
+        public function GetAllDataAttendance(){
+            $attendanceData = $this->attendanceService->getAllAttendance();
+            $data = array("attendances" => $attendanceData);
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE); 
+        }
+        public function GetAllDataLeaveApplication(){
+            $leaveApplicationData = $this->leaveApplicationService->getAllLeaveApplication();
+            $data = array("leaveApplications" => $leaveApplicationData);
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
         }

@@ -235,6 +235,7 @@ CREATE TABLE `timesheets` (
   `year` int(2) NOT NULL,
   `days_worked` int(2) NOT NULL,
   `days_off` int(2) NOT NULL,
+  `days_leave` int(2) NOT NULL,
   `days_late` int(2) NOT NULL
 );
 
@@ -242,6 +243,23 @@ CREATE TABLE `timesheet_details` (
   `timesheet_detail_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `timesheet_id` int(11) NOT NULL,
   `total_salary` decimal(10,2) NOT NULL
+);
+
+CREATE TABLE `leave_application`(
+  `leave_application_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `staff_id` int(11) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `reason` varchar(100) NOT NULL,
+  `status` tinyint(1) DEFAULT 0
+);
+
+CREATE TABLE `attendance` (
+  `attendance_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `timesheet_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `status` ENUM('Present', 'Absent', 'Leave', 'Late') NOT NULL,
+  `leave_application_id` int(11) NOT NULL
 );
 
 CREATE UNIQUE INDEX `decentralizations_index_0` ON `decentralizations` (`role_id`, `module_id`);
