@@ -2,7 +2,10 @@
     
 <link rel="stylesheet" href="../Public/css/globals/globals.css">
 <link rel="stylesheet" href="../Public/css/globals/components.css">
+<link rel="stylesheet" href="../Public/css/Home/product_item.css">
 <link rel="stylesheet" href="../Public/css/ProductDescription/style.css">
+
+<link rel="stylesheet" href="../Public/css/globals/input-components.css">
 
 <link rel="stylesheet" href="../Public/misc/rateyo-min/jquery.rateyo.min.css">
 
@@ -99,19 +102,32 @@
                                 </div>
                             <?php endif; ?>
                             <?php
-                                if(isset($selectedSku)){
-                                    unset($selectedSku);
-                                }
                                 unset($productSkus);
                             ?>
                     </div>
                     <div class="order-options no-user-select">
-                        <div class="option-buy">
-                            Mua ngay
-                        </div>
-                        <div class="option-add-to-cart">
-                            Thêm vào giỏ hàng
-                        </div>
+                        <?php if(isset($selectedSku)): ?>
+                            <div class="option-buy">
+                                Mua ngay
+                            </div>
+                            <div class="option-add-to-cart">
+                                Thêm vào giỏ hàng
+                            </div>
+                        <?php else: ?>
+                            <div class="option-buy disabled">
+                                Mua ngay
+                                <div class="sold-out-message">(Hết hàng)</div>
+                            </div>
+                            <div class="option-add-to-cart disabled">
+                                Thêm vào giỏ hàng
+                                <div class="sold-out-message">(Hết hàng)</div>
+                            </div>
+                        <?php endif; ?>
+                        <?php 
+                            if(isset($selectedSku)){
+                                unset($selectedSku);
+                            }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -158,7 +174,7 @@
                                 Đánh giá
                             </div>
                             <div class="rating-number text">
-                                (<?= (number_format((float)$data["Product"]["average_rating"], 1, '.', '')); ?>)
+                                (<?= (number_format((float)$data["Product"]["average_rating"], 2, '.', '')); ?>)
                             </div>
                             <div id="product-star-rating-value" value="<?= $data["Product"]["average_rating"]?>" >
     
@@ -184,10 +200,128 @@
             </div>
         </div>
     </div>
+    <div class="user-review-section">
+        <div class="title">
+            Nhận xét của bạn
+        </div>
+        <div class="review-form-wrapper">
+            <div class="c-input" id="input_rating">
+                <div class="input-label-wrapper">
+                    <label for="input_username">Đánh giá</label>
+                    <div class="input-error-message">
+                        
+                    </div>    
+                </div>
+                <div id="user-star-review-rating">
+    
+                </div>
+            </div>
+            <div class="c-input" id="input_comment">
+                <div class="input-label-wrapper">
+                    <label for="input_username">Mô tả</label>
+                    <div class="input-error-message">
+                        
+                    </div>    
+                </div>
+                <textarea name="" id="" rows="4" placeholder="Nhận xét của bạn"></textarea>
+            </div>
+        </div>
+        <div class="submit-review-wrapper no-user-select">
+            <?php if($data["IsLoggedIn"]): ?>
+                <?php if(!$data["HasReviewed"] && $data["HasOrdered"]): ?>
+                    <div class="submit-button" onclick="sendProductReview(this)">
+                        Gửi nhận xét
+                    </div>
+                <?php elseif(!$data["HasOrdered"]): ?>
+                    <div class="submit-button disabled">
+                        Vui lòng đặt mua sản phẩm để gửi nhận xét
+                    </div>
+                <?php else: ?>
+                    <div class="submit-button disabled">
+                        Bạn đã nhận xét sản phẩm
+                    </div>
+                <?php endif; ?>
+            <?php else: ?>
+                <div class="submit-button disabled">
+                    Vui lòng đăng nhập để gửi nhận xét
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
     <div class="product-review-section">
-
+        <?php 
+            $productReviews = $data["ProductReviews"];
+        ?>
+        <div class="title">
+            Nhận xét của khách hàng <span>(<?= count($productReviews) ?> Nhận xét)</span>
+        </div>
+        <?php if(count($productReviews)>0): ?>
+        <div class="user-review-list-wrapper">
+            <div class="user-review-list">
+                <?php foreach($productReviews as $review): ?>
+                <div class="user-review" rating-value="<?=$review["rating"]?>">
+                    <div class="user-info-wrapper">
+                        <div class="avatar-wrapper">
+                            <?php 
+                            $customerAvatar = $review["avatar"];
+                            if($customerAvatar==""){
+                                $customerAvatar = "_common/anon-user.jpg";
+                            }
+                            ?>
+                            <img src="../Public/img/customerAvatar/<?= $customerAvatar ?>" alt="" srcset="">
+                            <?php 
+                                unset($ratingCount);
+                            ?>
+                        </div>
+                        <div class="user-info">
+                            <div class="name-rating-info">
+                                <div class="user-fullname">
+                                    <?= $review["customer_fullname"]; ?>
+                                </div>
+                                <div class="user-rating">
+                                    <?= (number_format((float)$review["rating"], 1, '.', '')); ?>
+                                    <div class="star-icon-wrapper">
+                                        <img src="../Public/img/web_icons/star.png" alt="" srcset="" width="12px" height="12px">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="review-date">
+                                <?= $review["review_date"]; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php if($review["comment"]!=""): ?>
+                    <div class="user-review-comment">
+                        <div class="comment">
+                            <?= $review["comment"] ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php else: ?>
+        <div class="no-review-message">
+            Chưa có nhận xét về sản phẩm
+        </div>
+        <?php endif; ?>
+        <?php
+            unset($productReviews);
+        ?>
     </div>
     <div class="similar-product-section">
-        
+        <div class="title">
+            Xem thêm các sản phẩm
+        </div>
+        <div class="product-list-wrapper">
+            <div class="product-list">
+                <?php 
+                    $productList = $data["SimilarProductList"];
+                    include("./MVC/Views/pages/Catalog/ProductPrint.php");
+                    unset($productList);
+                ?>
+            </div>
+        </div>
     </div>
 </div>
