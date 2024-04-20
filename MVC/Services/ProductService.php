@@ -86,5 +86,93 @@
         public function getProductsQuery($sqlQuery){
             return $this->productRepo->get($sqlQuery);
         }
+        
+        public function GetFilteredProducts($urlParams, $otherQueries = "", $orderQueries = ""){
+            if($otherQueries!=""){
+                $otherQueries = " AND ".$otherQueries;
+            }
+
+            $queryCount = 25;
+            $index = 0;
+            if(isset($urlParams["page"])){
+                $index = (int)$urlParams["page"];
+            }
+            $indexCount = $index*($queryCount-1);
+
+            $filterQueries = "";
+            if(isset($urlParams["categories"]) && $urlParams["categories"]!=""){
+                $queryItems = explode(",",$urlParams["categories"]);
+                $filterQueries.=" AND products.category_id IN (".implode(",",$queryItems).")";
+            }
+
+            if(isset($urlParams["brands"]) && $urlParams["brands"]!=""){
+                $queryItems = explode(",",$urlParams["brands"]);
+                $filterQueries.=" AND products.brand_id IN (".implode(",",$queryItems).")";
+            }
+
+            $priceRangeQueries = "";
+            if(isset($urlParams["upper-price-range"])){
+                $upperPrice = $urlParams["upper-price-range"];
+                $priceRangeQueries.=" AND products.price <= $upperPrice";
+            }
+            if(isset($urlParams["lower-price-range"])){
+                $lowerPrice = $urlParams["lower-price-range"];
+                $priceRangeQueries.=" AND products.price >= $lowerPrice";
+            }
+            
+            
+            $searchQueries = "";
+            if(isset($urlParams["search-query"])){
+                $searchValue = $urlParams["search-query"];
+                $searchQueries.=" AND products.product_name LIKE '%{$searchValue}%'";
+            }
+
+            $orderByQueries = "";
+            if(isset($urlParams["order-by"])){
+                $orderByValue = $urlParams["order-by"];
+                if($orderByValue=="product-a-z"){
+                    $orderByQueries.="products.product_name ASC,";
+                }
+                else if($orderByValue=="brand-a-z"){
+                    $orderByQueries.="brands.brand_name ASC,";
+                }
+                else if($orderByValue=="price-asc"){
+                    $orderByQueries.="products.price ASC,";
+                }
+                else if($orderByValue=="price-desc"){
+                    $orderByQueries.="products.price DESC,";
+                }
+                else if($orderByValue=="updated-at-desc"){
+                    $orderByQueries.="products.updated_at DESC,";
+                }
+                else if($orderByValue=="updated-at-asc"){
+                    $orderByQueries.="products.updated_at asc,";
+                }
+            }
+            if($orderQueries!=""){
+                $orderQueries.=",";
+            }
+            
+            $sqlQuery = "SELECT products.product_id, products.product_name, products.description, categories.category_name, brands.brand_name, products.price, products.description, products.thumbnail, products.guarantee, products.average_rating, categories.category_id, brands.brand_id, products.created_at, products.updated_at
+            FROM products join brands on products.brand_id = brands.brand_id join categories on products.category_id = categories.category_id
+            WHERE products.is_active = 1 $filterQueries $searchQueries $priceRangeQueries $otherQueries
+            ORDER BY $orderByQueries $orderQueries products.updated_at DESC
+            LIMIT $indexCount,$queryCount";
+            
+            $resultList =  $this->GetProductsQuery($sqlQuery);
+            unset($sqlQuery);
+            unset($filterQueries);
+            unset($searchQueries);
+            $isLast = true;
+            if(count($resultList)==$queryCount){
+                $isLast = false;
+                unset($resultList[24]);
+            }
+            
+            return [
+                "ProductList"=>$resultList,
+                "IsLast"=>$isLast
+            ];
+        }
     }
 ?>

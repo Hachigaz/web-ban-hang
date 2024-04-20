@@ -5,7 +5,12 @@ Enum "orders_status_of_order_enum" {
   "Delivered"
   "Cancelled"
 }
-
+Enum "attendence_status" {
+  "Present"
+  "Absent"
+  "Leave"
+  "Late"
+}
 Table "noti" {
   "noti_id" int(11) [not null]
   "account_id" int(11) [not null]
@@ -150,7 +155,8 @@ Table "guarantees" {
 Table "options" {
   "option_id" int(11) [pk, not null, increment]
   "product_id" int(11) [not null]
-  "specifications" longtext [not null]
+  "option_name" varchar(128) [not null]
+  "option_value" longtext [not null]
   "is_active" tinyint(1) [default: 1]
 }
 
@@ -290,6 +296,7 @@ Table "timesheets" {
   "year" int(2) [not null]
   "days_worked" int(2) [not null]
   "days_off" int(2) [not null]
+  "days_leave" int(2) [not null]
   "days_late" int(2) [not null]
 }
 
@@ -299,6 +306,22 @@ Table "timesheet_details" {
   "total_salary" decimal(10,2) [not null]
 }
 
+Table "leave_application"{
+  "leave_application_id" int(11) [pk, not null, increment]
+  "staff_id" int(11) [not null]
+  "start_date" date [not null]
+  "end_date" date [not null]
+  "reason" varchar(100) [not null]
+  "status" tinyint(1) [default: 0]
+}
+
+Table "attendance" {
+  "attendance_id" int(11) [pk, not null, increment]
+  "timesheet_id" int(11) [not null]
+  "date" date [not null]
+  "status" attendence_status [default: "Absent", not null]
+  "leave_application_id" int(11) [not null]
+}
 Ref "brands_ibfk_1":"suppliers"."supplier_id" < "brands"."supplier_id"
 
 Ref "customers_ibfk_1":"roles"."role_id" < "customers"."role_id"

@@ -324,8 +324,23 @@
     background-color: #9bcf53;
     color: #fff;
 }
+.leave-btn:hover,
 .add-btn:hover {
     opacity: 0.8;
+}
+.leave-btn{
+    width: 90px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #1795ce;
+    color: #fff;
+}
+.leave-application a{
+    text-decoration: none;
 }
 
 /*button table*/
@@ -571,4 +586,12 @@
     opacity: 0;
     color: red;
     transition: 0.25s;
+}
+
+#btn-export-excel{
+    background-color: var(--primary-color-blue);
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    color: #fff;
 }

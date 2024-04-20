@@ -122,3 +122,29 @@ fetch("../InternalManager/GetAllDataStaff")
         });
     })
     .catch((error) => console.log("Error: ", error));
+
+
+// const userInfo = document.querySelector(".user-info");
+// const closeIconInfo = document.querySelector("#closeIconInfo");
+// const modalInnerInfo = document.querySelector(".modal-inner.modal-info");
+// const contentModalInfo = document.querySelector(".content-info");
+// const modalWrapper = document.querySelector(".modal-wrapper");
+// function hideModalInfo() {
+//     modalWrapper.classList.add("hide");
+//     modalInnerInfo.classList.add("hide");
+// }
+// function showModalInfo() {
+//     modalWrapper.classList.remove("hide");
+//     modalInnerInfo.classList.remove("hide");
+// }
+// function hideModal() {
+//     modalWrapper.classList.add("hide");
+//     modalInnerInfo.classList.add("hide");
+// }
+// modalInnerInfo.addEventListener("click", function (event) {
+//     event.stopPropagation();
+// });
+// closeIconInfo.addEventListener("click", hideModalInfo);
+// userInfo.addEventListener("click", function(){
+//     showModalInfo();
+// });
