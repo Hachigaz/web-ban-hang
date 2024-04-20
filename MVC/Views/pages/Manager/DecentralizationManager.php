@@ -36,8 +36,6 @@
                 <label for="role_name_add_form" class="label-form">Tên chức vụ</label>
                 <br>
                 <input type="text" name="role_name_add_form" class="role-name-add-form" placeholder="Tên chức vụ..." autocomplete="off" id="role_name_add_form" required>
-                <br>
-                <span class="warning add-role-name-warning">Tên chức vụ bị trùng</span>
             </div>
             <div class="modal-footer">
                 <button class="confirm" id="confirmBtnAdd">Xác nhận thêm</button>

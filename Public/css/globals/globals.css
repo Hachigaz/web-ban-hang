@@ -59,7 +59,3 @@ a.no-style, a.no-style:hover, a.no-style:visited, a.no-style:focus, a.no-style:a
     outline: 0;
     cursor: auto;
   }
-
-.hidden{
-    display:none;
-}

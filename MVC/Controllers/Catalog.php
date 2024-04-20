@@ -5,6 +5,84 @@
         public function __construct(){
             $this->productService = $this->service("ProductService");
         }
+        private function GetFilteredProducts($urlParams, $otherQueries = ""){
+            if($otherQueries!=""){
+                $otherQueries = " AND ".$otherQueries;
+            }
+
+            $queryCount = 25;
+            $index = 0;
+            if(isset($urlParams["page"])){
+                $index = (int)$urlParams["page"];
+            }
+            $indexCount = $index*($queryCount-1);
+
+            $filterQueries = "";
+            if(isset($urlParams["categories"])){
+                $queryItems = explode(",",$urlParams["categories"]);
+                $filterQueries.=" AND products.category_id IN (".implode(",",$queryItems).")";
+            }
+
+            if(isset($urlParams["brands"])){
+                $queryItems = explode(",",$urlParams["brands"]);
+                $filterQueries.=" AND products.brand_id IN (".implode(",",$queryItems).")";
+            }
+
+            $priceRangeQueries = "";
+            if(isset($urlParams["upper-price-range"])){
+                $upperPrice = $urlParams["upper-price-range"];
+                $priceRangeQueries.=" AND products.price <= $upperPrice";
+            }
+            if(isset($urlParams["lower-price-range"])){
+                $lowerPrice = $urlParams["lower-price-range"];
+                $priceRangeQueries.=" AND products.price >= $lowerPrice";
+            }
+            
+            
+            $searchQueries = "";
+            if(isset($urlParams["search-query"])){
+                $searchValue = $urlParams["search-query"];
+                $searchQueries.=" AND products.product_name LIKE '%{$searchValue}%'";
+            }
+
+            $orderByQueries = "";
+            if(isset($urlParams["order-by"])){
+                $orderByValue = $urlParams["order-by"];
+                if($orderByValue=="product-a-z"){
+                    $orderByQueries.="products.product_name ASC,";
+                }
+                else if($orderByValue=="brand-a-z"){
+                    $orderByQueries.="brands.brand_name ASC,";
+                }
+                else if($orderByValue=="price-asc"){
+                    $orderByQueries.="products.price ASC,";
+                }
+                else if($orderByValue=="price-desc"){
+                    $orderByQueries.="products.price DESC,";
+                }
+            }
+            
+            $sqlQuery = "SELECT products.product_id, products.product_name, categories.category_name, brands.brand_name, products.price, products.description, products.thumbnail, products.guarantee, products.average_rating, categories.category_id, brands.brand_id
+            FROM products join brands on products.brand_id = brands.brand_id join categories on products.category_id = categories.category_id
+            WHERE products.is_active = 1 $filterQueries $searchQueries $priceRangeQueries $otherQueries
+            ORDER BY $orderByQueries products.updated_at DESC
+            LIMIT $indexCount,$queryCount";
+            $resultList =  $this->productService->GetProductsQuery($sqlQuery);
+            unset($sqlQuery);
+            unset($filterQueries);
+            unset($searchQueries);
+
+            $isLast = true;
+            if(count($resultList)==$queryCount){
+                $isLast = false;
+                unset($resultList[24]);
+            }
+            
+            return [
+                "ProductList"=>$resultList,
+                "IsLast"=>$isLast
+            ];
+        }
         
         private function ProcessPriceRange($urlParams){
             $filterQueries = "";
@@ -49,20 +127,10 @@
                 $searchQueries.=" AND products.product_name LIKE '%{$searchValue}%'";
             }
 
-            if((isset($urlParams["context"]) && $urlParams["context"]!="categories") || !isset($urlParams["context"])){
-                $filterQueries = "";
-                if(isset($urlParams["categories"])){
-                    $queryItems = explode(",",$urlParams["brands"]);
-                    $filterQueries.=" AND products.category_id IN (".implode(",",$queryItems).")";
-
-                    if(isset($urlParams["brands"])){
-                        $queryItems = explode(",",$urlParams["categories"]);
-                        $filterQueries.=" OR brands.brand_id IN (".implode(",",$queryItems).")";
-                    }
-                }
+            if($urlParams["context"]!="categories"){
                 $sqlQuery = "SELECT DISTINCT categories.category_id as opt_id, categories.category_name as opt_name
                 FROM categories join products on products.category_id = categories.category_id
-                WHERE categories.is_active = 1 $searchQueries $filterQueries
+                WHERE categories.is_active = 1 $searchQueries
                 ORDER BY categories.category_name ASC
                 ";
                 $result = $this->productService->productRepo->get($sqlQuery);
@@ -77,7 +145,7 @@
                 }
             }
 
-            if((isset($urlParams["context"]) && $urlParams["context"]!="brands") || !isset($urlParams["context"])){
+            if($urlParams["context"]!="brands"){
                 $filterQueries = "";
                 if(isset($urlParams["categories"])){
                     $queryItems = explode(",",$urlParams["categories"]);
@@ -124,16 +192,11 @@
         public function SayHi(){
             $urlParams = $this->DecodeURL();
 
-            $resultProductList = $this->productService->GetFilteredProducts($urlParams);
+            $resultProductList = $this->GetFilteredProducts($urlParams);
             $resultFilterElements = $this->ProcessFilterOptions($urlParams);
             $priceRangeValue = $this->ProcessPriceRange($urlParams);
 
             $message = "Danh mục sản phẩm";
-            if(isset($urlParams["search-query"])){
-                $name = $urlParams["search-query"];
-                $message="Kết quả tìm kiếm cho $name";
-                unset($name);
-            }
 
             $this->view("master",[
                 "Page" => "Catalog/Catalog",
@@ -164,7 +227,7 @@
                     $otherQueries = " products.brand_id = $contextValue";
                 }
                 
-                $resultProductList = $this->productService->GetFilteredProducts($urlParams,$otherQueries);
+                $resultProductList = $this->GetFilteredProducts($urlParams,$otherQueries);
                 $resultFilterElements = $this->ProcessFilterOptions($urlParams);
                 $priceRangeValue = $this->ProcessPriceRange($urlParams);
 
@@ -188,7 +251,7 @@
         public function GetMoreProducts(){
             $urlParams = $this->DecodeURL();
 
-            $resultProductList = $this->productService->GetFilteredProducts($urlParams);
+            $resultProductList = $this->GetFilteredProducts($urlParams);
 
             ob_start();
             $productList = $resultProductList["ProductList"];

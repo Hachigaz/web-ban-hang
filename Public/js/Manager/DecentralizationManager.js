@@ -5,6 +5,7 @@ const cardNames = Array.from(document.querySelectorAll(".card .card-name"));
 const tbody = document.querySelector(".details table tbody");
 const theadtr = document.querySelector(".details table thead tr");
 const userImage = document.querySelector(".topbar .user img");
+const roleNameAddForm = document.querySelector(".role-name-add-form");
 fetch("../InternalManager/GetAllDataDecentralization")
     .then((response) => response.json())
     .then((values) => {
@@ -141,8 +142,6 @@ fetch("../InternalManager/GetAllDataDecentralization")
         modal.classList.add("hide");
         modalInnerAdd.classList.add("hide");
         refreshAddForm();   
-        addRoleNameWarning.style.opacity = "0";
-        isRoleNameAddValid = true;
     }
     function refreshAddForm() {
         roleNameAddForm.value = "";
@@ -162,33 +161,5 @@ fetch("../InternalManager/GetAllDataDecentralization")
 const confirmAddBtn = document.getElementById("confirmBtnAdd");
 const formAdd = document.querySelector(".modal-add .modal-body");
 
-const roleNameAddForm = document.querySelector(".role-name-add-form");
-const addRoleNameWarning = document.querySelector(
-    ".add-role-name-warning"
-);
-var isRoleNameAddValid = true;
-roleNameAddForm.addEventListener("keyup", function () {
-    console.log(this.value)
-    var role_name = this.value;
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "../Role/GetRoleByName", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onload = function () {
-        if (this.status == 200) {
-            var response = this.responseText;
-            response = response.trim();
-            if (response == "Tên chức vụ đã tồn tại") {
-                addRoleNameWarning.textContent = "Tên chức vụ đã tồn tại";
-                addRoleNameWarning.style.opacity = "1";
-                isRoleNameAddValid = false;
-            } else {
-                addRoleNameWarning.style.opacity = "0";
-                isRoleNameAddValid = true;
-            }
-        }
-        confirmAddBtn.disabled = !(
-            isRoleNameAddValid 
-        );
-    };
-    xhr.send("role_name=" + role_name);
-});
+const supplierNameAddForm = document.querySelector(".supplier_name_add_form");
+const addSupplierNameWarning = document.querySelector(".add-supplier-name-warning");

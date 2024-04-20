@@ -21,7 +21,7 @@
                         
                     </div>    
                 </div>
-                <input class="input" type="text" name="input_new_password" placeholder="Nhập mật khẩu mới" onclick="(new InputElement(this.parentElement)).hideError()" autocomplete="off">
+                <input type="text" name="input_new_password" placeholder="Nhập mật khẩu mới" onclick="(new InputElement(this.parentElement)).hideError()" autocomplete="off">
             </div>
         </div>
         <hr class="form-separation">

@@ -35,7 +35,7 @@
 
     overflow: hidden;
     
-    width: 90%;
+    width: auto;
     aspect-ratio: 1/1;
 
     align-self: center;
@@ -62,7 +62,7 @@
     
     height: 2em;
     
-    overflow:hidden;
+    overflow-y:hidden;
 }
 
 .product-item .producer-display-name{

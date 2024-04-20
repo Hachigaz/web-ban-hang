@@ -8,8 +8,11 @@
             <div class="hide-button" onclick="hideProducts(this.parentElement.parentElement.parentElement)">Ẩn</div>
         </div>
     </div>
-    <div class="product-list-wrapper no-scrollbar hide">
-        <div class="product-list">
+    <div class="product-list-wrapper no-scrollbar">
+        <div class="product-list hide">
+            <?php include('./MVC/Views/pages/Catalog/ProductPrint.php'); ?>
+            <?php include('./MVC/Views/pages/Catalog/ProductPrint.php'); ?>
+            <?php include('./MVC/Views/pages/Catalog/ProductPrint.php'); ?>
             <?php include('./MVC/Views/pages/Catalog/ProductPrint.php'); ?>
         </div>
     </div>

@@ -53,7 +53,7 @@ CREATE TABLE `exports` (
   `staff_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `export_date` datetime DEFAULT (now()),
-  `total_price` decimal(20,2) DEFAULT 0 COMMENT 'Không tự sinh đc như mysql',
+  `total_price` decimal(10,2) DEFAULT 0 COMMENT 'Không tự sinh đc như mysql',
   `is_active` tinyint(1) DEFAULT 1
 );
 
@@ -61,7 +61,7 @@ CREATE TABLE `export_details` (
   `export_detail_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `export_id` int(11) NOT NULL,
   `shipment_id` int(11) NOT NULL,
-  `unit_price_export` decimal(20,2) DEFAULT 0,
+  `unit_price_export` decimal(10,2) DEFAULT 0,
   `quantity_export` int(50) DEFAULT 0
 );
 
@@ -88,7 +88,7 @@ CREATE TABLE `orders` (
   `note` varchar(100) DEFAULT '',
   `order_date` datetime DEFAULT (now()),
   `status_of_order` ENUM ('Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled') DEFAULT 'Pending',
-  `total_money` decimal(20,2) DEFAULT 0,
+  `total_money` decimal(10,2) DEFAULT 0,
   `shipping_method` varchar(100) DEFAULT '',
   `shipping_address` varchar(200) NOT NULL,
   `shipping_date` datetime,
@@ -101,7 +101,7 @@ CREATE TABLE `order_details` (
   `order_detail_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `sku_id` int(11) NOT NULL,
-  `price` decimal(20,2) DEFAULT 0,
+  `price` decimal(10,2) DEFAULT 0,
   `number_of_products` int(11) DEFAULT 1 COMMENT 'Phải > 0',
   `color_of_product` varchar(20) DEFAULT ''
 );
@@ -111,10 +111,10 @@ CREATE TABLE `products` (
   `product_name` varchar(350) NOT NULL,
   `brand_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
-  `price` decimal(20,2) DEFAULT 0 COMMENT 'Phải >= 0',
+  `price` decimal(10,2) DEFAULT 0 COMMENT 'Phải >= 0',
   `guarantee` int(11) DEFAULT 0,
   `thumbnail` varchar(300) DEFAULT '' COMMENT 'Phải có ảnh mặc định',
-  `description` longtext,
+  `description` longtext DEFAULT 'Đây là mô tả sản phẩm',
   `created_at` datetime DEFAULT (now()),
   `updated_at` datetime DEFAULT (now()),
   `average_rating` float,
@@ -139,14 +139,12 @@ CREATE TABLE `guarantees` (
 CREATE TABLE `options` (
   `option_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
-  `option_name` varchar(128) NOT NULL,
-  `option_value` longtext NOT NULL,
+  `specifications` longtext NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
 );
 
 CREATE TABLE `likes` (
   `like_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `number` int,
   `product_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL
 );
@@ -177,7 +175,7 @@ CREATE TABLE `shipments` (
   `shipment_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `import_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `unit_price_import` decimal(20,2) DEFAULT 0 COMMENT 'Phải > 0',
+  `unit_price_import` decimal(10,2) DEFAULT 0 COMMENT 'Phải > 0',
   `quantity` int(50) DEFAULT 0 COMMENT 'Phải > giá trị tối thiểu của 1 lô hàng',
   `remain` int(50) DEFAULT 0 COMMENT 'Phải bé 1 số lượng cụ thể thì mới nhập thêm lô',
   `sku_id` int(11) NOT NULL,
@@ -226,7 +224,7 @@ CREATE TABLE `contracts` (
   `staff_id` int(11) NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
-  `salary` decimal(20,2) NOT NULL
+  `salary` decimal(10,2) NOT NULL
 );
 
 CREATE TABLE `timesheets` (
@@ -236,31 +234,15 @@ CREATE TABLE `timesheets` (
   `year` int(2) NOT NULL,
   `days_worked` int(2) NOT NULL,
   `days_off` int(2) NOT NULL,
-  `days_leave` int(2) NOT NULL,
   `days_late` int(2) NOT NULL
 );
 
 CREATE TABLE `timesheet_details` (
   `timesheet_detail_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `timesheet_id` int(11) NOT NULL,
-  `total_salary` decimal(20,2) NOT NULL
-);
-CREATE TABLE `leave_application`(
-  `leave_application_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `staff_id` int(11) NOT NULL,
-  `start_date` date NOT NULL,
-  `end_date` date NOT NULL,
-  `reason` varchar(100) NOT NULL,
-  `status` tinyint(1) DEFAULT 0
+  `total_salary` decimal(10,2) NOT NULL
 );
 
-CREATE TABLE `attendance` (
-  `attendance_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `timesheet_id` int(11) NOT NULL,
-  `date` date NOT NULL,
-  `status` ENUM('Present', 'Absent', 'Leave', 'Late') NOT NULL,
-  `leave_application_id` int(11) NOT NULL
-);
 CREATE UNIQUE INDEX `decentralizations_index_0` ON `decentralizations` (`role_id`, `module_id`);
 
 CREATE UNIQUE INDEX `likes_index_1` ON `likes` (`product_id`, `customer_id`);
