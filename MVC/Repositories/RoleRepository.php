@@ -19,9 +19,5 @@
         public function getRoleById($id){
             return $this->getAllByWhere("roles", "role_id = ".$id);
         }
-
-        public function getRoleByName($roleName){
-            return $this->getAllByWhere("roles", "role_name = '".$roleName."'");
-        }
     }
 ?>

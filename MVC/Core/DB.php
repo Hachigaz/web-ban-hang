@@ -141,16 +141,6 @@
             return $rows;
         }
 
-        public function getAllByWhereNonIsActive($table, $where) {// lấy ra các bản ghi thỏa điều kiện đầy đủ thuộc tính (chi lay ra is_active = 1)
-            $sql = "SELECT * FROM $table WHERE $where";// ở đây ghi rõ tên cột id
-            $result = mysqli_query($this->con, $sql);
-            $rows = array();
-            while ($row = $result->fetch_assoc()){
-                $rows[] = $row;
-            }
-            return $rows;
-        }
-
 
         public function getAllByWhereOrderBy($table, $where, $order_by) {// lấy ra các bản ghi thỏa điều kiện đầy đủ thuộc tính (chi lay ra is_active = 1)
             $is_active = "is_active";
@@ -277,5 +267,4 @@
             return $rows;
         }
     }
-
 ?>

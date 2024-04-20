@@ -971,22 +971,3 @@ searchFilter.oninput = filterTable;
 startDateFilter.onchange = filterTable;
 endDateFilter.onchange = filterTable;
 refreshBtn.onclick = filterTable;
-
-
-// function deleteColumn(table, columnIndex) {
-//     [...table.rows].forEach((row) => {
-//       row.deleteCell(columnIndex);
-//     });
-// }
-// const customerTable = document.querySelector("#staff-table");
-// const exportCustomerTable = document.querySelector("#btn-export-excel");
-// exportCustomerTable.addEventListener('click', () => {
-//     var clone = customerTable.cloneNode(true);
-
-//     deleteColumn(clone, 8); // Xóa cột thứ 8
-//     setTimeout(function(){
-//         const wb = XLSX.utils.table_to_book(clone, {sheet: 'sheet-1'});
-//         XLSX.writeFile(wb, 'StaffTable.xlsx');
-//     }, 2000);
-// });
-  
