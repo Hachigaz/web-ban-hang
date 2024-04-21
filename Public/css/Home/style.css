@@ -301,7 +301,5 @@
 }
 
 .featured-products-panel .product-set .product-item{
-    max-width: 200px;
-    min-width: 180px;
-    width:20vw;
+    width: 200px;
 }

@@ -47,7 +47,7 @@
 
 @media screen and (orientation:portrait){
   :root{
-    --product-display-image-width: 80%;
+    --product-display-image-width: 60%;
   }
 }
 
@@ -354,6 +354,7 @@
 
 .product-description-panel .description-panel .text{
   padding-top: 20px;
+  font-size: 14pt;
 }
 
 .product-description-panel .description-panel .title,
@@ -378,6 +379,17 @@
 .product-description-panel .spec-table-wrapper table.product-spec-table{
   border-spacing: 20px;
   width:100%;
+
+  font-size:14pt;
+  line-height: 1.2;
+}
+
+.product-description-panel .spec-table-wrapper table.product-spec-table td.option-name{
+  width:25%;
+}
+
+.product-description-panel .spec-table-wrapper table.product-spec-table td.option-value{
+  width:75%
 }
 
 .product-description-panel .product-rating-wrapper .product-rating-row {
@@ -399,7 +411,7 @@
 }
 
 .product-description-panel .product-rating-wrapper .rating-count-row{
-  font-size: 13pt;
+  font-size: 14pt;
   padding-top: 8pt;
   text-indent: 10px;
 }

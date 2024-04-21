@@ -38,10 +38,13 @@ function fillSelectedData(element){
 
     getProductSKUs(productID)
     getProductImages(productID)
+    getProductOptions(productID)
+
     document.querySelector(".sku-panel .sku-info-options .add-sku").classList.remove("disabled")
     currentSelectedSKU = null
     disableSkuOptions()
     disableProductImageOptions()
+    disableProductOptionOptions()
 
     document.querySelector(".info-tab-list .product-info-tab-wrapper").classList.remove("hidden")
     document.querySelector(".info-tab-list .no-product-select-tab").classList.add("hidden")
@@ -607,10 +610,6 @@ function setFilter(filterElement, filterValue){
     window.location.replace(redirectURL)
 }
 
-function fillProductImage(element){
-
-}
-
 function getProductImages(productID){
     let reqData = new FormData()
     reqData.append("product_id",productID)
@@ -625,8 +624,8 @@ function getProductImages(productID){
     };
     req.open("POST", "../DataRequest/GetProductImages", true);
     req.send(reqData);
-    disableProductImageOptions();
-    productImageInfo=null
+    disableProductOptionOptions();
+    productOptionInfo=null
 }
 
 let productImageInfo = null
@@ -716,6 +715,196 @@ function removeProductImage(element){
         req.open("POST", "../DataRequest/TrueDelete", true);
         if(confirm("Xác nhận xóa hình ảnh"))
             req.send(reqData);
+    }
+    else{
+        
+    }
+}
+
+
+
+function getProductOptions(productID){
+    let reqData = new FormData()
+    reqData.append("product_id",productID)
+
+    let req = new XMLHttpRequest()
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let productImageListElement = document.querySelector(".product-options-panel .product-options-list")
+            productImageListElement.innerHTML = ""
+            productImageListElement.innerHTML = this.responseText
+        }
+    };
+    req.open("POST", "../DataRequest/GetProductOptions", true);
+    req.send(reqData);
+    disableProductOptionOptions();
+    productImageInfo=null
+}
+
+let productOptionInfo = null
+function fillOptionEditInfo(element){
+    let productID = productInfo["product_id"]
+    let optionName = element.querySelector(".row-element[attrib='option_name']").getAttribute("value")
+    let optionValue = element.querySelector(".hidden span[attrib='option_value']").getAttribute("value")
+    let productOptionID = element.querySelector(".hidden span[attrib='option_id']").getAttribute("value")
+
+    enableProductOptionOptions(element);
+
+    productOptionInfo = {
+        "product_id":productID,
+        "option_id":productOptionID,
+        "option_name":optionName,
+        "option_value":optionValue
+    }
+    
+    let optionEditFormElement = document.querySelector(".product-options-panel .option-edit-form")
+    optionEditFormElement.querySelector(".c-input#input-option-name input").value=optionName
+    optionEditFormElement.querySelector(".c-input#input-option-value input").value=optionValue
+}
+
+let currentSelectedOption = null
+function enableProductOptionOptions(element){
+    let optionOptionsElement = document.querySelector(".product-options-panel .option-info-options")
+    optionOptionsElement.querySelector(".edit-option").classList.remove("disabled")
+    optionOptionsElement.querySelector(".remove-option").classList.remove("disabled")
+    if(currentSelectedOption){
+        currentSelectedOption.classList.remove("selected")
+    }
+    element.classList.add("selected")
+    currentSelectedOption = element
+}
+
+function disableProductOptionOptions(){
+    let optionOptionsElement = document.querySelector(".product-options-panel .option-edit-form .option-info-options")
+    optionOptionsElement.querySelector(".edit-option").classList.add("disabled")
+    optionOptionsElement.querySelector(".remove-option").classList.add("disabled")
+
+    let infoPanelElement = document.querySelector(".product-options-panel .option-edit-form")
+    let skuCodeElement = new InputElement(infoPanelElement.querySelector('.c-input#input-option-name'))
+    skuCodeElement.setInputValue("")
+    let skuNameElement = new InputElement(infoPanelElement.querySelector(".c-input#input-option-value"))
+    skuNameElement.setInputValue("")
+
+    infoPanelElement = document.querySelector(".product-options-panel .option-add-form")
+    skuCodeElement = new InputElement(infoPanelElement.querySelector('.c-input#input-option-name'))
+    skuCodeElement.setInputValue("")
+    skuNameElement = new InputElement(infoPanelElement.querySelector(".c-input#input-option-value"))
+    skuNameElement.setInputValue("")
+}
+
+function editOption(element){
+    if(!element.classList.contains("disabled")){
+        let option_id = productOptionInfo["option_id"]
+        let infoPanelElement = document.querySelector(".product-options-panel .option-edit-form")
+        let optionNameElement = new InputElement(infoPanelElement.querySelector('.c-input#input-option-name'))
+        let optionName = optionNameElement.getInputValue()
+        let optionValueElement = new InputElement(infoPanelElement.querySelector(".c-input#input-option-value"))
+        let optionValue = optionValueElement.getInputValue()
+
+        if(optionName==""){
+            optionNameElement.showError("Tên thông số không được để trống")
+            return
+        }
+        if(optionValue==""){
+            optionValueElement.showError("Mô tả không được để trống")
+            return
+        }
+
+        let reqData = new FormData()
+        reqData.append("table","options")
+        reqData.append("table_id","option_id")
+        reqData.append("option_id",option_id)
+        reqData.append("option_name",optionName)
+        reqData.append("option_value",optionValue)
+        
+        
+        let req = new XMLHttpRequest()
+        req.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+                let responseData = JSON.parse(this.responseText)
+                console.log(responseData)
+                if(responseData["status"]=="success"){
+                    window.location.reload()
+                }
+            }
+        };
+        req.open("POST", "../DataRequest/Update", true);
+        req.send(reqData);
+    }
+    else{
+        
+    }
+}
+
+function removeOption(element){
+    if(!element.classList.contains("disabled")){
+        let optionID = productOptionInfo["option_id"]
+        
+        let reqData = new FormData()
+        reqData.append("table","options")
+        reqData.append("table_id","option_id")
+        reqData.append("option_id",optionID)
+        
+        
+        
+        let req = new XMLHttpRequest()
+        req.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+                alert(optionID)
+                let responseData = JSON.parse(this.responseText)
+                console.log(responseData)
+                if(responseData["status"]=="success"){
+                    window.location.reload()
+                }
+            }
+        };
+        req.open("POST", "../DataRequest/Delete", true);
+        if(confirm("Xác nhận xóa thông số"))
+            req.send(reqData);
+    }
+    else{
+        
+    }
+}
+
+function addOption(element){
+    if(!element.classList.contains("disabled")){
+        let infoPanelElement = document.querySelector(".product-options-panel .option-add-form")
+        let optionNameElement = new InputElement(infoPanelElement.querySelector('.c-input#input-option-name'))
+        let optionName = optionNameElement.getInputValue()
+        let optionValueElement = new InputElement(infoPanelElement.querySelector(".c-input#input-option-value"))
+        let optionValue = optionValueElement.getInputValue()
+
+        if(optionName==""){
+            optionNameElement.showError("Tên thông số không được để trống")
+            return
+        }
+        if(optionValue==""){
+            optionValueElement.showError("Mô tả không được để trống")
+            return
+        }
+
+        let reqData = new FormData()
+        reqData.append("table","options")
+        reqData.append("option_name",optionName)
+        reqData.append("option_value",optionValue)
+        reqData.append("product_id",productInfo["product_id"])
+        
+        let req = new XMLHttpRequest()
+        req.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+                let responseData = JSON.parse(this.responseText)
+                if(responseData["status"]=="success"){
+                    window.location.reload()
+                }
+            }
+        };
+
+        req.open("POST", "../DataRequest/Add", true);
+        req.send(reqData);
     }
     else{
         

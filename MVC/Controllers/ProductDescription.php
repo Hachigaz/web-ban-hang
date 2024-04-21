@@ -156,6 +156,7 @@
             $sql = "INSERT INTO reviews(reviews.customer_id,reviews.comment,reviews.rating,reviews.product_id) VALUES ($loggedInCustomerID,'$comment',$rating,$productId)";
             $this->productService->productRepo->set($sql);
             unset($sql);
+            
             echo json_encode(["status"=>"success"]);
             return;
         }
