@@ -75,16 +75,14 @@
             $similarProductList =  $this->productService->productRepo->get($sqlQuery);
             
 
+            $hasReviewed = false;
+            $hasOrdered = false;
             $isLoggedIn = isset($_SESSION["logged_in_customer"]) && isset($_SESSION["logged_in_account"]);
             if($isLoggedIn){
                 $loggedInCustomerID = $_SESSION["logged_in_customer"]["customer_id"];
                 $loggedInAccountID = $_SESSION["logged_in_customer"]["account_id"];
                 if(count($this->productService->productRepo->get("SELECT reviews.customer_id FROM reviews where reviews.customer_id =$loggedInCustomerID AND reviews.product_id = $id"))>0){
                     $hasReviewed = true;
-                    $hasOrdered = false;
-                }
-                else {
-                    $hasReviewed = false;
                 }
 
                 $sql = "SELECT orders.order_id 
