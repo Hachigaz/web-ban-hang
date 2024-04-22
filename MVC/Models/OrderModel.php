@@ -162,7 +162,9 @@
         public function setIsActive($is_active){
             $this->is_active = $is_active;
         }
-
+        public function updateOrderStatus($status) {
+            $this->status_of_order = $status;
+        }
         public function toArray() {
             return array(
                 'order_id' => $this->order_id,

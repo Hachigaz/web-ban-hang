@@ -1,9 +1,3 @@
-CREATE TABLE `noti` (
-  `noti_id` int(11) NOT NULL,
-  `account_id` int(11) NOT NULL,
-  `status` tinyint(1) DEFAULT 0
-);
-
 CREATE TABLE `accounts` (
   `account_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `phone_number` varchar(20) UNIQUE NOT NULL,
@@ -45,6 +39,7 @@ CREATE TABLE `decentralizations` (
   `decentralization_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `role_id` int(11) NOT NULL,
   `module_id` int(11) NOT NULL,
+  `function_id` int(11) NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
 );
 
@@ -54,6 +49,7 @@ CREATE TABLE `exports` (
   `order_id` int(11) NOT NULL,
   `export_date` datetime DEFAULT (now()),
   `total_price` decimal(10,2) DEFAULT 0 COMMENT 'Không tự sinh đc như mysql',
+  `status_of_order` ENUM ('Pending', 'Shipped') DEFAULT 'Pending',
   `is_active` tinyint(1) DEFAULT 1
 );
 
@@ -63,6 +59,12 @@ CREATE TABLE `export_details` (
   `shipment_id` int(11) NOT NULL,
   `unit_price_export` decimal(10,2) DEFAULT 0,
   `quantity_export` int(50) DEFAULT 0
+);
+
+CREATE TABLE `functions` (
+  `function_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `function_name` varchar(100) DEFAULT '',
+  `is_active` tinyint(1) DEFAULT 1
 );
 
 CREATE TABLE `imports` (
@@ -80,7 +82,7 @@ CREATE TABLE `modules` (
 
 CREATE TABLE `orders` (
   `order_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `staff_id` int(11)  NULL,
+  `staff_id` int(11) NULL,
   `account_id` int(11) NOT NULL,
   `receiver_name` varchar(100) DEFAULT '' COMMENT 'Có thể giấu tên',
   `email_of_receiver` varchar(100) NOT NULL,
@@ -100,7 +102,7 @@ CREATE TABLE `orders` (
 CREATE TABLE `order_details` (
   `order_detail_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
-  `sku_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
   `price` decimal(10,2) DEFAULT 0,
   `number_of_products` int(11) DEFAULT 1 COMMENT 'Phải > 0',
   `color_of_product` varchar(20) DEFAULT ''
@@ -123,15 +125,13 @@ CREATE TABLE `products` (
 
 CREATE TABLE `product_details` (
   `serial_number` int(11) PRIMARY KEY NOT NULL,
-  `shipment_id` int(11) NOT NULL,
-  `sku_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
   `sold` tinyint(1) DEFAULT 0
 );
 
 CREATE TABLE `guarantees` (
   `guarantee_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `serial_number` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
   `start_date` date DEFAULT (now()),
   `end_date` date
 );
@@ -186,9 +186,9 @@ CREATE TABLE `shipments` (
 
 CREATE TABLE `skus` (
   `sku_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `sku_name` varchar(100),
   `sku_code` varchar(100) UNIQUE DEFAULT '' COMMENT 'Phải đủ số lượng ký tự của 1 sku code, nếu có enum về color thì sẽ dễ quản lý hơn',
   `product_id` int(11) NOT NULL,
+  `option_id` int(11) NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
 );
 
@@ -243,6 +243,6 @@ CREATE TABLE `timesheet_details` (
   `total_salary` decimal(10,2) NOT NULL
 );
 
-CREATE UNIQUE INDEX `decentralizations_index_0` ON `decentralizations` (`role_id`, `module_id`);
+CREATE UNIQUE INDEX `decentralizations_index_0` ON `decentralizations` (`role_id`, `module_id`, `function_id`);
 
 CREATE UNIQUE INDEX `likes_index_1` ON `likes` (`product_id`, `customer_id`);

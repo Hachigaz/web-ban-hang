@@ -1,44 +1,153 @@
 <?php
-    require_once "./MVC/Models/OrderModel.php";
-    class OrderService extends Service{
-        public $orderRepo;
+require_once "./MVC/Models/OrderModel.php";
 
-        public function __construct(){
-            $this->orderRepo = $this->repository("OrderRepository");
-        }
-        
-        public function createOrder(){//$orderDTO
-            $order = new OrderModel("3", "3", "Anh Hiển", "hien2205@gmail.com", "0937363834", "Gửi tặng anh Hiển", "Express", "Tây Ninh", "2024-05-03", "70L1-13579", "COD");
-            $this->orderRepo->createOrder($order);
-        }
-
-        public function updateOrder(){// by id (truyền DTO)
-            $orderData = $this->orderRepo->getOrderById("3");
-            extract($orderData);// gán các giá trị cho các key tương ứng với các biến
-            $order = new OrderModel(
-                $staff_id, $account_id, "Anh Hiển đẹp trai", $email_of_receiver, $phone_number_of_receiver, "Gửi tặng anh Hiển nha!", $shipping_method, $shipping_address, $shipping_date, $tracking_number, $payment_method, $total_money, $order_id, $order_date, $status_of_order, $is_active
-            );
-            $this->orderRepo->updateOrder($order, "3");
-        }
-
-        public function deleteOrder(){
-            $id = "3";
-            $this->orderRepo->deleteOrder($id);
-        }
-
-        public function getAllOrder(){
-            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->orderRepo->getAllOrder(), JSON_UNESCAPED_UNICODE);
-        }
-
-        public function getQuantityAllOrder(){
-            return $this->orderRepo->getQuantityAllOrder();
-        }
-
-        public function getOrderById(){
-            $id = "3";
-            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->orderRepo->getOrderById($id), JSON_UNESCAPED_UNICODE);
-        }
+class OrderService extends Service{
+    public $orderRepo;
+    public $exportRepo;
+    public function __construct(){
+        $this->orderRepo = $this->repository("OrderRepository");
     }
+    
+    // public function createOrder($receiver_name, $email_of_receiver, $phone_number_of_receiver, $shipping_address, $note){//$staffDTO
+    //         $order_id = $this->createOrderdetails($email, $password, $avatar, $phoneNumber)['order_id'];
+    //         $order = new OrderModel("","1",$receiver_name, $email_of_receiver,$phone_number_of_receiver,$note,"VNPT",$shipping_address,"","","COD");
+    //         $this->orderRepo->createOrder($order);
+        
+    // }
+
+    // public function updateOrder(){
+    //     $orderData = $this->orderRepo->getOrderById("3");
+    //     extract($orderData);
+    //     $order = new OrderModel(
+    //         $staff_id, $account_id, "Anh Hiển đẹp trai", $email_of_receiver, $phone_number_of_receiver, "Gửi tặng anh Hiển nha!", $shipping_method, $shipping_address, $shipping_date, $tracking_number, $payment_method, $total_money, $order_id, $order_date, $status_of_order, $is_active
+    //     );
+    //     $this->orderRepo->updateOrder($order, "3");
+    // }
+    public function updateOrder(){
+        $orderData = $this->orderRepo->getAllOrder();
+        extract($orderData);
+        $order = new OrderModel(
+            $staff_id, $account_id, "Anh Hiển đẹp trai", $email_of_receiver, $phone_number_of_receiver, "Gửi tặng anh Hiển nha!", $shipping_method, $shipping_address, $shipping_date, $tracking_number, $payment_method, $total_money, $order_id, $order_date, $status_of_order, $is_active
+        );
+        $this->orderRepo->updateOrder($order, "3");
+    }
+    public function CancelledOrder($order_id){
+        // Lấy thông tin đơn hàng từ repository
+        $orderData = $this->getOrderById($order_id);
+
+        if ($orderData === null) {
+            // Handle the case where no order data is found
+            // $response = ["error" => "Order not found"];
+        } else {
+            // $response = array("orderData" => $orderData);
+            $staff_id = $orderData[0]['staff_id'];  
+            $account_id = $orderData[0]['account_id'];    
+            $receiver_name=$orderData[0]['receiver_name'];
+            $email_of_receiver = $orderData[0]['email_of_receiver'];
+            $phone_number_of_receiver = $orderData[0]['phone_number_of_receiver'];
+            $note=$orderData[0]['note'];
+            $shipping_method = $orderData[0]['shipping_method'];
+            $shipping_address = $orderData[0]['shipping_address'];
+            $shipping_date=$orderData[0]['shipping_date'];
+            $tracking_number = $orderData[0]['tracking_number'];
+            $payment_method = $orderData[0]['payment_method'];
+            $total_money=$orderData[0]['total_money'];
+            $order_date=$orderData[0]['order_date'];
+            $is_active=$orderData[0]['is_active'];  
+        }
+
+         extract($orderData);
+    
+        // Tạo một đối tượng OrderModel mới với trạng thái đã hủy
+        $order = new OrderModel(
+            $staff_id, $account_id, $receiver_name, $email_of_receiver, $phone_number_of_receiver, 
+            $note, $shipping_method, $shipping_address, $shipping_date, $tracking_number, 
+            $payment_method, $total_money, $order_id, $order_date, "Cancelled", $is_active
+        );
+    
+        // Cập nhật đơn hàng trong repository
+        $this->orderRepo->updateOrder($order, $order_id); 
+        header("location: ../../../web-ban-hang/InternalManager/OrderManager");
+    }
+    public function UpdateStatusOrder($order_id){
+        // Lấy thông tin đơn hàng từ repository
+        $orderData = $this->getOrderById($order_id);
+
+        if ($orderData === null) {
+            // Handle the case where no order data is found
+            // $response = ["error" => "Order not found"];
+        } else {
+            // $response = array("orderData" => $orderData);
+            $staff_id = $orderData[0]['staff_id'];  
+            $account_id = $orderData[0]['account_id'];    
+            $receiver_name=$orderData[0]['receiver_name'];
+            $email_of_receiver = $orderData[0]['email_of_receiver'];
+            $phone_number_of_receiver = $orderData[0]['phone_number_of_receiver'];
+            $note=$orderData[0]['note'];
+            $shipping_method = $orderData[0]['shipping_method'];
+            $shipping_address = $orderData[0]['shipping_address'];
+            $shipping_date=$orderData[0]['shipping_date'];
+            $tracking_number = $orderData[0]['tracking_number'];
+            $payment_method = $orderData[0]['payment_method'];
+            $total_money=$orderData[0]['total_money'];
+            $order_date=$orderData[0]['order_date'];
+            $status_of_order=$orderData[0]['status_of_order'];
+            if ($status_of_order === "Pending") {
+                $status_of_order = "Processing";
+            } elseif ($status_of_order === "Processing") {
+                $status_of_order = "Shipped";
+                // $this->orderRepo->updateOrder($order, $order_id); 
+            } elseif ($status_of_order === "Shipped") {
+                $status_of_order = "Delivered";
+            }
+            $is_active=$orderData[0]['is_active'];  
+        }
+
+         extract($orderData);
+    
+        // Tạo một đối tượng OrderModel mới với trạng thái đã hủy
+        $order = new OrderModel(
+            $staff_id, $account_id, $receiver_name, $email_of_receiver, $phone_number_of_receiver, 
+            $note, $shipping_method, $shipping_address, $shipping_date, $tracking_number, 
+            $payment_method, $total_money, $order_id, $order_date,$status_of_order , $is_active
+        );
+    
+        // Cập nhật đơn hàng trong repository
+        $this->orderRepo->updateOrder($order, $order_id); 
+        header("location: ../../../web-ban-hang/InternalManager/OrderManager");
+    }
+
+    public function updateOrderStatus($orderData) {
+        $this->orderRepo->updateOrderStatus($orderData);
+    }
+    public function deleteOrder(){
+        $id = "3";
+        $this->orderRepo->deleteOrder($id);
+    }
+
+    public function getAllOrder(){
+        header('Content-Type: application/json');
+        echo json_encode($this->orderRepo->getAllOrder(), JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getQuantityAllOrder(){
+        return $this->orderRepo->getQuantityAllOrder();
+    }
+
+    public function getQuantityOrderByStatus($status_of_order){
+        return $this->orderRepo->getQuantityOrderByStatus($status_of_order);
+    }
+    public function getInfoOrder(){
+        return $this->orderRepo->joinOrderOrderdetails();
+    }
+    public function getOrder1(){
+        return $this->orderRepo->getAllOrder();
+    }
+    public function getOrderById($id) {
+        header('Content-Type: application/json');
+        echo json_encode($this->orderRepo->getOrderById($id), JSON_UNESCAPED_UNICODE);
+        return $this->orderRepo->getOrderById($id);
+    }
+    
+}
 ?>

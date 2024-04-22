@@ -269,16 +269,19 @@ BEGIN
 END; //
 DELIMITER ;
 DELIMITER //
+
 CREATE TRIGGER check_shipping_date_order_update
 BEFORE UPDATE ON `orders`
 FOR EACH ROW
 BEGIN
-    IF (NEW.shipping_date <= CURDATE()) THEN
+    IF (NEW.shipping_date IS NOT NULL AND NEW.shipping_date <= CURDATE()) THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Error: Shipping_date must bigger current date';
+        SET MESSAGE_TEXT = 'Error: Shipping_date must be greater than the current date';
     END IF;
 END; //
+
 DELIMITER ;
+
 -- 8.Kiểm tra staff_id phải có role_là 1,2,3
 DELIMITER //
 CREATE TRIGGER check_role_staff_order_insert

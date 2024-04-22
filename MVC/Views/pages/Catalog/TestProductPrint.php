@@ -1,5 +1,5 @@
 <?php foreach($productList as $product): ?>
-    <div class="product-item no-style" data-product-id="<?= $product["product_id"] ?>" data-product-price="<?= $product["price"] ?>"> onclick="addContent(this)">        <div class="product-image-wrapper">
+    <div class="product-item no-style" data-product-id="<?= $product["product_id"] ?>" data-product-name="<?= $product["product_name"] ?>" data-product-price="<?= $product["price"] ?>"> onclick="addContent(this)">        <div class="product-image-wrapper">
             <?php if($product["thumbnail"]!=""): ?>
             <img class="no-user-select" src="../Public/img/products/<?= $product["thumbnail"] ?>" alt="" srcset="">
             <?php else: ?>

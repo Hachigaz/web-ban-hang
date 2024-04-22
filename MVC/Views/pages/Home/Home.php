@@ -80,7 +80,7 @@
                 </div>
             </div>
         </div>
-        <div class="featured-products-panel">
+        <!-- <div class="featured-products-panel">
             <?php 
             function addFeaturedProductList($set_title,$set_index,$productList){
                 include('./MVC/Views/pages/Home/components/ItemList.php');                
@@ -91,6 +91,6 @@
                 $index++;
             }
             ?>
-        </div>
+        </div> -->
     </div>
 </div>

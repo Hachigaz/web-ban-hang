@@ -78,7 +78,9 @@
 
             return $this->productRepo->get($sql);
         }
-
+        public function getProductSku(){
+            return $this->productRepo->joinProductSku();
+        }
         public function getProductsQuery($sqlQuery){
             return $this->productRepo->get($sqlQuery);
         }
