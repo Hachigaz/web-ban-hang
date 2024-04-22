@@ -1,6 +1,12 @@
+.main{
+    background-color:  rgb(238, 238, 238)!important;
+}
+
 .body{
     display:flex;
     flex-direction: column;
+    
+    background-color: rgb(238, 238, 238);
 }
 
 .body > * {
@@ -19,7 +25,7 @@
     width:80%;
     align-self: center;
 
-    background-color: var(--secondary-light-color);
+    background-color: white;
     
 
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.295);
