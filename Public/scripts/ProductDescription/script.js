@@ -62,3 +62,34 @@ function sendProductReview(element){
         }
     }
 }
+
+function buyProduct(){
+    let selectedSku = document.querySelector(".product-info-panel .product-sku-list .sku-option.selected")
+    if(selectedSku){
+        window.location.reload()
+    }
+    let skuCode = selectedSku.getAttribute("value")
+    
+    let searchParams = new URLSearchParams(decodeURI(window.location.search))
+    let productID = searchParams.get("id")
+
+    addProducttocart(productID,skuCode)
+
+    // window.location="../ShopCart/"
+}
+
+function addProductToCart(){
+    let selectedSku = document.querySelector(".product-info-panel .product-sku-list .sku-option.selected")
+    // if(selectedSku){
+    //     window.location.reload()
+    // }
+    let skuCode = selectedSku.getAttribute("value")
+    
+    let searchParams = new URLSearchParams(decodeURI(window.location.search))
+    let productID = searchParams.get("id")
+    console.log(productID);
+    console.log(selectedSku);
+    addProducttocart(productID,skuCode)
+
+    // window.location.reload()
+}

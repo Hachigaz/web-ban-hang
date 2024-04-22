@@ -1,7 +1,7 @@
 <?php
     class ShipmentModel{
         private $import_id;
-        private $product_id;
+        private $supplier_id;
         private $unit_price_import;
         private $quantity;
         private $remain;
@@ -10,10 +10,10 @@
         private $exp;
         private $shipment_id;
         private $is_active;
-        public function __construct($import_id, $product_id, $unit_price_import, $quantity, $sku_id, $mfg, $exp, $remain = null, $shipment_id = null, $is_active = null)
+        public function __construct($import_id, $supplier_id, $unit_price_import, $quantity, $sku_id, $mfg, $exp, $remain = null, $shipment_id = null, $is_active = null)
         {
             $this->import_id = $import_id;
-            $this->product_id = $product_id;
+            $this->supplier_id = $supplier_id;
             $this->unit_price_import = $unit_price_import;
             $this->quantity = $quantity;
             $this->sku_id = $sku_id;
@@ -31,12 +31,12 @@
             $this->import_id = $import_id;
         }
     
-        public function getProduct_id(){
-            return $this->product_id;
+        public function getsupplier_id(){
+            return $this->supplier_id;
         }
     
-        public function setProduct_id($product_id){
-            $this->product_id = $product_id;
+        public function setsupplier_id($supplier_id){
+            $this->supplier_id = $supplier_id;
         }
     
         public function getUnit_price_import(){
@@ -107,7 +107,7 @@
             return array(
                 'shipment_id' => $this->shipment_id,
                 'import_id' => $this->import_id,
-                'product_id' => $this->product_id,
+                'supplier_id' => $this->supplier_id,
                 'unit_price_import' => $this->unit_price_import,
                 'quantity' => $this->quantity,
                 'remain' => $this->remain,
