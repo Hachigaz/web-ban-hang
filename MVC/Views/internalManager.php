@@ -52,8 +52,9 @@
         </div>  
         <script type="text/javascript">
             var role_id = <?php echo json_encode($_SESSION['role_id']); ?>;
+            var account_id = <?php echo json_encode($_SESSION['account_id']); ?>;
             sessionStorage.setItem('role_id', role_id);
-            console.log(sessionStorage.getItem('role_id'));
+            sessionStorage.setItem('account_id', account_id);
         </script>
             <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
