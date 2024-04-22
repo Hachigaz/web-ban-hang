@@ -11,7 +11,10 @@
             $export = new ExportModel("4", "4");
             $this->exportRepo->createExport($export);
         }
-
+        public function createExport2(){//$exportDTO
+            $export = new ExportModel("4", "4");
+            $this->exportRepo->createExport($export);
+        }
         public function updateExport(){// by id (truyền DTO)
             $exportData = $this->exportRepo->getExportById("1");
             extract($exportData);// gán các giá trị cho các key tương ứng với các biến

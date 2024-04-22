@@ -68,8 +68,8 @@
             <input type="date" name="" id="end-date" name="end-date" placeholder="Ngày kết thúc">
         </div>
     </div>
-    <div class="update">
-        <a href="../InternalManager/LeaveApplicationManager"><button class="update-btn" title="Đơn xin nghỉ">Đơn xin nghỉ</button></a>
+    <div class="leave-application">
+        <a href="../InternalManager/LeaveApplicationManager"><button class="leave-btn" title="Đơn xin nghỉ">Đơn xin nghỉ</button></a>
     </div>
 </div>
 
@@ -78,8 +78,9 @@
     <div class="staff-table">
         <div class="table-header">
             <h2>Danh sách nhân viên</h2>
+            <!-- <button id="btn-export-excel">Xuất Excel</button> -->
         </div>
-        <table>
+        <table id="staff-table">
             <thead>
                 <tr>
                     <td>Mã nhân viên</td>

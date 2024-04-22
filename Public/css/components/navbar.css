@@ -3,6 +3,8 @@
     display: flex;
     justify-content: center;
     overflow: hidden;
+
+    padding-bottom: 10px;
 }
 .category {
     width: 60%;
@@ -11,9 +13,10 @@
     justify-content: space-between;
 }
 .category .category-item {
+    padding:4px 10px;
     font-size: 17px;
     color: #000;
-    width: 100px;
+    min-width: 100px;
     height: 35px;
     line-height: 30px;
     text-align: center;
