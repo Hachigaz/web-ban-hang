@@ -120,6 +120,11 @@
             </div>
         </div>
         <div class="info-tab-list">
+            <div class="expand-option-wrapper">
+                <div class="option no-user-select" onclick="document.querySelector('.tab-content').classList.toggle('expanded'); if(this.innerHTML != '❯')this.innerHTML = '❯'; else this.innerHTML = '❮'">
+                    ❮
+                </div>
+            </div>
             <div class="info-tab product-info-tab">
                 <div class="no-product-select-tab">
                     <div class="message">
@@ -132,13 +137,16 @@
                     </div>
                     <div class="tab-header-options no-user-select">
                         <div class="option selected" panel="info-panel" onclick="showInfoPanel(this)">
-                            Thông tin sản phẩm
+                            Thông tin
                         </div>
                         <div class="option" panel="sku-panel" onclick="showInfoPanel(this)">
-                            Các đơn vị lưu
+                            Đơn vị lưu
                         </div>
                         <div class="option" panel="product-images-panel" onclick="showInfoPanel(this)">
-                            Hình ảnh sản phẩm
+                            Hình ảnh
+                        </div>
+                        <div class="option" panel="product-options-panel" onclick="showInfoPanel(this)">
+                            Thông số
                         </div>
                     </div>
                     <div class="tab-content-wrapper">
@@ -346,6 +354,90 @@
                                 </div>
                                 <div class="option rem-img" onclick="removeProductImage(this)">
                                     Xóa hình đã chọn
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-tab-content product-options-panel hidden">
+                            <div class="product-options-table-wrapper">
+                                <div class="product-options-title row-element-display-header">
+                                    <div class="row-element">
+                                        Thông số
+                                    </div>
+                                </div>
+                                <div class="product-options-wrapper">
+                                    <div class="product-options-list">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="option-info-form-wrapper">
+                                <div class="option-edit-form no-user-select">
+                                    <div class="title" onclick="this.parentElement.querySelector('.form-wrapper').classList.toggle('hidden')">
+                                        Sửa thông số
+                                    </div>
+                                    <div class="form-wrapper">
+                                        <div class="c-input" id="input-option-name">
+                                            <div class="input-error-message">
+                                            </div>    
+                                            <div class="input-wrapper">
+                                                <div class="input-label-wrapper">
+                                                    <label>Tên</label>
+                                                </div>                                
+                                                <input autocomplete="off" class="input"  name="input-option-name" type="text" placeholder="" onclick="(new InputElement(this.parentElement.parentElement)).hideError()">
+                                            </div>
+                                        </div>
+                                        <div class="c-input" id="input-option-value">
+                                            <div class="input-error-message">
+                                            </div>    
+                                            <div class="input-wrapper">
+                                                <div class="input-label-wrapper">
+                                                    <label>Mô tả</label>
+                                                </div>               
+                                                <textarea autocomplete="off" class="input"  name="input-option-value" type="text" placeholder="" onclick="(new InputElement(this.parentElement.parentElement)).hideError()"></textarea>                 
+                                            </div>
+                                        </div>
+                                        <div class="option-info-options no-user-select">
+                                            <div class="option edit-option disabled" onclick="editOption(this)">
+                                                Sửa Thông số
+                                            </div>
+                                            <div class="option remove-option disabled" onclick="removeOption(this)">
+                                                Xóa thông số
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="option-add-form">
+                                    <div class="title no-user-select" onclick="this.parentElement.querySelector('.form-wrapper').classList.toggle('hidden')">
+                                        Thêm thông số mới
+                                    </div>
+                                    <div class="form-wrapper">
+                                        <div class="c-input" id="input-option-name">
+                                            <div class="input-error-message">
+                                            </div>    
+                                            <div class="input-wrapper">
+                                                <div class="input-label-wrapper">
+                                                    <label>Tên</label>
+                                                </div>                                
+                                                <input autocomplete="off" class="input"  name="input-option-name" type="text" placeholder="" onclick="(new InputElement(this.parentElement.parentElement)).hideError()">
+                                            </div>
+                                        </div>
+                                        <div class="c-input" id="input-option-value">
+                                            <div class="input-error-message">
+                                            </div>    
+                                            <div class="input-wrapper">
+                                                <div class="input-label-wrapper">
+                                                    <label>Mô tả</label>
+                                                </div>
+                                                <textarea autocomplete="off" class="input"  name="input-option-value" type="text" placeholder="" onclick="(new InputElement(this.parentElement.parentElement)).hideError()"></textarea>                                
+                                            </div>
+                                        </div>
+                                        <div class="option-info-options no-user-select">
+                                            <div class="option add-option" onclick="addOption(this)">
+                                                Thêm thông số
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

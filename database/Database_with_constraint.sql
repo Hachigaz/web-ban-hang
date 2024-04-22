@@ -117,7 +117,8 @@ CREATE TABLE `products` (
   `description` longtext,
   `created_at` datetime DEFAULT (now()),
   `updated_at` datetime DEFAULT (now()),
-  `average_rating` float,
+  `average_rating` float DEFAULT 0,
+  `total_reviews` float DEAFULT 0,
   `is_active` tinyint(1) DEFAULT 1
 );
 

@@ -377,5 +377,11 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
         }
+        public function GetAllDataPersonalInfoStaff($account_id){
+            $personalInfoStaff = $this->staffService->getInfoStaffById($account_id);
+            $data = array("personalInfoStaff" => $personalInfoStaff);
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE); 
+        }
     }
  

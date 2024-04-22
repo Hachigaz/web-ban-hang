@@ -4,6 +4,7 @@
         public function __construct(){
             $this->productService = $this->service("ProductService");
         }
+
         public function GetProductSKUs(){
             $productID = $_POST["product_id"];
             $sql = "SELECT skus.sku_id, skus.sku_code, skus.sku_name
@@ -18,6 +19,7 @@
             unset($skuList);
             unset($productID);
         }
+
         public function GetProductImages(){
             $productID = $_POST["product_id"];
             $sql = "SELECT product_images.product_image_id, product_images.product_id, product_images.image_url
@@ -33,6 +35,22 @@
             unset($productImageList);
             unset($productID);
         }
+
+        public function GetProductOptions(){
+            $productID = $_POST["product_id"];
+            $sql = "SELECT options.option_id, options.product_id, options.option_name, options.option_value
+                FROM options
+                WHERE options.product_id = $productID and options.is_active = '1';
+            ";
+
+            $resultData = $this->productService->productRepo->get($sql);
+            $optionList = $resultData;
+
+            include("./MVC/Views/pages/Manager/ProductManagers/productOptionRender.php");
+            unset($optionList);
+            unset($productID);
+        }
+
         public function Add(){
             $table = $_POST["table"];
 
