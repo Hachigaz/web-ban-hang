@@ -25,7 +25,7 @@
                         <img src="../Public/img/logo/logo.png" width="100px" height="100px" alt="">
                     </div>
                     <div class="shop-name">
-                        Electro-Goods
+                        Techshop
                     </div>    
                 </div>
                 <div class="form-title-message">
@@ -43,7 +43,7 @@
                             
                         </div>    
                     </div>
-                    <input name="input_username" type="text" placeholder="Email hoặc Số điện thoại" onclick="(new InputElement(this.parentElement)).hideError()">
+                    <input class="input" name="input_username" type="text" placeholder="Email hoặc Số điện thoại" onclick="(new InputElement(this.parentElement)).hideError()">
                 </div>
                 <div class="c-input" id="input_password">
                     <div class="input-label-wrapper">
@@ -52,7 +52,7 @@
                             
                         </div>    
                     </div>
-                    <input name="input_password" type="password" placeholder="Nhập mật khẩu" onclick="(new InputElement(this.parentElement)).hideError()">
+                    <input class="input" name="input_password" type="password" placeholder="Nhập mật khẩu" onclick="(new InputElement(this.parentElement)).hideError()">
                 </div>
                 <div class="sign-in-options">
                     <div class="password-remember-wrapper">
@@ -63,7 +63,7 @@
                                     
                                 </div>    
                             </div>
-                            <input type="checkbox" name="input_remember_password">
+                            <input class="input" type="checkbox" name="input_remember_password">
                         </div>
                     </div>
                     <a href="../SignIn/ForgotPassword" class="forgot-password-option">Quên mật khẩu</a>

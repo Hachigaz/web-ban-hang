@@ -3,7 +3,7 @@ setInterval(() => {
 }, 5000);
 
 function showMoreProducts(productSetElement){
-    const productListElement = productSetElement.querySelector('.product-list')
+    const productListElement = productSetElement.querySelector('.product-list-wrapper')
     productListElement.classList.toggle("hide")
     productListElement.classList.toggle("show")
 
@@ -14,7 +14,7 @@ function showMoreProducts(productSetElement){
 }
 
 function hideProducts(productSetElement){
-    const productListElement = productSetElement.querySelector('.product-list')
+    const productListElement = productSetElement.querySelector('.product-list-wrapper')
     productListElement.classList.toggle("show")
     productListElement.classList.toggle("hide")
 

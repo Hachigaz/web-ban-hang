@@ -24,7 +24,7 @@
                         <img src="../Public/img/logo/logo.png" width="100px" height="100px" alt="">
                     </div>
                     <div class="shop-name">
-                        Electro-Goods
+                        Techshop
                     </div>    
                 </div>
                 <div class="form-title-message">
@@ -42,7 +42,7 @@
                             
                         </div>    
                     </div>
-                    <input name="input_email" type="text" placeholder="Nhập email" onclick="(new InputElement(this.parentElement)).hideError()">
+                    <input class="input" name="input_email" type="text" placeholder="Nhập email" onclick="(new InputElement(this.parentElement)).hideError()">
                 </div>
                 <div class="c-input" id="input_password">
                     <div class="input-label-wrapper">
@@ -51,7 +51,7 @@
                             
                         </div>
                     </div>
-                    <input name="input_password" type="password" placeholder="Nhập mật khẩu" onclick="(new InputElement(this.parentElement)).hideError()">
+                    <input class="input" name="input_password" type="password" placeholder="Nhập mật khẩu" onclick="(new InputElement(this.parentElement)).hideError()">
                 </div>
                 <div class="c-input" id="input_confirm_password">
                     <div class="input-label-wrapper">
@@ -60,7 +60,7 @@
                             
                         </div>  
                     </div>  
-                    <input name="input_confirm_password" type="password" placeholder="Nhập lại mật khẩu" onclick="(new InputElement(this.parentElement)).hideError()">
+                    <input class="input" name="input_confirm_password" type="password" placeholder="Nhập lại mật khẩu" onclick="(new InputElement(this.parentElement)).hideError()">
                 </div>
                 <input type="button" value="Tạo tài khoản" onclick="processSignUp()">            
             </form>

@@ -66,22 +66,78 @@
             // }else{
             //     header('Location: ../SignIn/SayHi');
             // }
+
             $this->view("internalManager", [
                 "Page" => "CustomerManager",
                 "Title" => "Khách hàng"
             ]);
         }
         public function ProductManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
-                $this->view("internalManager", [
-                    "Page" => "ProductManager",
-                    "Title" => "Sản phẩm"
-                ]);
-            }else{
+            if(!isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
                 header('Location: ../SignIn/SayHi');
-            }
+            }   
             
+            $uri = parse_url($_SERVER['REQUEST_URI']);
+
+            $urlParams = null;
+            if(isset($uri["query"])){            
+                parse_str(urldecode($uri["query"]),$urlParams);
+            }
+            unset($uri);
+            
+            $resultProductList = $this->productService->GetFilteredProducts($urlParams, "" , "products.product_id ASC");
+            $sql = "SELECT category_id,category_name
+            FROM categories
+            WHERE categories.is_active = '1'";
+            $resultCategoryList = $this->productService->getProductsQuery($sql);
+            unset($sql);
+            
+            $sql = "SELECT brand_id,brand_name
+            FROM brands
+            WHERE brands.is_active = '1'";
+            $resultBrandList = $this->productService->getProductsQuery($sql);
+            unset($sql);
+
+            $this->view("internalManager", [
+                "Page" => "ProductManager",
+                "Title" => "Sản phẩm",
+                "ProductList"=>$resultProductList,
+                "CategoryList"=>$resultCategoryList,
+                "BrandList"=>$resultBrandList,
+                "URLParams"=>$urlParams
+            ]);
         }
+
+        public function DecodeURL(){
+            $uri = parse_url($_SERVER['REQUEST_URI']);
+
+            $urlParams = null;
+            if(isset($uri["query"])){            
+                parse_str(urldecode($uri["query"]),$urlParams);
+            }
+            return $urlParams;
+        }
+
+        public function GetMoreProducts(){
+            $urlParams = $this->DecodeURL();
+
+            $resultProductList = $this->productService->GetFilteredProducts($urlParams, "", "products.product_id ASC");
+
+            ob_start();
+            $productList = $resultProductList["ProductList"];
+            include("./MVC/Views/Pages/Manager/ProductManagers/ProductPrint.php");
+            $htmlData=ob_get_contents();
+            unset($productList); 
+            ob_end_clean();
+
+            $responseData = [
+                "ProductsHTML"=>$htmlData,
+                "StatusData"=>["IsLast"=>$resultProductList["IsLast"]]
+            ];
+            header('Content-Type: application/json');
+            echo json_encode($responseData);
+        }
+
         public function SupplierManager(){
             if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
                 $this->view("internalManager", [
@@ -216,6 +272,22 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE);   
         }
+        public function GetPage(){
+            $uri = parse_url($_SERVER['REQUEST_URI']);
+
+            $urlParams = null;
+            if(isset($uri["query"])){            
+                parse_str(urldecode($uri["query"]),$urlParams);
+            }
+            if(isset($urlParams["action"])){
+                $action = $urlParams["action"];
+                header("Content-Type: text/html");
+                echo file_get_contents("./MVC/Views/pages/Manager/ProductManagers/$action.php");
+            }
+            else{
+                header("Location: ../InternalManager/HomeManager");
+            }
+        }
 
         public function GetAllDataCustomer(){
             $cardValue = array(
@@ -269,4 +341,4 @@
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
         }
     }
-?>
+ 

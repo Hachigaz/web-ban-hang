@@ -33,6 +33,8 @@
                 $account = json_decode($this->accountService->getAccountByEmail($input_login_details), true);
                 $_SESSION["role_id"] = $this->accountService->getRoleByAccountId($account['account_id']);
                 $_SESSION["account_id"] = $account['account_id'];
+                $_SESSION["logged_in_account"] = $account;
+
                 // echo "role: ".$_SESSION["role_id"];
                 if($_SESSION["role_id"] == 5){
                     $url = "../Home/";
@@ -43,6 +45,17 @@
                     return;
                 }
             }
+        }
+
+        public function LogOut(){
+            unset($_SESSION["logged_in_customer"]);
+            unset($_SESSION["role_id"]);
+            unset($_SESSION["account_id"]);
+            unset($_SESSION["logged_in_account"]);
+
+            $url = "../Home/";
+            header("Location: ".$url);
+            return;
         }
 
         public function ForgotPassword(){
