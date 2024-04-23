@@ -105,12 +105,6 @@
     overflow-y:scroll;
 }
 
-.tab-content .products-tab{
-    display:flex;
-    flex-direction: column;
-    background-color: rgb(241, 241, 241);
-}
-
 .products-tab .title{
     font-size:15pt;
     text-align: center;

@@ -150,14 +150,25 @@
             
         }
         public function WarehouseManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
-                $this->view("internalManager", [
-                    "Page" => "WarehouseManager",
-                    "Title" => "Kho"
-                ]);
-            }else{
+            if(!isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
                 header('Location: ../SignIn/SayHi');
+            }   
+            
+            $uri = parse_url($_SERVER['REQUEST_URI']);
+
+            $urlParams = null;
+            if(isset($uri["query"])){            
+                parse_str(urldecode($uri["query"]),$urlParams);
             }
+            unset($uri);
+
+
+
+            $this->view("internalManager", [
+                "Page" => "WarehouseManager",
+                "Title" => "Kho",
+                "urlParams"=>$urlParams
+            ]);
         }
         public function ImportManager(){
             if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){

@@ -463,7 +463,7 @@
   padding-left: 20px;
   display: flex;
   
-  background-color: var(--soft-panel-color-1);
+  background-color: white;
 }
 
 .user-review-section .submit-review-wrapper .submit-button{

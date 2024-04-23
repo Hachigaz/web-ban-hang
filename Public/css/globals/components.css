@@ -3,8 +3,11 @@
         display:flex;
         flex-direction: row;
     }
-    .two-subpanels .subpanel{
-        width: 50%;
+    .two-subpanels .subpanel.left-panel{
+        width: 60%;
+    }
+    .two-subpanels .subpanel.right-panel{
+        width: 40%;
     }
 }
 
@@ -18,7 +21,9 @@
     }
 }
 
-
+.two-subpanels{
+    padding-top:30px; 
+}
 /* widgets */
 .widget-container{
     position: relative;

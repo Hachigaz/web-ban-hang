@@ -127,7 +127,11 @@
                 
                 $filePath = $filePath[0][$key];
                 if($filePath!=""){
-                    $deletePath = "./Public/img/products/$filePath";
+                    if($table=="accounts"){
+                        $deletePath = "./Public/img/$filePath";
+                    }else{
+                        $deletePath = "./Public/img/products/$filePath";
+                    }
                     if(file_exists($deletePath)){
                         unlink($deletePath);
                     }
@@ -138,7 +142,12 @@
                 
                 $fileNameSep = strrpos($imgPath, '/'); 
                 $imgDir = [substr($imgPath, 0, $fileNameSep),substr($imgPath, $fileNameSep + 1)];
-                $storePath = "./Public/img/products/".$imgDir[0]."/";
+                
+                if($table=="accounts"){
+                    $storePath = "./Public/img/".$imgDir[0]."/";
+                }else{
+                    $storePath = "./Public/img/products/".$imgDir[0]."/";
+                }
                 
                 $fileNameInfo = explode(".",$imgDir[1]);
                 if (!is_dir($storePath)) {
@@ -154,6 +163,7 @@
                 file_put_contents($storePath.$newPathDir, $imgData);
 
                 array_push($updateKeys,"$table.$key = '".$imgDir[0]."/$newPathDir'");
+                
 
                 unset($newPathDir);
                 unset($fileNameInfo);
@@ -227,6 +237,24 @@
 
         public function DeleteImage(){
 
+        }
+
+        public function RefreshSessionData(){
+            $accountID = $_SESSION["logged_in_account"]["account_id"];
+
+            $sql = "SELECT * FROM accounts where accounts.account_id = $accountID";
+            $account = $this->productService->productRepo->get($sql)[0];
+
+            $sql = "SELECT * FROM customers where customers.account_id = $accountID";
+            $customer = $this->productService->productRepo->get($sql)[0];
+
+            $_SESSION["logged_in_account"]=$account;
+            $_SESSION["logged_in_customer"]=$customer;
+
+            unset($accountID);
+            unset($sql);
+            unset($account);
+            unset($customer);
         }
     }
 ?>

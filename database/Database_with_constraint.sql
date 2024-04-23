@@ -30,6 +30,13 @@ CREATE TABLE `categories` (
   `is_active` tinyint(1) DEFAULT 1
 );
 
+CREATE TABLE `banners` (
+  `banner_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `image_path` varchar(512) DEFAULT '',
+  `url` varchar(512) DEFAULT '',
+  `is_active` tinyint(1) DEFAULT 1
+);
+
 CREATE TABLE `customers` (
   `customer_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `customer_fullname` varchar(100) NOT NULL DEFAULT '',
