@@ -1,6 +1,8 @@
 <?php
     class InternalManager extends Controller{
         public $internalManagerService;
+        public $exportService;
+        public $exportDetailService;
         public $productService;
         public $customerService;
         public $orderService;
@@ -9,6 +11,7 @@
         public $supplierService;
         public $accountService;
         public $decentralizationService;
+        public $orderDetailService;
         public $attendanceService;
         public $leaveApplicationService;
         public function __construct(){
@@ -20,7 +23,10 @@
             $this->roleService = $this->service("RoleService");
             $this->supplierService = $this->service("SupplierService");
             $this->accountService = $this->service("AccountService");
+            $this->exportService = $this->service("ExportService");
+            $this->exportDetailService = $this->service("ExportDetailService");
             $this->decentralizationService = $this->service("DecentralizationService");
+            $this->orderDetailService = $this->service("OrderDetailService");
             $this->attendanceService = $this->service("AttendanceService");
             $this->leaveApplicationService = $this->service("LeaveApplicationService");
         }
@@ -333,6 +339,43 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
         }
+        public function GetAllDataOrder(){
+            $cardValue = array(
+                "countPending" => $this->orderService->getQuantityOrderByStatus("Pending"),
+                "countProcessing" => $this->orderService->getQuantityOrderByStatus("Processing"),
+                "countShipped" => $this->orderService->getQuantityOrderByStatus("Shipped"),
+                "countDelivered"=> $this->orderService->getQuantityOrderByStatus("Delivered"),
+                "countCancelled" => $this->orderService->getQuantityOrderByStatus("Cancelled")
+            );
+            $infoOrder = $this->orderService->getInfoOrder();
+            $orders = $this->orderService->getOrder1();
+            $ordersdetails = $this->orderDetailService->GetOrderDetailByOrderId();
+            $productSku = $this->productService->getProductSku();
+            // echo var_dump($cardValue);
+            $data = array("cardValue" => $cardValue,"orders" => $orders,"infoOrder" => $infoOrder,"productSku" => $productSku,"orders_details"=> $ordersdetails);
+            //$data = array("cardValue" => $cardValue, "infoOrder" => $infoOrder,"orders" => $infoOrder1,"productSku" => $productSku);
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE);   
+        }
+        public function GetAllDataExport(){
+            $infoExport = $this->exportService->getInfoExport();
+            $exportsdetails = $this->exportDetailService->getExportDetailByExportId();
+            // $ordersdetails = $this->orderDetailService->GetOrderDetailByOrderId();
+            // $productSku = $this->productService->getProductSku();
+            // echo var_dump($cardValue);
+            $data = array("infoExport" => $infoExport,"exportsdetails" => $exportsdetails);
+            // $data = array("orders" => $orders,"infoExport" => $infoExport,"productSku" => $productSku,"orders_details"=> $ordersdetails);
+            //$data = array("cardValue" => $cardValue, "infoOrder" => $infoOrder,"orders" => $infoOrder1,"productSku" => $productSku);
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE);   
+        }
+        // public function getAllProductSku(){
+        //     $productSku = $this->productService->getProductSku();
+        //     // echo var_dump($cardValue);
+        //     $data = array( "productSku" => $productSku);
+        //     header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+        //     echo json_encode($data, JSON_UNESCAPED_UNICODE);   
+        // }
         public function GetAllDataAttendance(){
             $attendanceData = $this->attendanceService->getAllAttendance();
             $data = array("attendances" => $attendanceData);

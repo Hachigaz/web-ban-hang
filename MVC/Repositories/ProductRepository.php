@@ -4,9 +4,9 @@
                 $this->create("products", $product, "product_id");
             }
 
-            public function updateProduct($product, $id){// by id
-                $this->update("products", $product, "product_id = ".$id);
-            }
+            // public function updateProduct($product, $id){// by id
+            //     $this->update("products", $product, "product_id = ".$id);
+            // }
 
             public function deleteProduct($id){// by id
                 $this->delete("products", "product_id = ".$id);
@@ -46,6 +46,9 @@
 
             public function getQuantityAllProduct(){// lấy ra số lượng mặt hàng mà cửa hàng đang bán
                 return $this->getCountColumn("products", "product_id", "");
+            }
+            public function joinProductSku(){
+                return $this->joinTablesNotWhere("products", "skus","product_id");
             }
         }
     ?>

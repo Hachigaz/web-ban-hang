@@ -19,5 +19,8 @@
         public function GetExportById(){
             $this->exportService->GetExportById();
         }
+        public function getInfoExport(){
+            $this->exportService->getInfoExport();
+        }
     }
 ?>

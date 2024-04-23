@@ -5,7 +5,7 @@
         }
 
         public function updateShipment($shipment, $id){// by id
-            $this->update("shipments", $shipment, "shipment_id = ".$id);
+            $this->update("shipments", $shipment, "shipment_id = ".$id,"shipment_id");
         }
 
         public function deleteShipment($id){// by id

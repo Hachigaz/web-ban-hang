@@ -19,5 +19,8 @@
         public function GetOrderDetailById(){
             $this->orderDetailService->GetOrderDetailById();
         }
+        public function GetOrderDetailByOrderId(){
+            $this->orderDetailService->GetOrderDetailByOrderId();
+        }
     }
 ?>

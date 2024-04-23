@@ -19,5 +19,8 @@
         public function GetExportDetailById(){
             $this->exportDetailService->GetExportDetailById();
         }
+        public function GetExportDetailByExportId(){
+            $this->exportDetailService->GetExportDetailByExportId();
+        }
     }
 ?>
