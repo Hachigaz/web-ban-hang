@@ -20,6 +20,22 @@
             unset($productID);
         }
 
+        public function GetProductShipments(){
+            $productID = $_POST["product_id"];
+            $skuID = $_POST["sku_id"];
+            $sql = "SELECT imports.import_id, imports.import_date, shipments.shipment_id, shipments.quantity, shipments.remain
+                FROM imports join shipments on imports.import_id = shipments.import_id
+                WHERE shipments.product_id = $productID and shipments.sku_id = $skuID and shipments.is_active = '1' and shipments.remain > 0
+                ORDER BY imports.import_id;
+            ";
+
+            $resultData = $this->productService->productRepo->get($sql);
+            $importList = $resultData;
+            include("./MVC/Views/pages/Manager/WarehouseManager/importPrint.php");
+            unset($importList);
+            unset($productID);
+        }
+
         public function GetProductImages(){
             $productID = $_POST["product_id"];
             $sql = "SELECT product_images.product_image_id, product_images.product_id, product_images.image_url

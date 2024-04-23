@@ -33,7 +33,7 @@ function submitInfo(element){
                         message:"Số điện thoại không được để trống"
                     },
                     format:{
-                        pattern:/^[0-9]{6,20}$/,
+                        pattern:/^0[0-9]{9}$/,
                         message:"Số điện thoại không đúng định dạng"
                     }
                 }

@@ -100,7 +100,7 @@
                 <div class="row-element">
                     Hãng 
                 </div>
-                <div class="row-element">
+                <div class="row-element hidden">
                     Ngày chỉnh sửa
                 </div>
             </div>

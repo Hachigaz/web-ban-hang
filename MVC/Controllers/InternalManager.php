@@ -31,7 +31,7 @@
             $this->leaveApplicationService = $this->service("LeaveApplicationService");
         }
         public function HomeManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "HomeManager",
                     "Title" => "Trang chủ"
@@ -41,7 +41,7 @@
             }
         }
         public function AccountManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "AccountManager",
                     "Title" => "Tài khoản"
@@ -53,7 +53,7 @@
             
         }
         public function StaffManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "StaffManager",
                     "Title" => "Nhân viên"
@@ -64,7 +64,7 @@
             
         }
         public function CustomerManager(){
-            // if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            // if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
             //     $this->view("internalManager", [
             //         "Page" => "CustomerManager",
             //         "Title" => "Khách hàng"
@@ -79,7 +79,7 @@
             ]);
         }
         public function ProductManager(){
-            if(!isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(!isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) || $_SESSION["role_id"]==5){
                 header('Location: ../SignIn/SayHi');
             }   
             
@@ -91,7 +91,7 @@
             }
             unset($uri);
             
-            $resultProductList = $this->productService->GetFilteredProducts($urlParams, "" , "products.product_id ASC");
+            $resultProductList = $this->productService->GetFilteredProducts($urlParams,null, null, "" , "products.product_id ASC");
             $sql = "SELECT category_id,category_name
             FROM categories
             WHERE categories.is_active = '1'";
@@ -127,7 +127,7 @@
         public function GetMoreProducts(){
             $urlParams = $this->DecodeURL();
 
-            $resultProductList = $this->productService->GetFilteredProducts($urlParams, "", "products.product_id ASC");
+            $resultProductList = $this->productService->GetFilteredProducts($urlParams,"","", "", "products.product_id ASC");
 
             ob_start();
             $productList = $resultProductList["ProductList"];
@@ -145,7 +145,7 @@
         }
 
         public function SupplierManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "SupplierManager",
                     "Title" => "Nhà cung cấp"
@@ -156,7 +156,7 @@
             
         }
         public function WarehouseManager(){
-            if(!isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(!(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) || $_SESSION["role_id"]==5)){
                 header('Location: ../SignIn/SayHi');
             }   
             
@@ -168,16 +168,38 @@
             }
             unset($uri);
 
-
+            $productList = $this->productService->getFilteredProducts($urlParams,"products.product_id, products.product_name, categories.category_id, categories.category_name, brands.brand_id, brands.brand_name, skus.sku_id, skus.sku_code, skus.sku_name, IFNULL(SUM(shipments.remain),0) as total_remain","join skus on skus.product_id = products.product_id left outer join shipments on shipments.sku_id = skus.sku_id","","","skus.sku_id");
 
             $this->view("internalManager", [
                 "Page" => "WarehouseManager",
                 "Title" => "Kho",
+                "ProductList" => $productList,
                 "urlParams"=>$urlParams
             ]);
         }
+
+        public function GetMoreProductWarehouse(){
+            $urlParams = $this->DecodeURL();
+
+            $resultProductList = $this->productService->getFilteredProducts($urlParams,"products.product_id, products.product_name, categories.category_id, categories.category_name, brands.brand_id, brands.brand_name, skus.sku_id, skus.sku_code,  skus.sku_name, IFNULL(SUM(shipments.remain),0) as total_remain","join skus on skus.product_id = products.product_id left outer join shipments on shipments.sku_id = skus.sku_id","","","skus.sku_id");
+
+            ob_start();
+            $productList = $resultProductList["ProductList"];
+            include("./MVC/Views/Pages/Manager/WarehouseManager/ProductPrint.php");
+            $htmlData=ob_get_contents();
+            unset($productList); 
+            ob_end_clean();
+
+            $responseData = [
+                "ProductsHTML"=>$htmlData,
+                "StatusData"=>["IsLast"=>$resultProductList["IsLast"]]
+            ];
+            header('Content-Type: application/json');
+            echo json_encode($responseData);
+        }
+
         public function ImportManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "ImportManager",
                     "Title" => "Nhập hàng"
@@ -187,7 +209,7 @@
             }
         }
         public function ExportManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "ExportManager",
                     "Title" => "Xuất hàng"
@@ -197,7 +219,7 @@
             }
         }
         public function OrderManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "OrderManager",
                     "Title" => "Hóa đơn"
@@ -207,7 +229,7 @@
             }
         }
         public function SalaryManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "SalaryManager",
                     "Title" => "Lương"
@@ -217,7 +239,7 @@
             }
         }
         public function StatisticManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "StatisticManager",
                     "Title" => "Thống kê"
@@ -227,7 +249,7 @@
             }
         }
         public function DecentralizationManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "DecentralizationManager",
                     "Title" => "Phân quyền"
@@ -237,7 +259,7 @@
             }
         }
         public function LeaveApplicationManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "LeaveApplicationManager",
                     "Title" => "Đơn xin nghỉ"
@@ -247,10 +269,20 @@
             }
         }
         public function PersonalInfoManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "PersonalInfoManager",
                     "Title" => "Thông tin cá nhân"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
+        }
+        public function AdvertisementManager(){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
+                $this->view("internalManager", [
+                    "Page" => "AdvertisementManager",
+                    "Title" => "Quảng cáo"
                 ]);
             }else{
                 header('Location: ../SignIn/SayHi');
