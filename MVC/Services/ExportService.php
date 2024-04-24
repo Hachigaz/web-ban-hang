@@ -11,7 +11,10 @@
             $export = new ExportModel("4", "4");
             $this->exportRepo->createExport($export);
         }
-
+        public function createExport2(){//$exportDTO
+            $export = new ExportModel("4", "4");
+            $this->exportRepo->createExport($export);
+        }
         public function updateExport(){// by id (truyền DTO)
             $exportData = $this->exportRepo->getExportById("1");
             extract($exportData);// gán các giá trị cho các key tương ứng với các biến
@@ -30,7 +33,9 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->exportRepo->getAllExport(), JSON_UNESCAPED_UNICODE);
         }
-
+        public function getInfoExport(){
+            return $this->exportRepo->getAllExport();
+        }
         public function getExportById(){
             $id = "1";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json

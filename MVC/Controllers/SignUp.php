@@ -115,12 +115,21 @@
             }
             else{
                 $userData = $_SESSION["signup_user_data"];
-                $this->accountService->createAccount($userData["email"],$userData["password"]);
+
+                $sql = "
+                    INSERT INTO accounts(email,phone_number,password) VALUES ('".$userData["email"]."','".$userData["email"]."','".$userData["password"]."')
+                ";
+                $this->accountService->accountRepo->set($sql);
+                
+
                 $newAccount = $this->accountService->accountRepo->getAccountByEmail($userData["email"]);
                 
-                $newCustomer = new CustomerModel($newAccount["account_id"]);
-                $this->customerService->createCustomer($newCustomer);
 
+                $sql = "
+                    INSERT INTO customers(account_id) VALUES ('".$newAccount["account_id"]."')
+                ";
+                $this->accountService->accountRepo->set($sql);
+                
                 
                 unset($_SESSION["signup_user_data"]);
                 unset($_SESSION["verification_code"]); 

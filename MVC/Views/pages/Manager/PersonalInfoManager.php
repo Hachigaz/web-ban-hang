@@ -69,6 +69,7 @@
         </div> -->
     </div>
 </div>
+
 <div class="modal hide">
 <div class="modal-inner modal-add hide">
         <div class="modal-header">

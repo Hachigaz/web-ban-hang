@@ -72,7 +72,7 @@
     <div class="customer-table">
         <div class="table-header">
             <h2>Danh sách khách hàng</h2>
-            <!-- <button id="btn-export-excel">Xuất Excel</button> -->
+            <button id="btn-export-excel">Xuất Excel</button>
         </div>
         <table id="customer-table">
             <thead>

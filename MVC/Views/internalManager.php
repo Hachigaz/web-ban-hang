@@ -10,7 +10,7 @@
             href="../Public/img/logo/logo.png"
             type="image/x-icon"
         />
-        <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.2.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+        <!-- <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.2.0/uicons-regular-rounded/css/uicons-regular-rounded.css'> -->
         <?php echo '<link rel="stylesheet" href="../Public/css/pages/Manager/'.$data["Page"].'.css">' ?>
         <link rel="stylesheet" href="../Public/css/pages/Manager/internalManager.css" />
         
@@ -56,11 +56,11 @@
             sessionStorage.setItem('role_id', role_id);
             sessionStorage.setItem('account_id', account_id);
         </script>
-            <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js" integrity="sha512-w3u9q/DeneCSwUDjhiMNibTRh/1i/gScBVp2imNVAMCt6cUHIw6xzhzcPFIaL3Q1EbI2l+nu17q2aLJJLo4ZYg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  
-            <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>   -->
-        <?php echo '<script src="../Public/js/Manager/'.$data["Page"].'.js"></script>'?>
+            <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>  
+            <?php echo '<script src="../Public/js/Manager/'.$data["Page"].'.js"></script>'?>
         <script src="../Public/js/Manager/main.js"></script>
     </body>
 </html>

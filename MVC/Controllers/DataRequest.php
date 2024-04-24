@@ -20,6 +20,22 @@
             unset($productID);
         }
 
+        public function GetProductShipments(){
+            $productID = $_POST["product_id"];
+            $skuID = $_POST["sku_id"];
+            $sql = "SELECT imports.import_id, imports.import_date, shipments.shipment_id, shipments.quantity, shipments.remain
+                FROM imports join shipments on imports.import_id = shipments.import_id
+                WHERE shipments.product_id = $productID and shipments.sku_id = $skuID and shipments.is_active = '1' and shipments.remain > 0
+                ORDER BY imports.import_id;
+            ";
+
+            $resultData = $this->productService->productRepo->get($sql);
+            $importList = $resultData;
+            include("./MVC/Views/pages/Manager/WarehouseManager/importPrint.php");
+            unset($importList);
+            unset($productID);
+        }
+
         public function GetProductImages(){
             $productID = $_POST["product_id"];
             $sql = "SELECT product_images.product_image_id, product_images.product_id, product_images.image_url
@@ -127,7 +143,11 @@
                 
                 $filePath = $filePath[0][$key];
                 if($filePath!=""){
-                    $deletePath = "./Public/img/products/$filePath";
+                    if($table=="accounts"){
+                        $deletePath = "./Public/img/$filePath";
+                    }else{
+                        $deletePath = "./Public/img/products/$filePath";
+                    }
                     if(file_exists($deletePath)){
                         unlink($deletePath);
                     }
@@ -138,7 +158,12 @@
                 
                 $fileNameSep = strrpos($imgPath, '/'); 
                 $imgDir = [substr($imgPath, 0, $fileNameSep),substr($imgPath, $fileNameSep + 1)];
-                $storePath = "./Public/img/products/".$imgDir[0]."/";
+                
+                if($table=="accounts"){
+                    $storePath = "./Public/img/".$imgDir[0]."/";
+                }else{
+                    $storePath = "./Public/img/products/".$imgDir[0]."/";
+                }
                 
                 $fileNameInfo = explode(".",$imgDir[1]);
                 if (!is_dir($storePath)) {
@@ -154,6 +179,7 @@
                 file_put_contents($storePath.$newPathDir, $imgData);
 
                 array_push($updateKeys,"$table.$key = '".$imgDir[0]."/$newPathDir'");
+                
 
                 unset($newPathDir);
                 unset($fileNameInfo);
@@ -227,6 +253,24 @@
 
         public function DeleteImage(){
 
+        }
+
+        public function RefreshSessionData(){
+            $accountID = $_SESSION["logged_in_account"]["account_id"];
+
+            $sql = "SELECT * FROM accounts where accounts.account_id = $accountID";
+            $account = $this->productService->productRepo->get($sql)[0];
+
+            $sql = "SELECT * FROM customers where customers.account_id = $accountID";
+            $customer = $this->productService->productRepo->get($sql)[0];
+
+            $_SESSION["logged_in_account"]=$account;
+            $_SESSION["logged_in_customer"]=$customer;
+
+            unset($accountID);
+            unset($sql);
+            unset($account);
+            unset($customer);
         }
     }
 ?>

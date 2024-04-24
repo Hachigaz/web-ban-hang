@@ -36,5 +36,8 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->exportDetailRepo->getExportDetailById($id), JSON_UNESCAPED_UNICODE);
         }
+        public function GetExportDetailByExportId(){
+            return $this->exportDetailRepo->getDetails();
+        }
     }
 ?>

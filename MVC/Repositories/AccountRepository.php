@@ -72,6 +72,10 @@
             public function joinAccountStaff($email){
                 return $this->joinTables("accounts", "staffs", "account_id", "");
             }
+
+            public function joinAccountStaffCustomer(){
+                return $this->getAccountStaffCustomer();
+            }
             
             public function getRoleByAccountId($account_id){
                 return $this->unionTables("customers", "staffs", "role_id", "account_id = ".$account_id, "account_id = ".$account_id)[0]["role_id"];

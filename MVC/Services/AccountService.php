@@ -29,14 +29,17 @@
             $this->accountRepo->updateAccount($account, "9");
         }
 
-        public function deleteAccount(){
-            $id = "9";
+        public function deleteAccount($id){
             $this->accountRepo->deleteAccount($id);
         }
 
         public function getAllAccount(){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             return json_encode($this->accountRepo->getAllAccount(), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function getAccountStaffCustomer(){
+            return $this->accountRepo->joinAccountStaffCustomer();
         }
 
         public function getAccountById($id){

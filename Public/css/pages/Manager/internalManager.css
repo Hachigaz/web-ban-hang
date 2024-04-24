@@ -145,6 +145,7 @@ body {
     font-size: 45px;
     font-weight: 700;
     color: var(--primary-color-blue);
+    margin-left: 120px;
 }
 .user-info{
     display: flex;
@@ -182,7 +183,7 @@ body {
         left: 80px;
     }
     .topbar .title {
-        padding-left: 30px;
+        margin-left: 190px;
     }
     .toggle {
         display: none;
@@ -199,6 +200,9 @@ body {
     }
     .toggle {
         display: none;
+    }
+    .topbar .title{
+        margin: 0;
     }
 }
 @media (max-width: 480px) {

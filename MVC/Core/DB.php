@@ -3,9 +3,8 @@
         public $con;
         protected $servername = "localhost";
         protected $username = "root";
-        protected $password = "Abc12345";
-        protected $dbname = "electronic_supermarket";
-
+        protected $password = "";
+        protected $dbname = "do_an_electronic_supermarket_test";
 
         function __construct(){
             $this->con = mysqli_connect($this->servername, $this->username, $this->password);
@@ -114,6 +113,15 @@
             }
             return $rows;
         }
+        public function joinTablesNotwhere($table1, $table2, $commonField){
+            $sql = "SELECT * FROM $table1 JOIN $table2 ON $table1.$commonField = $table2.$commonField ";
+            $result = mysqli_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
+        }
 
         public function join3Tables($table1, $table2, $table3, $on1, $on2, $where){
             $sql = "SELECT * 
@@ -128,11 +136,41 @@
             }
             return $rows;
         }
+        public function join3TablesNotWhere($table1, $table2, $table3, $on1, $on2){
+            $sql = "SELECT * 
+            FROM $table1 
+            JOIN $table2 ON $on1 
+            JOIN $table3 ON $on2 ";
+            $result = mysqli_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
+        }
 
 
         public function getAllByWhere($table, $where) {// lấy ra các bản ghi thỏa điều kiện đầy đủ thuộc tính (chi lay ra is_active = 1)
             $is_active = "is_active";
             $sql = "SELECT * FROM $table WHERE $where AND $is_active = '1'";// ở đây ghi rõ tên cột id
+            $result = mysqli_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
+        }
+        public function getAllByWhere2($table, $where) {
+            $sql = "SELECT * FROM $table WHERE $where";
+            $result = mysqli_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()) {
+                $rows[] = $row;
+            }
+            return $rows;
+        }
+        public function getAllByWhere1($table, $where) {// lấy ra các bản ghi thỏa điều kiện đầy đủ thuộc tính (chi lay ra is_active = 1)
+            $sql = "SELECT * FROM $table WHERE $where ";// ở đây ghi rõ tên cột id
             $result = mysqli_query($this->con, $sql);
             $rows = array();
             while ($row = $result->fetch_assoc()){
@@ -261,6 +299,28 @@
             }
             return $rows;
         }
+
+        //
+        public function getAccountStaffCustomer(){
+            $sql = "SELECT accounts.account_id, accounts.phone_number, accounts.email, staffs.staff_fullname as name, staffs.staff_id as id, staffs.role_id, roles.role_name, accounts.created_at, accounts.updated_at, accounts.is_active
+                    FROM accounts
+                    JOIN staffs ON accounts.account_id = staffs.account_id
+                    JOIN roles ON roles.role_id = staffs.role_id
+                    WHERE staffs.is_active = '1'
+                    UNION
+                    SELECT accounts.account_id, accounts.phone_number, accounts.email, customers.customer_fullname, customers.customer_id, customers.role_id, roles.role_name, accounts.created_at, accounts.updated_at, accounts.is_active
+                    FROM accounts
+                    JOIN customers ON accounts.account_id = customers.account_id
+                    JOIN roles ON roles.role_id = customers.role_id
+                    WHERE customers.is_active = '1'";
+            $result = mysqli_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
+        }
+        //
 
         public function selectManyColumn($table, $columns, $where){
             $is_active = "is_active";

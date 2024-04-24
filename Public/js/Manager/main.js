@@ -12,6 +12,7 @@ var moduleArr = {
     10: "SalaryManager",
     11: "StatisticManager",
     12: "DecentralizationManager",
+    13: "AdvertisementManager"
 };
 var moduleName = {
     1: "Tài khoản",
@@ -26,6 +27,7 @@ var moduleName = {
     10: "Lương",
     11: "Thống kê",
     12: "Phân quyền",
+    13: "Quảng cáo"
 };
 var moduleIcon = {
     1: '<i class="fi fi-rr-circle-user"></i>',
@@ -40,6 +42,7 @@ var moduleIcon = {
     10: '<i class="fi fi-rr-payroll-calendar"></i>',
     11: '<i class="fi fi-rr-chart-histogram"></i>',
     12: '<i class="fi fi-rr-users-medical"></i>',
+    13: '<i class="fi fi-rr-screen"></i>'
 };
 const ulInNavigation = document.querySelector(".navigation ul");
 const customerBtn = document.querySelector(".customer-btn");

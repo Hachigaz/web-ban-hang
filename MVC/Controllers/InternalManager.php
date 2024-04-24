@@ -1,6 +1,8 @@
 <?php
     class InternalManager extends Controller{
         public $internalManagerService;
+        public $exportService;
+        public $exportDetailService;
         public $productService;
         public $customerService;
         public $orderService;
@@ -9,6 +11,7 @@
         public $supplierService;
         public $accountService;
         public $decentralizationService;
+        public $orderDetailService;
         public $attendanceService;
         public $leaveApplicationService;
         public function __construct(){
@@ -20,12 +23,15 @@
             $this->roleService = $this->service("RoleService");
             $this->supplierService = $this->service("SupplierService");
             $this->accountService = $this->service("AccountService");
+            $this->exportService = $this->service("ExportService");
+            $this->exportDetailService = $this->service("ExportDetailService");
             $this->decentralizationService = $this->service("DecentralizationService");
+            $this->orderDetailService = $this->service("OrderDetailService");
             $this->attendanceService = $this->service("AttendanceService");
             $this->leaveApplicationService = $this->service("LeaveApplicationService");
         }
         public function HomeManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "HomeManager",
                     "Title" => "Trang chủ"
@@ -35,7 +41,7 @@
             }
         }
         public function AccountManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "AccountManager",
                     "Title" => "Tài khoản"
@@ -47,7 +53,7 @@
             
         }
         public function StaffManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "StaffManager",
                     "Title" => "Nhân viên"
@@ -58,7 +64,7 @@
             
         }
         public function CustomerManager(){
-            // if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            // if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
             //     $this->view("internalManager", [
             //         "Page" => "CustomerManager",
             //         "Title" => "Khách hàng"
@@ -73,7 +79,7 @@
             ]);
         }
         public function ProductManager(){
-            if(!isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(!isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) || $_SESSION["role_id"]==5){
                 header('Location: ../SignIn/SayHi');
             }   
             
@@ -85,7 +91,7 @@
             }
             unset($uri);
             
-            $resultProductList = $this->productService->GetFilteredProducts($urlParams, "" , "products.product_id ASC");
+            $resultProductList = $this->productService->GetFilteredProducts($urlParams,null, null, "" , "products.product_id ASC");
             $sql = "SELECT category_id,category_name
             FROM categories
             WHERE categories.is_active = '1'";
@@ -121,7 +127,7 @@
         public function GetMoreProducts(){
             $urlParams = $this->DecodeURL();
 
-            $resultProductList = $this->productService->GetFilteredProducts($urlParams, "", "products.product_id ASC");
+            $resultProductList = $this->productService->GetFilteredProducts($urlParams,"","", "", "products.product_id ASC");
 
             ob_start();
             $productList = $resultProductList["ProductList"];
@@ -139,7 +145,7 @@
         }
 
         public function SupplierManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "SupplierManager",
                     "Title" => "Nhà cung cấp"
@@ -150,17 +156,50 @@
             
         }
         public function WarehouseManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
-                $this->view("internalManager", [
-                    "Page" => "WarehouseManager",
-                    "Title" => "Kho"
-                ]);
-            }else{
+            if(!(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) || $_SESSION["role_id"]==5)){
                 header('Location: ../SignIn/SayHi');
+            }   
+            
+            $uri = parse_url($_SERVER['REQUEST_URI']);
+
+            $urlParams = null;
+            if(isset($uri["query"])){            
+                parse_str(urldecode($uri["query"]),$urlParams);
             }
+            unset($uri);
+
+            $productList = $this->productService->getFilteredProducts($urlParams,"products.product_id, products.product_name, categories.category_id, categories.category_name, brands.brand_id, brands.brand_name, skus.sku_id, skus.sku_code, skus.sku_name, IFNULL(SUM(shipments.remain),0) as total_remain","join skus on skus.product_id = products.product_id left outer join shipments on shipments.sku_id = skus.sku_id","","","skus.sku_id");
+
+            $this->view("internalManager", [
+                "Page" => "WarehouseManager",
+                "Title" => "Kho",
+                "ProductList" => $productList,
+                "urlParams"=>$urlParams
+            ]);
         }
+
+        public function GetMoreProductWarehouse(){
+            $urlParams = $this->DecodeURL();
+
+            $resultProductList = $this->productService->getFilteredProducts($urlParams,"products.product_id, products.product_name, categories.category_id, categories.category_name, brands.brand_id, brands.brand_name, skus.sku_id, skus.sku_code,  skus.sku_name, IFNULL(SUM(shipments.remain),0) as total_remain","join skus on skus.product_id = products.product_id left outer join shipments on shipments.sku_id = skus.sku_id","","","skus.sku_id");
+
+            ob_start();
+            $productList = $resultProductList["ProductList"];
+            include("./MVC/Views/Pages/Manager/WarehouseManager/ProductPrint.php");
+            $htmlData=ob_get_contents();
+            unset($productList); 
+            ob_end_clean();
+
+            $responseData = [
+                "ProductsHTML"=>$htmlData,
+                "StatusData"=>["IsLast"=>$resultProductList["IsLast"]]
+            ];
+            header('Content-Type: application/json');
+            echo json_encode($responseData);
+        }
+
         public function ImportManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "ImportManager",
                     "Title" => "Nhập hàng"
@@ -170,7 +209,7 @@
             }
         }
         public function ExportManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "ExportManager",
                     "Title" => "Xuất hàng"
@@ -180,7 +219,7 @@
             }
         }
         public function OrderManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "OrderManager",
                     "Title" => "Hóa đơn"
@@ -190,7 +229,7 @@
             }
         }
         public function SalaryManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "SalaryManager",
                     "Title" => "Lương"
@@ -200,7 +239,7 @@
             }
         }
         public function StatisticManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "StatisticManager",
                     "Title" => "Thống kê"
@@ -210,7 +249,7 @@
             }
         }
         public function DecentralizationManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "DecentralizationManager",
                     "Title" => "Phân quyền"
@@ -220,7 +259,7 @@
             }
         }
         public function LeaveApplicationManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "LeaveApplicationManager",
                     "Title" => "Đơn xin nghỉ"
@@ -230,10 +269,23 @@
             }
         }
         public function PersonalInfoManager(){
-            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"])){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
                     "Page" => "PersonalInfoManager",
                     "Title" => "Thông tin cá nhân"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
+        }
+        public function AdvertisementManager(){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
+                $bannerList = $this->productService->productRepo->get("SELECT * FROM banners WHERE is_active = 1");
+
+                $this->view("internalManager", [
+                    "Page" => "AdvertisementManager",
+                    "Title" => "Quảng cáo",
+                    "BannerList" => $bannerList
                 ]);
             }else{
                 header('Location: ../SignIn/SayHi');
@@ -310,8 +362,14 @@
         }
 
         public function GetAllDataAccount(){
-            $infoAccount = $this->accountService->getAllAccount();
-            $data = array("infoSupplier" => $infoAccount);
+            $cardValue = array(
+                "countAllAccount" => "8",
+                "countStaffAccount" => "4",
+                "countCustomerAccount" => "4",
+                "countBlockedAccount" => "2"
+            );
+            $infoAccount = $this->accountService->getAccountStaffCustomer();
+            $data = array("cardValue" => $cardValue, "infoAccount" => $infoAccount);
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
         }
@@ -322,6 +380,43 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
         }
+        public function GetAllDataOrder(){
+            $cardValue = array(
+                "countPending" => $this->orderService->getQuantityOrderByStatus("Pending"),
+                "countProcessing" => $this->orderService->getQuantityOrderByStatus("Processing"),
+                "countShipped" => $this->orderService->getQuantityOrderByStatus("Shipped"),
+                "countDelivered"=> $this->orderService->getQuantityOrderByStatus("Delivered"),
+                "countCancelled" => $this->orderService->getQuantityOrderByStatus("Cancelled")
+            );
+            $infoOrder = $this->orderService->getInfoOrder();
+            $orders = $this->orderService->getOrder1();
+            $ordersdetails = $this->orderDetailService->GetOrderDetailByOrderId();
+            $productSku = $this->productService->getProductSku();
+            // echo var_dump($cardValue);
+            $data = array("cardValue" => $cardValue,"orders" => $orders,"infoOrder" => $infoOrder,"productSku" => $productSku,"orders_details"=> $ordersdetails);
+            //$data = array("cardValue" => $cardValue, "infoOrder" => $infoOrder,"orders" => $infoOrder1,"productSku" => $productSku);
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE);   
+        }
+        public function GetAllDataExport(){
+            $infoExport = $this->exportService->getInfoExport();
+            $exportsdetails = $this->exportDetailService->getExportDetailByExportId();
+            // $ordersdetails = $this->orderDetailService->GetOrderDetailByOrderId();
+            // $productSku = $this->productService->getProductSku();
+            // echo var_dump($cardValue);
+            $data = array("infoExport" => $infoExport,"exportsdetails" => $exportsdetails);
+            // $data = array("orders" => $orders,"infoExport" => $infoExport,"productSku" => $productSku,"orders_details"=> $ordersdetails);
+            //$data = array("cardValue" => $cardValue, "infoOrder" => $infoOrder,"orders" => $infoOrder1,"productSku" => $productSku);
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE);   
+        }
+        // public function getAllProductSku(){
+        //     $productSku = $this->productService->getProductSku();
+        //     // echo var_dump($cardValue);
+        //     $data = array( "productSku" => $productSku);
+        //     header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+        //     echo json_encode($data, JSON_UNESCAPED_UNICODE);   
+        // }
         public function GetAllDataAttendance(){
             $attendanceData = $this->attendanceService->getAllAttendance();
             $data = array("attendances" => $attendanceData);
