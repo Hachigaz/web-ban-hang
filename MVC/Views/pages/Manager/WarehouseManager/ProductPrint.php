@@ -1,8 +1,10 @@
-
 <?php foreach($productList as $product): ?>
 <div class="product-item row-element-display" onclick="fillSelectedData(this)">
-    <div class="row-element" attrib="product_id" value="<?= $product["product_id"]?>">
+    <div class="row-element hidden" attrib="product_id" value="<?= $product["product_id"]?>">
         <?= $product["product_id"] ?>
+    </div>
+    <div class="row-element hidden" attrib="sku_id" value="<?= $product["sku_id"]?>">
+        <?= $product["sku_id"] ?>
     </div>
     <div class="row-element" attrib="product_name"value="<?= $product["product_name"]?>">
         <?= $product["product_name"] ?>
@@ -13,11 +15,14 @@
     <div class="row-element" attrib="brand_name" value="<?= $product["brand_id"] ?>">
         <?= $product["brand_name"] ?>
     </div>
-    <div class="row-element" attrib="price" value="<?= $product["price"]?>">
-        <?= number_format($product["price"], 0, '.', ',') ?>₫
+    <div class="row-element" attrib="sku_code" value="<?= $product["sku_code"] ?>">
+        <?= $product["sku_code"] ?>
     </div>
-    <div class="row-element hidden" attrib="updated_at" value="<?= $product["updated_at"] ?>">
-        <?= $product["updated_at"] ?>
+    <div class="row-element" attrib="sku_name" value="<?= $product["sku_id"] ?>">
+        <?= $product["sku_name"] ?>
+    </div>
+    <div class="row-element" attrib="total_remain" value="<?= $product["total_remain"] ?>">
+        <?= $product["total_remain"] ?>
     </div>
     <div class="hidden">
         <?php 
@@ -30,9 +35,6 @@
         <?php 
             unset($thumbnail);
         ?>
-        <span attrib="average_rating" value="<?= $product["average_rating"]?>"></span>
-        <span attrib="guarantee" value="<?= $product["guarantee"]?>"></span>
-        <span attrib="description" value="<?= $product["description"]?>"></span>
     </div>
 </div>
 <?php endforeach; ?>

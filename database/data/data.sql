@@ -90,6 +90,7 @@ INSERT INTO `modules` (`module_id`, `module_name`, `is_active`) VALUES
 ('10', 'Lương', '1'),
 ('11', 'Thống kê', '1'),
 ('12', 'Phân quyền', '1');
+('13', 'Quảng cáo', '1');
 
 INSERT INTO `decentralizations` (`decentralization_id`, `role_id`, `module_id`, `is_active`) VALUES 
 ('1', '1', '1', '1'),-- admin
@@ -105,15 +106,17 @@ INSERT INTO `decentralizations` (`decentralization_id`, `role_id`, `module_id`, 
 ('11', '2', '9', '1'),
 ('12', '2', '10', '1'),
 ('13', '2', '11', '1'),
-('14', '3', '1', '1'),-- nhan vien ban hang
-('15', '3', '3', '1'),
-('16', '3', '4', '1'),
-('17', '3', '9', '1'),
-('18', '4', '4', '1'),-- nhan vien kho
-('19', '4', '5', '1'),
-('20', '4', '6', '1'),
-('21', '4', '7', '1'),
-('22', '4', '8', '1');
+('14', '2', '12', '1'),
+('15', '2', '13', '1'),
+('16', '3', '1', '1'),-- nhan vien ban hang
+('17', '3', '3', '1'),
+('18', '3', '4', '1'),
+('19', '3', '9', '1'),
+('20', '4', '4', '1'),-- nhan vien kho
+('21', '4', '5', '1'),
+('22', '4', '6', '1'),
+('23', '4', '7', '1'),
+('24', '4', '8', '1');
 
 INSERT INTO `products` (`product_id`, `product_name`, `brand_id`, `category_id`, `price`, `guarantee`, `thumbnail`, `description`, `created_at`, `updated_at`, `is_active`) VALUES 
 ('1', 'iPhone 15 Pro Max RAM 8GB/ROM 256GB', '1', '1', '34990000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
@@ -317,34 +320,68 @@ INSERT INTO products (product_id, product_name, brand_id, category_id, price, gu
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('87', 'Bàn phím Logitech Pebble Keys 2 K380S White ', '14', '8', '7200', '24', 'keyboard/2_32cbb3f99f4e460cb0dbb41ac19450d0_grande.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('88', 'Bàn Phím Bluetooth Logitech K380 Black ', '14', '8', '6090', '24', 'keyboard/hinh-1_8c2dd4e8724c4e6b80d6709e92a9f6e1_5f112479df724affa1ce4f649a40ad43_grande.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('1','42-TX', 'Titan xanh', '42');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('2','42-TD', 'Titan den', '42');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('3','42-TN', 'Titan tu nhien', '42');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('4','42-TW', 'Titan trang', '42');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('5','44-W', 'Trang', '44');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('6','44-XL', 'Xanh lá', '44');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('7','44-D', 'Đen', '44');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('8','44-T', 'Tím', '44');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('9','44-XD', 'Xanh dương', '44');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('10','44-R', 'Đỏ', '44');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('11','45-V', 'Vàng', '45');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('12','45-X', 'Xám', '45');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('13','45-D', 'Đen', '45');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('14','45-T', 'Tím', '45');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('15','46-W', 'Trang', '46');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('16','46-X', 'Xanh mint', '46');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('17','47-X', 'Xanh mint', '47');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('18','47-T', 'Tím', '47');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('19','47-G', 'Xám', '47');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('20','47-K', 'Kem', '47');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('21','48-W', 'Trang', '48');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('22','48-XL', 'Xanh lá', '48');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('23','48-D', 'Đen', '48');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('24','49-X', 'Xanh', '49');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('25','49-D', 'Đen', '49');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('26','49-T', 'Tím', '49');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('27','50-XL', 'Xanh lá', '50');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('28','50-D', 'Đen', '50');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('29','50-T', 'Tím', '50');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('30','52-D', 'Đen', '52');
-INSERT INTO skus (sku_id,sku_code, sku_name, product_id) VALUES ('31','52-XD', 'Xanh dương', '52');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TX', 'Titan xanh', '42');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TD', 'Titan den', '42');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TN', 'Titan tu nhien', '42');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TW', 'Titan trang', '42');
+
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-W', 'Trang', '44');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-XL', 'Xanh lá', '44');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-D', 'Đen', '44');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-T', 'Tím', '44');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-XD', 'Xanh dương', '44');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-R', 'Đỏ', '44');
+
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-V', 'Vàng', '45');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-X', 'Xám', '45');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-D', 'Đen', '45');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-T', 'Tím', '45');
+
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('46-W', 'Trang', '46');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('46-X', 'Xanh mint', '46');
+
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-X', 'Xanh mint', '47');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-T', 'Tím', '47');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-G', 'Xám', '47');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-K', 'Kem', '47');
+
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-W', 'Trang', '48');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-XL', 'Xanh lá', '48');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-D', 'Đen', '48');
+
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('49-X', 'Xanh', '49');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('49-D', 'Đen', '49');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('49-T', 'Tím', '49');
+
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-XL', 'Xanh lá', '50');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-D', 'Đen', '50');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-T', 'Tím', '50');
+
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-D', 'Đen', '52');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-XD', 'Xanh dương', '52');
+
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-128G-Y', '128GB - Vàng', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-256G-Y', '256GB - Vàng', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-128G-S', '128GB - Bạc', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-256G-S', '256GB - Bạc', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-128G-P', '128GB - Hồng', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-256G-P', '256GB - Hồng', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-128G-B', '128GB - Đen', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-256G-B', '256GB - Đen', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-128G-S', '128GB - Bạc', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-256G-S', '256GB - Bạc', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-128G-R', '128GB - Đỏ', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-256G-R', '256GB - Đỏ', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-128G-Y', '128GB - Vàng', '3');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-256G-Y', '256GB - Vàng', '3');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-128G-P', '128GB - Hồng', '3');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-256G-P', '256GB - Hồng', '3');
+
+INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('5-D', '5');
+INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('6-D', '6');
+INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('7-D', '7');
+INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('8-D', '8');
+
+
+INSERT INTO `electronic_supermarket`.`banners` (`image_path`, `url`, `banner_name`, `location`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'header_banner', 'home-header', '800', '300');
+INSERT INTO `electronic_supermarket`.`banners` (`image_path`, `url`, `banner_name`, `location`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'header-banner', 'home-header', '800', '300');

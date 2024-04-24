@@ -30,6 +30,37 @@ CREATE TABLE `categories` (
   `is_active` tinyint(1) DEFAULT 1
 );
 
+CREATE TABLE `banners` (
+  `banner_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `image_path` varchar(512) DEFAULT '',
+  `url` varchar(512) DEFAULT '',
+  `is_active` tinyint(1) DEFAULT 1
+);
+ALTER TABLE `electronic_supermarket`.`banners` 
+ADD COLUMN `banner_name` VARCHAR(256) NULL AFTER `is_active`,
+ADD COLUMN `width` INT NULL AFTER `banner_name`,
+ADD COLUMN `height` INT NULL AFTER `width`;
+ALTER TABLE `electronic_supermarket`.`banners` 
+CHANGE COLUMN `is_active` `is_active` TINYINT(1) NULL DEFAULT '1' AFTER `height`;
+ALTER TABLE `electronic_supermarket`.`banners` 
+ADD COLUMN `location` VARCHAR(64) NULL AFTER `banner_name`;
+
+CREATE TABLE `featured_products` (
+  `featured_id` INT NOT NULL AUTO_INCREMENT,
+  `product_id` INT NOT NULL,
+  `featured_row` INT NULL,
+  PRIMARY KEY (`featured_id`)
+);
+
+CREATE TABLE `electronic_supermarket`.`featured_products_rows` (
+  `row_id` INT NOT NULL AUTO_INCREMENT,
+  `row_name` VARCHAR(512) NULL,
+  `row_description` VARCHAR(2048) NULL,
+  `row_url` VARCHAR(512) NULL,
+  PRIMARY KEY (`row_id`)
+);
+
+
 CREATE TABLE `customers` (
   `customer_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `customer_fullname` varchar(100) NOT NULL DEFAULT '',
@@ -339,3 +370,6 @@ ALTER TABLE `product_details` ADD FOREIGN KEY (`shipment_id`) REFERENCES `shipme
 ALTER TABLE `noti` ADD FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`);
 
 ALTER TABLE `export_details` ADD FOREIGN KEY (`shipment_id`) REFERENCES `shipments` (`shipment_id`);
+
+ALTER TABLE `featured_products` ADD FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+ALTER TABLE `featured_products` ADD FOREIGN KEY (`featured_row`) REFERENCES `featured_products_rows` (`row_id`);

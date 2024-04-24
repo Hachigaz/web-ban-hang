@@ -164,7 +164,7 @@
                     $otherQueries = " products.brand_id = $contextValue";
                 }
                 
-                $resultProductList = $this->productService->GetFilteredProducts($urlParams,$otherQueries);
+                $resultProductList = $this->productService->GetFilteredProducts($urlParams,"","",$otherQueries);
                 $resultFilterElements = $this->ProcessFilterOptions($urlParams);
                 $priceRangeValue = $this->ProcessPriceRange($urlParams);
 

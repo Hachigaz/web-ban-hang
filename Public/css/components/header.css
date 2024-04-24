@@ -1,6 +1,6 @@
 .header {
     margin: 0 auto; /*Căng giữa header*/
-    max-width: 1200px; /*Hỗ trợ responsivce*/
+    max-width: 70%; /*Hỗ trợ responsivce*/
     height:100px;
 }
 .header .wrapper-components {
@@ -10,14 +10,20 @@
     width: 100%;
     height: 100px;
     padding-inline: 15px;
+    gap:30px;
 }
-.header .wrapper-components div {
+.header .wrapper-components div.header-component,
+.header .wrapper-components a.header-component {
     height: 80%;
 }
+
+.header .wrapper-components a{
+    cursor: pointer!important;
+}
+
 .header .wrapper-components .logo {
     display: flex;
     align-items: center;
-    width: 200px;
 }
 .header .wrapper-components .logo img {
     height: 100%;
@@ -102,7 +108,7 @@
     height: 40px;
 }
 .header .wrapper-components .profile .avatar img {
-    border-radius: 12px;
+    border-radius: 100%;
 }
 .header .wrapper-components .profile button,
 .header .wrapper-components .profile a {
@@ -111,4 +117,11 @@
 .header .wrapper-components .profile i {
     font-size: 23px;
     color: #666;
+}
+
+.header .wrapper-components .header-ref{
+    font-size: 15pt;
+    color:rgb(25, 96, 163);
+    display: flex;
+    align-items: center;
 }
