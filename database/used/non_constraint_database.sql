@@ -80,7 +80,7 @@ CREATE TABLE `modules` (
 
 CREATE TABLE `orders` (
   `order_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `staff_id` int(11) NOT NULL,
+  `staff_id` int(11)  NULL,
   `account_id` int(11) NOT NULL,
   `receiver_name` varchar(100) DEFAULT '' COMMENT 'Có thể giấu tên',
   `email_of_receiver` varchar(100) NOT NULL,

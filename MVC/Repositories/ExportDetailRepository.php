@@ -19,5 +19,8 @@
         public function getExportDetailById($id){
             return $this->getAllDontHaveIsActive("export_details", "export_detail_id = ".$id);
         }
+        public function getDetails(){
+            return $this->readDontHaveIsActive("export_details");
+        }
     }
 ?>

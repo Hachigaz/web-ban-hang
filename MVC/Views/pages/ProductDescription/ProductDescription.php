@@ -16,7 +16,7 @@
 
 <script src="../Public/scripts/ProductDescription/script.js"></script>
 <script src="../Public/scripts/ProductDescription/load.js" defer></script>
-
+<script src="../Public/scripts/Shopcart/script3.js"></script>
 <div class="body">
     <div class="product-info-panel">
         <div class="product-image-info-wrapper">
@@ -107,10 +107,10 @@
                     </div>
                     <div class="order-options no-user-select">
                         <?php if(isset($selectedSku)): ?>
-                            <div class="option-buy">
+                            <div class="option-buy" onclick="buyProduct()">
                                 Mua ngay
                             </div>
-                            <div class="option-add-to-cart">
+                            <div class="option-add-to-cart" onclick="addProductToCart()">
                                 Thêm vào giỏ hàng
                             </div>
                         <?php else: ?>

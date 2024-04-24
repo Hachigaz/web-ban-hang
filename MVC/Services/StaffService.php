@@ -121,5 +121,9 @@
         public function getInfoStaff(){
             return $this->staffRepo->joinStaffAccountRole();
         }
+
+        public function getInfoStaffById($account_id){
+            return $this->staffRepo->joinStaffAccountRoleById($account_id);
+        }
     }
 ?>

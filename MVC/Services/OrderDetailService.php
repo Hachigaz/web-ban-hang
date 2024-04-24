@@ -36,5 +36,8 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->orderDetailRepo->getOrderDetailById($id), JSON_UNESCAPED_UNICODE);
         }
+        public function GetOrderDetailByOrderId(){
+            return $this->orderDetailRepo->getDetails();
+        }
     }
 ?>

@@ -47,5 +47,8 @@
         public function GetBrandLogoByCategory($category_id){
             $this->productService->getBrandLogoByCategory($category_id);
         }
+        public function GetProductSku(){
+            $this->productService->GetProductSku();
+        }
     }
 ?>
