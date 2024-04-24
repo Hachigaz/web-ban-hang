@@ -52,7 +52,7 @@ CREATE TABLE `featured_products` (
   PRIMARY KEY (`featured_id`)
 );
 
-CREATE TABLE `electronic_supermarket`.`featured_products_rows` (
+CREATE TABLE `featured_products_rows` (
   `row_id` INT NOT NULL AUTO_INCREMENT,
   `row_name` VARCHAR(512) NULL,
   `row_description` VARCHAR(2048) NULL,
@@ -149,7 +149,7 @@ CREATE TABLE `products` (
   `created_at` datetime DEFAULT (now()),
   `updated_at` datetime DEFAULT (now()),
   `average_rating` float DEFAULT 0,
-  `total_reviews` float DEAFULT 0,
+  `total_reviews` float DEFAULT 0,
   `is_active` tinyint(1) DEFAULT 1
 );
 

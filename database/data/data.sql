@@ -89,7 +89,7 @@ INSERT INTO `modules` (`module_id`, `module_name`, `is_active`) VALUES
 ('9', 'Hóa đơn', '1'),
 ('10', 'Lương', '1'),
 ('11', 'Thống kê', '1'),
-('12', 'Phân quyền', '1');
+('12', 'Phân quyền', '1'),
 ('13', 'Quảng cáo', '1');
 
 INSERT INTO `decentralizations` (`decentralization_id`, `role_id`, `module_id`, `is_active`) VALUES 
@@ -383,5 +383,5 @@ INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('7-D', '7');
 INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('8-D', '8');
 
 
-INSERT INTO `electronic_supermarket`.`banners` (`image_path`, `url`, `banner_name`, `location`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'header_banner', 'home-header', '800', '300');
-INSERT INTO `electronic_supermarket`.`banners` (`image_path`, `url`, `banner_name`, `location`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'header-banner', 'home-header', '800', '300');
+INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'header_banner', 'home-header', '800', '300');
+INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'header-banner', 'home-header', '800', '300');
