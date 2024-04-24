@@ -10,11 +10,11 @@
     <div class="row-element" attrib="category_name" value="<?= $product["category_id"]?>">
         <?= $product["category_name"] ?>
     </div>
-    <div class="row-element" attrib="price" value="<?= $product["price"]?>">
-        <?= number_format($product["price"], 0, '.', ',') ?>₫
-    </div>
     <div class="row-element" attrib="brand_name" value="<?= $product["brand_id"] ?>">
         <?= $product["brand_name"] ?>
+    </div>
+    <div class="row-element" attrib="price" value="<?= $product["price"]?>">
+        <?= number_format($product["price"], 0, '.', ',') ?>₫
     </div>
     <div class="row-element hidden" attrib="updated_at" value="<?= $product["updated_at"] ?>">
         <?= $product["updated_at"] ?>

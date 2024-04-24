@@ -92,13 +92,13 @@
                     Tên sản phẩm 
                 </div>
                 <div class="row-element">
-                    Giá
-                </div>
-                <div class="row-element">
                     Loại
                 </div>
                 <div class="row-element">
                     Hãng 
+                </div>
+                <div class="row-element">
+                    Giá
                 </div>
                 <div class="row-element hidden">
                     Ngày chỉnh sửa

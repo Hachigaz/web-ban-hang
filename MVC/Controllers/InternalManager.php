@@ -280,9 +280,12 @@
         }
         public function AdvertisementManager(){
             if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
+                $bannerList = $this->productService->productRepo->get("SELECT * FROM banners WHERE is_active = 1");
+
                 $this->view("internalManager", [
                     "Page" => "AdvertisementManager",
-                    "Title" => "Quảng cáo"
+                    "Title" => "Quảng cáo",
+                    "BannerList" => $bannerList
                 ]);
             }else{
                 header('Location: ../SignIn/SayHi');

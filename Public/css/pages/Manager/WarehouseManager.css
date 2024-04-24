@@ -305,6 +305,16 @@
 .product-info-tab .tab-content-wrapper .product-info-list .row-element-display,
 .product-info-tab .tab-content-wrapper .row-element-display-header{
     display: grid;
-    padding-bottom:10px;
+    padding-left: 10px;
+    line-height: 1.4;
     grid-template-columns: 15% 35% 25% 25%;
+    height:3em;
+}
+
+.product-info-tab .tab-content-wrapper .row-element-display-header{
+    background-color: var(--soft-panel-color-1);
+}
+
+.product-info-tab .tab-content-wrapper .product-info-list .row-element-display:hover{
+    background-color: #c9c9c9;
 }

@@ -381,3 +381,7 @@ INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('5-D', '5');
 INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('6-D', '6');
 INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('7-D', '7');
 INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('8-D', '8');
+
+
+INSERT INTO `electronic_supermarket`.`banners` (`image_path`, `url`, `banner_name`, `location`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'header_banner', 'home-header', '800', '300');
+INSERT INTO `electronic_supermarket`.`banners` (`image_path`, `url`, `banner_name`, `location`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'header-banner', 'home-header', '800', '300');
