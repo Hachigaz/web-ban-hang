@@ -5,7 +5,7 @@
         }
 
         public function updateImport($import, $id){// by id
-            $this->update("imports", $import, "import_id = ".$id);
+            $this->update("imports", $import, "import_id = ".$id,"import_id");
         }
 
         public function deleteImport($id){// by id

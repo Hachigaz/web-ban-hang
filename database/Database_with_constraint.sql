@@ -219,7 +219,7 @@ CREATE TABLE `roles` (
 CREATE TABLE `shipments` (
   `shipment_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `import_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
+  `supplier_id` int(11) NOT NULL,
   `unit_price_import` decimal(20,2) DEFAULT 0 COMMENT 'Phải > 0',
   `quantity` int(50) DEFAULT 0 COMMENT 'Phải > giá trị tối thiểu của 1 lô hàng',
   `remain` int(50) DEFAULT 0 COMMENT 'Phải bé 1 số lượng cụ thể thì mới nhập thêm lô',
@@ -330,7 +330,7 @@ ALTER TABLE `products` ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`category_i
 
 ALTER TABLE `product_images` ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
-ALTER TABLE `shipments` ADD CONSTRAINT `shipments_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+ALTER TABLE `shipments` ADD CONSTRAINT `shipments_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`supplier_id`);
 
 ALTER TABLE `skus` ADD CONSTRAINT `skus_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
@@ -346,7 +346,9 @@ ALTER TABLE `shipments` ADD FOREIGN KEY (`sku_id`) REFERENCES `skus` (`sku_id`);
 
 ALTER TABLE `export_details` ADD FOREIGN KEY (`export_id`) REFERENCES `exports` (`export_id`);
 
-ALTER TABLE `export_details` ADD FOREIGN KEY (`export_detail_id`) REFERENCES `shipments` (`shipment_id`);
+-- ALTER TABLE `export_details` ADD FOREIGN KEY (`export_detail_id`) REFERENCES `shipments` (`shipment_id`);
+
+ALTER TABLE `export_details` ADD FOREIGN KEY (`shipment_id`) REFERENCES `shipments` (`shipment_id`);
 
 ALTER TABLE `likes` ADD FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
