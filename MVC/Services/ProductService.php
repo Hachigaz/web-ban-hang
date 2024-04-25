@@ -89,7 +89,7 @@
             return $this->productRepo->get($sqlQuery);
         }
         
-        public function GetFilteredProducts($urlParams, $otherQueries = "", $orderQueries = ""){
+        public function GetFilteredProducts($urlParams,$selectQueries = "",$fromQueries = "", $otherQueries = "", $orderQueries = "", $groupByQueries= ""){
             if($otherQueries!=""){
                 $otherQueries = " AND ".$otherQueries;
             }
@@ -144,27 +144,46 @@
                 else if($orderByValue=="price-desc"){
                     $orderByQueries.="products.price DESC,";
                 }
-                else if($orderByValue=="updated-at-desc"){
-                    $orderByQueries.="products.updated_at DESC,";
-                }
-                else if($orderByValue=="updated-at-asc"){
-                    $orderByQueries.="products.updated_at asc,";
-                }
+                // else if($orderByValue=="updated-at-desc"){
+                //     $orderByQueries.="products.updated_at DESC,";
+                // }
+                // else if($orderByValue=="updated-at-asc"){
+                //     $orderByQueries.="products.updated_at asc,";
+                // }
             }
             if($orderQueries!=""){
                 $orderQueries.=",";
             }
             
-            $sqlQuery = "SELECT products.product_id, products.product_name, products.description, categories.category_name, brands.brand_name, products.price, products.description, products.thumbnail, products.guarantee, products.average_rating, categories.category_id, brands.brand_id, products.created_at, products.updated_at
+            if($selectQueries == ""){
+                $selectQueries = "products.product_id, products.product_name, products.description, categories.category_name, brands.brand_name, products.price, products.description, products.thumbnail, products.guarantee, products.average_rating, categories.category_id, brands.brand_id, products.created_at, products.updated_at";
+            }
+            
+            if($fromQueries == ""){
+                $fromQueries = " ".$fromQueries;
+            }
+
+            if($groupByQueries!=""){
+                $groupByQueries = " GROUP BY $groupByQueries";
+            }
+
+            $sqlQuery = "SELECT $selectQueries 
             FROM products join brands on products.brand_id = brands.brand_id join categories on products.category_id = categories.category_id
-            WHERE products.is_active = 1 $filterQueries $searchQueries $priceRangeQueries $otherQueries
+            $fromQueries
+            WHERE products.is_active = 1 $filterQueries $searchQueries $priceRangeQueries 
+            $otherQueries
+            $groupByQueries
             ORDER BY $orderByQueries $orderQueries products.updated_at DESC
             LIMIT $indexCount,$queryCount";
             
+
             $resultList =  $this->GetProductsQuery($sqlQuery);
             unset($sqlQuery);
             unset($filterQueries);
             unset($searchQueries);
+            unset($selectQueries);
+            unset($groupByQueries);
+            unset($fromQueries);
             $isLast = true;
             if(count($resultList)==$queryCount){
                 $isLast = false;

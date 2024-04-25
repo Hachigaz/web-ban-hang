@@ -90,6 +90,7 @@ INSERT INTO `modules` (`module_id`, `module_name`, `is_active`) VALUES
 ('10', 'Lương', '1'),
 ('11', 'Thống kê', '1'),
 ('12', 'Phân quyền', '1');
+('13', 'Quảng cáo', '1');
 
 INSERT INTO `decentralizations` (`decentralization_id`, `role_id`, `module_id`, `is_active`) VALUES 
 ('1', '1', '1', '1'),-- admin
@@ -105,15 +106,17 @@ INSERT INTO `decentralizations` (`decentralization_id`, `role_id`, `module_id`, 
 ('11', '2', '9', '1'),
 ('12', '2', '10', '1'),
 ('13', '2', '11', '1'),
-('14', '3', '1', '1'),-- nhan vien ban hang
-('15', '3', '3', '1'),
-('16', '3', '4', '1'),
-('17', '3', '9', '1'),
-('18', '4', '4', '1'),-- nhan vien kho
-('19', '4', '5', '1'),
-('20', '4', '6', '1'),
-('21', '4', '7', '1'),
-('22', '4', '8', '1');
+('14', '2', '12', '1'),
+('15', '2', '13', '1'),
+('16', '3', '1', '1'),-- nhan vien ban hang
+('17', '3', '3', '1'),
+('18', '3', '4', '1'),
+('19', '3', '9', '1'),
+('20', '4', '4', '1'),-- nhan vien kho
+('21', '4', '5', '1'),
+('22', '4', '6', '1'),
+('23', '4', '7', '1'),
+('24', '4', '8', '1');
 
 INSERT INTO `products` (`product_id`, `product_name`, `brand_id`, `category_id`, `price`, `guarantee`, `thumbnail`, `description`, `created_at`, `updated_at`, `is_active`) VALUES 
 ('1', 'iPhone 15 Pro Max RAM 8GB/ROM 256GB', '1', '1', '34990000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
@@ -378,3 +381,7 @@ INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('5-D', '5');
 INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('6-D', '6');
 INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('7-D', '7');
 INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('8-D', '8');
+
+
+INSERT INTO `electronic_supermarket`.`banners` (`image_path`, `url`, `banner_name`, `location`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'header_banner', 'home-header', '800', '300');
+INSERT INTO `electronic_supermarket`.`banners` (`image_path`, `url`, `banner_name`, `location`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'header-banner', 'home-header', '800', '300');

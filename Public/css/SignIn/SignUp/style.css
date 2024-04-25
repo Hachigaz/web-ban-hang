@@ -137,7 +137,7 @@ div.body{
     color:rgb(117, 117, 117);
 }
 
-.sign-up-form-wrapper .sign-up-form input[type="submit"]
+.sign-up-form-wrapper .sign-up-form input[type="button"]
 {
     font-size: 13pt;
     background-color: #83badf;
@@ -145,7 +145,7 @@ div.body{
 }
 
 
-.sign-up-form-wrapper .sign-up-form input[type="submit"]:hover
+.sign-up-form-wrapper .sign-up-form input[type="button"]:hover
 {
     animation: button-transition;
     animation-duration: 0.3s;
@@ -153,7 +153,7 @@ div.body{
     color:white;
 }
 
-.sign-up-form-wrapper .sign-up-form input[type="submit"]:active
+.sign-up-form-wrapper .sign-up-form input[type="button"]:active
 {
     background-color: #236fc7;
     color:white;

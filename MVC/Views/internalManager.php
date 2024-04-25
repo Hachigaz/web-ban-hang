@@ -10,7 +10,7 @@
             href="../Public/img/logo/logo.png"
             type="image/x-icon"
         />
-        <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.2.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+        <!-- <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.2.0/uicons-regular-rounded/css/uicons-regular-rounded.css'> -->
         <?php echo '<link rel="stylesheet" href="../Public/css/pages/Manager/'.$data["Page"].'.css">' ?>
         <link rel="stylesheet" href="../Public/css/pages/Manager/internalManager.css" />
         
