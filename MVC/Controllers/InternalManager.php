@@ -2,6 +2,7 @@
     class InternalManager extends Controller{
         public $internalManagerService;
         public $exportService;
+        public $importService;
         public $exportDetailService;
         public $productService;
         public $customerService;
@@ -9,6 +10,7 @@
         public $staffService;
         public $roleService;
         public $supplierService;
+        public $shipmentService;
         public $accountService;
         public $decentralizationService;
         public $orderDetailService;
@@ -22,8 +24,10 @@
             $this->staffService = $this->service("StaffService");
             $this->roleService = $this->service("RoleService");
             $this->supplierService = $this->service("SupplierService");
+            $this->shipmentService = $this->service("ShipmentService");
             $this->accountService = $this->service("AccountService");
             $this->exportService = $this->service("ExportService");
+            $this->importService = $this->service("ImportService");
             $this->exportDetailService = $this->service("ExportDetailService");
             $this->decentralizationService = $this->service("DecentralizationService");
             $this->orderDetailService = $this->service("OrderDetailService");
@@ -349,12 +353,14 @@
         public function GetAllDataExport(){
             $infoExport = $this->exportService->getInfoExport();
             $exportsdetails = $this->exportDetailService->getExportDetailByExportId();
-            // $ordersdetails = $this->orderDetailService->GetOrderDetailByOrderId();
-            // $productSku = $this->productService->getProductSku();
-            // echo var_dump($cardValue);
             $data = array("infoExport" => $infoExport,"exportsdetails" => $exportsdetails);
-            // $data = array("orders" => $orders,"infoExport" => $infoExport,"productSku" => $productSku,"orders_details"=> $ordersdetails);
-            //$data = array("cardValue" => $cardValue, "infoOrder" => $infoOrder,"orders" => $infoOrder1,"productSku" => $productSku);
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE);   
+        }
+        public function GetAllDataImport(){
+            $infoImport = $this->importService->getInfoImport();
+            $shipments = $this->shipmentService->GetShipmentlByImportId();
+            $data = array("infoImport" => $infoImport,"shipments" => $shipments);
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE);   
         }

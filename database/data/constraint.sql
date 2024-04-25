@@ -540,3 +540,138 @@ END
 CREATE TRIGGER `reviews_AFTER_DELETE` AFTER DELETE ON `reviews` FOR EACH ROW BEGIN
 	update products set products.average_rating = (products.average_rating * products.total_reviews - old.rating)/ (products.total_reviews - 1 ), products.total_reviews = products.total_reviews - 1 where products.product_id = old.product_id;
 END
+
+DELIMITER //
+CREATE TRIGGER before_export_detail_insert
+AFTER INSERT ON export_details
+FOR EACH ROW
+BEGIN
+    DECLARE shipment_remain INT;
+    DECLARE shipment_quantity INT;
+    
+    -- Get the remaining quantity and total quantity of the shipment
+    SELECT remain, quantity INTO shipment_remain, shipment_quantity
+    FROM shipments
+    WHERE shipment_id = NEW.shipment_id;
+    
+    -- Check if there is enough remaining quantity in the shipment
+    IF shipment_remain >= NEW.quantity_export THEN
+        -- Update the remaining quantity in the shipment
+        UPDATE shipments
+        SET remain = shipment_remain - NEW.quantity_export
+        WHERE shipment_id = NEW.shipment_id;
+    ELSE
+        -- If there is not enough remaining quantity, prevent the insertion
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Not enough remaining quantity in the shipment';
+    END IF;
+END//
+DELIMITER ;
+-- DELIMITER //
+
+-- CREATE TRIGGER before_export_detail_insert1
+-- BEFORE INSERT ON export_details
+-- FOR EACH ROW
+-- BEGIN
+--     -- Get the unit price import of the corresponding shipment
+--     DECLARE shipment_unit_price_import DECIMAL(20, 2);
+--     SELECT unit_price_import INTO shipment_unit_price_import
+--     FROM shipments
+--     WHERE shipment_id = NEW.shipment_id;
+    
+--     -- Calculate the unit price export (50% higher than unit price import)
+--     SET NEW.unit_price_export = shipment_unit_price_import * 1.5;
+-- END;
+
+-- //
+
+-- DELIMITER ;
+
+
+DELIMITER //
+
+CREATE TRIGGER before_export_detail_insert
+BEFORE INSERT ON export_details
+FOR EACH ROW
+BEGIN
+    -- Calculate the unit price export (50% higher than unit price import)
+    SET NEW.unit_price_export = ROUND((SELECT unit_price_import * 1.5 FROM shipments WHERE shipment_id = NEW.shipment_id), 2);
+    
+    -- Check if there is enough remaining quantity in the shipment
+    SET @shipment_remain := (SELECT remain FROM shipments WHERE shipment_id = NEW.shipment_id);
+    SET @shipment_quantity := (SELECT quantity FROM shipments WHERE shipment_id = NEW.shipment_id);
+    
+    IF @shipment_remain < NEW.quantity_export THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Not enough remaining quantity in the shipment';
+    ELSE
+        -- Reduce the remaining quantity in the shipment
+        UPDATE shipments
+        SET remain = remain - NEW.quantity_export
+        WHERE shipment_id = NEW.shipment_id;
+    END IF;
+END;
+//
+
+DELIMITER ;
+
+
+
+DELIMITER //
+
+CREATE TRIGGER order_shipped_trigger
+AFTER UPDATE ON orders
+FOR EACH ROW
+BEGIN
+    DECLARE order_detail_id, sku_id, number_of_products INT;
+    DECLARE price DECIMAL(20, 2);
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE sku_remain INT; -- Move the declaration here
+    
+    DECLARE cur CURSOR FOR 
+        SELECT od.order_detail_id, od.sku_id, od.number_of_products, od.price
+        FROM order_details od
+        WHERE od.order_id = NEW.order_id;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    
+    IF OLD.status_of_order = 'Processing' AND NEW.status_of_order = 'Shipped' THEN
+        -- Insert into exports table
+        INSERT INTO exports (staff_id, order_id, export_date, total_price)
+        VALUES (NEW.staff_id, NEW.order_id, NOW(), NEW.total_money);
+        
+        -- Get the newly inserted export_id
+        SET @export_id := LAST_INSERT_ID();
+        
+        OPEN cur;
+        
+        read_loop: LOOP
+            FETCH cur INTO order_detail_id, sku_id, number_of_products, price;
+            IF done THEN
+                LEAVE read_loop;
+            END IF;
+            
+            -- Get the remaining quantity of the SKU
+            SELECT remain INTO sku_remain
+            FROM shipments
+            WHERE sku_id = sku_id
+            ORDER BY shipment_id ASC
+            LIMIT 1;
+            
+            -- Check if there is enough remaining quantity in the shipment
+            IF sku_remain >= number_of_products THEN
+                -- Insert into export_details table
+                INSERT INTO export_details (export_id, shipment_id, unit_price_export, quantity_export)
+                VALUES (@export_id, (SELECT shipment_id FROM shipments WHERE sku_id = sku_id LIMIT 1), price, number_of_products);
+            ELSE
+                SET @error_message = CONCAT('Not enough remaining quantity for SKU ', CAST(sku_id AS CHAR));
+                SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @error_message;
+            END IF;
+        END LOOP;
+        
+        CLOSE cur;
+    END IF;
+END;
+//
+
+DELIMITER ;
+

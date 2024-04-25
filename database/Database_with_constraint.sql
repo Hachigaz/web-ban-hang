@@ -118,7 +118,7 @@ CREATE TABLE `products` (
   `created_at` datetime DEFAULT (now()),
   `updated_at` datetime DEFAULT (now()),
   `average_rating` float DEFAULT 0,
-  `total_reviews` float DEAFULT 0,
+  `total_reviews` float DEFAULT 0,
   `is_active` tinyint(1) DEFAULT 1
 );
 
@@ -177,7 +177,7 @@ CREATE TABLE `roles` (
 CREATE TABLE `shipments` (
   `shipment_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `import_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
+  `supplier_id` int(11) NOT NULL,
   `unit_price_import` decimal(20,2) DEFAULT 0 COMMENT 'Phải > 0',
   `quantity` int(50) DEFAULT 0 COMMENT 'Phải > giá trị tối thiểu của 1 lô hàng',
   `remain` int(50) DEFAULT 0 COMMENT 'Phải bé 1 số lượng cụ thể thì mới nhập thêm lô',
@@ -288,7 +288,7 @@ ALTER TABLE `products` ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`category_i
 
 ALTER TABLE `product_images` ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
-ALTER TABLE `shipments` ADD CONSTRAINT `shipments_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+ALTER TABLE `shipments` ADD CONSTRAINT `shipments_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`supplier_id`);
 
 ALTER TABLE `skus` ADD CONSTRAINT `skus_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
@@ -304,7 +304,9 @@ ALTER TABLE `shipments` ADD FOREIGN KEY (`sku_id`) REFERENCES `skus` (`sku_id`);
 
 ALTER TABLE `export_details` ADD FOREIGN KEY (`export_id`) REFERENCES `exports` (`export_id`);
 
-ALTER TABLE `export_details` ADD FOREIGN KEY (`export_detail_id`) REFERENCES `shipments` (`shipment_id`);
+-- ALTER TABLE `export_details` ADD FOREIGN KEY (`export_detail_id`) REFERENCES `shipments` (`shipment_id`);
+
+ALTER TABLE `export_details` ADD FOREIGN KEY (`shipment_id`) REFERENCES `shipments` (`shipment_id`);
 
 ALTER TABLE `likes` ADD FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
@@ -339,3 +341,174 @@ ALTER TABLE `product_details` ADD FOREIGN KEY (`shipment_id`) REFERENCES `shipme
 ALTER TABLE `noti` ADD FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`);
 
 ALTER TABLE `export_details` ADD FOREIGN KEY (`shipment_id`) REFERENCES `shipments` (`shipment_id`);
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE reduce_shipment_remain(IN shipment_id_param INT, IN quantity_of_export_param INT)
+BEGIN
+    UPDATE shipments
+    SET remain = remain - quantity_of_export_param
+    WHERE shipment_id = shipment_id_param;
+END//
+
+CREATE TRIGGER create_export_details_trigger
+AFTER UPDATE ON orders
+FOR EACH ROW
+BEGIN
+    DECLARE order_detail_id, sku_id, number_of_products INT;
+    DECLARE price DECIMAL(20, 2);
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE shipment_id INT;
+    DECLARE quantity_of_export INT;
+    
+    DECLARE cur_order_detail CURSOR FOR 
+        SELECT od.order_detail_id, od.sku_id, od.number_of_products, od.price 
+        FROM order_details od 
+        WHERE od.order_id = NEW.order_id;
+    
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    
+    IF OLD.status_of_order = 'Processing' AND NEW.status_of_order = 'Shipped' THEN
+        -- Insert into exports table
+        INSERT INTO exports (staff_id, order_id, export_date, total_price)
+        VALUES (NEW.staff_id, NEW.order_id, NOW(), NEW.total_money);
+        
+        -- Get the newly inserted export_id
+        SET @export_id := LAST_INSERT_ID();
+        
+        -- Open the cursor for order details
+        OPEN cur_order_detail;
+        
+        read_order_detail_loop: LOOP
+            FETCH cur_order_detail INTO order_detail_id, sku_id, number_of_products, price;
+            IF done THEN
+                LEAVE read_order_detail_loop;
+            END IF;
+            
+            -- Get the remaining quantity of the SKU from shipments table
+            SELECT s.shipment_id, s.remain
+            INTO shipment_id, quantity_of_export
+            FROM shipments s
+            WHERE s.sku_id = sku_id AND s.remain >= number_of_products
+            ORDER BY s.shipment_id ASC
+            LIMIT 1;
+            
+            IF shipment_id IS NOT NULL THEN
+                -- Insert into export_details table
+                INSERT INTO export_details (export_id, shipment_id, unit_price_export, quantity_export)
+                VALUES (@export_id, shipment_id, price, number_of_products);
+                
+                -- Call procedure to reduce shipment remain
+                CALL reduce_shipment_remain(shipment_id, number_of_products);
+            ELSE
+                SET @error_message = CONCAT('Not enough remaining quantity for SKU ', CAST(sku_id AS CHAR));
+                SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @error_message;
+            END IF;
+        END LOOP;
+        
+        CLOSE cur_order_detail;
+    END IF;
+END;
+//
+
+DELIMITER ;
+
+
+DELIMITER //
+CREATE TRIGGER create_export_details_trigger
+AFTER UPDATE ON orders
+FOR EACH ROW
+BEGIN
+    DECLARE order_detail_id, sku_id, number_of_products INT;
+    DECLARE price DECIMAL(20, 2);
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE shipment_id INT;
+    DECLARE quantity_of_export INT;
+    DECLARE remaining_quantity_needed INT; -- New variable to track remaining quantity needed for each order detail
+    
+    DECLARE cur_order_detail CURSOR FOR 
+        SELECT od.order_detail_id, od.sku_id, od.number_of_products, od.price 
+        FROM order_details od 
+        WHERE od.order_id = NEW.order_id;
+    
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    
+    IF OLD.status_of_order = 'Processing' AND NEW.status_of_order = 'Shipped' THEN
+        -- Insert into exports table
+        INSERT INTO exports (staff_id, order_id, export_date, total_price)
+        VALUES (NEW.staff_id, NEW.order_id, NOW(), NEW.total_money);
+        
+        -- Get the newly inserted export_id
+        SET @export_id := LAST_INSERT_ID();
+        
+        -- Open the cursor for order details
+        OPEN cur_order_detail;
+        
+        read_order_detail_loop: LOOP
+            FETCH cur_order_detail INTO order_detail_id, sku_id, number_of_products, price;
+            IF done THEN
+                LEAVE read_order_detail_loop;
+            END IF;
+            
+            -- Initialize remaining quantity needed for the current order detail
+            SET remaining_quantity_needed := number_of_products;
+            
+            -- Open cursor for shipments
+            DECLARE cur_shipment CURSOR FOR 
+                SELECT s.shipment_id, s.remain
+                FROM shipments s
+                WHERE s.sku_id = sku_id AND s.remain > 0
+                ORDER BY s.shipment_id ASC;
+                
+            DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+            
+            -- Loop through shipments to fulfill the order detail
+            OPEN cur_shipment;
+            read_shipment_loop: LOOP
+                FETCH cur_shipment INTO shipment_id, quantity_of_export;
+                IF done THEN
+                    LEAVE read_shipment_loop;
+                END IF;
+                
+                -- Check if the shipment can fulfill the remaining quantity needed for the order detail
+                IF remaining_quantity_needed <= quantity_of_export THEN
+                    -- Insert into export_details table
+                    INSERT INTO export_details (export_id, shipment_id, unit_price_export, quantity_export)
+                    VALUES (@export_id, shipment_id, price, remaining_quantity_needed);
+                    
+                    -- Call procedure to reduce shipment remain
+                    CALL reduce_shipment_remain(shipment_id, remaining_quantity_needed);
+                    
+                    -- Update remaining quantity needed to zero as the order detail is fulfilled
+                    SET remaining_quantity_needed := 0;
+                    LEAVE read_shipment_loop; -- Exit the loop as the order detail is fulfilled
+                ELSE
+                    -- Insert into export_details table
+                    INSERT INTO export_details (export_id, shipment_id, unit_price_export, quantity_export)
+                    VALUES (@export_id, shipment_id, price, quantity_of_export);
+                    
+                    -- Call procedure to reduce shipment remain
+                    CALL reduce_shipment_remain(shipment_id, quantity_of_export);
+                    
+                    -- Update remaining quantity needed for the order detail
+                    SET remaining_quantity_needed := remaining_quantity_needed - quantity_of_export;
+                END IF;
+            END LOOP;
+            
+            CLOSE cur_shipment;
+            
+            -- If there's still remaining quantity needed, raise an error
+            IF remaining_quantity_needed > 0 THEN
+                SET @error_message = CONCAT('Not enough remaining quantity for SKU ', CAST(sku_id AS CHAR));
+                SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @error_message;
+            END IF;
+        END LOOP;
+        
+        CLOSE cur_order_detail;
+    END IF;
+END;
+DELIMITER ;
+
+

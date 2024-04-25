@@ -16,7 +16,7 @@
             $shipmentData = $this->shipmentRepo->getShipmentById("1");
             extract($shipmentData);// gán các giá trị cho các key tương ứng với các biến
             $shipment = new ShipmentModel(
-                $import_id, $product_id, "1000000", $quantity, $sku_id, $mfg, $exp, "4", $shipment_id, $is_active 
+                $import_id, $supplier_id, "1000000", $quantity, $sku_id, $mfg, $exp, "4", $shipment_id, $is_active 
             );
             $this->shipmentRepo->updateShipment($shipment, "1");
         }
@@ -35,6 +35,9 @@
             $id = "1";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->shipmentRepo->getShipmentById($id), JSON_UNESCAPED_UNICODE);
+        }
+        public function GetShipmentlByImportId(){
+            return $this->shipmentRepo->getDetails();
         }
     }
 ?>

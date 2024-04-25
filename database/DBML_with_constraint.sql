@@ -200,7 +200,7 @@ Table "roles" {
 Table "shipments" {
   "shipment_id" int(11) [pk, not null, increment]
   "import_id" int(11) [not null]
-  "product_id" int(11) [not null]
+  "supplier_id" int(11) [not null]
   "unit_price_import" decimal(10,2) [default: 0, note: "Phải > 0"]
   "quantity" int(50) [default: 0, note: "Phải > giá trị tối thiểu của 1 lô hàng"]
   "remain" int(50) [default: 0, note: "Phải bé 1 số lượng cụ thể thì mới nhập thêm lô"]
@@ -395,6 +395,7 @@ Ref: "customers"."customer_id" < "reviews"."customer_id"
 
 Ref: "product_details"."serial_number" - "guarantees"."serial_number"
 
+Ref: "imports"."supplier_id" - "suppliers"."supplier_id"
 
 Ref: "orders"."order_id" < "guarantees"."order_id"
 

@@ -19,5 +19,8 @@
         public function getShipmentById($id){
             return $this->getAllByWhere("shipments", "shipment_id = ".$id);
         }
+        public function getDetails(){
+            return $this->readDontHaveIsActive("shipments");
+        }
     }
 ?>
