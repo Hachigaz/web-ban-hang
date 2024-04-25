@@ -3,7 +3,7 @@
         public $con;
         protected $servername = "localhost";
         protected $username = "root";
-        protected $password = "Abc12345";
+        protected $password = "";
         protected $dbname = "shopping_web";
 
         function __construct(){
