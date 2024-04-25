@@ -15,8 +15,9 @@
         public function UpdateAccount(){
             $this->accountService->updateAccount();
         }
-        public function DeleteAccount(){
-            $this->accountService->deleteAccount();
+        public function DeleteAccount($id){
+            $this->accountService->deleteAccount($id);
+            header("location: ../../InternalManager/AccountManager");
         }
         public function GetAllAccount(){
             $this->accountService->getAllAccount();

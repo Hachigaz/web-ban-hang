@@ -427,8 +427,14 @@
         }
 
         public function GetAllDataAccount(){
-            $infoAccount = $this->accountService->getAllAccount();
-            $data = array("infoSupplier" => $infoAccount);
+            $cardValue = array(
+                "countAllAccount" => "8",
+                "countStaffAccount" => "4",
+                "countCustomerAccount" => "4",
+                "countBlockedAccount" => "2"
+            );
+            $infoAccount = $this->accountService->getAccountStaffCustomer();
+            $data = array("cardValue" => $cardValue, "infoAccount" => $infoAccount);
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
         }
