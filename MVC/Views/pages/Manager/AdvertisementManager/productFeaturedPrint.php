@@ -4,7 +4,7 @@
     ];
 ?>
 <?php foreach($productList as $product): ?>
-<div class="table-row no-user-select" draggable="true">
+<div class="table-row no-user-select" draggable="true" ondragstart="removeProductDragStart(event,this)" >
     <?php foreach($productDisplayInfo as $col): ?>
         <?php if(in_array($col,array_keys($product))): ?>
             <div class="row-element" attrib="<?= $col ?>" value="<?= $product["$col"] ?>">

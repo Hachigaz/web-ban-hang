@@ -7,7 +7,7 @@
     ];
 ?>
 <?php foreach($featuredRowList as $featuredRow): ?>
-<div class="table-row no-user-select" onclick="fillSelectedInfo('FeaturedProductsRows',this);showInfoPanel('featured-row-info-panel');getFeaturedProducts(this)">
+<div class="table-row no-user-select" onclick="fillSelectedInfo('FeaturedProductsRows',this);showInfoPanel('featured-row-info-panel');getFeaturedProducts(this);disableOptions('EditFeaturedProductsTable');disableOptions('EditFeaturedRowForm')">
     
     <?php foreach($featuredRowDisplayInfo as $col): ?>
         <?php if(array_search($col,array_keys($featuredRow))): ?>

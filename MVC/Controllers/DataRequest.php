@@ -145,6 +145,59 @@
             unset($table);
         }
 
+        public function updateFeaturedProducts(){
+            $featuredRow = $_POST["featured_row"];
+            $addProductIdList = json_decode($_POST["product_id_list"]);
+            
+            $sql = "SELECT product_id FROM featured_products WHERE featured_products.featured_row = $featuredRow";
+            $removeProductIdList = $this->productService->productRepo->get($sql);
+            $removeProductIdList = array_column($removeProductIdList,"product_id");
+
+            // echo(var_dump($addProductIdList));
+            // echo(var_dump($removeProductIdList));
+            $temp = $addProductIdList;
+            for ($i = 0; $i < count($temp); $i++){
+                $keyIndex = array_search($addProductIdList[$i],$removeProductIdList);
+                if(!($keyIndex===false)){
+                    unset($removeProductIdList[$keyIndex]);
+                    unset($addProductIdList[$i]);
+                }
+            }
+
+            // echo(var_dump($addProductIdList));
+            // echo(var_dump($removeProductIdList));
+
+            if(count($addProductIdList)>0){
+                $insertPairs = [];
+                foreach ($addProductIdList as $productID){
+                    array_push($insertPairs,"('$featuredRow','$productID')");   
+                }
+                // echo(var_dump($insertPairs));
+                $insertPairs = implode(",",$insertPairs);
+                $sql = "INSERT INTO featured_products(featured_row,product_id) VALUES$insertPairs";
+                // echo($sql);
+                $this->productService->productRepo->set($sql);
+                unset($insertPairs);
+                unset($sql);
+            }
+
+            if(count($removeProductIdList)>0){
+                $deletePairs = "(".implode(",",$removeProductIdList).")";
+                // echo(var_dump($deletePairs));
+                $sql = "DELETE FROM featured_products WHERE featured_row = $featuredRow and product_id in $deletePairs";
+                // echo($sql);
+
+                $this->productService->productRepo->set($sql);
+                unset($deletePairs);
+                unset($sql);
+            }
+            unset($addProductIdList);
+            unset($removeProductIdList);
+            unset($temp);
+
+            echo(json_encode(["status"=>"success"]));
+        }
+
         public function Update(){
             $table = $_POST["table"];
             $tableKey = $_POST["table_id"];

@@ -23,7 +23,7 @@
         <?php endif; ?>       
     <?php endforeach; ?>
     <?php foreach(array_keys($product) as $col): ?>
-        <?php if(in_array($col,$productDisplayInfo)): ?>
+        <?php if(!in_array($col,$productDisplayInfo)): ?>
             <div class="row-element hidden" attrib="<?= $col ?>" value="<?= $product["$col"] ?>">
                 <?= $product["$col"] ?>
             </div>

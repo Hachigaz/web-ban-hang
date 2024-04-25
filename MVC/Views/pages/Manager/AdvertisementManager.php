@@ -335,7 +335,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="table-wrapper draggable-products-table">
+                                <div class="table-wrapper draggable-products-table" ondrop="removeProductOnDrop(event,this)" ondragover="removeProductDragOver(event,this)" ondragleave="removeProductDragLeave(event,this)">
                                     <div class="table-row-header">
                                         <div class="row-element">
                                             Tên sản phẩm
@@ -438,7 +438,10 @@
                                         Danh sách sản phẩm
                                     </div>
                                     <div class="product-list-wrapper">
-                                        <div class="table-wrapper featured-products-rows-detail-table" ondrop="addProductOnDrop(event,this)" ondragover="addProductDragOver(event,this);addHighlight(this)" ondragleave="removeHighlight(this)">
+                                        <div class="expand-button" onclick="this.parentElement.querySelector('.table-wrapper').classList.toggle('expanded'); if(this.innerHTML != 'Thu nhỏ')this.innerHTML = 'Thu nhỏ'; else this.innerHTML = 'Mở rộng'">
+                                            Mở rộng
+                                        </div>
+                                        <div class="table-wrapper featured-products-rows-detail-table" ondrop="addProductOnDrop(event,this)" ondragover="addProductDragOver(event,this)" ondragleave="addProductDragLeave(event,this)">
                                             <div class="table-row-header">
                                                 <div class="row-element">
                                                     Tên sản phẩm
@@ -448,15 +451,10 @@
                                                 <div class="row-list">
                                                     
                                                 </div>
-                                                <!-- <?php if(!$data["BannerList"]["IsLast"]):?>
-                                                <div class="show-more-button no-user-select" onclick="showMoreBanners(this)">
-                                                    Xem thêm
-                                                </div>
-                                                <?php endif; ?>  -->
                                             </div>
                                         </div>
                                         <div class="product-list-options">
-                                            <div class="option" onclick="saveProductListChanges(this)">
+                                            <div class="option save-button disabled" onclick="saveProductListChanges(this)">
                                                 Lưu thay đổi
                                             </div>
                                         </div>

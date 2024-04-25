@@ -29,17 +29,8 @@
                 
             </div>
         </div>
-        <!-- <div class="featured-products-panel">
-            <?php 
-            function addFeaturedProductList($set_title,$set_index,$productList){
-                include('./MVC/Views/pages/Home/components/ItemList.php');                
-            }
-            $index = 0;
-            foreach ($data["ProductLists"] as $key => $productList){
-                addFeaturedProductList($key,$index,$productList);
-                $index++;
-            }
-            ?>
-        </div> -->
+        <div class="featured-products-panel">
+
+        </div>
     </div>
 </div>

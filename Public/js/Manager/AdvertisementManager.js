@@ -165,6 +165,9 @@ let formOptions = {
     "AddFeaturedRowForm":{
         "add":document.querySelector(".add-featured-row-info-panel .add-info-panel-form-options .add-button")
     },
+    "EditFeaturedProductsTable":{
+        "save":document.querySelector(".featured-rows-product-list-wrapper .save-button")
+    },
 }
 function enableOptions(formName){
     let formOption = formOptions[formName]
@@ -358,7 +361,7 @@ function addFeaturedRow(element){
             (new InputElement(formData["input"]["row_name"].parentElement.parentElement)).showError("Vui lòng nhập tên cho dòng trưng bày")
             return
         }
-        if(isNaN(rowIndex)){
+        if(isNaN(rowIndex)||rowIndex==""){
             (new InputElement(formData["input"]["index"].parentElement.parentElement)).showError("Vị trí phải là số")
             return
         }
@@ -407,7 +410,7 @@ function editFeaturedRow(element){
             (new InputElement(formData["input"]["row_name"].parentElement.parentElement)).showError("Vui lòng nhập tên cho dòng trưng bày")
             return
         }
-        if(isNaN(rowIndex)){
+        if(isNaN(rowIndex)||rowIndex==""){
             (new InputElement(formData["input"]["index"].parentElement.parentElement)).showError("Vị trí phải là số")
             return
         }
@@ -501,29 +504,97 @@ function getFeaturedProducts(element){
 let addProductTableElement = document.querySelector(".featured-products-manager-tab .featured-rows-product-list-wrapper .featured-products-rows-detail-table")
 let draggableProductTableElement = document.querySelector(".featured-products-manager-tab .draggable-products-table")
 function addProductDragStart(event,element){
+    
     let productID = getRowElementValue(element,"product_id")
+    let productName = getRowElementValue(element,"product_name")
 
-    event.dataTransfer.setData("product_id",event.target.id)
+    event.dataTransfer.setData("product_id",productID)
+    event.dataTransfer.setData("product_name",productName)
+    event.dataTransfer.setData("action","add")
+
+    
+    addHighlight(addProductTableElement)
 }
 
 function addProductDragOver(event,element){
     event.preventDefault()
 }
 
+function addProductDragLeave(event,element){
+    if(event.dataTransfer.getData("action")!="add"){
+        return
+    }
+
+    removeHighlight(element)
+}
+
 function addProductOnDrop(event,element){
     event.preventDefault()
+    
+    if(event.dataTransfer.getData("action")!="add"){
+        return
+    }
+
     removeHighlight(element)
+    let productID = event.dataTransfer.getData("product_id")
+    let productName = event.dataTransfer.getData("product_name")
 
     let rowElementHTML = `
-    <div class="table-row no-user-select" draggable="true">
-        <div class="row-element" attrib="product_name" value="Xiaomi Redmi Note 13 RAM 6GB/ROM 128GB">
-            Xiaomi Redmi Note 13 RAM 6GB/ROM 128GB            
+        <div class="table-row no-user-select" draggable="true" ondragstart="removeProductDragStart(event,this)">
+            <div class="row-element" attrib="product_name" value="${productName}">
+                ${productName}         
+            </div>
+            <div class="row-element hidden" attrib="product_id" value="${productID}">
+                ${productID}
+            </div>
         </div>
-        <div class="row-element hidden" attrib="product_id" value="3">
-            3            
-        </div>
-    </div>
     `
+
+    let rowListElement =  addProductTableElement.querySelector(".row-list")
+
+    let hasItem = false
+    idAttribs = rowListElement.querySelectorAll(".row-element[attrib='product_id']")
+
+
+    idAttribs.forEach((item)=>{
+        if(item.getAttribute("value")==productID){
+            hasItem=true
+        }
+    })
+    if(!hasItem){
+        rowListElement.innerHTML += rowElementHTML
+    }
+    enableOptions("EditFeaturedProductsTable")
+}
+
+let removeDraggedProduct = null
+function removeProductDragStart(event,element){
+    removeDraggedProduct = element
+    addHighlight(draggableProductTableElement)
+    event.dataTransfer.setData("action","remove")
+}
+
+function removeProductDragOver(event,element){
+    event.preventDefault()
+}
+
+function removeProductDragLeave(event,element){
+    if(event.dataTransfer.getData("action")!="remove"){
+        return
+    }
+
+    removeHighlight(element)
+}
+
+function removeProductOnDrop(event,element){
+    event.preventDefault()
+    
+    if(event.dataTransfer.getData("action")!="remove"){
+        return
+    }
+    enableOptions("EditFeaturedProductsTable")
+    removeHighlight(element)
+    removeDraggedProduct.remove()
 }
 
 function addHighlight(element){
@@ -537,5 +608,44 @@ function removeHighlight(element){
     if(element.isHighlighted){
         element.classList.remove("highlight")
         element.isHighlighted=false
+    }
+}
+
+
+
+function saveProductListChanges(element){
+    if(!element.classList.contains("disabled")){
+        let tableListElement = document.querySelector(".featured-products-manager-tab .featured-rows-product-list-wrapper .featured-products-rows-detail-table .row-list")
+        
+        let featuredRow = selectedDatas["FeaturedProductsRows"]["row_id"]
+
+        let productIdList = []
+        tableListElement.querySelectorAll(".row-element[attrib='product_id']").forEach((item)=>{
+            productIdList.push(item.getAttribute("value"))
+        })
+
+        let reqData = new FormData()
+        reqData.append("featured_row",featuredRow);
+        reqData.append("product_id_list",JSON.stringify(productIdList))
+        
+        
+        
+        let req = new XMLHttpRequest()
+        req.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+                let responseData = JSON.parse(this.responseText)
+                console.log(responseData)
+                if(responseData["status"]=="success"){
+                    window.location.reload()
+                }
+            }
+        };
+        req.open("POST", "../DataRequest/UpdateFeaturedProducts", true);
+        if(confirm("Xác nhận cập nhật"))
+            req.send(reqData);
+    }
+    else{
+        
     }
 }
