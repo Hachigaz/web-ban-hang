@@ -67,6 +67,21 @@
             unset($productID);
         }
 
+        public function GetFeaturedRowsData(){
+            $rowID = $_POST["row_id"];
+            $sql = "SELECT products.product_id, products.product_name
+                FROM products join featured_products on products.product_id = featured_products.product_id
+                WHERE featured_products.featured_row = $rowID;
+            ";
+
+            $resultData = $this->productService->productRepo->get($sql);
+            $productList = $resultData;
+
+            include("./MVC/Views/pages/Manager/AdvertisementManager/productFeaturedPrint.php");
+            unset($productList);
+            unset($rowID);
+        }
+
         public function Add(){
             $table = $_POST["table"];
 
@@ -74,7 +89,7 @@
             $arrayValues= [];
             foreach (array_keys($_POST) as $key){
                 if($key != "table"){
-                    array_push($arrayKeys,$key);
+                    array_push($arrayKeys,$table.".".$key);
                     array_push($arrayValues,"'".$_POST["$key"]."'");
                 }
             }
@@ -86,8 +101,16 @@
                 $fileNameSep = strrpos($imgPath, '/'); 
                 $imgDir = [substr($imgPath, 0, $fileNameSep),substr($imgPath, $fileNameSep + 1)];
 
-                $storePath = "./Public/img/products/".$imgDir[0]."/";
-                
+                if($table=="accounts"){
+                    $storePath = "./Public/img/".$imgDir[0]."/";
+                }
+                else if($table == "banners"){
+                    $storePath = "./Public/img/".$imgDir[0]."/";
+                }
+                else{
+                    $storePath = "./Public/img/products/".$imgDir[0]."/";    
+                }
+
                 $fileNameInfo = explode(".",$imgDir[1]);
                 if (!is_dir($storePath)) {
                     mkdir($storePath);
@@ -145,7 +168,11 @@
                 if($filePath!=""){
                     if($table=="accounts"){
                         $deletePath = "./Public/img/$filePath";
-                    }else{
+                    }
+                    else if($table == "banners"){
+                        $deletePath = "./Public/img/$filePath";
+                    }
+                    else{
                         $deletePath = "./Public/img/products/$filePath";
                     }
                     if(file_exists($deletePath)){
@@ -161,7 +188,11 @@
                 
                 if($table=="accounts"){
                     $storePath = "./Public/img/".$imgDir[0]."/";
-                }else{
+                }
+                else if($table == "banners"){
+                    $storePath = "./Public/img/".$imgDir[0]."/";
+                }
+                else{
                     $storePath = "./Public/img/products/".$imgDir[0]."/";
                 }
                 

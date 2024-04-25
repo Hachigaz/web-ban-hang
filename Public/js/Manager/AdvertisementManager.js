@@ -11,23 +11,23 @@ function showTab(element){
     document.querySelector(`.tab .tab-content .tab-content-wrapper.${tabName}`).classList.remove("hidden")
 }
 
-function showPanel(element){
-    let tabName = element.getAttribute('panel')
+function showPanel(tabName,element){
+    let panelName = element.getAttribute('panel')
     element.parentElement.querySelectorAll('.option').forEach((item)=>{
         item.classList.remove('selected')
     })
     element.classList.add("selected")
-
-    document.querySelectorAll(`.tab .tab-content .tab-content-wrapper .info-panel-wrapper .info-panel`).forEach((item)=>{
+    
+    document.querySelectorAll(`.tab .tab-content .${tabName}.tab-content-wrapper .info-panel-wrapper .info-panel`).forEach((item)=>{
         item.classList.add("hidden")
     })
-    document.querySelector(`.tab .tab-content .tab-content-wrapper .info-panel-wrapper .info-panel.${tabName}`).classList.remove("hidden")
+    document.querySelector(`.tab .tab-content .${tabName}.tab-content-wrapper .info-panel-wrapper .info-panel.${panelName}`).classList.remove("hidden")
 }
 
 
 let bannerFillInfos = [
     "banner_name",
-    "location",
+    "location_id",
     "url",
     "banner_id",
     "image_path"
@@ -35,15 +35,60 @@ let bannerFillInfos = [
 
 let bannerEditFormElements = {
     "input":{
-        "banner_name":document.querySelector(".info-panel-wrapper .info-panel-form-wrapper #input_banner_name input"),
-        "location":document.querySelector(".info-panel-wrapper .info-panel-form-wrapper #input_location input"),
-        "url":document.querySelector(".info-panel-wrapper .info-panel-form-wrapper #input_url input")
+        "banner_name":document.querySelector(".banner-manager-tab .info-panel-wrapper .banner-info-panel .info-panel-form-wrapper #input_banner_name input"),
+        "url":document.querySelector(".banner-manager-tab .info-panel-wrapper .banner-info-panel .info-panel-form-wrapper #input_url input")
+    },
+    "select_input":{
+        "location_id":document.querySelector(".banner-manager-tab .info-panel-wrapper .banner-info-panel .info-panel-form-wrapper #input_location select")
     },
     "image_input":{
         "image_path":{
-            "display_element":document.querySelector(".info-panel-wrapper .edit-image-wrapper img"),
-            "input_element":document.querySelector(".info-panel-wrapper .edit-image-wrapper input")
+            "display_element":document.querySelector(".banner-manager-tab .info-panel-wrapper .banner-info-panel .edit-image-wrapper img"),
+            "input_element":document.querySelector(".banner-manager-tab .info-panel-wrapper .banner-info-panel .edit-image-wrapper input")
         }
+    }
+}
+
+let bannerAddFormElements = {
+    "input":{
+        "banner_name":document.querySelector(".banner-manager-tab .info-panel-wrapper .add-banner-info-panel #input_banner_name input"),
+        "url":document.querySelector(".banner-manager-tab .info-panel-wrapper .add-banner-info-panel #input_url input")
+    },
+    "select_input":{
+        "location_id":document.querySelector(".banner-manager-tab .info-panel-wrapper .add-banner-info-panel #input_location select")
+    },
+    "image_input":{
+        "image_path":{
+            "display_element":document.querySelector(".banner-manager-tab .info-panel-wrapper .add-banner-info-panel .edit-image-wrapper img"),
+            "input_element":document.querySelector(".banner-manager-tab .info-panel-wrapper .add-banner-info-panel .edit-image-wrapper input")
+        }
+    }
+}
+
+
+let featuredProductsRowsFillInfos = [
+    "row_name",
+    "row_id",
+    "index",
+    "row_description",
+    "row_url"
+]
+
+let featuredProductsRowsEditFormElements = {
+    "input":{
+        "row_name":document.querySelector(".featured-products-manager-tab .info-panel-wrapper .featured-row-info-panel .info-panel-form-wrapper #input_row_name input"),
+        "row_description":document.querySelector(".featured-products-manager-tab .info-panel-wrapper .featured-row-info-panel .info-panel-form-wrapper #input_row_description textarea"),
+        "row_url":document.querySelector(".featured-products-manager-tab .info-panel-wrapper .featured-row-info-panel .info-panel-form-wrapper #input_row_url input"),
+        "index":document.querySelector(".featured-products-manager-tab .info-panel-wrapper .featured-row-info-panel .info-panel-form-wrapper #input_index input")
+    }
+}
+
+let featuredProductsRowsAddFormElements = {
+    "input":{
+        "row_name":document.querySelector(".featured-products-manager-tab .info-panel-wrapper .add-featured-row-info-panel #input_row_name input"),
+        "row_description":document.querySelector(".featured-products-manager-tab .info-panel-wrapper .add-featured-row-info-panel #input_row_description textarea"),
+        "row_url":document.querySelector(".featured-products-manager-tab .info-panel-wrapper .add-featured-row-info-panel #input_row_url input"),
+        "index":document.querySelector(".featured-products-manager-tab .info-panel-wrapper .add-featured-row-info-panel #input_index input")
     }
 }
     
@@ -52,6 +97,16 @@ let fillInfos = {
     "Banners":{
         "row_infos":bannerFillInfos,
         "edit_elements":bannerEditFormElements
+    },
+    "AddBanners":{
+        "edit_elements":bannerAddFormElements
+    },
+    "FeaturedProductsRows":{
+        "row_infos":featuredProductsRowsFillInfos,
+        "edit_elements":featuredProductsRowsEditFormElements
+    },
+    "AddFeaturedProductsRows":{
+        "edit_elements":featuredProductsRowsAddFormElements
     }
 }
 
@@ -59,7 +114,7 @@ let selectedDatas = {
     
 }
 
-function fillInfo(name,element){
+function fillSelectedInfo(name,element){
     if (element.parentElement.selectedRow){
         element.parentElement.selectedRow.classList.remove("selected")
     }
@@ -88,13 +143,28 @@ function fillInfo(name,element){
         displayElement = imageInputElements[index]["display_element"]
         displayElement.setAttribute('src',`../Public/img/${selectedDatas[name][index]}`)
     }
+
+    let selectInputElements = editElements["select_input"]
+    for(index in selectInputElements){
+        element = selectInputElements[index]
+        element.value = selectedDatas[`${name}`][index]
+    }
 }
 
 
 let formOptions = {
     "EditBannerForm":{
         "edit":document.querySelector(".info-panel-wrapper .banner-info-panel .info-panel-form-options .edit-button")
-    }
+    },
+    "AddBannerForm":{
+        "add":document.querySelector(".info-panel-wrapper .add-banner-info-panel .add-info-panel-form-options .add-button")
+    },
+    "EditFeaturedRowForm":{
+        "edit":document.querySelector(".featured-row-info-panel .info-panel-form-options .edit-button")
+    },
+    "AddFeaturedRowForm":{
+        "add":document.querySelector(".add-featured-row-info-panel .add-info-panel-form-options .add-button")
+    },
 }
 function enableOptions(formName){
     let formOption = formOptions[formName]
@@ -110,50 +180,111 @@ function disableOptions(formName){
     }
 }
 
-let isInfoPanelShown = false
-function showInfoPanel(){
-    if(!isInfoPanelShown){
-        document.querySelector(".tab-content .banner-info-panel .inital-panel").classList.add("hidden")
-        document.querySelector(".tab-content .banner-info-panel .after-panel").classList.remove("hidden")
-        isInfoPanelShown = true
+let isInfoPanelShown = []
+function showInfoPanel(infoPanelName){
+    if(!isInfoPanelShown[infoPanelName]){
+        document.querySelector(`.tab-content .${infoPanelName} .inital-panel`).classList.add("hidden")
+        document.querySelector(`.tab-content .${infoPanelName} .after-panel`).classList.remove("hidden")
+        isInfoPanelShown[infoPanelName] = true
     }
 }
 
-function editBanner(element){
-    if(isChanged && !element.classList.contains("disabled")){
-        let bannerData = selectedDatas["Banners"]["row-infos"]
-        let formData = selectedDatas["Banners"]["edit-elements"]
-        
-        let bannerID = bannerData["banner_id"]
-        let bannerName = formData["input"]["banner_name"]
-        let location = formData["input"]["location"]
-        let bannerURL = formData["input"]["url"]
+function changeImage(element){
+    let file = element.querySelector("input").files[0]
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+        let imgElement = element.querySelector("img")
+        imgElement.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+}
 
+function addBanner(element){
+    if(!element.classList.contains("disabled")){
+        let bannerData = selectedDatas["AddBanners"]
+        let formData = fillInfos["AddBanners"]["edit_elements"]
+        
+        
+        let bannerName = formData["input"]["banner_name"].value
+        let location = formData["select_input"]["location_id"].value
+        let bannerURL = formData["input"]["url"].value
+        
+        let bannerImage = formData["image_input"]["image_path"]["input_element"].files[0]
+        
         
         if(bannerName==""){
-            productNameElement.showError("Vui lòng nhập tên banner")
-            return
-        }
-
-        if(location==""){
-            descriptionElement.showError("Vui lòng nhập vị trí đặt banner")
+            (new InputElement(formData["input"]["banner_name"].parentElement.parentElement)).showError("Vui lòng nhập tên banner")
             return
         }
         
 
 
         let reqData = new FormData()
-        reqData.append("table","bannerss")
-        reqData.append("table_id","banner_id")
-        reqData.append("product_id",bannerID)
+        reqData.append("table","banners")
         reqData.append("banner_name",bannerName)
-        reqData.append("location",location)
+        reqData.append("location_id",location)
         reqData.append("url",bannerURL)
 
-        if(productImage){
-            let imgExtension = productImage.name.split(".")
-            let newImgPath = `${categoryID}/${imgExtension[imgExtension.length-2].trim().toLowerCase()}.${imgExtension[imgExtension.length-1]}`
-            reqData.append("thumbnail",productImage,newImgPath)
+
+        if(bannerImage){
+            let imgExtension = bannerImage.name.split(".")
+            let newImgPath = `banners/${imgExtension[imgExtension.length-2].trim().toLowerCase()}.${imgExtension[imgExtension.length-1]}`
+            reqData.append("image_path",bannerImage,newImgPath)
+        }
+        
+        let req = new XMLHttpRequest()
+        req.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+                let responseData = JSON.parse(this.responseText)
+                if(responseData["status"]=="success"){
+                    window.location.reload()
+                }
+            }
+        };
+        req.open("POST", "../DataRequest/Add", true);
+        req.send(reqData);
+    }
+    else{
+        
+    }
+}
+
+function editBanner(element){
+    if(!element.classList.contains("disabled")){
+        let bannerData = selectedDatas["Banners"]
+        let formData = fillInfos["Banners"]["edit_elements"]
+        
+        
+        let bannerID = bannerData["banner_id"]
+        let bannerName = formData["input"]["banner_name"].value
+        let location = formData["select_input"]["location_id"].value
+        let bannerURL = formData["input"]["url"].value
+
+
+        let bannerImage = formData["image_input"]["image_path"]["input_element"].files[0]
+        
+        if(bannerName==""){
+            (new InputElement(formData["input"]["banner_name"].parentElement.parentElement)).showError("Vui lòng nhập tên banner")
+            return
+        }
+        
+
+
+        let reqData = new FormData()
+        reqData.append("table","banners")
+        reqData.append("table_id","banner_id")
+        reqData.append("banner_id",bannerID)
+        reqData.append("banner_name",bannerName)
+        reqData.append("location_id",location)
+        reqData.append("url",bannerURL)
+
+        if(bannerImage){
+            let imgExtension = bannerImage.name.split(".")
+            let newImgPath = `banners/${imgExtension[imgExtension.length-2].trim().toLowerCase()}.${imgExtension[imgExtension.length-1]}`
+            reqData.append("image_path",bannerImage,newImgPath)
         }
         
         let req = new XMLHttpRequest()
@@ -175,26 +306,17 @@ function editBanner(element){
     }
 }
 
-function changeImage(element){
-    let file = element.querySelector("input").files[0]
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-        let imgElement = element.querySelector("img")
-        imgElement.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-}
-
-function removeProduct(element){
+function removeBanner(element){
     if(!element.classList.contains("disabled")){
-        let productID = productInfo["product_id"]
+        let bannerData = selectedDatas["Banners"]
+        
+        
+        let bannerID = bannerData["banner_id"]
         
         let reqData = new FormData()
-        reqData.append("table","products")
-        reqData.append("table_id","product_id")
-        reqData.append("product_id",productID)
+        reqData.append("table","banners")
+        reqData.append("table_id","banner_id")
+        reqData.append("banner_id",bannerID)
         
         
         
@@ -210,7 +332,7 @@ function removeProduct(element){
             }
         };
         req.open("POST", "../DataRequest/Delete", true);
-        if(confirm("Xác nhận xóa sản phẩm"))
+        if(confirm("Xác nhận xóa hình"))
             req.send(reqData);
     }
     else{
@@ -218,54 +340,38 @@ function removeProduct(element){
     }
 }
 
-function addProduct(element){
+
+
+function addFeaturedRow(element){
     if(!element.classList.contains("disabled")){
-        let infoPanelElement = document.querySelector(".add-products-tab .tab-content-wrapper")
-        let productNameElement = new InputElement(infoPanelElement.querySelector('.c-input#input-product-name'))
-        let productName = productNameElement.getInputValue()
-        let descriptionElement = new InputElement(infoPanelElement.querySelector(".c-input#input-description"))
-        let description = descriptionElement.getInputValue()
-
-        let categoryID = infoPanelElement.querySelector(".c-input#input-category-id select").value
-        let brandID =infoPanelElement.querySelector(".c-input#input-brand-id select").value
-
-        let price = infoPanelElement.querySelector(".c-input#input-price input").trueValue
-        let guarantee = infoPanelElement.querySelector(".c-input#input-guarantee input").trueValue
+        let formData = fillInfos["AddFeaturedProductsRows"]["edit_elements"]
         
-        let productImage = infoPanelElement.querySelector(".product-img-wrapper input").files[0]
         
-        if(productName==""){
-            productNameElement.showError("Tên sản phẩm không được để trống")
+        let rowName = formData["input"]["row_name"].value
+        let rowURL = formData["input"]["row_url"].value
+        let rowDescription = formData["input"]["row_description"].value
+        let rowIndex = formData["input"]["index"].value
+        
+        
+        
+        if(rowName==""){
+            (new InputElement(formData["input"]["row_name"].parentElement.parentElement)).showError("Vui lòng nhập tên cho dòng trưng bày")
             return
         }
-        if(description==""){
-            descriptionElement.showError("Mô tả không được để trống")
+        if(isNaN(rowIndex)){
+            (new InputElement(formData["input"]["index"].parentElement.parentElement)).showError("Vị trí phải là số")
             return
         }
-        if(!price){
-            (new InputElement(infoPanelElement.querySelector(".c-input#input-price"))).showError("Giá sản phẩm không được để trống")
-            return
-        }
-        if(!guarantee){
-            (new InputElement(infoPanelElement.querySelector(".c-input#input-guarantee"))).showError("Năm bảo hành phải lớn hơn 0")
-            return
-        }
+        
+
 
         let reqData = new FormData()
-        reqData.append("table","products")
-        reqData.append("product_name",productName)
-        reqData.append("category_id",categoryID)
-        reqData.append("brand_id",brandID)
-        reqData.append("description",description)
-        reqData.append("price",price)
-        reqData.append("guarantee",guarantee)
+        reqData.append("table","featured_products_rows")
+        reqData.append("row_name",rowName)
+        reqData.append("row_description",rowDescription)
+        reqData.append("row_url",rowURL)
+        reqData.append("index",rowIndex)
 
-        if(productImage){
-            let imgExtension = productImage.name.split(".")
-            let newImgPath = `${categoryID}/${imgExtension[imgExtension.length-2].trim().toLowerCase()}.${imgExtension[imgExtension.length-1]}`
-            reqData.append("thumbnail",productImage,newImgPath)
-        }
-        
         let req = new XMLHttpRequest()
         req.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -281,5 +387,155 @@ function addProduct(element){
     }
     else{
         
+    }
+}
+
+function editFeaturedRow(element){
+    if(!element.classList.contains("disabled")){
+        let rowData = selectedDatas["FeaturedProductsRows"]
+        let formData = fillInfos["FeaturedProductsRows"]["edit_elements"]
+        
+        let rowID = rowData["row_id"];
+        let rowName = formData["input"]["row_name"].value
+        let rowURL = formData["input"]["row_url"].value
+        let rowDescription = formData["input"]["row_description"].value
+        let rowIndex = formData["input"]["index"].value
+        
+        
+        
+        if(rowName==""){
+            (new InputElement(formData["input"]["row_name"].parentElement.parentElement)).showError("Vui lòng nhập tên cho dòng trưng bày")
+            return
+        }
+        if(isNaN(rowIndex)){
+            (new InputElement(formData["input"]["index"].parentElement.parentElement)).showError("Vị trí phải là số")
+            return
+        }
+        
+
+
+        let reqData = new FormData()
+        reqData.append("table","featured_products_rows")
+        reqData.append("table_id","row_id")
+        reqData.append("row_id",rowID)
+        reqData.append("row_name",rowName)
+        reqData.append("row_description",rowDescription)
+        reqData.append("row_url",rowURL)
+        reqData.append("index",rowIndex)
+        
+        
+        let req = new XMLHttpRequest()
+        req.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+                let responseData = JSON.parse(this.responseText)
+                console.log(responseData)
+                if(responseData["status"]=="success"){
+                    window.location.reload()
+                }
+            }
+        };
+        req.open("POST", "../DataRequest/Update", true);
+        req.send(reqData);
+    }
+    else{
+        
+    }
+}
+
+function removeFeaturedRow(element){
+    if(!element.classList.contains("disabled")){
+        let rowData = selectedDatas["FeaturedProductsRows"]
+        
+        
+        let rowID = rowData["row_id"]
+        
+        let reqData = new FormData()
+        reqData.append("table","featured_products_rows")
+        reqData.append("table_id","row_id")
+        reqData.append("row_id",rowID)
+        
+        
+        
+        let req = new XMLHttpRequest()
+        req.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+                let responseData = JSON.parse(this.responseText)
+                console.log(responseData)
+                if(responseData["status"]=="success"){
+                    window.location.reload()
+                }
+            }
+        };
+        req.open("POST", "../DataRequest/Delete", true);
+        if(confirm("Xác nhận xóa hình"))
+            req.send(reqData);
+    }
+    else{
+        
+    }
+}
+
+function getRowElementValue(element,attribute){
+    return element.querySelector(`.row-element[attrib='${attribute}']`).getAttribute("value")
+}
+
+function getFeaturedProducts(element){
+    let rowID = getRowElementValue(element,"row_id")
+    let reqData = new FormData()
+    reqData.append("row_id",rowID)
+
+    let req = new XMLHttpRequest()
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let productImageListElement = document.querySelector(".featured-products-manager-tab .featured-rows-product-list-wrapper .featured-products-rows-detail-table .row-list")
+            productImageListElement.innerHTML = ""
+            productImageListElement.innerHTML = this.responseText
+        }
+    };
+    req.open("POST", "../DataRequest/GetFeaturedRowsData", true);
+    req.send(reqData);
+}
+
+let addProductTableElement = document.querySelector(".featured-products-manager-tab .featured-rows-product-list-wrapper .featured-products-rows-detail-table")
+let draggableProductTableElement = document.querySelector(".featured-products-manager-tab .draggable-products-table")
+function addProductDragStart(event,element){
+    let productID = getRowElementValue(element,"product_id")
+
+    event.dataTransfer.setData("product_id",event.target.id)
+}
+
+function addProductDragOver(event,element){
+    event.preventDefault()
+}
+
+function addProductOnDrop(event,element){
+    event.preventDefault()
+    removeHighlight(element)
+
+    let rowElementHTML = `
+    <div class="table-row no-user-select" draggable="true">
+        <div class="row-element" attrib="product_name" value="Xiaomi Redmi Note 13 RAM 6GB/ROM 128GB">
+            Xiaomi Redmi Note 13 RAM 6GB/ROM 128GB            
+        </div>
+        <div class="row-element hidden" attrib="product_id" value="3">
+            3            
+        </div>
+    </div>
+    `
+}
+
+function addHighlight(element){
+    if(!element.isHighlighted){
+        element.classList.add("highlight")
+        element.isHighlighted=true
+    }
+}
+
+function removeHighlight(element){
+    if(element.isHighlighted){
+        element.classList.remove("highlight")
+        element.isHighlighted=false
     }
 }

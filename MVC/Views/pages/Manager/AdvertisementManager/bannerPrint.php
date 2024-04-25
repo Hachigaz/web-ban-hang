@@ -2,11 +2,11 @@
     $bannerDisplayInfo = [
         "banner_name",
         "url",
-        "location"    
+        "location_name"    
     ];
 ?>
 <?php foreach($bannerList as $banner): ?>
-<div class="table-row no-user-select" onclick="fillInfo('Banners',this);showInfoPanel()">
+<div class="table-row no-user-select" onclick="fillSelectedInfo('Banners',this);showInfoPanel('banner-info-panel')">
     
     <?php foreach($bannerDisplayInfo as $col): ?>
         <?php if(array_search($col,array_keys($banner))): ?>

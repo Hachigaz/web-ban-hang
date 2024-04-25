@@ -280,17 +280,78 @@
         }
         public function AdvertisementManager(){
             if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
-                $bannerList = $this->productService->productRepo->get("SELECT * FROM banners WHERE is_active = 1");
+                $bannerList = $this->productService->productRepo->get(
+                    "SELECT banners.banner_id, banners.banner_name, banners.url, banners.image_path, banners.width, banners.height, banners.location_id, banner_locations.location_name
+                    FROM banners join banner_locations on banners.location_id = banner_locations.location_id 
+                    WHERE is_active = 1"
+                );
+                $locationList = $this->productService->productRepo->get("SELECT * FROM banner_locations");
+
+
+                $featuredRowList = $this->productService->productRepo->get(
+                    "SELECT * FROM featured_products_rows WHERE is_active = 1 ORDER BY featured_products_rows.index ASC"
+                );
+
+                $urlParams = $this->DecodeURL();
+
+                $resultProductList = $this->productService->getFilteredProducts($urlParams);
+    
+                $sql = "SELECT category_id,category_name
+                FROM categories
+                WHERE categories.is_active = '1'";
+                $resultCategoryList = $this->productService->getProductsQuery($sql);
+                unset($sql);
+                
+                $sql = "SELECT brand_id,brand_name
+                FROM brands
+                WHERE brands.is_active = '1'";
+                $resultBrandList = $this->productService->getProductsQuery($sql);
+                unset($sql);
 
                 $this->view("internalManager", [
                     "Page" => "AdvertisementManager",
                     "Title" => "Quảng cáo",
-                    "BannerList" => $bannerList
+                    "BannerList" => $bannerList,
+                    "BannerLocationList" => $locationList,
+                    "FeaturedRowList"=>$featuredRowList,
+                    "ProductList"=>$resultProductList,
+                    "CategoryList"=>$resultCategoryList,
+                    "BrandList"=>$resultBrandList,
+                    "URLParams"=>$urlParams
                 ]);
+
+                unset($bannerList);
+                unset($locationList);
+                unset($featuredRowList);
+                unset($urlParams);
+                unset($resultProductList);
+                unset($resultBrandList);
+                unset($resultCategoryList);
             }else{
                 header('Location: ../SignIn/SayHi');
             }
         }
+
+        public function AdvertisementGetMoreProducts(){
+            $urlParams = $this->DecodeURL();
+
+            $resultProductList = $this->productService->GetFilteredProducts($urlParams,"","", "", "products.product_id ASC");
+
+            ob_start();
+            $productList = $resultProductList["ProductList"];
+            include("./MVC/Views/Pages/Manager/AdvertisementManager/productPrint.php");
+            $htmlData=ob_get_contents();
+            unset($productList); 
+            ob_end_clean();
+
+            $responseData = [
+                "ProductsHTML"=>$htmlData,
+                "StatusData"=>["IsLast"=>$resultProductList["IsLast"]]
+            ];
+            header('Content-Type: application/json');
+            echo json_encode($responseData);
+        }
+
         public function Logout(){
             session_start();
             // Hủy tất cả các biến session

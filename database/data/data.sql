@@ -382,6 +382,14 @@ INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('6-D', '6');
 INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('7-D', '7');
 INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('8-D', '8');
 
+INSERT INTO `banner_locations` (`location_id`, `location_name`) VALUES ('1', 'home-header');
 
-INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'header_banner', 'home-header', '800', '300');
-INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'header-banner', 'home-header', '800', '300');
+INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'banner_header1', '1', '800', '600');
+INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'banner_header2', '1', '800', '600');
+
+INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm nổi bật', 'Các sản phẩm mới và nổi bật trong tháng 4',1);
+INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm mới', 'Sản phẩm mới vừa xuất hiện trên thị trường',2);
+
+INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('1', '1', '1');
+INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('2', '2', '1');
+INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('3', '3', '1');
