@@ -170,39 +170,6 @@ INSERT INTO `attendance` (`attendance_id`, `timesheet_id`, `date`, `status`, `le
 ('2', '2', '2024-04-16', 'Present', '2'),
 ('3', '3', '2024-04-16', 'Present', '3');
 
--- INSERT INTO `attendance` (`attendance_id`, `timesheet_id`, `date`, `status`) VALUES 
--- ('1', '1', '2024-04-01', 'Present'),
--- ('2', '1', '2024-04-02', 'Present'),
--- ('3', '1', '2024-04-03', 'Present'),
--- ('4', '1', '2024-04-04', 'Present'),
--- ('5', '1', '2024-04-05', 'Present'),
--- ('6', '1', '2024-04-06', 'Present'),
--- ('7', '1', '2024-04-07', 'Present'),
--- ('8', '1', '2024-04-08', 'Present'),
--- ('9', '1', '2024-04-09', 'Present'),
--- ('10', '1', '2024-04-10', 'Present'),
--- ('11', '1', '2024-04-11', 'Present'),
--- ('12', '1', '2024-04-12', 'Present'),
--- ('13', '1', '2024-04-13', 'Present'),
--- ('14', '1', '2024-04-14', 'Present'),
--- ('15', '1', '2024-04-15', 'Present'),
--- ('16', '1', '2024-04-16', 'Present'),
--- ('17', '1', '2024-04-17', 'Present'),
--- ('18', '1', '2024-04-18', 'Present'),
--- ('19', '1', '2024-04-19', 'Present'),
--- ('20', '1', '2024-04-20', 'Present'),
--- ('21', '1', '2024-04-21', 'Present'),
--- ('22', '1', '2024-04-22', 'Present'),
--- ('23', '1', '2024-04-23', 'Present'),
--- ('24', '1', '2024-04-24', 'Present'),
--- ('25', '1', '2024-04-25', 'Present'),
--- ('26', '1', '2024-04-26', 'Present'),
--- ('27', '1', '2024-04-27', 'Present'),
--- ('28', '1', '2024-04-28', 'Present'),
--- ('29', '1', '2024-04-29', 'Present'),
--- ('30', '1', '2024-04-30', 'Present');
-
--- 12.Kiểm tra total_salary = salary/26 * days_worked - (salary/26 * days_late * 30%)
 DELIMITER //
 CREATE TRIGGER update_total_salary_timesheets_insert
 AFTER INSERT ON timesheets
