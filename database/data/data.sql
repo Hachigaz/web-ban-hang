@@ -93,9 +93,9 @@ INSERT INTO `modules` (`module_id`, `module_name`, `is_active`) VALUES
 ('13', 'Quảng cáo', '1');
 
 INSERT INTO `decentralizations` (`decentralization_id`, `role_id`, `module_id`, `is_active`) VALUES 
-('1', '1', '1', '1'),
+('1', '1', '1', '1'),-- admin
 ('2', '1', '12', '1'),
-('3', '2', '1', '1'),
+('3', '2', '1', '1'),-- nhan vien quan ly
 ('4', '2', '2', '1'),
 ('5', '2', '3', '1'),
 ('6', '2', '4', '1'),
@@ -106,15 +106,17 @@ INSERT INTO `decentralizations` (`decentralization_id`, `role_id`, `module_id`, 
 ('11', '2', '9', '1'),
 ('12', '2', '10', '1'),
 ('13', '2', '11', '1'),
-('14', '3', '1', '1'),
-('15', '3', '3', '1'),
-('16', '3', '4', '1'),
-('17', '3', '9', '1'),
-('18', '4', '4', '1'),
-('19', '4', '5', '1'),
-('20', '4', '6', '1'),
-('21', '4', '7', '1'),
-('22', '4', '8', '1');
+('14', '2', '12', '1'),
+('15', '2', '13', '1'),
+('16', '3', '1', '1'),-- nhan vien ban hang
+('17', '3', '3', '1'),
+('18', '3', '4', '1'),
+('19', '3', '9', '1'),
+('20', '4', '4', '1'),-- nhan vien kho
+('21', '4', '5', '1'),
+('22', '4', '6', '1'),
+('23', '4', '7', '1'),
+('24', '4', '8', '1');
 
 INSERT INTO `products` (`product_id`, `product_name`, `brand_id`, `category_id`, `price`, `guarantee`, `thumbnail`, `description`, `created_at`, `updated_at`, `is_active`) VALUES 
 ('1', 'iPhone 15 Pro Max RAM 8GB/ROM 256GB', '1', '1', '34990000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
@@ -147,6 +149,10 @@ INSERT INTO `products` (`product_id`, `product_name`, `brand_id`, `category_id`,
 INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `email_of_receiver`, `phone_number_of_receiver`, `note`, `order_date`, `status_of_order`, `total_money`, `shipping_method`, `shipping_address`, `shipping_date`, `tracking_number`, `payment_method`, `is_active`) VALUES 
 ('1', '3', '5', 'Anh Hiển', 'thehien@gmail.com', '0786705877', 'Tặng anh Hiển', current_timestamp(), 'Pending', '35990000', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '70L1-13579', 'COD', '1');
 
+INSERT INTO `order_details` (`order_detail_id`, `order_id`, `sku_id`, `price`, `number_of_products`, `color_of_product`) VALUES 
+('1', '1', '1', '34990000', '1', 'Đen'),
+('2', '1', '9', '500000', '2', 'Đen');
+
 INSERT INTO `leave_application` (`leave_application_id`, `staff_id`, `start_date`, `end_date`, `reason`, `status`) VALUES 
 ('1', '1', '2024-04-15', '2024-04-15', 'Lý do cá nhân', '0'),
 ('2', '2', '2024-04-15', '2024-04-15', 'Ốm đau, thai sản', '0'),
@@ -171,6 +177,39 @@ INSERT INTO `attendance` (`attendance_id`, `timesheet_id`, `date`, `status`, `le
 ('2', '2', '2024-04-16', 'Present', '2'),
 ('3', '3', '2024-04-16', 'Present', '3');
 
+-- INSERT INTO `attendance` (`attendance_id`, `timesheet_id`, `date`, `status`) VALUES 
+-- ('1', '1', '2024-04-01', 'Present'),
+-- ('2', '1', '2024-04-02', 'Present'),
+-- ('3', '1', '2024-04-03', 'Present'),
+-- ('4', '1', '2024-04-04', 'Present'),
+-- ('5', '1', '2024-04-05', 'Present'),
+-- ('6', '1', '2024-04-06', 'Present'),
+-- ('7', '1', '2024-04-07', 'Present'),
+-- ('8', '1', '2024-04-08', 'Present'),
+-- ('9', '1', '2024-04-09', 'Present'),
+-- ('10', '1', '2024-04-10', 'Present'),
+-- ('11', '1', '2024-04-11', 'Present'),
+-- ('12', '1', '2024-04-12', 'Present'),
+-- ('13', '1', '2024-04-13', 'Present'),
+-- ('14', '1', '2024-04-14', 'Present'),
+-- ('15', '1', '2024-04-15', 'Present'),
+-- ('16', '1', '2024-04-16', 'Present'),
+-- ('17', '1', '2024-04-17', 'Present'),
+-- ('18', '1', '2024-04-18', 'Present'),
+-- ('19', '1', '2024-04-19', 'Present'),
+-- ('20', '1', '2024-04-20', 'Present'),
+-- ('21', '1', '2024-04-21', 'Present'),
+-- ('22', '1', '2024-04-22', 'Present'),
+-- ('23', '1', '2024-04-23', 'Present'),
+-- ('24', '1', '2024-04-24', 'Present'),
+-- ('25', '1', '2024-04-25', 'Present'),
+-- ('26', '1', '2024-04-26', 'Present'),
+-- ('27', '1', '2024-04-27', 'Present'),
+-- ('28', '1', '2024-04-28', 'Present'),
+-- ('29', '1', '2024-04-29', 'Present'),
+-- ('30', '1', '2024-04-30', 'Present');
+
+-- 12.Kiểm tra total_salary = salary/26 * days_worked - (salary/26 * days_late * 30%)
 DELIMITER //
 CREATE TRIGGER update_total_salary_timesheets_insert
 AFTER INSERT ON timesheets
@@ -210,23 +249,18 @@ INSERT INTO brands (brand_id, brand_name, brand_logo,supplier_id,is_active) VALU
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('27', 'Laptop Dell Inspiron 15 3520 i5 1235U/16GB/512GB/120Hz/OfficeHS/KYHD/Win11', '19', '2', '154900', '24', 'laptop/dell_inspiron.png', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('28', 'Laptop Dell Vostro 14 3430 i5 1335U/8GB/512GB/2GB MX550/OfficeHS/Win11', '19', '2', '119900', '24', 'laptop/dell_vostro.png', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('29', 'Laptop Dell Precision 14 3480 i7 12800H/32GB/1TB/4GB RTXA500/Win11 Pro', '19', '2', '507900', '24', 'laptop/dell_precision.png', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
-
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('30', 'Laptop Lenovo IdeaPad 1 15AMN7 R5 7520U/8GB/256GB/Win11', '8', '2', '98900', '24', 'laptop/lenovo-ideapad-1-15amn7-r5-82vg0061vn-glr-2.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('31', 'Laptop Lenovo V14 G3 ABA R5 5625U/8GB/512GB/Win11', '8', '2', '98900', '24', 'laptop/lenovo-v14-g3-aba-r5-82tu006svn-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('32', 'Laptop Lenovo Yoga 7 14IRL8 i5 1340P/16GB/512GB/Touch/Pen/OfficeHS/Win11', '8', '2', '98900', '24', 'laptop/vi-vn-lenovo-yoga-7-14irl8-i5-82yl006avn-slider-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
-
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('33', 'Laptop Acer Aspire 3 A315 510P 32EF i3 N305/8GB/256GB/Win11', '5', '2', '89900', '24', 'laptop/acer-aspire-3-a315-510p-32ef-i3-nxkdhsv001-glr-2.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('34', 'Laptop Acer Gaming Aspire 7 A715 43G R8GA R5 5625U/8GB/512GB/4GB RTX3050/144Hz/Win11', '5', '2', '159900', '24', 'laptop/acer-aspire-7-gaming-a715-43g-r8ga-r5-nhqhdsv002-2-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('35', 'Laptop Acer Aspire Lite 15 51M 55NB i5 1155G7/8GB/512GB/Win11', '5', '2', '119900', '24', 'laptop/acer-aspire-lite-15-51m-55nb-i5-nxkrssv001-2.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
-
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('36', 'Laptop HP 245 G10 R5 7520U/8GB/512GB/Win11', '6', '2', '114900', '24', 'laptop/hp-245-g10-r5-8f155pa-glr-2.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('37', 'Laptop HP 15s fq5229TU i3 1215U/8GB/512GB/Win11', '6', '2', '104900', '24', 'laptop/hp-15s-fq5229tu-i3-8u237pa-glr-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('38', 'Laptop HP Pavilion 14 dv2073TU i5 1235U/16GB/512GB/Win11 ', '6', '2', '175900', '24', 'laptop/hp-pavilion-14-dv2073tu-i5-7c0p2pa-2-2.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
-
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('39', 'Laptop ASUS Zenbook 14 OLED UM3402YA-KM405W', '7', '2', '204900', '24', 'laptop/text_ng_n_16__3_10.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('40', 'Laptop Asus TUF Gaming FX507ZC4-HN095W i5 12500H/16GB/512GB/15.6"/Nvidia RTX 3050 4GB/Win11', '7', '2', '209900', '24', 'laptop/638249405783488795_Asus TUF Gaming FX507ZC4-HN095W 1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('41', 'Laptop Asus TUF Gaming FX506HC-HN144W i5 11400H/8GB/512GB/15.6"FHD/GeForce RTX 3050 4GB/Win 11', '7', '2', '174900', '24', 'laptop/ASUS-TUF-Gaming-F15-2021-black-fpt-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
-
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('42', 'Điện thoại iPhone 15 Pro Max 256GB', '1', '2', '299900', '24', 'smartphone/iphone-15-pro-max-blue-1-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('43', 'Điện thoại iPhone 14 Pro Max 128GB', '1', '2', '273900', '24', 'smartphone/iphone-14-pro-max-purple-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
@@ -250,7 +284,6 @@ INSERT INTO products (product_id, product_name, brand_id, category_id, price, gu
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('52', 'Điện thoại OPPO A18 64GB ', '4', '2', '32900', '24', 'smartphone/oppo-a18-12-1020x570.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('53', 'Điện thoại OPPO A57 128GB ', '4', '2', '36900', '24', 'smartphone/oppo-a57-4g637916782091781459-1020x570.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
-
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('54', 'Loa Bluetooth JBL Flip 6', '12', '6', '28400', '24', 'speaker/bluetooth-jbl-flip-6-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('55', 'Loa Bluetooth JBL Pulse 5', '12', '6', '63500', '24', 'speaker/loa-bluetooth-jbl-pulse-5-1-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('56', 'Loa Bluetooth JBL Partybox On The Go', '12', '6', '54900', '24', 'speaker/bluetooth-jbl-partybox-on-the-go-600x600-1-org.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
@@ -261,13 +294,11 @@ INSERT INTO products (product_id, product_name, brand_id, category_id, price, gu
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('61', 'Loa Bluetooth JBL Boombox 3 ', '12', '6', '113900', '24', 'speaker/loa-bluetooth-jbl-boombox-3-01.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('62', 'Loa Bluetooth JBL Partybox 310 ', '12', '6', '149000', '24', 'speaker/loa-bluetooth-jbl-partybox-310-2.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('63', 'Loa Bluetooth JBL Partybox 110 ', '12', '6', '109000', '24', 'speaker/loa-bluetooth-jbl-partybox-110-imei-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
-
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('64', 'Tai nghe Bluetooth True Wireless Sony WF-C700N ', '13', '5', '21900', '24', 'bluetooth_headphone/tai-nghe-bluetooth-true-wireless-sony-wf-c700n-den-2.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('65', 'Tai nghe Bluetooth True Wireless Sony WF-C500  ', '13', '5', '15200', '24', 'bluetooth_headphone/bluetooth-true-wireless-sony-wf-c500-den-1-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('66', 'Tai nghe Bluetooth chụp tai Sony WH-1000XM4 ', '13', '5', '51900', '24', 'bluetooth_headphone/group_17333.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('67', 'Tai nghe Bluetooth chụp tai Sony WH-1000XM5 ', '13', '5', '65900', '24', 'bluetooth_headphone/tai-nghe-chup-tai-sony-wh-1000xm5-4.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('68', 'Tai nghe Gaming chụp tai không dây Sony INZONE H5 ', '13', '5', '29900', '24', 'bluetooth_headphone/tai-nghe-chup-tai-sony-inzone-h5_5_.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
-
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('69', 'Chuột Bluetooth Silent Logitech M240 ', '14', '7', '3400', '24', 'mouse/chuot-bluetooth-silent-logitech-m240-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('70', 'Chuột Không dây Logitech M190 ', '14', '7', '2900', '24', 'mouse/chuot-khong-day-logitech-m190-xanh-den-1-org.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('71', 'Chuột Có dây Gaming Logitech G102 Gen2 Lightsync  ', '14', '7', '4050', '24', 'mouse/chuot-gaming-logitech-g102-gen2-lightsync-den-1-org.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
@@ -278,7 +309,6 @@ INSERT INTO products (product_id, product_name, brand_id, category_id, price, gu
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('76', 'Chuột Không dây Bluetooth Logitech MX Anywhere 2S Đen ', '14', '7', '11900', '24', 'mouse/chuot-khong-day-logitech-mx-anywhere-2s-den-2-org.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('77', 'Chuột Không dây Logitech Silent M220 ', '14', '7', '3000', '24', 'mouse/chuot-khong-day-logitech-silent-m220-den-2-org.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('78', 'Chuột Không dây Logitech M170  ', '14', '7', '2650', '24', 'mouse/chuot-khong-day-logitech-m170-den-2-org.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
-
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('79', 'Bàn phím Bluetooth Logitech K380s  ', '14', '8', '7900', '24', 'keyboard/ban-phim-bluetooth-logitech-k380s-hong-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('80', 'Bộ Bàn Phím Chuột Không Dây Logitech MK240  ', '14', '8', '4900', '24', 'keyboard/bo-ban-phim-chuot-khong-day-logitech-mk240-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('81', 'Bàn Phím Có Dây Logitech K120 ', '14', '8', '2000', '24', 'keyboard/ban-phim-co-day-logitech-k120-1.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
@@ -352,6 +382,14 @@ INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('6-D', '6');
 INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('7-D', '7');
 INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('8-D', '8');
 
+INSERT INTO `banner_locations` (`location_id`, `location_name`) VALUES ('1', 'home-header');
 
-INSERT INTO `electronic_supermarket`.`banners` (`image_path`, `url`, `banner_name`, `location`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'header_banner', 'home-header', '800', '300');
-INSERT INTO `electronic_supermarket`.`banners` (`image_path`, `url`, `banner_name`, `location`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'header-banner', 'home-header', '800', '300');
+INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'banner_header1', '1', '800', '600');
+INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'banner_header2', '1', '800', '600');
+
+INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm nổi bật', 'Các sản phẩm mới và nổi bật trong tháng 4',1);
+INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm mới', 'Sản phẩm mới vừa xuất hiện trên thị trường',2);
+
+INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('1', '1', '1');
+INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('2', '2', '1');
+INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('3', '3', '1');
