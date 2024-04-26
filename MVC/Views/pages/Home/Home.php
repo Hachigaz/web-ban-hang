@@ -25,8 +25,14 @@
             </div>
         </div>
         <div class="categories-panel">
-            <div class="categories-panel style-panel-title">
-                
+            <div class="category-list">
+                <?php foreach($data["BrandDisplayList"] as $brand): ?>
+                <a class="category-item no-style" href="../Catalog/Category?context=brands&context-value=<?= $brand["brand_id"] ?>">
+                    <div class="img-wrapper">
+                        <img src="../Public/img/logo/brand_logo/<?= $brand["brand_logo"]?> " alt="">
+                    </div>
+                </a>
+                <?php endforeach; ?>
             </div>
         </div>
         <div class="featured-products-panel">

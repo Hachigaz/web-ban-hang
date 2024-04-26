@@ -114,7 +114,7 @@ function processSignUp(){
                 if(status=="non_exists"){
                     let signUpData = new FormData()
                     signUpData.append("input_email",emailInput.getInputValue())
-                    signUpData.append("input_phone_number",emailInput.getInputValue())
+                    signUpData.append("input_phone_number",phoneInput.getInputValue())
                     signUpData.append("input_password",passwordInput.getInputValue())
                     signUpData.append("input_confirm_password",confirmPasswordInput.getInputValue())
             

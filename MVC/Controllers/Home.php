@@ -51,10 +51,18 @@
             $headerBannerList = $this->productService->productRepo->get($sql);
             unset($sql);
 
+            
+            $sql = "SELECT * FROM brands
+            WHERE not brands.brand_logo = ''  and brands.is_active = 1
+            ";
+            $brandDisplayList = $this->productService->productRepo->get($sql);
+            unset($sql);
+
             $this->view("master",[
                 "Page" => "Home/Home",
                 "HeaderBannerList"=>$headerBannerList,
-                "DisplayRows"=>$displayRows
+                "DisplayRows"=>$displayRows,
+                "BrandDisplayList"=> $brandDisplayList
             ]);
         }
     }
