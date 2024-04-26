@@ -54,20 +54,29 @@
             if((isset($urlParams["context"]) && $urlParams["context"]!="categories") || !isset($urlParams["context"])){
                 $filterQueries = "";
 
-                if(isset($urlParams["brands"])){
-                    $queryItems = explode(",",$urlParams["brands"]);
-                    if(count($queryItems)>0){
-                        $filterQueries.="AND products.brand_id IN (".implode(",",$queryItems).")";
+
+
+                if(isset($urlParams["context"])){
+                    $value = $urlParams["context-value"];
+                    $filterQueries.= " OR products.brand_id = $value";
+                    unset($value);
+                }
+                else{
+                    if(isset($urlParams["brands"])){
+                        $queryItems = explode(",",$urlParams["brands"]);
+                        if(count($queryItems)>0){
+                            $filterQueries.="AND products.brand_id IN (".implode(",",$queryItems).")";
+                        }
+                    }
+    
+                    if(isset($urlParams["categories"])){
+                        $queryItems = explode(",",$urlParams["categories"]);
+                        if(count($queryItems)>0){
+                            $filterQueries.=" OR products.category_id IN (".implode(",",$queryItems).")";
+                        }
                     }
                 }
-
-                if(isset($urlParams["categories"])){
-                    $queryItems = explode(",",$urlParams["categories"]);
-                    if(count($queryItems)>0){
-                        $filterQueries.=" OR products.category_id IN (".implode(",",$queryItems).")";
-                    }
-                }
-
+                
                 // if($filterQueries!=""){
                 //     $filterQueries = " AND $filterQueries";
                 // }
@@ -93,18 +102,26 @@
             //loc brands
             if((isset($urlParams["context"]) && $urlParams["context"]!="brands") || !isset($urlParams["context"])){
                 $filterQueries = "";
-                if(isset($urlParams["categories"])){
-                    $queryItems = explode(",",$urlParams["categories"]);
-                    
-                    if(count($queryItems)>0){
-                        $filterQueries.=" AND products.category_id IN (".implode(",",$queryItems).")";
-                    }
-                }
 
-                if(isset($urlParams["brands"])){
-                    $queryItems = explode(",",$urlParams["brands"]);
-                    if(count($queryItems)>0){
-                        $filterQueries.=" OR brands.brand_id IN (".implode(",",$queryItems).")";
+                if(isset($urlParams["context"])){
+                    $value = $urlParams["context-value"];
+                    $filterQueries.= " AND products.category_id = $value";
+                    unset($value);
+                }
+                else{
+                    if(isset($urlParams["categories"])){
+                        $queryItems = explode(",",$urlParams["categories"]);
+                        
+                        if(count($queryItems)>0){
+                            $filterQueries.=" AND products.category_id IN (".implode(",",$queryItems).")";
+                        }
+                    }
+    
+                    if(isset($urlParams["brands"])){
+                        $queryItems = explode(",",$urlParams["brands"]);
+                        if(count($queryItems)>0){
+                            $filterQueries.=" OR brands.brand_id IN (".implode(",",$queryItems).")";
+                        }
                     }
                 }
                 
