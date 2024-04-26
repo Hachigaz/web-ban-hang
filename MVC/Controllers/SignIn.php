@@ -29,6 +29,10 @@
                     setcookie("remember_username",$input_login_details,0,"../SignIn/");
                     setcookie("remember_password",$input_password,0,"../SignIn/");
                 }
+                else{
+                    setcookie("remember_username", null, time()-3600);
+                    setcookie("remember_password", null, time()-3600);
+                }
                 $_SESSION["logged_in_customer"] = $this->customerService->getCustomerByAccountId($logged_in_customer_account["account_id"]);
                 $account = json_decode($this->accountService->getAccountByEmail($input_login_details), true);
                 $_SESSION["role_id"] = $this->accountService->getRoleByAccountId($account['account_id']);
@@ -147,7 +151,7 @@
                 Đã có yêu cầu đổi mật khẩu tải khoản của bạn.
                 Mã xác nhận email là: $verification_code.";
             
-            //return mail($userEmail,$emailSubject,$message);
+            return mail($userEmail,$emailSubject,$message);
         }
 
         public function VerifyCode(){

@@ -10,6 +10,9 @@ function setup(){
     else if(status == "signup_email_exists"){
         showSliderDialogMessage("Email đã được sử dụng, vui lòng đăng ký tài khoản sử dụng email khác")
     }
+    else if(status == "signup_phone_exists"){
+        showSliderDialogMessage("Số điện thoại đã được sử dụng, vui lòng đăng ký tài khoản sử dụng số điện thoại khác")
+    }
     for (key in searchParams.keys()){
         searchParams.delete(key)
     }
@@ -21,13 +24,16 @@ function processSignUp(){
     try{
         const formElement = document.querySelector('form.sign-up-form')
         const emailInput = new InputElement(formElement.querySelector('#input_email'))
+        const phoneInput = new InputElement(formElement.querySelector('#input_phone_number'))
         const passwordInput = new InputElement(formElement.querySelector('#input_password'))
         const confirmPasswordInput = new InputElement(formElement.querySelector('#input_confirm_password'))
 
-        let email = emailInput.getInputValue() 
+        let email = emailInput.getInputValue()
+        let phone = phoneInput.getInputValue()
         let password = passwordInput.getInputValue()
         let confirm_password = confirmPasswordInput.getInputValue()
         email = email.length!=0?email:null
+        phone = phone.length!=0?phone:null
         password = password.length!=0?password:null
         confirm_password = confirm_password.length!=0?confirm_password:null
 
@@ -38,6 +44,15 @@ function processSignUp(){
                 },
                 email:{
                     message:"Email không đúng định dạng"
+                }
+            },
+            phone_number:{
+                presence:{
+                    message:"Số điện thoại không được để trống"
+                },
+                format:{
+                    pattern:/^0[0-9]{9}$/,
+                    message:"Số điện thoại phải có 10 chữ số và bắt đầu bằng số 0"
                 }
             },
             password:{
@@ -61,6 +76,7 @@ function processSignUp(){
         };
         let inputs = {
             email: email,
+            phone_number: phone,
             password: password,
             confirm_password: confirm_password
         }
@@ -68,6 +84,10 @@ function processSignUp(){
         if(result!=undefined){
             if(result["email"]){
                 emailInput.showError(result["email"])
+                return false
+            }
+            if(result["phone_number"]){
+                phoneInput.showError(result["phone_number"])
                 return false
             }
             if(result["password"]){
@@ -83,15 +103,18 @@ function processSignUp(){
 
         let checkEmailData = new FormData()
         checkEmailData.append("user_email",emailInput.getInputValue())
+        checkEmailData.append("user_phone_number",phoneInput.getInputValue())
 
         let checkEmailRequest = new XMLHttpRequest();
         checkEmailRequest.onreadystatechange = function() {
+            console.log(this.responseText)
             if (this.readyState == 4 && this.status == 200) {
                 let responseData = JSON.parse(this.responseText)
                 let status = responseData["exist_status"]
                 if(status=="non_exists"){
                     let signUpData = new FormData()
                     signUpData.append("input_email",emailInput.getInputValue())
+                    signUpData.append("input_phone_number",emailInput.getInputValue())
                     signUpData.append("input_password",passwordInput.getInputValue())
                     signUpData.append("input_confirm_password",confirmPasswordInput.getInputValue())
             
@@ -106,6 +129,9 @@ function processSignUp(){
                 }
                 else if(status=="email_exists"){
                     showSliderDialogMessage("Email đã được sử dụng, vui lòng sử dụng email khác.")
+                }
+                else if(status=="phone_exists"){
+                    showSliderDialogMessage("Số điện thoại đã được sử dụng, vui lòng đăng ký tài khoản sử dụng số điện thoại khác")
                 }
             }
         };

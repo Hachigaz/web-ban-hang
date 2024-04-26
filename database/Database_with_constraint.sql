@@ -74,7 +74,7 @@ CREATE TABLE `featured_products_rows` (
 
 CREATE TABLE `customers` (
   `customer_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `customer_fullname` varchar(100) NOT NULL DEFAULT '',
+  `customer_fullname` varchar(100) NOT NULL DEFAULT 'Người dùng',
   `role_id` int(11) NOT NULL DEFAULT 5,
   `account_id` int(11) NOT NULL,
   `gender` tinyint(1) DEFAULT 0 COMMENT 'Male: 0, Female: 1',
