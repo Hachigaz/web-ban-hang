@@ -542,136 +542,113 @@ CREATE TRIGGER `reviews_AFTER_DELETE` AFTER DELETE ON `reviews` FOR EACH ROW BEG
 END
 
 DELIMITER //
-CREATE TRIGGER before_export_detail_insert
-AFTER INSERT ON export_details
+CREATE TRIGGER create_export_details_trigger
+AFTER INSERT ON exports
 FOR EACH ROW
 BEGIN
-    DECLARE shipment_remain INT;
-    DECLARE shipment_quantity INT;
-    
-    -- Get the remaining quantity and total quantity of the shipment
-    SELECT remain, quantity INTO shipment_remain, shipment_quantity
-    FROM shipments
-    WHERE shipment_id = NEW.shipment_id;
-    
-    -- Check if there is enough remaining quantity in the shipment
-    IF shipment_remain >= NEW.quantity_export THEN
-        -- Update the remaining quantity in the shipment
-        UPDATE shipments
-        SET remain = shipment_remain - NEW.quantity_export
-        WHERE shipment_id = NEW.shipment_id;
-    ELSE
-        -- If there is not enough remaining quantity, prevent the insertion
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Not enough remaining quantity in the shipment';
-    END IF;
+    DECLARE export_id INT;
+    SET export_id = NEW.export_id;
+
+    INSERT INTO export_details (export_id, shipment_id, unit_price_export, quantity_export)
+    SELECT export_id, shipment_id, price, number
+    FROM Removes
+    JOIN order_details ON Removes.order_detail_id = order_details.order_detail_id
+    WHERE order_details.order_id = NEW.order_id;
 END//
 DELIMITER ;
--- DELIMITER //
-
--- CREATE TRIGGER before_export_detail_insert1
--- BEFORE INSERT ON export_details
--- FOR EACH ROW
--- BEGIN
---     -- Get the unit price import of the corresponding shipment
---     DECLARE shipment_unit_price_import DECIMAL(20, 2);
---     SELECT unit_price_import INTO shipment_unit_price_import
---     FROM shipments
---     WHERE shipment_id = NEW.shipment_id;
-    
---     -- Calculate the unit price export (50% higher than unit price import)
---     SET NEW.unit_price_export = shipment_unit_price_import * 1.5;
--- END;
-
--- //
-
--- DELIMITER ;
 
 
 DELIMITER //
 
-CREATE TRIGGER before_export_detail_insert
-BEFORE INSERT ON export_details
-FOR EACH ROW
-BEGIN
-    -- Calculate the unit price export (50% higher than unit price import)
-    SET NEW.unit_price_export = ROUND((SELECT unit_price_import * 1.5 FROM shipments WHERE shipment_id = NEW.shipment_id), 2);
-    
-    -- Check if there is enough remaining quantity in the shipment
-    SET @shipment_remain := (SELECT remain FROM shipments WHERE shipment_id = NEW.shipment_id);
-    SET @shipment_quantity := (SELECT quantity FROM shipments WHERE shipment_id = NEW.shipment_id);
-    
-    IF @shipment_remain < NEW.quantity_export THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Not enough remaining quantity in the shipment';
-    ELSE
-        -- Reduce the remaining quantity in the shipment
-        UPDATE shipments
-        SET remain = remain - NEW.quantity_export
-        WHERE shipment_id = NEW.shipment_id;
-    END IF;
-END;
-//
-
-DELIMITER ;
-
-
-
-DELIMITER //
-
-CREATE TRIGGER order_shipped_trigger
+CREATE TRIGGER create_export_trigger
 AFTER UPDATE ON orders
 FOR EACH ROW
 BEGIN
-    DECLARE order_detail_id, sku_id, number_of_products INT;
-    DECLARE price DECIMAL(20, 2);
-    DECLARE done INT DEFAULT FALSE;
-    DECLARE sku_remain INT; -- Move the declaration here
-    
-    DECLARE cur CURSOR FOR 
-        SELECT od.order_detail_id, od.sku_id, od.number_of_products, od.price
-        FROM order_details od
-        WHERE od.order_id = NEW.order_id;
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
-    
-    IF OLD.status_of_order = 'Processing' AND NEW.status_of_order = 'Shipped' THEN
-        -- Insert into exports table
+    -- Check if the status_of_order has been changed to 'Shipped'
+    IF OLD.status_of_order <> NEW.status_of_order AND NEW.status_of_order = 'Shipped' THEN
+        -- Insert a new row into exports table
         INSERT INTO exports (staff_id, order_id, export_date, total_price)
-        VALUES (NEW.staff_id, NEW.order_id, NOW(), NEW.total_money);
-        
-        -- Get the newly inserted export_id
-        SET @export_id := LAST_INSERT_ID();
-        
-        OPEN cur;
-        
-        read_loop: LOOP
-            FETCH cur INTO order_detail_id, sku_id, number_of_products, price;
-            IF done THEN
-                LEAVE read_loop;
-            END IF;
-            
-            -- Get the remaining quantity of the SKU
-            SELECT remain INTO sku_remain
-            FROM shipments
-            WHERE sku_id = sku_id
-            ORDER BY shipment_id ASC
-            LIMIT 1;
-            
-            -- Check if there is enough remaining quantity in the shipment
-            IF sku_remain >= number_of_products THEN
-                -- Insert into export_details table
-                INSERT INTO export_details (export_id, shipment_id, unit_price_export, quantity_export)
-                VALUES (@export_id, (SELECT shipment_id FROM shipments WHERE sku_id = sku_id LIMIT 1), price, number_of_products);
-            ELSE
-                SET @error_message = CONCAT('Not enough remaining quantity for SKU ', CAST(sku_id AS CHAR));
-                SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @error_message;
-            END IF;
-        END LOOP;
-        
-        CLOSE cur;
+        SELECT NEW.staff_id, NEW.order_id, NOW(), NEW.total_money;
+
+        -- Update the orders table to set the shipping_date to current date
+
+        -- Insert into export_details table
+        INSERT INTO export_details (export_id, shipment_id, unit_price_export, quantity_export)
+        SELECT (SELECT MAX(export_id) FROM exports), shipment_id, unit_price_import, quantity
+        FROM shipments
+        WHERE import_id = NEW.order_id;
     END IF;
-END;
-//
+END//
 
 DELIMITER ;
 
+DELIMITER //
+
+CREATE TRIGGER create_removes_trigger
+AFTER INSERT ON order_details
+FOR EACH ROW
+BEGIN
+    DECLARE productsRemaining INT;
+    DECLARE shipmentID INT;
+    DECLARE shipmentRemain INT;
+    DECLARE productsToAdd INT;
+
+    -- Get the total number of products to add and initialize remaining products
+    SET productsRemaining = NEW.number_of_products;
+
+    -- Iterate over shipments with remaining products
+    shipment_loop: WHILE productsRemaining > 0 DO
+        -- Find the next shipment with remaining products
+        SELECT shipment_id, remain INTO shipmentID, shipmentRemain
+        FROM shipments
+        WHERE sku_id = NEW.sku_id AND remain > 0
+        ORDER BY shipment_id
+        LIMIT 1;
+
+        -- If no shipment is found, exit the loop
+        IF shipmentID IS NULL THEN
+            LEAVE shipment_loop;
+        END IF;
+
+        -- Calculate the number of products to assign from this shipment
+        SET productsToAdd = LEAST(productsRemaining, shipmentRemain);
+
+        -- Insert into Removes with the calculated number
+        INSERT INTO Removes (orderID, order_detail_id, shipment_id, number)
+        VALUES (NEW.order_id, NEW.order_detail_id, shipmentID, productsToAdd);
+
+        -- Update remaining products
+        SET productsRemaining = productsRemaining - productsToAdd;
+
+        -- Update remaining quantity in the shipment
+        UPDATE shipments
+        SET remain = remain - productsToAdd
+        WHERE shipment_id = shipmentID;
+    END WHILE;
+END//
+
+DELIMITER ;
+DELIMITER //
+
+CREATE TRIGGER return_remaining_products_trigger
+AFTER UPDATE ON orders
+FOR EACH ROW
+BEGIN
+    IF OLD.status_of_order <> NEW.status_of_order AND NEW.status_of_order = 'Cancelled' THEN
+        -- Add the returned quantity to the shipment's remain
+        UPDATE shipments s
+        JOIN Removes r ON s.shipment_id = r.shipment_id
+        JOIN order_details od ON od.order_detail_id = r.order_detail_id
+        SET s.remain = s.remain + r.number
+        WHERE od.order_id = NEW.order_id;
+        
+        -- Delete the processed order details from Removes
+        DELETE FROM Removes WHERE order_detail_id IN (
+            SELECT order_detail_id
+            FROM order_details
+            WHERE order_id = NEW.order_id
+        );
+    END IF;
+END//
+
+DELIMITER ;

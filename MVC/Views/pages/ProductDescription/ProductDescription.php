@@ -16,7 +16,7 @@
 
 <script src="../Public/scripts/ProductDescription/script.js"></script>
 <script src="../Public/scripts/ProductDescription/load.js" defer></script>
-<script src="../Public/scripts/Shopcart/script3.js"></script>
+<!-- <script src="../Public/scripts/Shopcart/script3.js"></script> -->
 <div class="body">
     <div class="product-info-panel">
         <div class="product-image-info-wrapper">
@@ -110,7 +110,7 @@
                             <div class="option-buy" onclick="buyProduct()">
                                 Mua ngay
                             </div>
-                            <div class="option-add-to-cart" onclick="addProductToCart()">
+                            <div class="option-add-to-cart" onclick="addProductToCart2()">
                                 Thêm vào giỏ hàng
                             </div>
                         <?php else: ?>
