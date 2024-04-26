@@ -13,9 +13,9 @@
             <div id="ad-widget" class="widget-container">
                 <div class="widget-list-wrapper">
                     <div class="widget-list">
-                        <?php foreach($data["BannerList"]["Banners"] as $bannerPath): ?>
-                            <a href="#" class="widget-item no-style" style="">
-                                <img src="../<?=$bannerPath?>" alt="" srcset="">
+                        <?php foreach($data["HeaderBannerList"] as $headerBanner): ?>
+                            <a href="<?= $headerBanner["url"] ?>" class="widget-item no-style" style="">
+                                <img src="../Public/img/<?=$headerBanner["image_path"]?>" alt="" srcset="">
                             </a>
                         <?php endforeach?>
                     </div>
@@ -30,7 +30,12 @@
             </div>
         </div>
         <div class="featured-products-panel">
-
+            <?php foreach($data["DisplayRows"] as $displayRow):?> 
+                <?php include('./MVC/Views/pages/Home/components/ItemList.php'); ?>          
+            <?php endforeach; ?>
+        </div>
+        <div class="catalog-redirect-panel">
+            <a class="no-style redirect-button" href="../Catalog/">Xem thêm sản phẩm</a>
         </div>
     </div>
 </div>

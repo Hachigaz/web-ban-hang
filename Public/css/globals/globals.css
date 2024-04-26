@@ -57,3 +57,15 @@ a:hover {
     color: rgb(13, 128, 182);
     font-weight: 700;
 }
+
+a.no-style:link {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}
+
+a.no-style:visited {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}

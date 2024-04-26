@@ -15,10 +15,10 @@
         <div class="no-item-icon" id="no-item">
             <i class="fa-solid fa-bag-shopping"></i></br>
             <span>Không có sản phẩm nào trong giỏ hàng</span></br>
-            <a href="/web-ban-hang/Home/" class="backhome">Về trang chủ</a>
+            <a href="../Home/" class="backhome">Về trang chủ</a>
         </div>
         <div class="inline">
-            <a href="/web-ban-hang/Home/" class="backhome-2">Trang chủ -></a>
+            <a href="../Home/" class="backhome-2">Trang chủ -></a>
         </div>
         <span class="inline">
             Giỏ hàng </br>

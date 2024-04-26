@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="../Public/css/components/footer.css">
-<div class="body">
 <footer>
     <div class="container">
         <div class="logo">
@@ -19,4 +18,3 @@
         </div>
     </div>
 </footer>
-</div>
