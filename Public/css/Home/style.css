@@ -303,7 +303,7 @@
     padding:20px 50px;
     background-color: white;
     font-size: 15pt;
-    cursor: pointer;
+    cursor: pointer!important;
 }
 
 .categories-panel{

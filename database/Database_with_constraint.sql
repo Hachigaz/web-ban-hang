@@ -1211,32 +1211,32 @@ INSERT INTO `decentralizations` (`decentralization_id`, `role_id`, `module_id`, 
 ('24', '4', '8', '1');
 
 INSERT INTO `products` (`product_id`, `product_name`, `brand_id`, `category_id`, `price`, `guarantee`, `thumbnail`, `description`, `created_at`, `updated_at`, `is_active`) VALUES 
-('1', 'iPhone 15 Pro Max RAM 8GB/ROM 256GB', '1', '1', '34990000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('2', 'Samsung Galaxy S23 FE 5G RAM 8GB/ROM 128GB', '2', '1', '14890000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('3', 'Xiaomi Redmi Note 13 RAM 6GB/ROM 128GB', '3', '1', '4890000', '18', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('4', 'OPPO A57 RAM 4GB/ROM 128GB', '4', '1', '4990000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('5', 'Acer Aspire 5 A514 54 5127 i5 1135G7 (NX.A28SV.007) RAM 8GB/SSD 512GB', '5', '2', '15490000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('6', 'HP Pavilion 15 eg2062TX i5 1235U (7C0W7PA) RAM 8GB/SSD 512GB', '6', '2', '20590000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('7', 'Asus TUF Gaming F15 FX507ZC4 i5 12500H (HN074W) RAM 8GB/SSD 512GB', '7', '2', '23990000', '24', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('8', 'Lenovo Gaming Legion 5 16IRH8 i5 13500H (82YA00BSVN) RAM 16GB/SSD 512', '8', '2', '36990000', '36', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('9', 'AVA+ 15W JP399', '9', '4', '500000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('10', 'Xmobile 20W DS223B', '10', '4', '890000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('11', 'Baseus Comet 22.5W PPMD10 kèm cáp Lightning và Type C', '11', '4', '1100000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('12', 'Apple Watch SE 2023 GPS 40mm viền nhôm dây thể thao', '1', '3', '6390000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('13', 'Samsung Galaxy Watch5 Pro LTE 45mm dây silicone', '2', '3', '12990000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('14', 'Xiaomi Redmi Watch 4 47.5mm dây silicone', '3', '3', '2690000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('15', 'Tai nghe Bluetooth AirPods Pro Gen 2 MagSafe Charge (USB-C) Apple MTJV3', '1', '5', '6200000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('16', 'Tai nghe Bluetooth True Wireless Xiaomi Redmi Buds 5 Pro', '3', '5', '1990000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('17', 'Tai nghe Bluetooth True Wireless AVA+ FreeGo A20', '9', '5', '290000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('18', 'Loa Bluetooth JBL Pulse 5', '12', '6', '6690000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('19', 'Loa Bluetooth Sony SRS-XB13', '13', '6', '1290000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('20', 'Loa Bluetooth AVA+ FreeGo F13', '9', '6', '450000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('21', 'Chuột Không Dây Silent Rapoo B2S', '18', '7', '200000', '24', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('22', 'Chuột Không dây DareU LM106G', '17', '7', '150000', '24', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('23', 'Chuột Có dây Gaming Corsair M55 RGB Pro', '16', '7', '890000', '24', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('24', 'Chuột Có dây Gaming Genius Scorpion M700', '15', '7', '490000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('25', 'Bàn phím Bluetooth Logitech K380', '14', '8', '750000', '12', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1'),
-('26', 'Bàn Phím Có Dây DareU EK87', '17', '8', '650000', '24', '', 'Đây là mô tả sản phẩm', current_timestamp(), current_timestamp(), '1');
+('1', 'iPhone 15 Pro Max RAM 8GB/ROM 256GB', '1', '1', '34990000.00', '12', '1/iphone_15_pro_max.jpg', 'iPhone 15 là sự lựa chọn hoàn hảo cho những người sành điện thoại', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('2', 'Samsung Galaxy S23 FE 5G RAM 8GB/ROM 128GB', '2', '1', '14890000.00', '12', '1/samsung_galaxy_s23_fe_5g.jpeg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('3', 'Xiaomi Redmi Note 13 RAM 6GB/ROM 128GB', '3', '1', '4890000.00', '18', '1/xiaomi_redmi_note_13.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('4', 'OPPO A57 RAM 4GB/ROM 128GB', '4', '1', '4990000.00', '12', '1/oppo_a57.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('5', 'Acer Aspire 5 A514 54 5127 i5 1135G7 (NX.A28SV.007) RAM 8GB/SSD 512GB', '5', '2', '15490000.00', '12', '2/acer_aspire_a514_54_5127_i5.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('6', 'HP Pavilion 15 eg2062TX i5 1235U (7C0W7PA) RAM 8GB/SSD 512GB', '6', '2', '20590000.00', '12', '2/hp_pavilion_15_eg2062tx_i5.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('7', 'Asus TUF Gaming F15 FX507ZC4 i5 12500H (HN074W) RAM 8GB/SSD 512GB', '7', '2', '23990000.00', '24', '2/asus_tuf_gaming_f15_fx507zc4_i5.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('8', 'Lenovo Gaming Legion 5 16IRH8 i5 13500H (82YA00BSVN) RAM 16GB/SSD 512', '8', '2', '36990000.00', '36', '2/lenovo_legion_5_16irh8_i5.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('9', 'AVA+ 15W JP399', '9', '4', '500000.00', '12', '4/pin_sac_du_phong_polymer_10000mah_type_c_15w_ava.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('10', 'Xmobile 20W DS223B', '10', '4', '890000.00', '12', '4/sac_du_phong_polymer_10000mah_khong_day_magnetic_type_c_pd_20w_xmobile.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('11', 'Baseus Comet 22.5W PPMD10 kèm cáp Lightning và Type C', '11', '4', '1100000.00', '12', '4/sac-du-phong-10000mah_typecpd_22_5w_baseus_ppmd10_cap_lightning_va_typec.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('12', 'Apple Watch SE 2023 GPS 40mm viền nhôm dây thể thao', '1', '3', '6390000.00', '12', '3/apple_watch_se_2023_40mm_vien_nhom_day_silicone_xanh_duong.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('13', 'Samsung Galaxy Watch5 Pro LTE 45mm dây silicone', '2', '3', '12990000.00', '12', '3/samsung_galaxy_watch5_pro.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('14', 'Xiaomi Redmi Watch 4 47.5mm dây silicone', '3', '3', '2690000.00', '12', '3/dong_ho_thong_minh_xiaomi_redmi_watch_4_47_5mm.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('15', 'Tai nghe Bluetooth AirPods Pro Gen 2 MagSafe Charge (USB-C) Apple MTJV3', '1', '5', '6200000.00', '12', '5/tai_nghe_bluetooth_airpods_pro_2nd_gen_usb_c_charge_apple.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('16', 'Tai nghe Bluetooth True Wireless Xiaomi Redmi Buds 5 Pro', '3', '5', '1990000.00', '12', '5/tai_nghe_bluetooth_true_wireless_xiaomi_redmi_buds_5_pro.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('17', 'Tai nghe Bluetooth True Wireless AVA+ FreeGo A20', '9', '5', '290000.00', '12', '5/tai_nghe_bluetooth_true_wireless_ava_freego_a20.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('18', 'Loa Bluetooth JBL Pulse 5', '12', '6', '6690000.00', '12', '6/loa_bluetooth_jbl_pulse_5.jpeg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('19', 'Loa Bluetooth Sony SRS-XB13', '13', '6', '1290000.00', '12', '6/sony_srs_xb13.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('20', 'Loa Bluetooth AVA+ FreeGo F13', '9', '6', '450000.00', '12', '6/loa_bluetooth_ava_plus_freego_f13.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('21', 'Chuột Không Dây Silent Rapoo B2S', '18', '7', '200000.00', '24', '7/chuot_khong_day_silent_rapoo_b2s.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('22', 'Chuột Không dây DareU LM106G', '17', '7', '150000.00', '24', '', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('23', 'Chuột Có dây Gaming Corsair M55 RGB Pro', '16', '7', '890000.00', '24', '7/chuot_gaming_corsair_m55_rgb_pro.jpeg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('24', 'Chuột Có dây Gaming Genius Scorpion M700', '15', '7', '490000.00', '12', '7/chuot_co_day_gaming_genius_scorpion_m700.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('25', 'Bàn phím Bluetooth Logitech K380', '14', '8', '750000.00', '12', '8/ban_phim_bluetooth_logitechk380.jpg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1'),
+('26', 'Bàn Phím Có Dây DareU EK87', '17', '8', '650000.00', '24', '8/ban_phim_co_day_dareu_ek87.jpeg', 'Đây là mô tả sản phẩm', '2024-04-19 11:01:52', '2024-04-19 11:01:52', '1');
 
 -- INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `email_of_receiver`, `phone_number_of_receiver`, `note`, `order_date`, `status_of_order`, `total_money`, `shipping_method`, `shipping_address`, `shipping_date`, `tracking_number`, `payment_method`, `is_active`) VALUES 
 -- ('1', '3', '5', 'Anh Hiển', 'thehien@gmail.com', '0786705877', 'Tặng anh Hiển', current_timestamp(), 'Pending', '35990000', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '70L1-13579', 'COD', '1');
@@ -1439,6 +1439,44 @@ INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width
 INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm nổi bật', 'Các sản phẩm mới và nổi bật trong tháng 4',1);
 INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm mới', 'Sản phẩm mới vừa xuất hiện trên thị trường',2);
 
-INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('1', '1', '1');
-INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('2', '2', '1');
-INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('3', '3', '1');
+INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES 
+('35', '1', '1'),
+('40', '2', '1'),
+('41', '4', '1'),
+('42', '3', '1'),
+('43', '47', '1'),
+('44', '46', '1'),
+('45', '50', '1'),
+('46', '52', '1'),
+('47', '53', '1'),
+('48', '6', '2'),
+('49', '5', '2'),
+('50', '8', '2'),
+('51', '7', '2'),
+('52', '40', '2'),
+('53', '41', '2'),
+('54', '32', '2'),
+('55', '31', '2');
+
+INSERT INTO `options` (`option_id`, `product_id`, `option_name`, `option_value`, `is_active`) VALUES
+('3', '1', 'Kích thước', '159,9 mm x 76,7 mm x 8,25 mm', '1'),
+('4', '1', 'Trọng lượng', '221 g', '1'),
+('5', '1', 'Màn hình', '2796x1290 Super Retina XDR OLED 6,7 inch', '1'),
+('6', '1', 'Chip', 'A17 Pro 6 Core 2P 4E 16x Neural Engine', '1'),
+('7', '1', 'Camera', '3 Camera Main 48MP, Ultra Wide 12MP, Telephoto 5x 12MP', '1'),
+('8', '2', 'Chip xử lý', 'Samsung 10 Core 6 P-Core 4 E-Core 5.00GHz', '1'),
+('9', '2', 'asd', '123', '0'),
+('10', '2', 'asd', 'asd', '0'),
+('11', '5', 'CPU', 'I5 1135G7 6 Nhân 12 Luồng 3.5Ghz', '1'),
+('12', '5', 'RAM', '8GB DDR4 - Còn trống 1 slot DDR4', '1'),
+('13', '5', 'Card Màn Hình', 'Intel Graphics Iris X gen 11', '1'),
+('14', '5', 'Dung lượng', 'SSD 256GB - Dư 1 slot HDD SATA 3 tối đa 1TB', '1');
+
+INSERT INTO `product_images` (`product_image_id`, `product_id`, `image_url`) VALUES
+('11', '1', '1/1/iphone15-2.jpg'),
+('12', '1', '1/1/iphone15-4.png'),
+('13', '1', '1/1/iphone15-3.jpg'),
+('14', '1', '1/1/iphone15-1.jpg'),
+('16', '3', '1/3/image_2024-04-26_222411440.png'),
+('17', '5', '2/5/image_2024-04-26_222420467.png'),
+('18', '5', '2/5/image_2024-04-26_222515881.png');
