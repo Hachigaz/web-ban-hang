@@ -172,7 +172,7 @@
             }
             unset($uri);
 
-            $productList = $this->productService->getFilteredProducts($urlParams,"products.product_id, products.product_name, categories.category_id, categories.category_name, brands.brand_id, brands.brand_name, skus.sku_id, skus.sku_code, skus.sku_name, IFNULL(SUM(shipments.remain),0) as total_remain","join skus on skus.product_id = products.product_id left outer join shipments on shipments.sku_id = skus.sku_id","","","skus.sku_id");
+            $productList = $this->productService->getFilteredProducts($urlParams,"products.product_id, products.product_name, categories.category_id, categories.category_name, brands.brand_id, brands.brand_name, skus.sku_id, skus.sku_code, skus.sku_name, IFNULL(SUM(shipments.remain),0) as total_remain","join skus on skus.product_id = products.product_id left outer join shipments on shipments.sku_id = skus.sku_id","skus.is_active = 1","","skus.sku_id");
 
             $this->view("internalManager", [
                 "Page" => "WarehouseManager",
@@ -185,7 +185,7 @@
         public function GetMoreProductWarehouse(){
             $urlParams = $this->DecodeURL();
 
-            $resultProductList = $this->productService->getFilteredProducts($urlParams,"products.product_id, products.product_name, categories.category_id, categories.category_name, brands.brand_id, brands.brand_name, skus.sku_id, skus.sku_code,  skus.sku_name, IFNULL(SUM(shipments.remain),0) as total_remain","join skus on skus.product_id = products.product_id left outer join shipments on shipments.sku_id = skus.sku_id","","","skus.sku_id");
+            $resultProductList = $this->productService->getFilteredProducts($urlParams,"products.product_id, products.product_name, categories.category_id, categories.category_name, brands.brand_id, brands.brand_name, skus.sku_id, skus.sku_code,  skus.sku_name, IFNULL(SUM(shipments.remain),0) as total_remain","join skus on skus.product_id = products.product_id left outer join shipments on shipments.sku_id = skus.sku_id","skus.is_active = 1","","skus.sku_id");
 
             ob_start();
             $productList = $resultProductList["ProductList"];

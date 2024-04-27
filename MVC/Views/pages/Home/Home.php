@@ -29,7 +29,7 @@
                 <?php foreach($data["BrandDisplayList"] as $brand): ?>
                 <a class="category-item no-style" href="../Catalog/Category?context=brands&context-value=<?= $brand["brand_id"] ?>">
                     <div class="img-wrapper">
-                        <img src="../Public/img/logo/brand_logo/<?= $brand["brand_logo"]?> " alt="">
+                        <img src="../Public/img/logo/brand_logo/<?= $brand["brand_logo"]?>" alt="">
                     </div>
                 </a>
                 <?php endforeach; ?>
@@ -41,7 +41,7 @@
             <?php endforeach; ?>
         </div>
         <div class="catalog-redirect-panel">
-            <a class="no-style redirect-button" href="../Catalog/">Xem thêm sản phẩm</a>
+            <a class="no-style redirect-button" href="../Catalog/">Xem danh mục sản phẩm</a>
         </div>
     </div>
 </div>

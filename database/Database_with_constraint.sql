@@ -62,13 +62,12 @@ CREATE TABLE `featured_products` (
 );
 
 CREATE TABLE `featured_products_rows` (
-  `row_id` INT NOT NULL AUTO_INCREMENT,
+  `row_id` INT NOT NULL PRIMARY KEY  AUTO_INCREMENT,
   `row_name` VARCHAR(512) NULL,
   `row_description` VARCHAR(2048) NULL,
   `row_url` VARCHAR(512) NULL,
-  `index` INT DEFAULT 100
-  `is_active` TINYINT(1) DEFAULT 1,
-  PRIMARY KEY (`row_id`)
+  `index` INT DEFAULT 100,
+  `is_active` TINYINT(1) DEFAULT 1
 );
 
 
