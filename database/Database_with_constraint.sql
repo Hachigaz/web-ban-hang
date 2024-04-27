@@ -263,6 +263,15 @@ CREATE TABLE `suppliers` (
   `email_of_supplier` varchar(100) UNIQUE NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
 );
+CREATE TABLE `Removes` (
+  `orderID` INT(11),
+  `order_detail_id` INT(11),
+  `shipment_id` INT(11),
+  `number` INT(50),
+  FOREIGN KEY (`orderID`) REFERENCES `orders`(`order_id`),
+  FOREIGN KEY (`order_detail_id`) REFERENCES `order_details`(`order_detail_id`),
+  FOREIGN KEY (`shipment_id`) REFERENCES `shipments`(`shipment_id`)
+);
 
 CREATE TABLE `contracts` (
   `contract_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,

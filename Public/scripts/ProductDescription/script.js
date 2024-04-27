@@ -77,19 +77,60 @@ function buyProduct(){
 
     // window.location="../ShopCart/"
 }
-
-function addProductToCart(){
-    let selectedSku = document.querySelector(".product-info-panel .product-sku-list .sku-option.selected")
-    // if(selectedSku){
-    //     window.location.reload()
-    // }
-    let skuCode = selectedSku.getAttribute("value")
-    
-    let searchParams = new URLSearchParams(decodeURI(window.location.search))
-    let productID = searchParams.get("id")
-    console.log(productID);
-    console.log(selectedSku);
-    addProducttocart(productID,skuCode)
-
-    // window.location.reload()
+// Tính số lượng cặp key-value trong localStorage
+function countLocalStorageItems() {
+    let count = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith("product_")) {
+            count++;
+        }
+    }
+    return count;
 }
+
+// Sử dụng hàm countLocalStorageItems() để in ra số lượng cặp key-value trong localStorage
+
+
+function addProductToCart2() {
+    let selectedSku = document.querySelector(".product-info-panel .product-sku-list .sku-option.selected");
+    if (selectedSku) {
+        let skuCode = selectedSku.getAttribute("value");
+        let searchParams = new URLSearchParams(decodeURI(window.location.search));
+        let productID = searchParams.get("id");
+        
+        // Kiểm tra xem đã có dữ liệu nào được lưu cho productID này trong localStorage chưa
+        let storedData = localStorage.getItem("product_" + productID);
+        if (storedData) {
+            // Nếu đã có dữ liệu, chuyển đổi nó từ chuỗi JSON thành mảng
+            let productData = JSON.parse(storedData);
+            // Kiểm tra xem productData có thuộc tính skus không và là một mảng không
+            if (productData && Array.isArray(productData.skus)) {
+                // Kiểm tra xem skuCode đã tồn tại trong mảng SKU hay chưa
+                if (productData.skus.includes(skuCode)) {
+                    console.log("Đã có");
+                    return; // Dừng hàm nếu skuCode đã tồn tại
+                }
+                // Nếu skuCode chưa tồn tại, thêm nó vào mảng SKU
+                productData.skus.push(skuCode);
+                // Lưu lại dữ liệu đã cập nhật vào localStorage
+                localStorage.setItem("product_" + productID, JSON.stringify(productData));
+                console.log("product_" + productID, JSON.stringify(productData));
+            } else {
+                console.log("Invalid product data format");
+            }
+        } else {
+            // Nếu chưa có dữ liệu cho productID này, tạo một mảng mới chứa skuCode
+            let productData = { skus: [skuCode] };
+            // Lưu dữ liệu vào localStorage
+            localStorage.setItem("product_" + productID, JSON.stringify(productData));
+            console.log("product_" + productID, JSON.stringify(productData));
+        }
+
+        console.log("Đã thêm SKU mới vào localStorage");
+        console.log("sku_id=" + skuCode);
+        console.log("Số lượng cặp key-value trong localStorage: " + countLocalStorageItems());
+    }
+}
+
+

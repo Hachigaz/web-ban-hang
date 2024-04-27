@@ -83,13 +83,32 @@
     display: flex; /* Sử dụng Flexbox để xếp hai phần tử cart và Total cùng một hàng */
     justify-content: center; /* Căn giữa theo chiều ngang */
 }
+.input1{
+    width: calc(100% - 50px);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.input2{
+    width: calc(100% - 50px);
+    height: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.b{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-right: 120px;
+}
+.C{
+    font-size: 30px;
+}
 
 .cart, .Total {
     /* flex: 1; Phần tử cart và Total chiếm bằng nhau trên mỗi bên của container */
     margin: 0 15px;
 }
 .Total{
-    max-height: 180px;
+    max-height: 250px;
 }
 .cart {
     flex: 0.7;
@@ -116,6 +135,12 @@
     display: flex;
     align-items: center;
     padding: 10px 0;
+}
+.shopping {
+    display: flex;
+    /* border: 0.5px solid #000; /* Thiết lập border có độ dày 2px và màu đen */
+    /* padding: 10px; Thêm padding để tạo khoảng trắng xung quanh nội dung */ 
+    margin-bottom : 10px;
 }
 
 .product-item > div {
@@ -151,7 +176,6 @@
     display: flex;
     align-items: center;
 }
-
 .quantity input {
     text-align: center;
     margin-left: 10px;
@@ -167,7 +191,6 @@
 .product-name {
     width: 60%; /* Sử dụng lại chiều rộng của header1 */
     order: 1; /* Xác định thứ tự xuất hiện trong flex container */
-    margin-left:90px;
 }
 .product-name:hover {
     color: blue;
@@ -199,6 +222,9 @@
 .Total-header{
     font-weight: bold;
 }
+.Total-header-2{
+    margin-left: 100px;
+}
 .Total-content {
     display: flex;
     flex-wrap: wrap; /* Cho phép các phần tử con xuống dòng khi không đủ không gian */
@@ -227,8 +253,18 @@
     width: 50%;
     text-align: right;
 }
+.fee-money{
+    width: 50%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.value-fee{
+    width: 50%;
+    text-align: right;
+}
 .value-total-money{
-    color: blue;
+    color: red;
+    font-size: 25px;
 }
 .product-in-cart {
     display: flex;
