@@ -22,5 +22,24 @@
         public function getInfoExport(){
             $this->exportService->getInfoExport();
         }
+        public function GetQuantityExportByMonth($year){
+            $this->exportService->getQuantityExportByMonth($year);
+        }
+
+        public function GetQuantityExportByQuarter($year){
+            $this->exportService->getQuantityExportByQuarter($year);
+        }
+
+        public function GetProfitByMonth($year){
+            $this->exportService->getProfitByMonth($year);
+        }
+
+        public function GetProfitByQuarter($year){
+            $this->exportService->getProfitByQuarter($year);
+        }
+
+        public function GetDistinctYear(){
+            $this->exportService->getDistinctYear();
+        }
     }
 ?>

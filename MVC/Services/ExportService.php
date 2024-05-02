@@ -36,10 +36,36 @@
         public function getInfoExport(){
             return $this->exportRepo->getAllExport();
         }
+        
         public function getExportById(){
             $id = "1";
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->exportRepo->getExportById($id), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function getQuantityExportByMonth($year){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->exportRepo->getQuantityExportByMonth($year), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function getQuantityExportByQuarter($year){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->exportRepo->getQuantityExportByQuarter($year), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function getProfitByMonth($year){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->exportRepo->getProfitByMonth($year), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function getProfitByQuarter($year){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->exportRepo->getProfitByQuarter($year), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function getDistinctYear(){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->exportRepo->getDistinctYear(), JSON_UNESCAPED_UNICODE);
         }
     }
 ?>

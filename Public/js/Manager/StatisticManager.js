@@ -89,7 +89,7 @@ const profitConfig = {
                 data: [
                     14000000, 16000000, 15000000, 10000000, 18000000, 19000000,
                     22000000, 19000000, 12000000, 20000000, 23000000, 36000000,
-                    25000000,
+                    25000000,   
                 ],
                 backgroundColor: ["rgba(255, 99, 132)"],
                 borderWidth: 2,
@@ -115,6 +115,90 @@ const profitConfig = {
 }
 var profitChartEntity = new Chart(profitChart, profitConfig);
 
+
+const urlYearProfit = '../Export/GetDistinctYear';
+let dataYearProfit = [];
+
+fetch(urlYearProfit)
+    .then(response => response.json()) 
+    .then(json => {
+        dataYearProfit = json; // Lưu dữ liệu vào mảng
+        // Thêm các năm vào combobox
+        dataYearProfit.forEach((item, index, array) => {
+            let option = document.createElement('option');
+            option.value = item.year;
+            option.text = item.year;
+
+            if (index === array.length - 1) {
+                option.selected = true;
+            }
+            console.log(item.year);
+            yearSelectProfit.add(option);
+        });
+        fetchDataAndUpdateProfitChart(urlMonthProfit+dataYearProfit.pop().year);
+    })
+    .catch(error => console.error('Error:', error));
+
+let yearSelectProfit = document.getElementById('year-profit');
+
+
+
+const urlMonthProfit = '../Export/GetProfitByMonth/';
+const urlQuarterProfit = '../Export/GetProfitByQuarter/';
+const radioMonthProfit = document.querySelector("#month-profit");
+const radioQuarterProfit = document.querySelector("#quarter-profit");
+
+
+function fetchDataAndUpdateProfitChart(url){
+    let isQuarter = url.includes('Quarter');
+    let length = isQuarter ? 4 : 12;
+    let labels = Array.from({length}, (_, i) => isQuarter ? `Quý ${i+1}` : `Tháng ${i+1}`);
+    let year = url.slice(-4); // Lấy năm từ url
+
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        let profits = Array(length).fill(0);
+
+        if(isQuarter){
+            data.forEach(item => {
+                let index = parseInt(item.quarter) - 1; 
+                profits[index] = parseFloat(item.profit); 
+            });
+            profitConfig.options.plugins.title.text = `Biểu đồ tổng lợi nhuận thu được qua các quý trong năm ${year}`;
+        }else{
+            data.forEach(item => {
+                let index = parseInt(item.month) - 1; 
+                profits[index] = parseFloat(item.profit); 
+            });
+            profitConfig.options.plugins.title.text = `Biểu đồ tổng lợi nhuận thu được qua các tháng trong năm ${year}`;
+        }
+
+        profitConfig.data.labels = labels;
+        profitConfig.data.datasets[0].data = profits;
+        profitChartEntity.update();
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+yearSelectProfit.addEventListener('change', (event) => {
+    let year = event.target.value;
+    let url = radioQuarterProfit.checked ? `${urlQuarterProfit}${year}` : `${urlMonthProfit}${year}`;
+    fetchDataAndUpdateProfitChart(url);
+});
+
+radioMonthProfit.addEventListener('change', () => {
+    let year = yearSelectProfit.value;
+    let url = `${urlMonthProfit}${year}`;
+    fetchDataAndUpdateProfitChart(url);
+});
+
+radioQuarterProfit.addEventListener('change', () => {
+    let year = yearSelectProfit.value;
+    let url = `${urlQuarterProfit}${year}`;
+    fetchDataAndUpdateProfitChart(url);
+});
 
 var downloadProfitChartJs = () => {
     html2canvas(document.getElementById("profit")).then((canvas) => {
@@ -177,6 +261,90 @@ const exportConfig = {
 };
 
 var exportChartEntity = new Chart(exportChart ,exportConfig);
+
+const urlYearExport = '../Export/GetDistinctYear';
+let dataYearExport = [];
+
+fetch(urlYearExport)
+    .then(response => response.json()) 
+    .then(json => {
+        dataYearExport = json; // Lưu dữ liệu vào mảng
+        // Thêm các năm vào combobox
+        dataYearExport.forEach((item, index, array) => {
+            let option = document.createElement('option');
+            option.value = item.year;
+            option.text = item.year;
+            
+            if (index === array.length - 1) {
+                option.selected = true;
+            }
+            console.log(item.year);
+            yearSelectExport.add(option);
+        });
+        fetchDataAndUpdateExportChart(urlMonthExport+dataYearExport.pop().year);
+    })
+    .catch(error => console.error('Error:', error));
+
+let yearSelectExport = document.getElementById('year-export');
+
+
+
+const urlMonthExport = '../Export/GetQuantityExportByMonth/';
+const urlQuarterExport = '../Export/GetQuantityExportByQuarter/';
+const radioMonthExport = document.querySelector("#month-export");
+const radioQuarterExport = document.querySelector("#quarter-export");
+
+
+function fetchDataAndUpdateExportChart(url){
+    let isQuarter = url.includes('Quarter');
+    let length = isQuarter ? 4 : 12;
+    let labels = Array.from({length}, (_, i) => isQuarter ? `Quý ${i+1}` : `Tháng ${i+1}`);
+    let year = url.slice(-4); // Lấy năm từ url
+
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        let exportQuantity = Array(length).fill(0);
+
+        if(isQuarter){
+            data.forEach(item => {
+                let index = parseInt(item.quarter) - 1; 
+                exportQuantity[index] = parseFloat(item.total_quantity); 
+            });
+            exportConfig.options.plugins.title.text = `Biểu đồ tổng số lượng sản phẩm bán ra qua các quý trong năm ${year}`;
+        }else{
+            data.forEach(item => {
+                let index = parseInt(item.month) - 1; 
+                exportQuantity[index] = parseFloat(item.total_quantity); 
+            });
+            exportConfig.options.plugins.title.text = `Biểu đồ tổng số lượng sản phẩm bán ra qua các tháng trong năm ${year}`;
+        }
+
+        exportConfig.data.labels = labels;
+        exportConfig.data.datasets[0].data = exportQuantity;
+        exportChartEntity.update();
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+yearSelectExport.addEventListener('change', (event) => {
+    let year = event.target.value;
+    let url = radioQuarterExport.checked ? `${urlQuarterExport}${year}` : `${urlMonthExport}${year}`;
+    fetchDataAndUpdateExportChart(url);
+});
+
+radioMonthExport.addEventListener('change', () => {
+    let year = yearSelectExport.value;
+    let url = `${urlMonthExport}${year}`;
+    fetchDataAndUpdateExportChart(url);
+});
+
+radioQuarterExport.addEventListener('change', () => {
+    let year = yearSelectExport.value;
+    let url = `${urlQuarterExport}${year}`;
+    fetchDataAndUpdateExportChart(url);
+});
+
 var downloadExportChartJs = () => {
     html2canvas(document.getElementById("export")).then((canvas) => {
         var img = canvas.toDataURL(); //image data of canvas
@@ -237,6 +405,88 @@ const importConfig = {
 };
 
 var importChartEntity = new Chart(importChart ,importConfig);
+const urlYearImport = '../Import/GetDistinctYear';
+let dataYearImport = [];
+
+fetch(urlYearImport)
+    .then(response => response.json()) 
+    .then(json => {
+        dataYearImport = json; // Lưu dữ liệu vào mảng
+        dataYearImport.forEach((item, index, array) => {
+            let option = document.createElement('option');
+            option.value = item.year;
+            option.text = item.year;
+
+            if (index === array.length - 1) {
+                option.selected = true;
+            }
+            console.log(item.year);
+            yearSelectImport.add(option);
+        });
+        fetchDataAndUpdateImportChart(urlMonthImport+dataYearImport.pop().year);
+    })
+    .catch(error => console.error('Error:', error));
+
+let yearSelectImport = document.getElementById('year-import');
+
+
+
+const urlMonthImport = '../Import/GetQuantityImportByMonth/';
+const urlQuarterImport = '../Import/GetQuantityImportByQuarter/';
+const radioMonthImport = document.querySelector("#month-import");
+const radioQuarterImport = document.querySelector("#quarter-import");
+
+
+function fetchDataAndUpdateImportChart(url){
+    let isQuarter = url.includes('Quarter');
+    let length = isQuarter ? 4 : 12;
+    let labels = Array.from({length}, (_, i) => isQuarter ? `Quý ${i+1}` : `Tháng ${i+1}`);
+    let year = url.slice(-4); // Lấy năm từ url
+
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        let importQuantity = Array(length).fill(0);
+
+        if(isQuarter){
+            data.forEach(item => {
+                let index = parseInt(item.quarter) - 1; 
+                importQuantity[index] = parseFloat(item.total_quantity); 
+            });
+            importConfig.options.plugins.title.text = `Biểu đồ tổng số lượng sản phẩm nhập vào qua các quý trong năm ${year}`;
+        }else{
+            data.forEach(item => {
+                let index = parseInt(item.month) - 1; 
+                importQuantity[index] = parseFloat(item.total_quantity); 
+            });
+            importConfig.options.plugins.title.text = `Biểu đồ tổng số lượng sản phẩm nhập vào qua các tháng trong năm ${year}`;
+        }
+
+        importConfig.data.labels = labels;
+        importConfig.data.datasets[0].data = importQuantity;
+        importChartEntity.update();
+    })
+    .catch(error => console.error('Error:', error));
+}
+yearSelectImport.addEventListener('change', (event) => {
+    let year = event.target.value;
+    let url = radioQuarterImport.checked ? `${urlQuarterImport}${year}` : `${urlMonthImport}${year}`;
+    fetchDataAndUpdateImportChart(url);
+});
+
+radioMonthImport.addEventListener('change', () => {
+    let year = yearSelectImport.value;
+    let url = `${urlMonthImport}${year}`;
+    fetchDataAndUpdateImportChart(url);
+});
+
+radioQuarterImport.addEventListener('change', () => {
+    let year = yearSelectImport.value;
+    let url = `${urlQuarterImport}${year}`;
+    fetchDataAndUpdateImportChart(url);
+});
+
+
 var downloadImportChartJs = () => {
     html2canvas(document.getElementById("import")).then((canvas) => {
         var img = canvas.toDataURL(); //image data of canvas
@@ -280,6 +530,7 @@ var charts = document.querySelectorAll(".chart-container");
                 profitChartEntity = new Chart(profitChart ,profitConfig);
             }
             profitChartElement.classList.remove("hide");
+
         }
         if(button.className == "salary-statistic"){
             if(salaryChartEntity){

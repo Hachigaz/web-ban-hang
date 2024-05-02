@@ -39,5 +39,20 @@
         public function getInfoImport(){
             return $this->importRepo->getAllImport();
         }
+
+        public function getQuantityImportByMonth($year){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->importRepo->getQuantityImportByMonth($year), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function getQuantityImportByQuarter($year){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->importRepo->getQuantityImportByQuarter($year), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function getDistinctYear(){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->importRepo->getDistinctYear(), JSON_UNESCAPED_UNICODE);
+        }
     }
 ?>

@@ -1,19 +1,13 @@
-INSERT INTO `roles` (`role_id`, `role_name`, `is_active`) VALUES 
-('1', 'Admin', '1'), 
-('2', 'Nhân viên quản lý', '1'),
-('3', 'Nhân viên bán hàng', '1'),
-('4', 'Nhân viên kho', '1'),
-('5', 'Khách hàng', '1');
 
 INSERT INTO `accounts` (`account_id`, `phone_number`, `email`, `password`, `avatar`, `created_at`, `updated_at`, `is_active`) VALUES
-(1, '0988722521', 'hien@gmail.com', 'Thien123', `avatar_0988722521.jpg`,current_timestamp(), current_timestamp(), 1),
-(2, '0988722522', 'huy@gmail.com', 'qhuy123', `avatar_0988722522.jpg`, current_timestamp(), current_timestamp(), 1),
-(3, '0988722523', 'loc@gmail.com', 'mloc123', `avatar_0988722523.jpg`, current_timestamp(), current_timestamp(), 1),
-(4, '0988722524', 'phong@gmail.com', 'hphong123', `avatar_0988722524.jpg`,current_timestamp(), current_timestamp(), 1),
-(5, '0988722525', 'lan@gmail.com', 'tlan123', `avatar_0988722525.jpeg`, current_timestamp(), current_timestamp(), 1),
-(6, '0988722526', 'lieu@gmail.com', 'tlieu123', `avatar_0988722526.jpeg`,current_timestamp(), current_timestamp(), 1),
-(7, '0988722527', 'lai@gmail.com', 'tlai123', `avatar_0988722527.jpeg`,current_timestamp(), current_timestamp(), 1),
-(8, '0988722528', 'camhuong@gmail.com', `avatar_0988722528.jpg`,'chuong123', current_timestamp(), current_timestamp(), 1);
+(1, '0988722521', 'hien@gmail.com', 'Thien123', 'avatar_0988722521.jpg',current_timestamp(), current_timestamp(), 1),
+(2, '0988722522', 'huy@gmail.com', 'qhuy123', 'avatar_0988722522.jpg', current_timestamp(), current_timestamp(), 1),
+(3, '0988722523', 'loc@gmail.com', 'mloc123', 'avatar_0988722523.jpg', current_timestamp(), current_timestamp(), 1),
+(4, '0988722524', 'phong@gmail.com', 'hphong123', 'avatar_0988722524.jpg',current_timestamp(), current_timestamp(), 1),
+(5, '0988722525', 'lan@gmail.com', 'tlan123', 'avatar_0988722525.jpeg', current_timestamp(), current_timestamp(), 1),
+(6, '0988722526', 'lieu@gmail.com', 'tlieu123', 'avatar_0988722526.jpeg',current_timestamp(), current_timestamp(), 1),
+(7, '0988722527', 'lai@gmail.com', 'tlai123', 'avatar_0988722527.jpeg',current_timestamp(), current_timestamp(), 1),
+(8, '0988722528', 'camhuong@gmail.com', 'chuong123','avatar_0988722528.jpg', current_timestamp(), current_timestamp(), 1);
 
 INSERT INTO `customers` (`customer_id`, `customer_fullname`, `role_id`, `account_id`, `gender`, `address`, `date_of_birth`, `is_active`) VALUES 
 ('1', 'Nguyễn Thị Lan', '5', '5', '1', 'Quận 1, Thành Phố Hồ Chí Minh', '2003-06-12', '1'),
@@ -93,9 +87,9 @@ INSERT INTO `modules` (`module_id`, `module_name`, `is_active`) VALUES
 ('13', 'Quảng cáo', '1');
 
 INSERT INTO `decentralizations` (`decentralization_id`, `role_id`, `module_id`, `is_active`) VALUES 
-('1', '1', '1', '1'),-- admin
+('1', '1', '1', '1'),
 ('2', '1', '12', '1'),
-('3', '2', '1', '1'),-- nhan vien quan ly
+('3', '2', '1', '1'),
 ('4', '2', '2', '1'),
 ('5', '2', '3', '1'),
 ('6', '2', '4', '1'),
@@ -108,11 +102,11 @@ INSERT INTO `decentralizations` (`decentralization_id`, `role_id`, `module_id`, 
 ('13', '2', '11', '1'),
 ('14', '2', '12', '1'),
 ('15', '2', '13', '1'),
-('16', '3', '1', '1'),-- nhan vien ban hang
+('16', '3', '1', '1'),
 ('17', '3', '3', '1'),
 ('18', '3', '4', '1'),
 ('19', '3', '9', '1'),
-('20', '4', '4', '1'),-- nhan vien kho
+('20', '4', '4', '1'),
 ('21', '4', '5', '1'),
 ('22', '4', '6', '1'),
 ('23', '4', '7', '1'),
@@ -177,39 +171,6 @@ INSERT INTO `attendance` (`attendance_id`, `timesheet_id`, `date`, `status`, `le
 ('2', '2', '2024-04-16', 'Present', '2'),
 ('3', '3', '2024-04-16', 'Present', '3');
 
--- INSERT INTO `attendance` (`attendance_id`, `timesheet_id`, `date`, `status`) VALUES 
--- ('1', '1', '2024-04-01', 'Present'),
--- ('2', '1', '2024-04-02', 'Present'),
--- ('3', '1', '2024-04-03', 'Present'),
--- ('4', '1', '2024-04-04', 'Present'),
--- ('5', '1', '2024-04-05', 'Present'),
--- ('6', '1', '2024-04-06', 'Present'),
--- ('7', '1', '2024-04-07', 'Present'),
--- ('8', '1', '2024-04-08', 'Present'),
--- ('9', '1', '2024-04-09', 'Present'),
--- ('10', '1', '2024-04-10', 'Present'),
--- ('11', '1', '2024-04-11', 'Present'),
--- ('12', '1', '2024-04-12', 'Present'),
--- ('13', '1', '2024-04-13', 'Present'),
--- ('14', '1', '2024-04-14', 'Present'),
--- ('15', '1', '2024-04-15', 'Present'),
--- ('16', '1', '2024-04-16', 'Present'),
--- ('17', '1', '2024-04-17', 'Present'),
--- ('18', '1', '2024-04-18', 'Present'),
--- ('19', '1', '2024-04-19', 'Present'),
--- ('20', '1', '2024-04-20', 'Present'),
--- ('21', '1', '2024-04-21', 'Present'),
--- ('22', '1', '2024-04-22', 'Present'),
--- ('23', '1', '2024-04-23', 'Present'),
--- ('24', '1', '2024-04-24', 'Present'),
--- ('25', '1', '2024-04-25', 'Present'),
--- ('26', '1', '2024-04-26', 'Present'),
--- ('27', '1', '2024-04-27', 'Present'),
--- ('28', '1', '2024-04-28', 'Present'),
--- ('29', '1', '2024-04-29', 'Present'),
--- ('30', '1', '2024-04-30', 'Present');
-
--- 12.Kiểm tra total_salary = salary/26 * days_worked - (salary/26 * days_late * 30%)
 DELIMITER //
 CREATE TRIGGER update_total_salary_timesheets_insert
 AFTER INSERT ON timesheets
@@ -409,3 +370,36 @@ INSERT INTO `export_details` (`export_detail_id`, `export_id`, `shipment_id`, `u
 ('6', '3', '6', '7500000', '1'),
 ('7', '4', '7', '5000000', '2'),
 ('8', '4', '8', '2000000', '4');
+
+INSERT INTO `shipments` (`shipment_id`, `import_id`, `supplier_id`, `unit_price_import`, `quantity`, `remain`, `sku_id`, `is_active`) VALUES 
+('1', '1', '1', '7000000', '50', '49', '1', '1'),
+('2', '1', '2', '3000000', '50', '49', '1', '1'),
+('3', '1', '3', '12000000', '50', '49', '1', '1'),
+('4', '1', '4', '5000000', '50', '49', '1', '1'),
+('5', '2', '5', '5000000', '50', '49', '1', '1'),
+('6', '2', '6', '4000000', '50', '49', '1', '1'),
+('7', '2', '7', '3000000', '50', '49', '1', '1'),
+('8', '2', '8', '1500000', '50', '49', '1', '1'),
+('9', '3', '8', '1000000', '50', '49', '1', '1'),
+('10', '4', '8', '500000', '50', '49', '1', '1'),
+('11', '5', '8', '1200000', '50', '49', '1', '1'),
+('12', '6', '8', '500000', '50', '49', '1', '1'),
+('13', '6', '8', '1300000', '50', '49', '1', '1'),
+('14', '7', '8', '500000', '50', '49', '1', '1'),
+('15', '7', '8', '1200000', '50', '49', '1', '1');
+
+INSERT INTO `imports` (`import_id`, `staff_id`, `import_date`, `is_active`) VALUES 
+('1', '2', '2024-01-01', '1'),
+('2', '3', '2024-01-15', '1'),
+('3', '3', '2024-02-01', '1'),
+('4', '3', '2024-03-01', '1'),
+('5', '2', '2024-04-01', '1'),
+('6', '2', '2023-10-01', '1'),
+('7', '2', '2023-11-01', '1');
+
+INSERT INTO `roles` (`role_id`, `role_name`, `is_active`) VALUES 
+('1', 'Admin', '1'),
+('2', 'Nhân viên quản lý', '1'),
+('3', 'Nhân viên bán hàng', '1'),
+('4', 'Nhân viên kho', '1'),
+('5', 'Khách hàng', '1');

@@ -223,8 +223,8 @@ CREATE TABLE `shipments` (
   `quantity` int(50) DEFAULT 0 COMMENT 'Phải > giá trị tối thiểu của 1 lô hàng',
   `remain` int(50) DEFAULT 0 COMMENT 'Phải bé 1 số lượng cụ thể thì mới nhập thêm lô',
   `sku_id` int(11) NOT NULL,
-  `mfg` date,
-  `exp` date,
+  -- `mfg` date,
+  -- `exp` date,
   `is_active` tinyint(1) DEFAULT 1
 );
 

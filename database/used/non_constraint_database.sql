@@ -175,13 +175,11 @@ CREATE TABLE `roles` (
 CREATE TABLE `shipments` (
   `shipment_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `import_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
+  `supplier_id` int(11) NOT NULL,
   `unit_price_import` decimal(10,2) DEFAULT 0 COMMENT 'Phải > 0',
   `quantity` int(50) DEFAULT 0 COMMENT 'Phải > giá trị tối thiểu của 1 lô hàng',
   `remain` int(50) DEFAULT 0 COMMENT 'Phải bé 1 số lượng cụ thể thì mới nhập thêm lô',
   `sku_id` int(11) NOT NULL,
-  `mfg` date,
-  `exp` date,
   `is_active` tinyint(1) DEFAULT 1
 );
 
