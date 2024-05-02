@@ -25,6 +25,11 @@
             $this->roleRepo->deleteRole($id);
         }
 
+        public function getAllRole(){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            return $this->roleRepo->getAllRole();
+        }
+
         public function getAllRoleStaff(){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             return $this->roleRepo->getAllRoleStaff();

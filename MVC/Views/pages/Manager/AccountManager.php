@@ -47,8 +47,8 @@
         <button class="reset-btn"><i class="fi fi-rr-refresh"></i></button>
     </div>
     <div class="combobox-filter">
-        <select name="" id="gender-filter">
-            <option value="Giới tính">Vai trò</option>
+        <select name="" id="role-filter">
+            <option value="Vai trò">Vai trò</option>
         </select>
     </div>
     <div>Ngày tạo: </div>

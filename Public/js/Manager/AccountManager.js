@@ -31,7 +31,7 @@ const content = document.querySelector(".content-module");
 
 const startDateFilter = document.querySelector("#start-date");
 const endDateFilter = document.querySelector("#end-date");
-const genderFilter = document.querySelector("#gender-filter");
+const roleFilter = document.querySelector("#role-filter");
 const searchFilter = document.querySelector("#search-filter");
 
 const numbers = Array.from(document.querySelectorAll(".card .numbers"));
@@ -58,13 +58,18 @@ fetch("../InternalManager/GetAllDataAccount")
             name.textContent = valueArr[i]; // gán tên cho các thẻ
         });
 
+        // Filter
+        values.allRole.forEach((role) => {
+            var option = document.createElement("option");
+            option.value = role.role_name;
+            option.text = role.role_name;
+            roleFilter.appendChild(option); // gán giá trị các role vào combobox
+        });
+
         // Table
         values.infoAccount.forEach((account) => {
             var row = tbody.insertRow();
-            if(account.is_active == 0){
-                row.style.opacity = "0.5";
-                row.style.backgroundColor = "#ccc";
-            }
+            
             var accountIdCell = row.insertCell();
             accountIdCell.textContent = account.account_id; // gán giá trị vào từng ô tương ứng cho bảng
             
@@ -81,15 +86,22 @@ fetch("../InternalManager/GetAllDataAccount")
             roleCell.textContent = account.role_name;
 
             var createdAtCell = row.insertCell();
-            createdAtCell.textContent = account.created_at;
+            createdAtCell.textContent = convertToDDMMYY_HHMMSS(account.created_at);
 
             var operation = row.insertCell();
-            var btns = `<div class="btns">
-            <button class="info" id="info-${account.account_id}" title="Xem thông tin"><i class="fi fi-rr-info"></i></button>
-            `;
-            btns += `
-            <button class="delete" id="delete-${account.account_id}" title="Khóa tài khoản"><i class="fi fi-rr-lock"></i></button></div>`;
-            
+            if(account.is_active == 0){
+                row.style.opacity = "0.9";
+                row.style.backgroundColor = "#ccc";
+                row.style.color = "#000";
+                var btns = `<div class="btns">
+                <button class="info" id="info-${account.account_id}" title="Xem thông tin"><i class="fi fi-rr-info"></i></button>
+                <button class="delete" style="background-color: var(--primary-color-green)" id="delete-${account.account_id}" title="Mở khóa tài khoản"><i class="fi fi-rr-lock-open-alt"></i></button></div>`;
+
+            }else{
+                var btns = `<div class="btns">
+                <button class="info" id="info-${account.account_id}" title="Xem thông tin"><i class="fi fi-rr-info"></i></button>
+                <button class="delete" style="background-color: var(--primary-color-red)" id="delete-${account.account_id}" title="Khóa tài khoản"><i class="fi fi-rr-lock"></i></button></div>`;
+            }
             operation.insertAdjacentHTML("beforeend", btns);
 
             tbody.appendChild(row);
@@ -102,16 +114,23 @@ fetch("../InternalManager/GetAllDataAccount")
             var infoBtn = clickedElement.closest(".info");
             if (deleteBtn) {
                 var accountId = deleteBtn.id.split("-")[1];
+                var isActive;
                 values.infoAccount.forEach((account) => {
                     if (account.account_id == accountId) {
+                        isActive = account.is_active;
                         accountId = account.account_id;
                     }
                 });
-                contentModalDelete.textContent =
+                if(isActive == "0"){
+                    contentModalDelete.textContent =
+                    "Bạn có chắc là mở khóa tài khoản có id " + accountId ;
+                }else{
+                    contentModalDelete.textContent =
                     "Bạn có chắc là khóa tài khoản có id " + accountId ;
+                }
                 deleteA.setAttribute(
                     "href",
-                    "../Account/DeleteAccount/" + accountId
+                    "../Account/LockAndUnlockAccount/" + accountId
                 );
                 showModalDelete();
             }
@@ -172,14 +191,6 @@ function showModalInfo() {
     modal.classList.remove("hide");
     modalInnerInfo.classList.remove("hide");
 }
-function hideModalEdit() {
-    modal.classList.add("hide");
-    modalInnerEdit.classList.add("hide");
-}
-function showModalEdit() {
-    modal.classList.remove("hide");
-    modalInnerEdit.classList.remove("hide");
-}
 function hideModal() {
     modal.classList.add("hide");
     modalInnerDelete.classList.add("hide");
@@ -192,7 +203,6 @@ closeIconDelete.addEventListener("click", hideModalDelete);
 closeBtnDelete.addEventListener("click", hideModalDelete);
 closeIconInfo.addEventListener("click", hideModalInfo);
 closeBtnInfo.addEventListener("click", hideModalInfo);
-closeIconEdit.addEventListener("click", hideModalEdit);
 
 modal.addEventListener("click", hideModal);
 modalInnerDelete.addEventListener("click", function (event) {
@@ -201,15 +211,12 @@ modalInnerDelete.addEventListener("click", function (event) {
 modalInnerInfo.addEventListener("click", function (event) {
     event.stopPropagation();
 });
-modalInnerEdit.addEventListener("click", function (event) {
-    event.stopPropagation();
-});
 
 const refreshBtn = document.querySelector(".reset-btn");
 refreshBtn.addEventListener("click", function () {
     startDateFilter.value = "";
     endDateFilter.value = "";
-    genderFilter.selectedIndex = 0;
+    roleFilter.selectedIndex = 0;
     searchFilter.value = "";
     document.getElementById("start-date").max = null;
     document.getElementById("end-date").min = null;
@@ -224,39 +231,35 @@ const refreshEditBtn = document.querySelector(".modal-edit .reset-btn");
 function filterTable() {
     var trs = tbody.getElementsByTagName("tr");
     // Lấy giá trị lọc
-    var genderFilterValue = genderFilter.value;
+    var roleFilterValue = roleFilter.value;
     var searchFilterValue = searchFilter.value.toLowerCase();
     var startDateString = document.getElementById("start-date").value;
     var endDateString = document.getElementById("end-date").value;
 
     for (var i = 0; i < trs.length; i++) {
-        var genderTd = trs[i].getElementsByTagName("td")[4];
+        var roleTd = trs[i].getElementsByTagName("td")[4];
 
-        var accountCodeTd = trs[i].getElementsByTagName("td")[0];
-        var accountNameTd = trs[i].getElementsByTagName("td")[1];
-        var accountPhoneTd = trs[i].getElementsByTagName("td")[2];
-        var accountEmailTd = trs[i].getElementsByTagName("td")[3];
+        var accountIdTd = trs[i].getElementsByTagName("td")[0];
+        var accountPhoneTd = trs[i].getElementsByTagName("td")[1];
+        var accountEmailTd = trs[i].getElementsByTagName("td")[2];
+        var accountNameTd = trs[i].getElementsByTagName("td")[3];
         var accountCreatedAtTd = trs[i].getElementsByTagName("td")[5];
-
-        var birthDateTd = trs[i].getElementsByTagName("td")[6];
-
         if (
-            genderTd &&
-            accountCodeTd &&
+            roleTd &&
+            accountIdTd &&
             accountNameTd &&
             accountPhoneTd &&
             accountEmailTd &&
-            accountCreatedAtTd &&
-            birthDateTd
+            accountCreatedAtTd
         ) {
             // nếu tồn tại thì thay đổi tránh crash
-            var genderValue = genderTd.textContent || genderTd.innerText;
+            var roleValue = roleTd.textContent || roleTd.innerText;
 
-            var genderMatch =
-                genderFilterValue == "Giới tính" || //nếu mặc định thì sẽ hiển thị
-                genderValue.indexOf(genderFilterValue) > -1; // nếu không chứa giá trị lọc thì ẩn
-            var accountCodeMatch =
-                accountCodeTd.textContent
+            var roleMatch =
+                roleFilterValue == "Vai trò" || //nếu mặc định thì sẽ hiển thị
+                roleValue.indexOf(roleFilterValue) > -1; // nếu không chứa giá trị lọc thì ẩn
+            var accountIdMatch =
+                accountIdTd.textContent
                     .toLowerCase()
                     .indexOf(searchFilterValue) > -1; // so sánh giá trị trong bảng với giá trị lọc
             var accountNameMatch =
@@ -271,10 +274,6 @@ function filterTable() {
                 accountEmailTd.textContent
                     .toLowerCase()
                     .indexOf(searchFilterValue) > -1;
-            var accountCreatedAtMatch =
-                accountCreatedAtTd.textContent
-                    .toLowerCase()
-                    .indexOf(searchFilterValue) > -1;
             if (endDateString != "") {
                 // nếu endDate được chọn thì max của startDate là endDate
                 document.getElementById("start-date").max = endDateString;
@@ -285,26 +284,25 @@ function filterTable() {
             }
             var bothDatePickersSelected = startDateString && endDateString; // cả 2 datePicker được chọn thì mới bắt đầu kiểm tra điều kiện lọc
             if (bothDatePickersSelected) {
-                var birthDateMatch =
+                var createdAtMatch =
                     compareStartDate(
-                        birthDateTd.textContent,
-                        convertToDDMMYYYY(startDateString)
+                        accountCreatedAtTd.textContent,
+                        convertToDDMMYY_HHMMSS(startDateString)
                     ) &&
                     compareEndDate(
-                        birthDateTd.textContent,
-                        convertToDDMMYYYY(endDateString)
+                        accountCreatedAtTd.textContent,
+                        convertToDDMMYY_HHMMSS(endDateString)
                     );
             } else {
-                birthDateMatch = true;
+                createdAtMatch = true;
             }
             trs[i].style.display =
-                genderMatch &&
-                (accountCodeMatch ||
+                roleMatch &&
+                (accountIdMatch ||
                     accountNameMatch ||
                     accountPhoneMatch ||
-                    accountEmailMatch ||
-                    accountCreatedAtMatch) &&
-                birthDateMatch
+                    accountEmailMatch) &&
+                    createdAtMatch
                     ? ""
                     : "none";
         }
@@ -314,10 +312,18 @@ function convertToDate(dateString) {
     const [day, month, year] = dateString.split("/");
     return new Date(year, month - 1, day);
 }
+
+function convertToDateTime(dateTimeString) {
+    const [date, time] = dateTimeString.split(" ");
+    const [day, month, year] = date.split("/");
+    const [hour, minute, second] = time.split(":");
+    return new Date(year, month - 1, day, hour, minute, second);
+}
+
 function compareStartDate(dateString1, dateString2) {
     // so sánh với startDate
-    const date1 = convertToDate(dateString1);
-    const date2 = convertToDate(dateString2);
+    const date1 = convertToDateTime(dateString1);
+    const date2 = convertToDateTime(dateString2);
     if (date1 >= date2 && dateString2 != "") {
         return true;
     } else {
@@ -326,8 +332,8 @@ function compareStartDate(dateString1, dateString2) {
 }
 function compareEndDate(dateString1, dateString2) {
     // so sánh với endDate
-    const date1 = convertToDate(dateString1);
-    const date2 = convertToDate(dateString2);
+    const date1 = convertToDateTime(dateString1);
+    const date2 = convertToDateTime(dateString2);
     if (date1 <= date2 && dateString2 != "") {
         return true;
     } else {
@@ -335,17 +341,44 @@ function compareEndDate(dateString1, dateString2) {
     }
 }
 
-function convertToDDMMYYYY(dateString) {
-    // convert sang định dạng dd/mm/yyyy
-    if (dateString != "") {
-        const [year, month, day] = dateString.split("-");
+// function convertToDDMMYYYY(dateString) {
+//     // convert sang định dạng dd/mm/yyyy
+//     if (dateString != "") {
+//         const [year, month, day] = dateString.split("-");
+//         return `${day}/${month}/${year}`;
+//     } else {
+//         return "";
+//     }
+// }
+function convertToDDMMYY_HHMMSS(dateTimeString) {
+    if (dateTimeString != "") {
+        const date = new Date(dateTimeString);
+        const day = ("0" + date.getDate()).slice(-2);
+        const month = ("0" + (date.getMonth() + 1)).slice(-2);
+        const year = date.getFullYear().toString();
+        const hours = ("0" + date.getHours()).slice(-2);
+        const minutes = ("0" + date.getMinutes()).slice(-2);
+        const seconds = ("0" + date.getSeconds()).slice(-2);
+        return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    } else {
+        return "";
+    }
+}
+
+function convertToDDMMYY(dateTimeString) {
+    if (dateTimeString != "") {
+        const date = new Date(dateTimeString);
+        const day = ("0" + date.getDate()).slice(-2);
+        const month = ("0" + (date.getMonth() + 1)).slice(-2);
+        const year = date.getFullYear().toString();
         return `${day}/${month}/${year}`;
     } else {
         return "";
     }
 }
+
 // roleFilter.onchange = filterTable;
-genderFilter.onchange = filterTable;
+roleFilter.onchange = filterTable;
 searchFilter.oninput = filterTable;
 startDateFilter.onchange = filterTable;
 endDateFilter.onchange = filterTable;

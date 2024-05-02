@@ -363,13 +363,14 @@
 
         public function GetAllDataAccount(){
             $cardValue = array(
-                "countAllAccount" => "8",
-                "countStaffAccount" => "4",
-                "countCustomerAccount" => "4",
-                "countBlockedAccount" => "2"
+                "countAllAccount" => $this->accountService->getQuantityAllAccount(),
+                "countStaffAccount" => $this->accountService->getQuantityStaffAccount(),
+                "countCustomerAccount" => $this->accountService->getQuantityCustomerAccount(),
+                "countBlockedAccount" => $this->accountService->getQuantityAccountBlocked()
             );
             $infoAccount = $this->accountService->getAccountStaffCustomer();
-            $data = array("cardValue" => $cardValue, "infoAccount" => $infoAccount);
+            $allRole = $this->roleService->getAllRole();
+            $data = array("cardValue" => $cardValue, "infoAccount" => $infoAccount, "allRole" => $allRole);
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
         }

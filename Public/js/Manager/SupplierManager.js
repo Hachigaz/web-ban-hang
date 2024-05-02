@@ -514,3 +514,20 @@ function convertToDDMMYYYY(dateString) {
     }
 }
 searchFilter.oninput = filterTable;
+
+function deleteColumn(table, columnIndex) {
+    [...table.rows].forEach((row) => {
+      row.deleteCell(columnIndex);
+    });
+}
+const customerTable = document.querySelector("#supplier-table");
+const exportCustomerTable = document.querySelector("#btn-export-excel");
+exportCustomerTable.addEventListener('click', () => {
+    var clone = customerTable.cloneNode(true);
+
+    deleteColumn(clone, 5); // Xóa cột thứ 8
+    setTimeout(function(){
+        const wb = XLSX.utils.table_to_book(clone, {sheet: 'sheet-1'});
+        XLSX.writeFile(wb, 'SupplierTable.xlsx');
+    }, 2000);
+});

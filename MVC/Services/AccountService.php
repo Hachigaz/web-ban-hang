@@ -33,6 +33,10 @@
             $this->accountRepo->deleteAccount($id);
         }
 
+        public function lockAndUnlockAccount($id){
+            $this->accountRepo->lockAndUnlockAccount($id);
+        }
+
         public function getAllAccount(){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             return json_encode($this->accountRepo->getAllAccount(), JSON_UNESCAPED_UNICODE);
@@ -95,6 +99,22 @@
         public function changeAccountPassword($account_email,$new_password){
             $sql = "UPDATE accounts set accounts.password = '$new_password' where email='$account_email'";
             $this->accountRepo->set($sql);
+        }
+
+        public function getQuantityAllAccount(){
+            return $this->accountRepo->getQuantityAllAccount();
+        }
+        
+        public function getQuantityAccountBlocked(){
+            return $this->accountRepo->getQuantityAccountBlocked();
+        }
+
+        public function getQuantityStaffAccount(){
+            return $this->accountRepo->getQuantityStaffAccount();
+        }
+
+        public function getQuantityCustomerAccount(){
+            return $this->accountRepo->getQuantityCustomerAccount();
         }
     }
 ?>

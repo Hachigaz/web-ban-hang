@@ -44,13 +44,13 @@ var moduleIcon = {
     12: '<i class="fi fi-rr-users-medical"></i>',
     13: '<i class="fi fi-rr-screen"></i>'
 };
-const ulInNavigation = document.querySelector(".navigation ul");
 const customerBtn = document.querySelector(".customer-btn");
 const productBtn = document.querySelector(".product-btn");
 const internalManager = document.querySelector(".internal-manager");
 const screenModule = document.querySelector(".screen");
 const contentModule = document.querySelector(".content-module");
 
+const ulInNavigation = document.querySelector(".navigation ul");
 // account id va role id cua tai khoan dang dang nhap
 const roleIdValue = document.querySelector(".user-info.role-id-value").id;
 const accountIdValue = document.querySelector(".user-info .account-id-value").id;
@@ -125,29 +125,3 @@ fetch("../InternalManager/GetAllDataStaff")
         });
     })
     .catch((error) => console.log("Error: ", error));
-
-
-// const userInfo = document.querySelector(".user-info");
-// const closeIconInfo = document.querySelector("#closeIconInfo");
-// const modalInnerInfo = document.querySelector(".modal-inner.modal-info");
-// const contentModalInfo = document.querySelector(".content-info");
-// const modalWrapper = document.querySelector(".modal-wrapper");
-// function hideModalInfo() {
-//     modalWrapper.classList.add("hide");
-//     modalInnerInfo.classList.add("hide");
-// }
-// function showModalInfo() {
-//     modalWrapper.classList.remove("hide");
-//     modalInnerInfo.classList.remove("hide");
-// }
-// function hideModal() {
-//     modalWrapper.classList.add("hide");
-//     modalInnerInfo.classList.add("hide");
-// }
-// modalInnerInfo.addEventListener("click", function (event) {
-//     event.stopPropagation();
-// });
-// closeIconInfo.addEventListener("click", hideModalInfo);
-// userInfo.addEventListener("click", function(){
-//     showModalInfo();
-// });
