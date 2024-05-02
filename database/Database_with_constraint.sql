@@ -30,20 +30,29 @@ CREATE TABLE `categories` (
   `is_active` tinyint(1) DEFAULT 1
 );
 
+CREATE TABLE `banner_locations` (
+  `location_id` INT NOT NULL AUTO_INCREMENT,
+  `location_name` VARCHAR(512) NULL,
+  PRIMARY KEY (`location_id`));
+
 CREATE TABLE `banners` (
-  `banner_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `image_path` varchar(512) DEFAULT '',
-  `url` varchar(512) DEFAULT '',
-  `is_active` tinyint(1) DEFAULT 1
-);
-ALTER TABLE `electronic_supermarket`.`banners` 
-ADD COLUMN `banner_name` VARCHAR(256) NULL AFTER `is_active`,
-ADD COLUMN `width` INT NULL AFTER `banner_name`,
-ADD COLUMN `height` INT NULL AFTER `width`;
-ALTER TABLE `electronic_supermarket`.`banners` 
-CHANGE COLUMN `is_active` `is_active` TINYINT(1) NULL DEFAULT '1' AFTER `height`;
-ALTER TABLE `electronic_supermarket`.`banners` 
-ADD COLUMN `location` VARCHAR(64) NULL AFTER `banner_name`;
+  `banner_id` INT NOT NULL AUTO_INCREMENT,
+  `image_path` VARCHAR(512) NULL,
+  `url` VARCHAR(512) NULL,
+  `banner_name` VARCHAR(256) NULL,
+  `location_id` INT NULL,
+  `width` INT NULL,
+  `height` INT NULL,
+  `is_active` TINYINT(1) DEFAULT 1,
+  PRIMARY KEY (`banner_id`),
+  INDEX `banner_banner-locations_idx` (`location_id` ASC) VISIBLE,
+  CONSTRAINT `banner_banner-locations`
+    FOREIGN KEY (`location_id`)
+    REFERENCES `banner_locations` (`location_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
 
 CREATE TABLE `featured_products` (
   `featured_id` INT NOT NULL AUTO_INCREMENT,
@@ -52,18 +61,19 @@ CREATE TABLE `featured_products` (
   PRIMARY KEY (`featured_id`)
 );
 
-CREATE TABLE `electronic_supermarket`.`featured_products_rows` (
-  `row_id` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE `featured_products_rows` (
+  `row_id` INT NOT NULL PRIMARY KEY  AUTO_INCREMENT,
   `row_name` VARCHAR(512) NULL,
   `row_description` VARCHAR(2048) NULL,
   `row_url` VARCHAR(512) NULL,
-  PRIMARY KEY (`row_id`)
+  `index` INT DEFAULT 100,
+  `is_active` TINYINT(1) DEFAULT 1
 );
 
 
 CREATE TABLE `customers` (
   `customer_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `customer_fullname` varchar(100) NOT NULL DEFAULT '',
+  `customer_fullname` varchar(100) NOT NULL DEFAULT 'Người dùng',
   `role_id` int(11) NOT NULL DEFAULT 5,
   `account_id` int(11) NOT NULL,
   `gender` tinyint(1) DEFAULT 0 COMMENT 'Male: 0, Female: 1',
@@ -208,7 +218,7 @@ CREATE TABLE `roles` (
 CREATE TABLE `shipments` (
   `shipment_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `import_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
+  `supplier_id` int(11) NOT NULL,
   `unit_price_import` decimal(20,2) DEFAULT 0 COMMENT 'Phải > 0',
   `quantity` int(50) DEFAULT 0 COMMENT 'Phải > giá trị tối thiểu của 1 lô hàng',
   `remain` int(50) DEFAULT 0 COMMENT 'Phải bé 1 số lượng cụ thể thì mới nhập thêm lô',
@@ -251,6 +261,15 @@ CREATE TABLE `suppliers` (
   `address_of_supplier` varchar(200) NOT NULL,
   `email_of_supplier` varchar(100) UNIQUE NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
+);
+CREATE TABLE `Removes` (
+  `orderID` INT(11),
+  `order_detail_id` INT(11),
+  `shipment_id` INT(11),
+  `number` INT(50),
+  FOREIGN KEY (`orderID`) REFERENCES `orders`(`order_id`),
+  FOREIGN KEY (`order_detail_id`) REFERENCES `order_details`(`order_detail_id`),
+  FOREIGN KEY (`shipment_id`) REFERENCES `shipments`(`shipment_id`)
 );
 
 CREATE TABLE `contracts` (
@@ -319,7 +338,7 @@ ALTER TABLE `products` ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`category_i
 
 ALTER TABLE `product_images` ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
-ALTER TABLE `shipments` ADD CONSTRAINT `shipments_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+ALTER TABLE `shipments` ADD CONSTRAINT `shipments_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`supplier_id`);
 
 ALTER TABLE `skus` ADD CONSTRAINT `skus_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
@@ -335,7 +354,9 @@ ALTER TABLE `shipments` ADD FOREIGN KEY (`sku_id`) REFERENCES `skus` (`sku_id`);
 
 ALTER TABLE `export_details` ADD FOREIGN KEY (`export_id`) REFERENCES `exports` (`export_id`);
 
-ALTER TABLE `export_details` ADD FOREIGN KEY (`export_detail_id`) REFERENCES `shipments` (`shipment_id`);
+-- ALTER TABLE `export_details` ADD FOREIGN KEY (`export_detail_id`) REFERENCES `shipments` (`shipment_id`);
+
+ALTER TABLE `export_details` ADD FOREIGN KEY (`shipment_id`) REFERENCES `shipments` (`shipment_id`);
 
 ALTER TABLE `likes` ADD FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 

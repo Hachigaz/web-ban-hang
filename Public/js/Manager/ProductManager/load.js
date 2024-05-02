@@ -11,12 +11,14 @@ searchBar.addEventListener("keydown", function(e){
         }
     }
 })
+
 function SearchProduct(searchValue){
     let urlParams = new URLSearchParams()
     urlParams.append("search-query",searchValue)
     let forwardURL = `../InternalManager/ProductManager?${encodeURI(urlParams.toString())}`
     window.location.replace(forwardURL)
 }
+
 
 function showMoreProducts(element){
     if(!element.index){

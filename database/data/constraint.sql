@@ -540,3 +540,115 @@ END
 CREATE TRIGGER `reviews_AFTER_DELETE` AFTER DELETE ON `reviews` FOR EACH ROW BEGIN
 	update products set products.average_rating = (products.average_rating * products.total_reviews - old.rating)/ (products.total_reviews - 1 ), products.total_reviews = products.total_reviews - 1 where products.product_id = old.product_id;
 END
+
+DELIMITER //
+CREATE TRIGGER create_export_details_trigger
+AFTER INSERT ON exports
+FOR EACH ROW
+BEGIN
+    DECLARE export_id INT;
+    SET export_id = NEW.export_id;
+
+    INSERT INTO export_details (export_id, shipment_id, unit_price_export, quantity_export)
+    SELECT export_id, shipment_id, price, number
+    FROM Removes
+    JOIN order_details ON Removes.order_detail_id = order_details.order_detail_id
+    WHERE order_details.order_id = NEW.order_id;
+END//
+DELIMITER ;
+
+
+DELIMITER //
+
+CREATE TRIGGER create_export_trigger
+AFTER UPDATE ON orders
+FOR EACH ROW
+BEGIN
+    -- Check if the status_of_order has been changed to 'Shipped'
+    IF OLD.status_of_order <> NEW.status_of_order AND NEW.status_of_order = 'Shipped' THEN
+        -- Insert a new row into exports table
+        INSERT INTO exports (staff_id, order_id, export_date, total_price)
+        SELECT NEW.staff_id, NEW.order_id, NOW(), NEW.total_money;
+
+        -- Update the orders table to set the shipping_date to current date
+
+        -- Insert into export_details table
+        INSERT INTO export_details (export_id, shipment_id, unit_price_export, quantity_export)
+        SELECT (SELECT MAX(export_id) FROM exports), shipment_id, unit_price_import, quantity
+        FROM shipments
+        WHERE import_id = NEW.order_id;
+    END IF;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER create_removes_trigger
+AFTER INSERT ON order_details
+FOR EACH ROW
+BEGIN
+    DECLARE productsRemaining INT;
+    DECLARE shipmentID INT;
+    DECLARE shipmentRemain INT;
+    DECLARE productsToAdd INT;
+
+    -- Get the total number of products to add and initialize remaining products
+    SET productsRemaining = NEW.number_of_products;
+
+    -- Iterate over shipments with remaining products
+    shipment_loop: WHILE productsRemaining > 0 DO
+        -- Find the next shipment with remaining products
+        SELECT shipment_id, remain INTO shipmentID, shipmentRemain
+        FROM shipments
+        WHERE sku_id = NEW.sku_id AND remain > 0
+        ORDER BY shipment_id
+        LIMIT 1;
+
+        -- If no shipment is found, exit the loop
+        IF shipmentID IS NULL THEN
+            LEAVE shipment_loop;
+        END IF;
+
+        -- Calculate the number of products to assign from this shipment
+        SET productsToAdd = LEAST(productsRemaining, shipmentRemain);
+
+        -- Insert into Removes with the calculated number
+        INSERT INTO Removes (orderID, order_detail_id, shipment_id, number)
+        VALUES (NEW.order_id, NEW.order_detail_id, shipmentID, productsToAdd);
+
+        -- Update remaining products
+        SET productsRemaining = productsRemaining - productsToAdd;
+
+        -- Update remaining quantity in the shipment
+        UPDATE shipments
+        SET remain = remain - productsToAdd
+        WHERE shipment_id = shipmentID;
+    END WHILE;
+END//
+
+DELIMITER ;
+DELIMITER //
+
+CREATE TRIGGER return_remaining_products_trigger
+AFTER UPDATE ON orders
+FOR EACH ROW
+BEGIN
+    IF OLD.status_of_order <> NEW.status_of_order AND NEW.status_of_order = 'Cancelled' THEN
+        -- Add the returned quantity to the shipment's remain
+        UPDATE shipments s
+        JOIN Removes r ON s.shipment_id = r.shipment_id
+        JOIN order_details od ON od.order_detail_id = r.order_detail_id
+        SET s.remain = s.remain + r.number
+        WHERE od.order_id = NEW.order_id;
+        
+        -- Delete the processed order details from Removes
+        DELETE FROM Removes WHERE order_detail_id IN (
+            SELECT order_detail_id
+            FROM order_details
+            WHERE order_id = NEW.order_id
+        );
+    END IF;
+END//
+
+DELIMITER ;

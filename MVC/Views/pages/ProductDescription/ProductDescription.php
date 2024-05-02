@@ -16,7 +16,7 @@
 
 <script src="../Public/scripts/ProductDescription/script.js"></script>
 <script src="../Public/scripts/ProductDescription/load.js" defer></script>
-<script src="../Public/scripts/Shopcart/script3.js"></script>
+<!-- <script src="../Public/scripts/Shopcart/script3.js"></script> -->
 <div class="body">
     <div class="product-info-panel">
         <div class="product-image-info-wrapper">
@@ -28,6 +28,7 @@
                         </div>
                     </div>
                     <div class="image-preview-list-wrapper no-user-select">
+                        <?php if(count($data["ProductImages"])>0):?>
                         <div class="preview-image-list">
                             <div class="image-wrapper" onclick="showImage(this)">
                                 <div class="overlay"></div>
@@ -48,6 +49,7 @@
                                 unset($productImages);
                             ?>
                         </div>
+                        <?php endif?>
                     </div>
                 </div>
             </div>
@@ -110,7 +112,7 @@
                             <div class="option-buy" onclick="buyProduct()">
                                 Mua ngay
                             </div>
-                            <div class="option-add-to-cart" onclick="addProductToCart()">
+                            <div class="option-add-to-cart" onclick="addProductToCart2()">
                                 Thêm vào giỏ hàng
                             </div>
                         <?php else: ?>
@@ -265,10 +267,10 @@
                             <?php 
                             $customerAvatar = $review["avatar"];
                             if($customerAvatar==""){
-                                $customerAvatar = "_common/anon-user.jpg";
+                                $customerAvatar = "customerAvatar/_common/anon-user.jpg";
                             }
                             ?>
-                            <img src="../Public/img/customerAvatar/<?= $customerAvatar ?>" alt="" srcset="">
+                            <img src="../Public/img/<?= $customerAvatar ?>" alt="" srcset="">
                             <?php 
                                 unset($ratingCount);
                             ?>

@@ -88,9 +88,15 @@
     /* flex: 1; Phần tử cart và Total chiếm bằng nhau trên mỗi bên của container */
     margin: 0 15px;
 }
+.Total{
+    max-height: 180px;
+}
 .cart {
     flex: 0.7;
-    background-color: red;
+    /* background-color: red; */
+    border: 1px solid #000; /* Thiết lập border có độ dày 2px và màu đen */
+    padding: 10px; /* Thêm padding để tạo khoảng trắng xung quanh nội dung */
+    /* border-radius: 5%; */
 }
 
 .cart-header {
@@ -121,19 +127,35 @@
 .quantity,
 .total-price-product {
     width: 15%;
+    /* font-weight: bold; */
+}
+.product-price,
+.total-price-product {
+       font-weight: bold;
+
 }
 .quantity{
     display: flex;
+    flex-direction: column;
     align-items: center;
     padding: 15px;
 }
-.quantity div {
-    
+.quantity .remove-btn {
+    color: blue;
+    margin-top: 10px;
 }
+.quantity .remove-btn:hover{
+    color: red;
+}
+.controls {
+    display: flex;
+    align-items: center;
+}
+
 .quantity input {
     text-align: center;
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
     width: 20px; /* Thiết lập kích thước của input */
     /* Hoặc có thể sử dụng max-width nếu bạn muốn input co giãn tối đa */
     /* max-width: 50px; */
@@ -145,6 +167,10 @@
 .product-name {
     width: 60%; /* Sử dụng lại chiều rộng của header1 */
     order: 1; /* Xác định thứ tự xuất hiện trong flex container */
+    margin-left:90px;
+}
+.product-name:hover {
+    color: blue;
 }
 
 .product-price {
@@ -165,11 +191,14 @@
     display: flex;
     flex-direction: column;
     padding: 10px;
-    background-color: blue;
+    /* background-color: blue; */
+    border: 0.5px solid #000; /* Thiết lập border có độ dày 2px và màu đen */
+    padding: 10px; /* Thêm padding để tạo khoảng trắng xung quanh nội dung */
+ 
 }
-/* .Total-header{
-
-} */
+.Total-header{
+    font-weight: bold;
+}
 .Total-content {
     display: flex;
     flex-wrap: wrap; /* Cho phép các phần tử con xuống dòng khi không đủ không gian */
@@ -178,9 +207,10 @@
 }
 
 .Total-footer{
+    background-color: blue;
     color:white; /* chuyển màu chữ thành đỏ */
     text-decoration: none; /* loại bỏ dòng gạch dưới */
-    border: 0.5px solid red; /* tạo border màu xanh, độ rộng 2px */
+    border: 0.5px solid ; /* tạo border màu xanh, độ rộng 2px */
     border-radius: 10px; /* tạo border vo tròn */
     padding: 20px 50px; /* thêm padding để tạo khoảng cách giữa border và nội dung */
     width: fit-content;
@@ -188,6 +218,7 @@
     font-weight: bold;
     margin-left: auto; /* căn giữa theo chiều ngang */
     margin-right: auto; /* căn giữa theo chiều ngang */
+    margin-top: 25px;
 }
 .temp-money{
     width: 50%;
@@ -195,6 +226,9 @@
 .value-temp-money{
     width: 50%;
     text-align: right;
+}
+.value-total-money{
+    color: blue;
 }
 .product-in-cart {
     display: flex;
@@ -219,7 +253,9 @@
     text-align: center; /* Căn giữa nội dung */
     margin-right: 5px; /* Khoảng cách giữa input và button */
 }
-
+.help{
+    color: white;
+}
 .product-in-cart button {
     flex-shrink: 0; /* Không co lại khi không đủ không gian */
     margin-right: 5px; /* Khoảng cách giữa các button */

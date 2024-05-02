@@ -1,10 +1,10 @@
 let productsAddedToCart = 0;
-function addProducttocart(product_id, sku_id, checkboxState,inputValue) {
+function addProducttocart(product_id, sku_id) {
     fetch("../Shopcart/getAllProductSku")
         .then((response) => response.json())
         .then((data) => {
             const productSku = data.productSku;
-            const foundProduct = productSku.find(item => item.product_id === product_id && item.sku_id === sku_id);
+            const foundProduct = productSku.find(item => item.sku_id === sku_id);
             if (foundProduct) {
                 const cartContent = document.querySelector(".cart-content");
 
@@ -33,19 +33,28 @@ function addProducttocart(product_id, sku_id, checkboxState,inputValue) {
                 nameDiv.classList.add("product-name");
                 nameDiv.textContent = foundProduct.product_name;
                 productDiv.appendChild(nameDiv);
+                
+                const skuDiv = document.createElement("div");
+                skuDiv.classList.add("product-sku-code");
+                skuDiv.textContent = foundProduct.sku_code;
+                nameDiv.appendChild(skuDiv);
 
                 const priceDiv = document.createElement("div");
                 priceDiv.classList.add("product-price");
-                priceDiv.textContent = foundProduct.price + "đ"; // Thêm "đ" vào giá trị của price
+                priceDiv.textContent = (parseInt(foundProduct.price)).toLocaleString() + "đ";
                 cartContent.appendChild(priceDiv); // Thêm priceDiv vào cart-content
                 productDiv.appendChild(priceDiv);
 
                 const quantityDiv = document.createElement("div");
                 quantityDiv.classList.add("quantity");
 
+                const controllDiv = document.createElement("div");
+                controllDiv.classList.add("controll");
+                
+                quantityDiv.appendChild(controllDiv);
                 const minusBtn = document.createElement("button");
                 minusBtn.textContent = "-";
-                quantityDiv.appendChild(minusBtn);
+                controllDiv.appendChild(minusBtn);
 
                 const quantityInput = document.createElement("input");
                 quantityInput.id ="quantity_sku_" + sku_id;
@@ -77,11 +86,17 @@ function addProducttocart(product_id, sku_id, checkboxState,inputValue) {
                         updateTotalAmount();
                     }
                 });
-                quantityDiv.appendChild(quantityInput);
+                controllDiv.appendChild(quantityInput);
 
                 const plusBtn = document.createElement("button");
                 plusBtn.textContent = "+";
-                quantityDiv.appendChild(plusBtn);
+                controllDiv.appendChild(plusBtn);
+                // quantityDiv.innerHTML += "</br>";
+
+                const remove = document.createElement("button");
+                remove.textContent = "Xóa";
+                remove.classList.add("remove-btn")
+                quantityDiv.appendChild(remove);
 
                 cartContent.appendChild(quantityDiv); // Thêm quantityDiv vào cart-content
                 productDiv.appendChild(quantityDiv);
@@ -106,7 +121,7 @@ function addProducttocart(product_id, sku_id, checkboxState,inputValue) {
                 // Hàm cập nhật giá trị total price
                 function updateTotalPrice() {
                     const totalPrice = parseInt(foundProduct.price) * parseInt(quantityInput.value);
-                    totalPriceDiv.textContent = totalPrice + "đ";
+                    totalPriceDiv.textContent = (parseInt(totalPrice)).toLocaleString() + "đ";
                     saveState(product_id, sku_id, checkbox.checked, quantityInput.value);
                 }
 
@@ -133,24 +148,24 @@ function addProducttocart(product_id, sku_id, checkboxState,inputValue) {
                 function saveState(product_id, sku_id, checkboxState, inputValue) {
                     console.log(`Save input ${checkbox.id} = ${inputValue}`);
                     console.log(`Checkbox ${checkbox.id} = ${checkboxState ? "checked" : "unchecked"}`);
-                    localStorage.setItem("product_" + sku_id, JSON.stringify({ product_id, sku_id, checkboxState, inputValue }));
+                    localStorage.setItem("products_" + sku_id, JSON.stringify({ product_id, sku_id, checkboxState, inputValue }));
                 }
 
                 // Hàm khôi phục trạng thái từ localStorage khi tải trang
                 function restoreState(product_id, sku_id) {
-                    const storedState = localStorage.getItem("product_" + sku_id);
+                    const storedState = localStorage.getItem("products_" + sku_id);
                     if (storedState) {
                         const { checkboxState, inputValue } = JSON.parse(storedState);
-                        
+                
                         // Get the checkbox and quantity input elements based on their IDs
                         const checkbox = document.getElementById("sku_" + sku_id);
                         const quantityInput = document.getElementById("quantity_sku_" + sku_id);
-                        
-                        // Check the checkbox and set the quantity input value
-                        checkbox.checked = checkboxState;
-                        quantityInput.value = inputValue;
                 
-                        // Call addProductToCart to update the UI
+                        // Check the checkbox and set the quantity input value
+                        checkbox.checked = checkboxState === undefined ? true : checkboxState;
+                        quantityInput.value = inputValue === undefined ? 1 : inputValue;
+                
+
                     }
                     updateTotalPrice();
                     updateTotalAmount();
@@ -169,19 +184,19 @@ function addProducttocart(product_id, sku_id, checkboxState,inputValue) {
                             // Tìm totalPriceDiv trong productDiv
                             const totalPriceDiv = productDiv.querySelector(".total-price-product");
                             // Lấy giá trị số từ textContent bỏ đi ký tự 'đ'
-                            const price = parseInt(totalPriceDiv.textContent.replace('đ', ''));
+                            const priceText = totalPriceDiv.textContent.replace(/\D/g, ''); // Loại bỏ tất cả các ký tự không phải số
+                            const price = parseInt(priceText); // Chuyển đổi thành số nguyên
                             totalPrice += price;
                         }
                     });
                 
                     // Cập nhật giá trị cho temp-money
                     const tempMoneyDiv = document.getElementById("temp-money");
-                    tempMoneyDiv.textContent = totalPrice + "đ";
-                
+                    tempMoneyDiv.textContent = (parseInt(totalPrice)).toLocaleString() + "đ";
                     // Tính thành tiền và cập nhật giá trị cho value-total-money
                     const totalMoneyDiv = document.querySelector(".value-total-money");
                     const totalMoney = totalPrice * 1.1; // Thành tiền = Tạm tính * 1.1
-                    totalMoneyDiv.textContent = totalMoney + "đ";
+                    totalMoneyDiv.textContent = (parseInt(totalMoney)).toLocaleString() + "đ";
                 }
                 // Khôi phục trạng thái từ localStorage khi tải trang
                 // saveState(product_id, sku_id, checkbox.checked, quantityInput.value);
@@ -197,7 +212,7 @@ function addProducttocart(product_id, sku_id, checkboxState,inputValue) {
 calculateTotalAmount();
 
 // test
-addProducttocart("1", "1");
+// addProducttocart("1", "1");
 // addProducttocart("3", "17");
 
 
@@ -216,12 +231,11 @@ function calculateTotalAmount() {
 
     // Cập nhật giá trị cho temp-money
     const tempMoneyDiv = document.getElementById("temp-money");
-    tempMoneyDiv.textContent = totalPrice + "đ";
-    
+    tempMoneyDiv.textContent = (parseInt(totalPrice)).toLocaleString()  + "đ";
     // Tính và cập nhật giá trị cho value-total-money
     const totalMoneyDiv = document.querySelector(".value-total-money");
     const totalMoney = totalPrice * 1.1; // Thành tiền = Tạm tính * 1.1
-    totalMoneyDiv.textContent = totalMoney + "đ";
+    totalMoneyDiv.textContent = (parseInt(totalMoney)).toLocaleString() + "đ";
 }
 
 
@@ -263,11 +277,11 @@ function checkStoredProducts() {
     const addedSkuIds = new Set(); // Use a Set to store added sku_ids
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key.startsWith("product_")) {
+        if (key.startsWith("products_")) {
             const { sku_id } = JSON.parse(localStorage.getItem(key));
             if (!addedSkuIds.has(sku_id)) {
                 const { product_id, checkboxState, inputValue } = JSON.parse(localStorage.getItem(key));
-                addProducttocart(product_id, sku_id, checkboxState, inputValue);
+                // addProducttocart(product_id, sku_id, checkboxState, inputValue);
                 addedSkuIds.add(sku_id); // Add sku_id to the Set to mark it as added
             }
         }
@@ -285,7 +299,7 @@ thanhToanButton.addEventListener('click', function() {
     if (totalMoney !== 0) {
         document.getElementById("Total-footer").addEventListener("click", function() {
             // Hiển thị form khi người dùng nhấp vào div "Total-footer"
-            document.getElementById("personalInfoForm").style.display = "block";
+            window.location.href = "http://localhost/web-ban-hang/Checkout/";        
         });
     } else {
         // Show a message or perform other actions when the total amount is 0
@@ -294,5 +308,123 @@ thanhToanButton.addEventListener('click', function() {
 });
 // Gọi hàm checkCartContent khi trang được tải và sau mỗi lần thêm hoặc xoá sản phẩm trong cart-content
 document.addEventListener("DOMContentLoaded", checkCartContent);
+document.addEventListener("DOMContentLoaded", function() {
+    callAll();
+});
+
+function callAll() {
+    // Loop through all items in localStorage
+    for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i);
+        // Check if the key represents product data
+        if (key.startsWith("product_")) {
+            let productID = key.replace("product_", ""); // Get product ID from the key
+            let skuData = localStorage.getItem(key); // Get SKU data from localStorage
+            
+            try {
+                let parsedData = JSON.parse(skuData); // Parse the SKU data
+                console.log("Parsed data:", parsedData); // Log the parsed data
+                
+                // Check if the parsed data has the expected structure
+                if (parsedData && Array.isArray(parsedData.skus)) {
+                    // Iterate through the skus array and add each SKU to the cart
+                    parsedData.skus.forEach(sku => {
+                        if (!isNaN(parseInt(productID)) && !isNaN(parseInt(sku))) {
+                            addProducttocart(productID, sku); // Call addProducttocart function with corresponding product ID and SKU
+                            console.log("(" + productID + ")(" + sku + ")");
+                        } else {
+                            console.error("Invalid product or SKU ID format:", productID, sku);
+                        }
+                    });
+                } else {
+                    console.error("Invalid product data:", parsedData);
+                }
+            } catch (error) {
+                console.error("Error parsing SKU data:", error);
+            }
+        }
+    }
+}
 
 
+
+
+
+
+
+function removeProductFromCart(sku_id) {
+    // Iterate over all localStorage keys
+    for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i);
+        // Check if the key represents a product entry
+        if (key.startsWith("product_")) {
+            // Retrieve the product data associated with the key
+            const storedData = localStorage.getItem(key);
+            if (storedData) {
+                // Parse the stored data to get the JavaScript object
+                const productData = JSON.parse(storedData);
+                // Check if the productData has a skus array
+                if (productData && Array.isArray(productData.skus)) {
+                    // Find the index of the sku_id in the skus array
+                    const index = productData.skus.indexOf(sku_id);
+                    // If the sku_id is found, remove it from the skus array
+                    if (index !== -1) {
+                        productData.skus.splice(index, 1);
+                        // Update the localStorage with the modified data
+                        localStorage.setItem(key, JSON.stringify(productData));
+                        console.log("Removed sku_id " + sku_id + " from " + key);
+                        // Check if the skus array is now empty
+                        if (productData.skus.length === 0) {
+                            // If the skus array is empty, remove the entire product entry from localStorage
+                            localStorage.removeItem(key);
+                            console.log("Removed empty product entry: " + key);
+                            location.reload();
+                        }
+                        else{
+                            location.reload();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    const productDiv = document.getElementById(sku_id); // Get the product item div
+    if (productDiv) {
+        productDiv.remove(); // Remove the product item from the UI
+    }
+    checkCartContent();
+}
+
+
+
+
+
+
+// Kiểm tra xem có phần tử div header có chứa phần tử <a> với nội dung là "Đăng xuất" không
+const logoutLink = document.querySelector('.header-ref');
+const totalFooterDiv = document.querySelector('.Total-footer');
+
+if (!logoutLink || logoutLink.textContent.trim() == 'Đăng xuất') {
+    // Kiểm tra xem div Total-footer có phần tử a có class là "help" không
+    const helpLink = totalFooterDiv.querySelector('a.help');
+    if (helpLink) {
+        // Ẩn phần tử <a>
+        helpLink.style.display = "none";
+        // Hiển thị chữ "Tiếp tục" bằng cách gán giá trị cho textContent
+        totalFooterDiv.textContent = "Tiếp tục";    
+    }
+}
+
+document.addEventListener("click", function(event) {
+    if (event.target.classList.contains("remove-btn")) {
+        const productDiv = event.target.closest(".product-item"); // Find the closest product item div
+        if (productDiv) {
+            const sku_id = productDiv.id; // Get the SKU ID from the product item div
+            removeProductFromCart(sku_id); // Remove the product from the cart
+        }
+    }
+});
+// window.onload = function() {
+//     callAll(); // Gọi hàm callAll() khi trang được tải
+// };

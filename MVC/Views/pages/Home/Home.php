@@ -13,9 +13,9 @@
             <div id="ad-widget" class="widget-container">
                 <div class="widget-list-wrapper">
                     <div class="widget-list">
-                        <?php foreach($data["BannerList"]["Banners"] as $bannerPath): ?>
-                            <a href="#" class="widget-item no-style" style="">
-                                <img src="../<?=$bannerPath?>" alt="" srcset="">
+                        <?php foreach($data["HeaderBannerList"] as $headerBanner): ?>
+                            <a href="<?= $headerBanner["url"] ?>" class="widget-item no-style" style="">
+                                <img src="../Public/img/<?=$headerBanner["image_path"]?>" alt="" srcset="">
                             </a>
                         <?php endforeach?>
                     </div>
@@ -25,21 +25,23 @@
             </div>
         </div>
         <div class="categories-panel">
-            <div class="categories-panel style-panel-title">
-                
+            <div class="category-list">
+                <?php foreach($data["BrandDisplayList"] as $brand): ?>
+                <a class="category-item no-style" href="../Catalog/Category?context=brands&context-value=<?= $brand["brand_id"] ?>">
+                    <div class="img-wrapper">
+                        <img src="../Public/img/logo/brand_logo/<?= $brand["brand_logo"]?>" alt="">
+                    </div>
+                </a>
+                <?php endforeach; ?>
             </div>
         </div>
-        <!-- <div class="featured-products-panel">
-            <?php 
-            function addFeaturedProductList($set_title,$set_index,$productList){
-                include('./MVC/Views/pages/Home/components/ItemList.php');                
-            }
-            $index = 0;
-            foreach ($data["ProductLists"] as $key => $productList){
-                addFeaturedProductList($key,$index,$productList);
-                $index++;
-            }
-            ?>
-        </div> -->
+        <div class="featured-products-panel">
+            <?php foreach($data["DisplayRows"] as $displayRow):?> 
+                <?php include('./MVC/Views/pages/Home/components/ItemList.php'); ?>          
+            <?php endforeach; ?>
+        </div>
+        <div class="catalog-redirect-panel">
+            <a class="no-style redirect-button" href="../Catalog/">Xem danh mục sản phẩm</a>
+        </div>
     </div>
 </div>

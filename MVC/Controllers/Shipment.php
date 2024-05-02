@@ -19,5 +19,8 @@
         public function GetShipmentById(){
             $this->shipmentService->GetShipmentById();
         }
+        public function GetShipmentlByImportId(){
+            $this->shipmentService->GetShipmentlByImportId();
+        }
     }
 ?>

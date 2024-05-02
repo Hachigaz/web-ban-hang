@@ -15,10 +15,10 @@
         <div class="no-item-icon" id="no-item">
             <i class="fa-solid fa-bag-shopping"></i></br>
             <span>Không có sản phẩm nào trong giỏ hàng</span></br>
-            <a href="/web-ban-hang/Home/" class="backhome">Về trang chủ</a>
+            <a href="../Home/" class="backhome">Về trang chủ</a>
         </div>
         <div class="inline">
-            <a href="/web-ban-hang/Home/" class="backhome-2">Trang chủ -></a>
+            <a href="../Home/" class="backhome-2">Trang chủ -></a>
         </div>
         <span class="inline">
             Giỏ hàng </br>
@@ -36,7 +36,7 @@
         <div class="shop-cart" id="cart">
             <div class="cart">
                 <div class="cart-header">
-                    <div class="header1">123</div>
+                    <div class="header1"></div>
                     <div class="header2">Đơn giá</div>
                     <div class="header2">Số lượng</div>
                     <div class="header2 header4">Thành tiền</div>
@@ -61,15 +61,13 @@
                     <span class="help">Đăng nhập để tiếp tục</span>
                 </a>  -->
                 <div  class="Total-footer" id ="Total-footer">
-                    Thanh toán<br>
-                    <span class="help">Đăng nhập để tiếp tục</span>
+                    <!-- Thanh toán<br> -->
+                    <a class="help" href="http://localhost/web-ban-hang/Signin/">Đăng nhập để tiếp tục</a>
                 </div>                 
             </div>
         </div>
         <div id="personalInfoForm" style="display: none;">
-    <!-- Form nhập thông tin cá nhân sẽ được thêm vào đây -->
-    <!-- Ví dụ: -->
-    <form action="../Order/CreateOrder" method="post" class="modal-body" enctype="multipart/form-data">
+    <!-- <form action="../Order/CreateOrder" method="post" class="modal-body" enctype="multipart/form-data">
         <label for="name">Họ tên:</label>
         <input type="text" id="name" name="name"><br>
         <label for="email">Email:</label>
@@ -80,17 +78,10 @@
         <input type="address" id="address" name="address"><br>
         <label for="note">Ghi chú:</label>
         <input type="note" id="note" name="note"><br>
-        <!-- Thêm các trường thông tin khác cần nhập -->
         <input type="submit" value="Submit">
-    </form>
+    </form> -->
 </div>
         <?php require_once "./MVC/Views/pages/".$data["Page"].".php" ?>
     </body>
-    <script src="../Public/scripts/Shopcart/script.js">
-        
-    </script>
-        <script src="../Public/scripts/Shopcart/script2.js">
-        
-        </script>
-    <script src="../Public/scripts/Shopcart/scriptsfunction.js" defer></script>
+        <script src="../Public/scripts/Shopcart/script2.js"> </script>
 </html>

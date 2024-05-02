@@ -1,5 +1,5 @@
 <?php foreach($optionList as $option): ?>
-<div class="sku-item row-element-display no-user-select" onclick="fillOption(this)">
+<div class="sku-item row-element-display no-user-select" onclick="fillOptionEditInfo(this)">
     <div class="row-element" attrib="option_name" value="<?= $option["option_name"]?>">
         <?= $option["option_name"] ?>
     </div>

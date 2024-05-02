@@ -42,7 +42,16 @@
                             
                         </div>    
                     </div>
-                    <input class="input" name="input_email" type="text" placeholder="Nhập email" onclick="(new InputElement(this.parentElement)).hideError()">
+                    <input class="input" autocomplete="off" name="input_email" type="text" placeholder="Nhập email" onclick="(new InputElement(this.parentElement)).hideError()">
+                </div>
+                <div class="c-input" id="input_phone_number">
+                    <div class="input-label-wrapper">
+                        <label for="input_email">Số điện thoại</label>
+                        <div class="input-error-message">
+                            
+                        </div>    
+                    </div>
+                    <input class="input" autocomplete="off" name="input_phone_number" type="text" placeholder="Nhập số điện thoại" onclick="(new InputElement(this.parentElement)).hideError()">
                 </div>
                 <div class="c-input" id="input_password">
                     <div class="input-label-wrapper">
@@ -51,7 +60,7 @@
                             
                         </div>
                     </div>
-                    <input class="input" name="input_password" type="password" placeholder="Nhập mật khẩu" onclick="(new InputElement(this.parentElement)).hideError()">
+                    <input class="input" name="input_password" type="password" autocomplete="off" placeholder="Nhập mật khẩu" onclick="(new InputElement(this.parentElement)).hideError()">
                 </div>
                 <div class="c-input" id="input_confirm_password">
                     <div class="input-label-wrapper">
@@ -60,7 +69,7 @@
                             
                         </div>  
                     </div>  
-                    <input class="input" name="input_confirm_password" type="password" placeholder="Nhập lại mật khẩu" onclick="(new InputElement(this.parentElement)).hideError()">
+                    <input class="input" name="input_confirm_password" type="password" autocomplete="off" placeholder="Nhập lại mật khẩu" onclick="(new InputElement(this.parentElement)).hideError()">
                 </div>
                 <input type="button" value="Tạo tài khoản" onclick="processSignUp()">            
             </form>

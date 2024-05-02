@@ -49,17 +49,38 @@
                 $searchQueries.=" AND products.product_name LIKE '%{$searchValue}%'";
             }
 
+
+            //loc categories
             if((isset($urlParams["context"]) && $urlParams["context"]!="categories") || !isset($urlParams["context"])){
                 $filterQueries = "";
-                if(isset($urlParams["categories"])){
-                    $queryItems = explode(",",$urlParams["brands"]);
-                    $filterQueries.=" AND products.category_id IN (".implode(",",$queryItems).")";
 
+
+
+                if(isset($urlParams["context"])){
+                    $value = $urlParams["context-value"];
+                    $filterQueries.= " OR products.brand_id = $value";
+                    unset($value);
+                }
+                else{
                     if(isset($urlParams["brands"])){
+                        $queryItems = explode(",",$urlParams["brands"]);
+                        if(count($queryItems)>0){
+                            $filterQueries.="AND products.brand_id IN (".implode(",",$queryItems).")";
+                        }
+                    }
+    
+                    if(isset($urlParams["categories"])){
                         $queryItems = explode(",",$urlParams["categories"]);
-                        $filterQueries.=" OR brands.brand_id IN (".implode(",",$queryItems).")";
+                        if(count($queryItems)>0){
+                            $filterQueries.=" OR products.category_id IN (".implode(",",$queryItems).")";
+                        }
                     }
                 }
+                
+                // if($filterQueries!=""){
+                //     $filterQueries = " AND $filterQueries";
+                // }
+
                 $sqlQuery = "SELECT DISTINCT categories.category_id as opt_id, categories.category_name as opt_name
                 FROM categories join products on products.category_id = categories.category_id
                 WHERE categories.is_active = 1 $searchQueries $filterQueries
@@ -67,7 +88,7 @@
                 ";
                 $result = $this->productService->productRepo->get($sqlQuery);
                 unset($sqlQuery);
-                if(count($result)>1){
+                if(count($result)>0){
                     array_push($filterOptions,[
                         "name"=>"Loại sản phẩm",
                         "id"=>"categories",
@@ -75,18 +96,32 @@
                     ]
                     );
                 }
+                unset($filterQueries);
             }
 
+            //loc brands
             if((isset($urlParams["context"]) && $urlParams["context"]!="brands") || !isset($urlParams["context"])){
                 $filterQueries = "";
-                if(isset($urlParams["categories"])){
-                    $queryItems = explode(",",$urlParams["categories"]);
-                    $filterQueries.=" AND products.category_id IN (".implode(",",$queryItems).")";
-                    
 
+                if(isset($urlParams["context"])){
+                    $value = $urlParams["context-value"];
+                    $filterQueries.= " AND products.category_id = $value";
+                    unset($value);
+                }
+                else{
+                    if(isset($urlParams["categories"])){
+                        $queryItems = explode(",",$urlParams["categories"]);
+                        
+                        if(count($queryItems)>0){
+                            $filterQueries.=" AND products.category_id IN (".implode(",",$queryItems).")";
+                        }
+                    }
+    
                     if(isset($urlParams["brands"])){
                         $queryItems = explode(",",$urlParams["brands"]);
-                        $filterQueries.=" OR brands.brand_id IN (".implode(",",$queryItems).")";
+                        if(count($queryItems)>0){
+                            $filterQueries.=" OR brands.brand_id IN (".implode(",",$queryItems).")";
+                        }
                     }
                 }
                 
@@ -99,7 +134,7 @@
                 $result = $this->productService->productRepo->get($sqlQuery);
                 unset($sqlQuery);
                 unset($filterQueries);
-                if(count($result)>1){
+                if(count($result)>0){
                     array_push($filterOptions,[
                         "name"=>"Hãng sản xuất",
                         "id"=>"brands",
@@ -107,6 +142,7 @@
                     ]
                     );
                 }
+                unset($filterQueries);
             }
             return $filterOptions;
         }

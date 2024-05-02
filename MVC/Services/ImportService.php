@@ -36,5 +36,8 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->importRepo->getImportById($id), JSON_UNESCAPED_UNICODE);
         }
+        public function getInfoImport(){
+            return $this->importRepo->getAllImport();
+        }
     }
 ?>

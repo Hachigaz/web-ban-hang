@@ -19,5 +19,8 @@
         public function GetImportById(){
             $this->importService->GetImportById();
         }
+        public function getInfoImport(){
+            $this->importService->getInfoImport();
+        }
     }
 ?>
