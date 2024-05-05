@@ -147,64 +147,7 @@ INSERT INTO `order_details` (`order_detail_id`, `order_id`, `sku_id`, `price`, `
 ('1', '1', '1', '34990000', '1', 'Đen'),
 ('2', '1', '9', '500000', '2', 'Đen');
 
-DELIMITER //
-CREATE TRIGGER update_total_salary_timesheets_insert
-AFTER INSERT ON timesheets
-FOR EACH ROW
-BEGIN
-    DECLARE total_days_worked INT;
-    DECLARE total_days_late INT;
-    DECLARE total_days_off INT;
-    DECLARE total_days_leave INT;
-    DECLARE total_day INT;
-    DECLARE total_salary DECIMAL(10, 2);
-    SET total_days_worked = NEW.days_worked;
-    SET total_days_late = NEW.days_late;
-    SET total_days_leave = NEW.days_leave;
-    SET total_days_off = NEW.days_off;
-    SET total_day = total_days_worked+total_days_late+total_days_leave+total_days_off;
-    IF total_days_leave <= 1 THEN
-        SET total_days_worked = total_days_worked+total_days_leave;
-    END IF;
-    IF total_day < 26 THEN
-        SET total_day = 26;
-    END IF;
-    SET total_salary = (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / total_day * (total_days_worked+total_days_late)
-                      - (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / total_day * total_days_late * 0.3;
-    INSERT INTO timesheet_details(timesheet_id, total_salary) VALUES (NEW.timesheet_id, total_salary);
-    UPDATE timesheet_details SET timesheet_details.total_salary = total_salary WHERE timesheet_details.timesheet_id = NEW.timesheet_id;
-END;
-//
-DELIMITER ;
 
-DELIMITER //
-CREATE TRIGGER update_total_salary_timesheets_update
-AFTER UPDATE ON timesheets
-FOR EACH ROW
-BEGIN
-    DECLARE total_days_worked INT;
-    DECLARE total_days_late INT;
-    DECLARE total_days_off INT;
-    DECLARE total_days_leave INT;
-    DECLARE total_salary DECIMAL(10, 2);
-    DECLARE total_day INT;
-    SET total_days_worked = NEW.days_worked;
-    SET total_days_late = NEW.days_late;
-    SET total_days_leave = NEW.days_leave;
-    SET total_days_off = NEW.days_off;
-    SET total_day = total_days_worked+total_days_late+total_days_leave+total_days_off;
-    IF total_days_leave <= 1 THEN
-        SET total_days_worked = total_days_worked+total_days_leave;
-    END IF;
-    IF total_day < 26 THEN
-        SET total_day = 26;
-    END IF;
-    SET total_salary = (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / total_day * (total_days_worked+total_days_late)
-                      - (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / total_day * total_days_late * 0.3;
-    UPDATE timesheet_details SET timesheet_details.total_salary = total_salary WHERE timesheet_details.timesheet_id = NEW.timesheet_id;
-END;
-//
-DELIMITER ;
 
 
 INSERT INTO suppliers (supplier_id, supplier_name, phone_number_of_supplier, address_of_supplier, email_of_supplier) VALUES ('19', 'Dell Store Việt Nam', '0923020320', '1230123902103', 'dellstorevn@gamil.com');
@@ -351,7 +294,11 @@ INSERT INTO `exports` (`export_id`, `staff_id`, `order_id`, `export_date`, `tota
 ('1', '1', '1', '2024-03-01', '15000000', '1'),
 ('2', '1', '1', '2024-02-01', '23000000', '1'),
 ('3', '1', '1', '2024-04-01', '17500000', '1'),
-('4', '1', '1', '2024-05-01', '18000000', '1');
+('4', '1', '1', '2024-05-01', '18000000', '1'),
+('5', '1', '1', '2023-03-01', '15000000', '1'),
+('6', '1', '1', '2023-02-01', '20000000', '1'),
+('7', '1', '1', '2023-04-01', '25000000', '1'),
+('8', '1', '1', '2023-05-01', '30000000', '1');
 
 INSERT INTO `export_details` (`export_detail_id`, `export_id`, `shipment_id`, `unit_price_export`, `quantity_export`) VALUES 
 ('1', '1', '1', '10000000', '1'),
@@ -361,7 +308,11 @@ INSERT INTO `export_details` (`export_detail_id`, `export_id`, `shipment_id`, `u
 ('5', '3', '5', '10000000', '1'),
 ('6', '3', '6', '7500000', '1'),
 ('7', '4', '7', '5000000', '2'),
-('8', '4', '8', '2000000', '4');
+('8', '4', '8', '2000000', '4'),
+('9', '5', '8', '5000000', '3'),
+('10', '6', '8', '20000000', '1'),
+('11', '7', '8', '5000000', '5'),
+('12', '4', '8', '5000000', '6');
 
 INSERT INTO `shipments` (`shipment_id`, `import_id`, `supplier_id`, `unit_price_import`, `quantity`, `remain`, `sku_id`, `is_active`) VALUES 
 ('1', '1', '1', '7000000', '50', '49', '1', '1'),
@@ -378,7 +329,11 @@ INSERT INTO `shipments` (`shipment_id`, `import_id`, `supplier_id`, `unit_price_
 ('12', '6', '8', '500000', '50', '49', '1', '1'),
 ('13', '6', '8', '1300000', '50', '49', '1', '1'),
 ('14', '7', '8', '500000', '50', '49', '1', '1'),
-('15', '7', '8', '1200000', '50', '49', '1', '1');
+('15', '7', '8', '1200000', '50', '49', '1', '1'),
+('16', '8', '8', '500000', '50', '49', '1', '1'),
+('17', '9', '8', '1300000', '50', '49', '1', '1'),
+('18', '10', '8', '500000', '50', '49', '1', '1'),
+('19', '11', '8', '1200000', '50', '49', '1', '1');;
 
 INSERT INTO `imports` (`import_id`, `staff_id`, `import_date`, `is_active`) VALUES 
 ('1', '2', '2024-01-01', '1'),
@@ -387,7 +342,11 @@ INSERT INTO `imports` (`import_id`, `staff_id`, `import_date`, `is_active`) VALU
 ('4', '3', '2024-03-01', '1'),
 ('5', '2', '2024-04-01', '1'),
 ('6', '2', '2023-10-01', '1'),
-('7', '2', '2023-11-01', '1');
+('7', '2', '2023-11-01', '1'),
+('8', '2', '2023-09-01', '1'),
+('9', '2', '2023-08-01', '1'),
+('10', '2', '2022-10-01', '1'),
+('11', '2', '2022-11-01', '1');
 
 INSERT INTO `roles` (`role_id`, `role_name`, `is_active`) VALUES 
 ('1', 'Admin', '1'),
@@ -396,6 +355,44 @@ INSERT INTO `roles` (`role_id`, `role_name`, `is_active`) VALUES
 ('4', 'Nhân viên kho', '1'),
 ('5', 'Khách hàng', '1');
 
+INSERT INTO `contracts` (`contract_id`, `staff_id`, `start_date`, `end_date`, `salary`) VALUES 
+('1', '1', '2024-03-01', '2025-03-01', '20000000'), 
+('2', '2', '2024-03-01', '2025-03-01', '18000000'),
+('3', '3', '2024-03-01', '2025-03-01', '13000000'),
+('4', '4', '2024-03-01', '2025-03-01', '15000000');
+
+
+
+INSERT INTO `leave_application` (`staff_id`, `start_date`, `end_date`, `reason`, `status`) VALUES
+(1, '2024-05-01', '2024-05-01', 'Lý do cá nhân', 0),
+(2, '2024-05-01', '2024-05-01', 'Ốm đau, thai sản', 0),
+(3, '2024-05-01', '2024-05-01', 'Ốm đau, thai sản', 0),
+(2, '2024-05-02', '2024-05-02', 'Lý do cá nhân', 0),
+(1, '2024-05-02', '2024-05-02', 'Ốm đau, thai sản', 0),
+(3, '2024-05-02', '2024-05-02', 'Ốm đau, thai sản', 0);
+
+
+INSERT INTO `attendance` (`timesheet_id`, `date`, `status`, `leave_application_id`) VALUES
+(4, '2024-05-03', 'Có mặt', NULL),
+(1, '2024-05-03', 'Có mặt', NULL),
+(2, '2024-05-03', 'Trễ', NULL),
+(3, '2024-05-03', 'Vắng mặt', NULL),
+(1, '2024-05-04', 'Có mặt', NULL),
+(2, '2024-05-04', 'Có mặt', NULL),
+(3, '2024-05-04', 'Có mặt', NULL),
+(4, '2024-05-04', 'Có mặt', NULL),
+(1, '2024-05-05', 'Có mặt', NULL),
+(2, '2024-05-05', 'Có mặt', NULL),
+(3, '2024-05-05', 'Có mặt', NULL),
+(4, '2024-05-05', 'Có mặt', NULL),
+(1, '2024-05-01', 'Nghỉ phép', '1'),
+(2, '2024-05-01', 'Nghỉ phép', '2'),
+(3, '2024-05-01', 'Nghỉ phép', '3'),
+(4, '2024-05-01', 'Có mặt', NULL),
+(1, '2024-05-02', 'Nghỉ phép', '4'),
+(2, '2024-05-02', 'Nghỉ phép', '5'),
+(3, '2024-05-02', 'Nghỉ phép', '6'),
+(4, '2024-05-02', 'Có mặt', NULL);
 
 -- -- Lấy ngày hiện tại
 -- SET @today = CURDATE();
@@ -409,35 +406,6 @@ INSERT INTO `roles` (`role_id`, `role_name`, `is_active`) VALUES
 --     SELECT 1 FROM attendance 
 --     WHERE date = @today AND timesheet_id = timesheets.timesheet_id
 -- );
-
-
--- Việc tạo tự động timesheet sẽ không còn được thực hiện nếu tháng hiện tại không nằm trong hợp đồng
-INSERT INTO timesheets (`contract_id`, `month`, `year`, `days_worked`, `days_off`, `days_leave`, `days_late`)
-    SELECT contracts.contract_id, MONTH(CURDATE()), YEAR(CURDATE()), 0, 0, 0, 0
-    FROM contracts
-    WHERE NOT EXISTS (
-        SELECT 1 FROM timesheets 
-        WHERE month = MONTH(CURDATE()) AND year = YEAR(CURDATE()) AND contract_id = contracts.contract_id
-    )
-    AND CURDATE() BETWEEN contracts.start_date AND contracts.end_date;
-
--- Lấy ngày hiện tại
-
--- Chèn các bản ghi attendance mới nếu chưa có bản ghi nào cho hôm nay
-SET @today = CURDATE();
-INSERT INTO attendance (timesheet_id, date, status)
-SELECT timesheet_id, @today, 'Chưa điểm danh'
-FROM timesheets
-INNER JOIN contracts ON timesheets.contract_id = contracts.contract_id
-INNER JOIN staffs ON contracts.staff_id = staffs.staff_id
-INNER JOIN accounts ON staffs.account_id = accounts.account_id
-WHERE month = MONTH(@today) AND year = YEAR(@today)
-AND accounts.is_active = 1
-AND NOT EXISTS (
-    SELECT 1 FROM attendance 
-    WHERE date = @today AND timesheet_id = timesheets.timesheet_id
-);
-
 
 
 
@@ -703,44 +671,117 @@ DELIMITER ;
 
 
 
-INSERT INTO `timesheets` (`timesheet_id`, `contract_id`, `month`, `year`, `days_worked`, `days_off`, `days_leave`, `days_late`) VALUES ('1', '1', '5', '2024', '22', '1', '1', '2'),
-('2', '2', '5', '2024', '26', '0', '0', '0'),
-('3', '3', '5', '2024', '23', '0', '1', '2'),
-('4', '4', '5', '2024', '25', '0', '1', '0');
 
-INSERT INTO `leave_application` (`leave_application_id`, `staff_id`, `start_date`, `end_date`, `reason`, `status`) VALUES
-(1, 1, '2024-04-15', '2024-04-15', 'Lý do cá nhân', 0),
-(2, 2, '2024-04-15', '2024-04-15', 'Ốm đau, thai sản', 0),
-(3, 3, '2024-04-15', '2024-04-15', 'Ốm đau, thai sản', 0),
-(4, 2, '2024-05-02', '2024-05-05', 'Lý do cá nhân', 0),
-(5, 1, '2024-04-16', '2024-04-16', 'Ốm đau, thai sản', 0),
-(6, 3, '2024-04-16', '2024-04-16', 'Ốm đau, thai sản', 0);
+-- INSERT INTO `banner_locations` (`location_id`, `location_name`) VALUES ('1', 'home-header');
 
-INSERT INTO `contracts` (`contract_id`, `staff_id`, `start_date`, `end_date`, `salary`) VALUES 
-('1', '1', '2024-04-01', '2025-04-01', '20000000'), 
-('2', '2', '2024-04-01', '2025-04-01', '18000000'),
-('3', '3', '2024-04-01', '2025-04-01', '13000000'),
-('4', '4', '2024-04-01', '2025-04-01', '15000000');
+-- INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'banner_header1', '1', '800', '600');
+-- INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'banner_header2', '1', '800', '600');
 
-INSERT INTO `attendance` (`attendance_id`, `timesheet_id`, `date`, `status`, `leave_application_id`) VALUES
-(1, 4, '2024-05-03', 'Có mặt', NULL),
-(2, 1, '2024-05-03', 'Có mặt', NULL),
-(3, 2, '2024-05-03', 'Có mặt', NULL),
-(4, 3, '2024-05-03', 'Có mặt', NULL),
-(5, 1, '2024-05-04', 'Chưa điểm danh', NULL),
-(6, 2, '2024-05-04', 'Chưa điểm danh', NULL),
-(7, 3, '2024-05-04', 'Chưa điểm danh', NULL),
-(8, 4, '2024-05-04', 'Chưa điểm danh', NULL);
+-- INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm nổi bật', 'Các sản phẩm mới và nổi bật trong tháng 4',1);
+-- INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm mới', 'Sản phẩm mới vừa xuất hiện trên thị trường',2);
+
+-- INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('1', '1', '1');
+-- INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('2', '2', '1');
+-- INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('3', '3', '1');
 
 
-INSERT INTO `banner_locations` (`location_id`, `location_name`) VALUES ('1', 'home-header');
 
-INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'banner_header1', '1', '800', '600');
-INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'banner_header2', '1', '800', '600');
 
-INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm nổi bật', 'Các sản phẩm mới và nổi bật trong tháng 4',1);
-INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm mới', 'Sản phẩm mới vừa xuất hiện trên thị trường',2);
+-- Việc tạo tự động timesheet sẽ không còn được thực hiện nếu tháng hiện tại không nằm trong hợp đồng
+-- INSERT INTO timesheets (`contract_id`, `month`, `year`, `days_worked`, `days_off`, `days_leave`, `days_late`)
+--     SELECT contracts.contract_id, MONTH(CURDATE()), YEAR(CURDATE()), 0, 0, 0, 0
+--     FROM contracts
+--     WHERE NOT EXISTS (
+--         SELECT 1 FROM timesheets 
+--         WHERE month = MONTH(CURDATE()) AND year = YEAR(CURDATE()) AND contract_id = contracts.contract_id
+--     )
+--     AND CURDATE() BETWEEN contracts.start_date AND contracts.end_date;
 
-INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('1', '1', '1');
-INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('2', '2', '1');
-INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('3', '3', '1');
+-- Lấy ngày hiện tại
+
+-- Chèn các bản ghi attendance mới nếu chưa có bản ghi nào cho hôm nay
+-- SET @today = CURDATE();
+-- INSERT INTO attendance (timesheet_id, date, status)
+-- SELECT timesheet_id, @today, 'Chưa điểm danh'
+-- FROM timesheets
+-- INNER JOIN contracts ON timesheets.contract_id = contracts.contract_id
+-- INNER JOIN staffs ON contracts.staff_id = staffs.staff_id
+-- INNER JOIN accounts ON staffs.account_id = accounts.account_id
+-- WHERE month = MONTH(@today) AND year = YEAR(@today)
+-- AND accounts.is_active = 1
+-- AND NOT EXISTS (
+--     SELECT 1 FROM attendance 
+--     WHERE date = @today AND timesheet_id = timesheets.timesheet_id
+-- );
+INSERT INTO `timesheets` (`contract_id`, `month`, `year`, `days_worked`, `days_off`, `days_leave`, `days_late`) VALUES 
+('1', '5', '2024', '4', '0', '1', '0'),
+('2', '5', '2024', '3', '0', '1', '1'),
+('3', '5', '2024', '4', '1', '0', '0'),
+('4', '5', '2024', '5', '0', '0', '0'),
+('1', '4', '2024', '26', '0', '1', '0'),
+('2', '4', '2024', '26', '0', '0', '1'),
+('3', '4', '2024', '25', '1', '0', '0'),
+('4', '4', '2024', '20', '0', '0', '6'),
+('1', '3', '2024', '23', '2', '1', '0'),
+('2', '3', '2024', '26', '0', '1', '1'),
+('3', '3', '2024', '23', '1', '0', '0'),
+('4', '3', '2024', '23', '0', '1', '2');
+
+DELIMITER //
+CREATE TRIGGER update_total_salary_timesheets_insert
+AFTER INSERT ON timesheets
+FOR EACH ROW
+BEGIN
+    DECLARE total_days_worked INT;
+    DECLARE total_days_late INT;
+    DECLARE total_days_off INT;
+    DECLARE total_days_leave INT;
+    DECLARE total_day INT;
+    DECLARE total_salary DECIMAL(10, 2);
+    SET total_days_worked = NEW.days_worked;
+    SET total_days_late = NEW.days_late;
+    SET total_days_leave = NEW.days_leave;
+    SET total_days_off = NEW.days_off;
+    SET total_day = total_days_worked+total_days_late+total_days_leave+total_days_off;
+    IF total_days_leave <= 1 THEN
+        SET total_days_worked = total_days_worked+total_days_leave;
+    END IF;
+    IF total_day < 26 THEN
+        SET total_day = 26;
+    END IF;
+    SET total_salary = (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / total_day * (total_days_worked+total_days_late)
+                      - (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / total_day * total_days_late * 0.3;
+    INSERT INTO timesheet_details(timesheet_id, total_salary) VALUES (NEW.timesheet_id, total_salary);
+    UPDATE timesheet_details SET timesheet_details.total_salary = total_salary WHERE timesheet_details.timesheet_id = NEW.timesheet_id;
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER update_total_salary_timesheets_update
+AFTER UPDATE ON timesheets
+FOR EACH ROW
+BEGIN
+    DECLARE total_days_worked INT;
+    DECLARE total_days_late INT;
+    DECLARE total_days_off INT;
+    DECLARE total_days_leave INT;
+    DECLARE total_salary DECIMAL(10, 2);
+    DECLARE total_day INT;
+    SET total_days_worked = NEW.days_worked;
+    SET total_days_late = NEW.days_late;
+    SET total_days_leave = NEW.days_leave;
+    SET total_days_off = NEW.days_off;
+    SET total_day = total_days_worked+total_days_late+total_days_leave+total_days_off;
+    IF total_days_leave <= 1 THEN
+        SET total_days_worked = total_days_worked+total_days_leave;
+    END IF;
+    IF total_day < 26 THEN
+        SET total_day = 26;
+    END IF;
+    SET total_salary = (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / total_day * (total_days_worked+total_days_late)
+                      - (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / total_day * total_days_late * 0.3;
+    UPDATE timesheet_details SET timesheet_details.total_salary = total_salary WHERE timesheet_details.timesheet_id = NEW.timesheet_id;
+END;
+//
+DELIMITER ;
