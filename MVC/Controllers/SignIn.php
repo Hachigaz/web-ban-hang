@@ -45,7 +45,7 @@
                     header("Location: ".$url);
                     return;
                 }else{
-                    header("Location: ../InternalManager/HomeManager");
+                    header("Location: ../InternalManager/PersonalInfoManager");
                     return;
                 }
             }

@@ -71,43 +71,160 @@
 </div>
 
 <div class="modal hide">
-<div class="modal-inner modal-add hide">
+<div class="modal-inner modal-change-password hide">
         <div class="modal-header">
-            <p>Thêm nhà cung cấp</p>
-            <i class="fi fi-rr-cross-small" id="closeIconAdd"></i>
+            <p>Đổi mật khẩu</p>
+            <i class="fi fi-rr-cross-small" id="closeIconChangePassword"></i>
         </div>
-        <form action="../Supplier/CreateSupplier" method="post" class="modal-body" enctype="multipart/form-data">
+        <form action="../Account/ChangePassword" method="post" class="modal-body" enctype="multipart/form-data">
             <div class="input-section">
-                <label for="supplier_name_add_form" class="label-form">Tên nhà cung cấp</label>
+                <label for="old_password_form" class="label-form">Mật khẩu cũ</label>
                 <br>
-                <input type="text" name="supplier_name_add_form" placeholder="Tên nhà cung cấp..." class="supplier_name_add_form" autocomplete="off" id="supplier_name_add_form" required>
+                <input type="password" name="old_password_form" placeholder="Mật khẩu cũ..." class="old_password_form" autocomplete="off" id="old_password_form" required>
                 <br>
-                <span class="warning add-supplier-name-warning">Tên không chứa ký tự đặc biệt</span>
+                <span class="warning old-password-warning">Mật khẩu không đúng</span>
             </div>
             <div class="input-section">
-                <label for="address_add_form" class="label-form">Địa chỉ</label>
+                <label for="new_password_form" class="label-form">Mật khẩu mới</label>
                 <br>
-                <input type="text" name="address_add_form" class="address-add-form" required placeholder="Địa chỉ...">
+                <input type="password" name="new_password_form" class="new_password_form" required placeholder="Mật khẩu mới...">
+                <br>
+                <span class="warning new-password-warning">Phải có 7 ký tự, có chữ thường, chữ hoa, số và ký tự đặc biệt</span>
             </div>
             <div class="input-section">
-                <label for="phone_number_add_form" class="label-form">Số điện thoại</label>
+                <label for="confirm_password_form" class="label-form">Xác nhận mật khẩu</label>
                 <br>
-                <input type="text" name="phone_number_add_form" class="phone-number-add-form" placeholder="Số điện thoại..." autocomplete="off" id="phone_number_add_form" required>
+                <input type="password" name="confirm_password_form" class="confirm_password_form" placeholder="Xác nhận mật khẩu..." autocomplete="off" id="confirm_password_form" required>
                 <br>
-                <span class="warning add-phone-number-warning">Phải đủ 10 số và bắt đầu là 0</span>
-            </div>
-            <div class="input-section">
-                <label for="email_add_form" class="label-form">Email</label>
-                <br>
-                <input type="email" name="email_add_form" class="email-add-form" placeholder="Email..." autocomplete="off" id="email_add_form" required>
-                <br>
-                <span class="warning add-email-warning">Email không đúng định dạng</span>
+                <span class="warning confirm-password-warning">Mật khẩu không khớp</span>
             </div>
             <div class="modal-footer">
                 <div class="reset-btn" title="refresh">
                     <i class="fi fi-rr-refresh"></i>
                 </div>
-                <button class="confirm" id="confirmBtnAdd">Xác nhận thêm</button>
+                <button class="confirm" id="confirmBtnChangePassword">Xác nhận thêm</button>
+                <input type="text" name="account_id" style="display: none" class="account_id">
+            </div>
+        </form>
+    </div>
+    <div class="modal-inner modal-info hide">
+        <div class="modal-header">
+            <p>Thông tin cá nhân</p>
+            <i class="fi fi-rr-cross-small" id="closeIconInfo"></i>
+        </div>
+        <div class="modal-body">
+            <div class="info-section">
+                <div class="row-section">
+                    <label for="" class="row-name">Họ tên</label>
+                    <div class="row-data row-fullname"></div>
+                </div>
+                <div class="row-section">
+                    <label for="" class="row-name">Chức vụ</label>
+                    <div class="row-data row-role"></div>
+                </div>
+                <div class="row-section">
+                    <label for="" class="row-name">Mã nhân viên</label>
+                    <div class="row-data row-staff-id"></div>
+                </div>
+                <div class="row-section">
+                    <label for="" class="row-name">Mã tài khoản</label>
+                    <div class="row-data row-account-id"></div>
+                </div>
+                <div class="row-section">
+                    <label for="" class="row-name">Giới tính</label>
+                    <div class="row-data row-gender"></div>
+                </div>
+                <div class="row-section">
+                    <label for="" class="row-name">Địa chỉ</label>
+                    <div class="row-data row-address"></div>
+                </div>
+                <div class="row-section">
+                    <label for="" class="row-name">Ngày vào làm</label>
+                    <div class="row-data row-entry-date"></div>
+                </div>
+                <div class="row-section">
+                    <label for="" class="row-name">Số điện thoại</label>
+                    <div class="row-data row-phone-number"></div>
+                </div>
+                <div class="row-section">
+                    <label for="" class="row-name">Email</label>
+                    <div class="row-data row-email"></div>
+                </div>
+                <div class="row-section">
+                    <label for="" class="row-name">Ngày tạo tài khoản</label>
+                    <div class="row-data row-created-at"></div>
+                </div>
+                <div class="row-section">
+                    <label for="" class="row-name">Ngày sửa đổi</label>
+                    <div class="row-data row-updated-at"></div>
+                </div>
+            </div>
+            
+            <div class="avatar-section">
+                <img src="" alt="" class="avatar-image">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="close" id="closeBtnInfo">Đóng</button>
+        </div>
+    </div>
+    <div class="modal-inner modal-edit hide">
+        <div class="modal-header">
+            <p>Sửa thông tin cá nhân</p>
+            <i class="fi fi-rr-cross-small" id="closeIconEdit"></i>
+        </div>
+        <form action="../Staff/UpdateStaffHaveAvatar" method="post" class="modal-body" enctype="multipart/form-data">
+            <div class="input-section">
+                <label for="fullname_edit_form" class="label-form">Họ và tên</label>
+                <br>
+                <input type="text" name="fullname_edit_form" placeholder="Họ và tên..." class="fullname-edit-form" autocomplete="off" id="fullname_edit_form">
+                <br>
+                <span class="warning edit-fullname-warning">Tên không chứa số và ký tự đặc biệt</span>
+            </div>
+            <div class="input-section">
+                <label for="phone_number_edit_form" class="label-form">Số điện thoại</label>
+                <br>
+                <input type="text" name="phone_number_edit_form" class="phone-number-edit-form" placeholder="Số điện thoại..." autocomplete="off" id="phone_number_edit_form">
+                <br>
+                <span class="warning edit-phone-number-warning">Phải đủ 10 số và bắt đầu là 0</span>
+            </div>
+            <div class="input-section">
+                <label for="email_edit_form" class="label-form">Email</label>
+                <br>
+                <input type="email" name="email_edit_form" class="email-edit-form" autocomplete="off" id="email_edit_form" placeholder="Email...">
+                <br>
+                <span class="warning edit-email-warning">Email không đúng định dạng</span>
+            </div>
+            <div class="input-section">
+                <label for="gender_edit_form" class="label-form">Giới tính</label>
+                <br>
+                <select name="gender_edit_form" class="gender-edit-form" id="gender_edit_form">
+                    <option value="-1">Giới tính</option>
+                    <option value="0">Nam</option>
+                    <option value="1">Nữ</option>
+                </select>
+                <br>
+                <span class="warning edit-gender-warning">Bạn phải chọn giới tính</span>
+            </div>
+            <div class="input-section">
+                <label for="address_edit_form" class="label-form">Địa chỉ</label>
+                <br>
+                <input type="text" name="address_edit_form" placeholder="Địa chỉ..." required class="address-edit-form" autocomplete="off" id="address_edit_form">
+            </div>
+            <div class="input-section">
+                <label for="avatar_edit_form" class="label-form">Ảnh đại diện</label>
+                <br>
+                <input type="file" class="custom-file-input avatar-edit-form" name="avatar_edit_form" autocomplete="off" id="avatar_edit_form">
+                <br>
+                <span class="warning edit-avatar-warning">Định dạng ảnh phải là png, jpg, jpeg</span>
+            </div>
+            <div class="modal-footer">
+                <div class="reset-btn" title="refresh">
+                    <i class="fi fi-rr-refresh"></i>
+                </div>
+                <input type="text" name="account_id" style="display: none" class="account_id">
+                <input type="text" name="staff_id" style="display: none" class="staff_id">
+                <button class="confirm" id="confirmBtnEdit">Xác nhận sửa</button>
             </div>
         </form>
     </div>

@@ -31,5 +31,21 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->timesheetDetailRepo->getTimesheetDetailById($id), JSON_UNESCAPED_UNICODE);
         }
+
+        public function getSalaryTable(){
+            return $this->timesheetDetailRepo->getSalaryTable();
+        }
+
+        public function getAllMonth(){
+            return $this->timesheetDetailRepo->getAllMonth();
+        }
+
+        public function getAllYear(){
+            return $this->timesheetDetailRepo->getAllYear();
+        }
+
+        public function getAllDataTimesheet(){
+            return $this->timesheetDetailRepo->getAllDataTimesheet();
+        }
     }
 ?>

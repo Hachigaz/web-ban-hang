@@ -5,7 +5,6 @@
     <button class="salary-statistic">Lương</button>
 </div>
 
-<div class="mt-mb-20"></div>
 <div class="chart-container export-chart" style="position: relative; height: 50vh; width: 100vw">
     <div class="filter-chart filter-chart-export">
         <label for="">Tháng</label>

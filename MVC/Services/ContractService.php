@@ -31,5 +31,9 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->contractRepo->getContractById($id), JSON_UNESCAPED_UNICODE);
         }
+
+        public function getAllDataContract(){
+            return $this->contractRepo->getAllDataContract();
+        }
     }
 ?>

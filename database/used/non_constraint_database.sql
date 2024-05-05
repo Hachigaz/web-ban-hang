@@ -256,8 +256,8 @@ CREATE TABLE `attendance` (
   `attendance_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `timesheet_id` int(11) NOT NULL,
   `date` date NOT NULL,
-  `status` ENUM('Present', 'Absent', 'Leave', 'Late') NOT NULL,
-  `leave_application_id` int(11) NOT NULL
+  `status` ENUM('Chưa điểm danh','Có mặt', 'Vắng mặt', 'Nghỉ phép', 'Trễ') NOT NULL,
+  `leave_application_id` int(11) 
 );
 
 CREATE UNIQUE INDEX `decentralizations_index_0` ON `decentralizations` (`role_id`, `module_id`);

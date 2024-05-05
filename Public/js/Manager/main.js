@@ -54,23 +54,24 @@ const ulInNavigation = document.querySelector(".navigation ul");
 // account id va role id cua tai khoan dang dang nhap
 const roleIdValue = document.querySelector(".user-info.role-id-value").id;
 const accountIdValue = document.querySelector(".user-info .account-id-value").id;
+// localStorage.setItem("personal_id",accountIdValue);
 
 fetch("../Decentralization/GetAllModuleByRole/" + roleIdValue)
     .then((response) => response.json())
     .then((modules) => {
         modules.forEach((module, i) => {
             var moduleBtn = "";
-            if (i == 0) {
-                // module trang chu khong tao trong db
-                moduleBtn += `<li title='Trang chủ'>
-                <a href="./HomeManager">
-                    <span class="icon"
-                        ><i class="fi fi-rr-home"></i>
-                    </span>
-                    <span class="title">Trang chủ</span>
-                </a>
-                </li>`;
-            }
+            // if (i == 0) {
+            //     // module trang chu khong tao trong db
+            //     moduleBtn += `<li title='Trang chủ'>
+            //     <a href="./HomeManager">
+            //         <span class="icon"
+            //             ><i class="fi fi-rr-home"></i>
+            //         </span>
+            //         <span class="title">Trang chủ</span>
+            //     </a>
+            //     </li>`;
+            // }
             moduleBtn += `<li title='${moduleName[module.module_id]}'> 
                     <a href="./${moduleArr[module.module_id]}">
                         <span class="icon">${
@@ -117,6 +118,7 @@ fetch("../InternalManager/GetAllDataStaff")
         values.infoStaff.forEach((staff) => {
             if (staff.account_id == accountIdValue) {
                 userFullname.textContent = staff.staff_fullname;
+                sessionStorage.setItem("staff_id", staff.staff_id);
                 userAvatar.setAttribute(
                     "src",
                     "../Public/img/staffAvatar/" + staff.avatar

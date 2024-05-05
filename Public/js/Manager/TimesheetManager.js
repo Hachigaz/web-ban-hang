@@ -42,7 +42,7 @@ const cardNames = Array.from(document.querySelectorAll(".card .card-name"));
 const tbody = document.querySelector(".details table tbody");
 const userImage = document.querySelector(".topbar .user img");
 
-fetch("../InternalManager/GetAllDataSalary")
+fetch("../InternalManager/GetAllDataTimesheet")
     .then((response) => response.json())
     .then((values) => {
         values.allMonth.forEach((value) => {
@@ -57,20 +57,19 @@ fetch("../InternalManager/GetAllDataSalary")
             yearOption.text = value.year;
             yearFilter.appendChild(yearOption);
         });
-        
-
         // Table
-        values.salaryData.forEach((value) => {
+        values.timesheetData.forEach((value) => {
+            
             var row = tbody.insertRow();
 
+            var timesheetIdCell = row.insertCell();
+            timesheetIdCell.textContent = value.timesheet_id; // gán giá trị vào từng ô tương ứng cho bảng
+
             var staffIdCell = row.insertCell();
-            staffIdCell.textContent = value.staff_id; // gán giá trị vào từng ô tương ứng cho bảng
+            staffIdCell.textContent = value.staff_id;
 
             var staffFullnameCell = row.insertCell();
             staffFullnameCell.textContent = value.staff_fullname;
-
-            var contractIdCell = row.insertCell();
-            contractIdCell.textContent = value.contract_id;
 
             var monthCell = row.insertCell();
             monthCell.textContent = value.month;
@@ -78,8 +77,17 @@ fetch("../InternalManager/GetAllDataSalary")
             var yearCell = row.insertCell();
             yearCell.textContent = value.year;
 
-            var salaryCell = row.insertCell();
-            salaryCell.textContent = value.salary;
+            var daysWorkedCell = row.insertCell();
+            daysWorkedCell.textContent = value.days_worked;
+
+            var daysOffCell = row.insertCell();
+            daysOffCell.textContent = value.days_off;
+
+            var daysLeaveCell = row.insertCell();
+            daysLeaveCell.textContent = value.days_leave;
+
+            var daysLateCell = row.insertCell();
+            daysLateCell.textContent = value.days_late;
 
             var totalSalaryCell = row.insertCell();
             totalSalaryCell.textContent = value.total_salary;
@@ -107,22 +115,16 @@ function filterTable() {
     var searchFilterValue = searchFilter.value.toLowerCase();
 
     for (var i = 0; i < trs.length; i++) {
-        var staffIdTd = trs[i].getElementsByTagName("td")[0];
-        var staffNameTd = trs[i].getElementsByTagName("td")[1];
-        var contractIdTd = trs[i].getElementsByTagName("td")[2];
+        var timesheetIdTd = trs[i].getElementsByTagName("td")[0];
+        var staffIdTd = trs[i].getElementsByTagName("td")[1];
+        var staffFullnameTd = trs[i].getElementsByTagName("td")[2];
         var monthTd = trs[i].getElementsByTagName("td")[3];
         var yearTd = trs[i].getElementsByTagName("td")[4];
-        var salaryTd = trs[i].getElementsByTagName("td")[5];
-        var totalSalaryTd = trs[i].getElementsByTagName("td")[6];
 
         if (
             staffIdTd &&
-            staffNameTd &&
-            contractIdTd &&
-            monthTd &&
-            yearTd &&
-            salaryTd &&
-            totalSalaryTd
+            timesheetIdTd &&
+            staffFullnameTd
         ) {
             // nếu tồn tại thì thay đổi tránh crash
             var monthValue = monthTd.textContent || monthTd.innerText;
@@ -135,24 +137,25 @@ function filterTable() {
                 yearFilterValue == "0" || //nếu mặc định thì sẽ hiển thị
                 yearValue.indexOf(yearFilterValue) > -1; // nếu không chứa giá trị lọc thì ẩn
             
-            var staffIdMatch =
-                staffIdTd.textContent
-                    .toLowerCase()
-                    .indexOf(searchFilterValue) > -1; // so sánh giá trị trong bảng với giá trị lọc
-            var staffNameMatch =
-                staffNameTd.textContent
+            var staffFullnameMatch =
+                staffFullnameTd.textContent
                     .toLowerCase()
                     .indexOf(searchFilterValue) > -1;
 
-            var contractIdMatch =
-                contractIdTd.textContent
+            var staffIdMatch =
+                staffIdTd.textContent
                     .toLowerCase()
                     .indexOf(searchFilterValue) > -1;
+            var timesheetIdMatch =
+                timesheetIdTd.textContent
+                    .toLowerCase()
+                    .indexOf(searchFilterValue) > -1;
+
             trs[i].style.display =
                 monthMatch &&
                 (staffIdMatch ||
-                    staffNameMatch ||
-                    contractIdMatch) &&
+                    staffFullnameMatch ||
+                    timesheetIdMatch) &&
                 yearMatch
                     ? ""
                     : "none";
@@ -165,18 +168,6 @@ monthFilter.onchange = filterTable;
 yearFilter.onchange = filterTable;
 searchFilter.oninput = filterTable;
 refreshBtn.onclick = filterTable;
-
-// var contentCustomer = document.querySelector('.details');
-// setTimeout(function(){
-//     // var opt = {
-//     // margin: [10, 10, 10, 10],
-//     // filename: 'Danh_sách_khách_hàng.pdf',
-//     // image: { type: 'jpeg', quality: 0.98 },
-//     // html2canvas: { scale: 0.5 }, // Giảm độ phân giải của hình ảnh
-//     // jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-//     // };
-//     html2pdf(contentCustomer);
-// },5000);
 function deleteColumn(table, columnIndex) {
     [...table.rows].forEach((row) => {
       row.deleteCell(columnIndex);

@@ -15,11 +15,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    cursor: pointer;
     box-shadow: 4px 7px 25px rgba(0, 0, 0, 0.1);
 }
-/* .card-box .card:hover {
+.card-box .card:hover {
     background-color: var(--primary-color-blue);
-} */
+}
 .card-box .card .numbers {
     position: relative;
     font-weight: 500;
@@ -35,53 +36,10 @@
     font-size: 38px;
     color: #000;
 }
-/* .card-box .card:hover .numbers,
+.card-box .card:hover .numbers,
 .card-box .card:hover .card-name,
 .card-box .card:hover .icon-box {
     color: #fff;
-} */
-.card .content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-}
-.change-password,
-.retire,
-.leave,
-.sick,
-.personal-info,
-.edit-personal-info {
-    display: flex;
-    align-items: center;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 6px;
-}
-.change-password:hover,
-.retire:hover,
-.leave:hover,
-.sick:hover,
-.personal-info:hover,
-.edit-personal-info:hover {
-    background-color: var(--primary-color-blue);
-    color: #fff;
-}
-.icon-in-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    width: 40px;
-    height: 40px;
-    background-color: #ccc;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-/* Đăng xuất */
-.card .content a.logout {
-    color: #000;
-    text-decoration: none;
 }
 
 /* Table */
@@ -136,12 +94,13 @@
 .details table thead tr {
     font-size: 19px;
 }
-.details table thead tr td:nth-child(4) {
-    text-align: center;
-}
+.details table thead tr td:nth-child(3),
+.details table thead tr td:nth-child(4),
+.details table thead tr td:nth-child(5),
 .details table thead tr td:nth-child(6) {
     text-align: center;
 }
+
 .details table thead,
 .details table tbody {
     min-width: 100%;
@@ -169,7 +128,13 @@
 .details .customer-table table td:first-child {
     text-align: center;
 }
-.details .customer-table table td:nth-child(5) {
+.details .customer-table table td:nth-child(2),
+.details .customer-table table td:nth-child(4),
+.details .customer-table table td:nth-child(5),
+.details .customer-table table td:nth-child(6),
+.details .customer-table table td:nth-child(7),
+.details .customer-table table td:nth-child(8),
+.details .customer-table table td:nth-child(9) {
     text-align: center;
 }
 .details .customer-table table td:last-child {
@@ -449,12 +414,6 @@
     overflow: hidden;
     animation: modalShow ease 0.5s;
 }
-.modal-inner.modal-change-password{
-    width: 400px;
-}
-.modal-inner.modal-info{
-    width: 800px;
-}
 .modal-header {
     display: flex;
     justify-content: space-between;
@@ -464,12 +423,16 @@
     background-color: var(--primary-color-blue);
     color: #fff;
 }
-.modal-edit .modal-header,
-.modal-change-password .modal-header {
+.modal-add .modal-header {
+    background-color: var(--primary-color-green);
+}
+.modal-edit .modal-header {
     background-color: var(--primary-color-yellow);
 }
-
-.modal-delete p {
+.modal-delete .modal-header {
+    background-color: var(--primary-color-red);
+}
+.modal-delete p{
     font-size: 20px;
 }
 .modal-header i {
@@ -493,8 +456,11 @@
     text-align: right;
     justify-self: center;
 }
-
-.modal-delete .modal-footer {
+.modal-edit .modal-footer,
+.modal-add .modal-footer{
+    grid-column: 1 / span 2;
+}
+.modal-delete .modal-footer{
     justify-content: flex-end;
     padding: 30px 15px 0 15px;
 }
@@ -508,9 +474,14 @@
     cursor: pointer;
     transition: 0.4s;
 }
-.modal-edit .modal-footer button,
-.modal-change-password .modal-footer button {
+.modal-add .modal-footer button {
+    background-color: var(--primary-color-green);
+}
+.modal-edit .modal-footer button {
     background-color: var(--primary-color-yellow);
+}
+.modal-delete .modal-footer button {
+    background-color: var(--primary-color-red);
 }
 .modal-footer button:hover {
     background-color: #ccc;
@@ -530,63 +501,58 @@
     }
 }
 
+
 /* info modal */
-.modal-info .modal-body {
+.modal-info .modal-body{
     display: flex;
     justify-content: space-between;
 }
-.info-section .row-section {
+.info-section .row-section{
     display: flex;
     font-size: 20px;
     margin: 15px 0;
 }
-.info-section .row-section .row-data {
+.info-section .row-section .row-data{
     width: 170px;
 }
-.info-section .row-section .row-name {
+.info-section .row-section .row-name{
     width: 140px;
     font-weight: 600;
 }
-.avatar-section {
+.avatar-section{
     align-self: center;
 }
-.modal-info .modal-footer {
+.modal-info .modal-footer{
     padding: 0 30px 30px;
     display: flex;
     justify-content: center;
 }
-.modal-info .avatar-section .avatar-image {
+.modal-info .avatar-section .avatar-image{
     width: 200px;
     height: 200px;
     object-fit: cover;
 }
 /* Add form */
 .modal-edit .modal-body,
-.modal-change-password .modal-body {
+.modal-add .modal-body {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 5px 35px;
 }
-.modal-edit .modal-body{
-    grid-template-columns: repeat(2, 1fr);
-}
-.modal-edit .modal-footer{
-    grid-column: 1 / span 2;
-}
-.label-form {
+.label-form{
     margin-left: 5px;
 }
 /* choose file */
 .modal-edit .modal-body .custom-file-input,
-.modal-change-password .modal-body .custom-file-input {
+.modal-add .modal-body .custom-file-input {
     width: 100%;
 }
 .modal-edit .modal-body .custom-file-input::-webkit-file-upload-button,
-.modal-change-password .modal-body .custom-file-input::-webkit-file-upload-button {
+.modal-add .modal-body .custom-file-input::-webkit-file-upload-button {
     visibility: hidden;
 }
 .modal-edit .modal-body .custom-file-input::before,
-.modal-change-password .modal-body .custom-file-input::before {
+.modal-add .modal-body .custom-file-input::before {
     position: absolute;
     content: "Chọn avatar";
     display: inline-block;
@@ -603,11 +569,11 @@
     font-size: 10pt;
 }
 .modal-edit .modal-body .custom-file-input:active::before,
-.modal-change-password .modal-body .custom-file-input:active::before {
+.modal-add .modal-body .custom-file-input:active::before {
     background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
 .modal-edit .modal-body .input-section input,
-.modal-change-password .modal-body .input-section input {
+.modal-add .modal-body .input-section input {
     border: none;
     padding: 7px 14px;
     margin-top: 5px;
@@ -616,7 +582,7 @@
     width: 100%;
 }
 .modal-edit .modal-body .input-section select,
-.modal-change-password .modal-body .input-section select {
+.modal-add .modal-body .input-section select {
     border: none;
     padding: 7px 14px;
     margin-top: 5px;
@@ -629,11 +595,29 @@
     color: red;
     transition: 0.25s;
 }
-
-#btn-export-excel {
+    
+#btn-export-excel{
     background-color: var(--primary-color-blue);
     padding: 10px;
     border-radius: 5px;
     font-weight: 600;
     color: #fff;
+}
+
+.attendence-btn:hover{
+    opacity: 0.8;
+}
+.attendence-btn{
+    width: 90px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #1795ce;
+    color: #fff;
+}
+.attendence a{
+    text-decoration: none;
 }

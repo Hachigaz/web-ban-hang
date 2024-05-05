@@ -100,5 +100,11 @@
             public function getQuantityCustomerAccount(){
                 return $this->getCountColumnJoin2Tables("accounts", "customers", "account_id", "", "customer_id");
             }
+
+            public function changePassword($password, $account_id){
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
+                $currentDateTime = date('Y-m-d H:i:s');
+                return $this->set("UPDATE accounts SET password = '$password', updated_at = '$currentDateTime' WHERE accounts.account_id = $account_id");
+            }
         }
     ?>
