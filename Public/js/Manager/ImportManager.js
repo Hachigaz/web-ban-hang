@@ -316,67 +316,23 @@ const refreshBtn = document.querySelector(".reset-btn");
 
 function filterTable() {
     var trs = tbody.getElementsByTagName("tr");
-    // Lấy giá trị lọc
-    var roleFilterValue = roleFilter.value;
-    var genderFilterValue = genderFilter.value;
-    var searchFilterValue = searchFilter.value.toLowerCase();
-    // var startDate = new Date(document.getElementById("start-date").value);
-    // var endDate = new Date(document.getElementById("end-date").value);
+
     var startDateString = document.getElementById("start-date").value;
     var endDateString = document.getElementById("end-date").value;
 
     for (var i = 0; i < trs.length; i++) {
-        var roleTd = trs[i].getElementsByTagName("td")[2]; // lấy ra giá trị từng cột
-        var genderTd = trs[i].getElementsByTagName("td")[5];
 
-        var staffCodeTd = trs[i].getElementsByTagName("td")[0];
-        var staffNameTd = trs[i].getElementsByTagName("td")[1];
-        var staffPhoneTd = trs[i].getElementsByTagName("td")[3];
-        var staffEmailTd = trs[i].getElementsByTagName("td")[4];
-        var staffAddressTd = trs[i].getElementsByTagName("td")[6];
+        var importdateTd = trs[i].getElementsByTagName("td")[2];
 
-        var entryDateTd = trs[i].getElementsByTagName("td")[7];
 
         if (
-            roleTd &&
-            genderTd &&
-            staffCodeTd &&
-            staffNameTd &&
-            staffPhoneTd &&
-            staffEmailTd &&
-            staffAddressTd &&
-            entryDateTd
+            importdateTd 
+ 
         ) {
             // nếu tồn tại thì thay đổi tránh crash
-            var roleValue = roleTd.textContent || roleTd.innerText;
-            var genderValue = genderTd.textContent || genderTd.innerText;
 
-            var roleMatch =
-                roleFilterValue == "Chức vụ" ||
-                roleValue.indexOf(roleFilterValue) > -1;
-            var genderMatch =
-                genderFilterValue == "Giới tính" || //nếu mặc định thì sẽ hiển thị
-                genderValue.indexOf(genderFilterValue) > -1; // nếu không chứa giá trị lọc thì ẩn
-            var staffCodeMatch =
-                staffCodeTd.textContent
-                    .toLowerCase()
-                    .indexOf(searchFilterValue) > -1; // so sánh giá trị trong bảng với giá trị lọc
-            var staffNameMatch =
-                staffNameTd.textContent
-                    .toLowerCase()
-                    .indexOf(searchFilterValue) > -1;
-            var staffPhoneMatch =
-                staffPhoneTd.textContent
-                    .toLowerCase()
-                    .indexOf(searchFilterValue) > -1;
-            var staffEmailMatch =
-                staffEmailTd.textContent
-                    .toLowerCase()
-                    .indexOf(searchFilterValue) > -1;
-            var staffAddressMatch =
-                staffAddressTd.textContent
-                    .toLowerCase()
-                    .indexOf(searchFilterValue) > -1;
+
+
             if (endDateString != "") {
                 // nếu endDate được chọn thì max của startDate là endDate
                 document.getElementById("start-date").max = endDateString;
@@ -387,27 +343,23 @@ function filterTable() {
             }
             var bothDatePickersSelected = startDateString && endDateString; // cả 2 datePicker được chọn thì mới bắt đầu kiểm tra điều kiện lọc
             if (bothDatePickersSelected) {
-                var entryDateMatch =
+                var orderDateMatch =
                     compareStartDate(
-                        entryDateTd.textContent,
-                        convertToDDMMYYYY(startDateString)
+                        importdateTd.textContent,
+                        convertToDDMMYYYY(startDateString),
+                        console.log(convertToDDMMYYYY(startDateString))
+
                     ) &&
                     compareEndDate(
-                        entryDateTd.textContent,
-                        convertToDDMMYYYY(endDateString)
+                        importdateTd.textContent,
+                        convertToDDMMYYYY(endDateString),
+                        console.log(convertToDDMMYYYY(endDateString))
                     );
             } else {
-                entryDateMatch = true;
+                orderDateMatch = true;
             }
             trs[i].style.display =
-                roleMatch &&
-                genderMatch &&
-                (staffCodeMatch ||
-                    staffNameMatch ||
-                    staffPhoneMatch ||
-                    staffEmailMatch ||
-                    staffAddressMatch) &&
-                entryDateMatch
+                orderDateMatch
                     ? ""
                     : "none";
         }
@@ -807,3 +759,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+startDateFilter.onchange = filterTable;
+endDateFilter.onchange = filterTable;
+refreshBtn.addEventListener("click", function () {
+    startDateFilter.value = "";
+    endDateFilter.value = "";
+    document.getElementById("start-date").max = null;
+    document.getElementById("end-date").min = null;
+});
+refreshBtn.onclick = filterTable;

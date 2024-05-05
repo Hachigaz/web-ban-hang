@@ -1,10 +1,4 @@
 <div class="filter-bar">
-    <div class="search">
-        <label for="">
-            <input type="text" placeholder="Tìm kiếm..." id="search-filter">
-            <i class="fi fi-rr-search"></i>
-        </label>
-    </div>
     <div class="add-staff">
         <button class="add-btn" title="Thêm nhân viên"><i class="fi fi-rr-plus"></i></button>
     </div>
