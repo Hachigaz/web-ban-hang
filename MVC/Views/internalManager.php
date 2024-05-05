@@ -47,7 +47,7 @@
                 </div>
                 <div class="content-module">
                     <?php require_once "./MVC/Views/pages/Manager/".$data["Page"].".php" ?>
-                </div>
+                </div>  
             </div>
         </div>  
         <script type="text/javascript">

@@ -49,7 +49,7 @@
             }
 
             public function joinCustomerAccount(){
-                return $this->joinTables("customers", "accounts","account_id", "customers.is_active = 1 AND accounts.is_active = 1 ORDER BY customer_id ASC");
+                return $this->joinTables("customers", "accounts","account_id", "customers.is_active = 1 ORDER BY customer_id ASC");
             }
         }
     ?>

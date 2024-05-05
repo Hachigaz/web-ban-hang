@@ -15,8 +15,8 @@
         public function UpdateAccount(){
             $this->accountService->updateAccount();
         }
-        public function DeleteAccount($id){
-            $this->accountService->deleteAccount($id);
+        public function LockAndUnlockAccount($id){
+            $this->accountService->lockAndUnlockAccount($id);
             header("location: ../../InternalManager/AccountManager");
         }
         public function GetAllAccount(){
@@ -33,6 +33,12 @@
         }
         public function GetRoleByAccountId($account_id){
             $this->accountService->getRoleByAccountId($account_id);
+        }
+        public function ChangePassword(){
+            $password = $_POST['confirm_password_form'];
+            $account_id = $_POST['account_id'];
+            $this->accountService->changePassword($password, $account_id);
+            header("location: ../InternalManager/PersonalInfoManager");
         }
     }
 ?>

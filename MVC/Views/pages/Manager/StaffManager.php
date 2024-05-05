@@ -78,7 +78,7 @@
     <div class="staff-table">
         <div class="table-header">
             <h2>Danh sách nhân viên</h2>
-            <!-- <button id="btn-export-excel">Xuất Excel</button> -->
+            <button id="btn-export-excel">Xuất Excel</button>
         </div>
         <table id="staff-table">
             <thead>

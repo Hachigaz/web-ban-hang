@@ -6,6 +6,12 @@
 
 // // Lưu file PDF
 // doc.save('sample.pdf');
+var accountIdPost = document.querySelector(".account_id");
+accountIdPost.value = sessionStorage.getItem("account_id");
+var accountIdPostEdit = document.querySelector(".modal-edit .account_id");
+accountIdPostEdit.value = sessionStorage.getItem("account_id");
+var staffIdPost = document.querySelector(".staff_id");
+staffIdPost.value = sessionStorage.getItem("staff_id");
 const changePasswordBtn = document.querySelector(".change-password");
 // changePasswordBtn.addEventListener("click", function () {
 //     console.log("ok");
@@ -21,154 +27,572 @@ fetch(
     .catch((error) => console.log("Error: ", error));
 
 const modal = document.querySelector(".modal");
-const closeIconAdd = document.querySelector("#closeIconAdd");
+const closeIconChangePassword = document.querySelector("#closeIconChangePassword");
 
-const modalInnerAdd = document.querySelector(".modal-inner.modal-add");
+const modalInnerChangePassword = document.querySelector(".modal-inner.modal-change-password");
 
-const contentModalAdd = document.querySelector(".content-add");
-const deleteA = document.querySelector(".modal-footer a");
-
-const btnAdd = document.querySelector(".add-btn");
-changePasswordBtn.addEventListener("click", showModalAdd);
-function hideModalAdd() {
+changePasswordBtn.addEventListener("click", showModalChangePassword);
+function hideModalChangePassword() {
     modal.classList.add("hide");
-    modalInnerAdd.classList.add("hide");
-    refreshAddForm();
+    modalInnerChangePassword.classList.add("hide");
+    modalInnerInfo.classList.add("hide");
+    refreshChangePasswordForm();
 }
-function showModalAdd() {
+function showModalChangePassword() {
     modal.classList.remove("hide");
-    modalInnerAdd.classList.remove("hide");
+    modalInnerChangePassword.classList.remove("hide");
 }
 function hideModal() {
     modal.classList.add("hide");
-    modalInnerAdd.classList.add("hide");
-    refreshAddForm();
+    modalInnerChangePassword.classList.add("hide");
+    modalInnerEdit.classList.add("hide");
+    refreshChangePasswordForm();
+    refreshEditForm();
 }
 
-closeIconAdd.addEventListener("click", hideModalAdd);
+closeIconChangePassword.addEventListener("click", hideModalChangePassword);
 modal.addEventListener("click", hideModal);
-modalInnerAdd.addEventListener("click", function (event) {
+modalInnerChangePassword.addEventListener("click", function (event) {
     event.stopPropagation();
 });
 
-const confirmAddBtn = document.getElementById("confirmBtnAdd");
-const formAdd = document.querySelector(".modal-add .modal-body");
-const refreshAddBtn = document.querySelector(".modal-add .reset-btn");
+const confirmChangePasswordBtn = document.getElementById("confirmBtnChangePassword");
+const formChangePassword = document.querySelector(".modal-change-password .modal-body");
+const refreshChangePasswordBtn = document.querySelector(".modal-change-password .reset-btn");
 
 /* refresh edit-form */
-const addressAddForm = document.querySelector(".address-add-form");
-function refreshAddForm() {
-    supplierNameAddForm.value = "";
-    phoneNumberAddForm.value = "";
-    emailAddForm.value = "";
-    addressAddForm.value = "";
-    emailAddForm.style.backgroundColor = "#ddd";
-    phoneNumberAddForm.style.backgroundColor = "#ddd";
-}
-refreshAddBtn.addEventListener("click", refreshAddForm);
-var isSupplierNameAddValid = true;
-var isAddressAddValid = true;
-var isPhoneNumberAddValid = true;
-var isEmailAddValid = true;
-
-const supplierNameAddForm = document.querySelector(".supplier_name_add_form");
-const addSupplierNameWarning = document.querySelector(
-    ".add-supplier-name-warning"
+const newPasswordForm = document.querySelector(".new_password_form");
+const newPasswordWarning = document.querySelector(
+    ".new-password-warning"
 );
-supplierNameAddForm.addEventListener("keyup", function (e) {
-    var value = e.target.value;
-    const regex =
-        /^[0-9a-zA-Z áàảãạÁÀẢÃẠăắằặẳẵĂẮẰẲẴẶâấầẩẫậÂẤẦẨẪẬéèẻẽẹÉÈẺẼẸêếềểễệÊẾỂỄỆíìỉĩịÍÌỈĨỊúùủũụÚÙỦŨỤưứừửữựƯỨỪỬỮỰóòỏõọÓÒỎÕỌôốồổỗộÔỐỒỔỖỘơớờởỡợƠỚỜỞỠỢđĐýỳỷỹỵÝỲỶỸỴ]*$/; // chỉ cho phép chữ cái và khoảng trắng
-    if (!regex.test(value)) {
-        addSupplierNameWarning.style.opacity = "1";
-        isSupplierNameAddValid = false;
-    } else {
-        addSupplierNameWarning.style.opacity = "0";
-        isSupplierNameAddValid = true;
+function refreshChangePasswordForm() {
+    oldPasswordForm.value = "";
+    confirmPasswordForm.value = "";
+    newPasswordForm.value = "";
+    confirmPasswordForm.style.backgroundColor = "#ddd";
+    oldPasswordWarning.style.opacity = "0";
+    newPasswordWarning.style.opacity = "0";
+    confirmPasswordWarning.style.opacity = "0";
+}
+refreshChangePasswordBtn.addEventListener("click", refreshChangePasswordForm);
+var isOldPasswordValid = true;
+var isNewPasswordValid = true;
+var isConfirmPasswordValid = true;
+
+const oldPasswordForm = document.querySelector(".old_password_form");
+const oldPasswordWarning = document.querySelector(
+    ".old-password-warning"
+);
+
+var oldPasswordValue = "";
+oldPasswordForm.addEventListener("keyup", function (e) {
+    oldPasswordValue = e.target.value;
+    fetch(
+        "../Account/GetAccountById/" +
+            sessionStorage.getItem("account_id")
+    )
+        .then((response) => response.json())
+        .then((values) => {
+            if(oldPasswordValue !== ""){
+                if(oldPasswordValue === values.password){
+                    oldPasswordWarning.style.opacity = "0";
+                    isOldPasswordValid = true;
+                }else{
+                    oldPasswordWarning.style.opacity = "1";
+                    isOldPasswordValid = false;
+                }
+            }else{
+                oldPasswordWarning.style.opacity = "0";
+            }    
+        })
+        .catch((error) => console.log("Error: ", error));
+    confirmChangePasswordBtn.disabled = !(
+        isConfirmPasswordValid &&
+        isOldPasswordValid &&
+        isNewPasswordValid
+    );
+});
+var newPasswordValue = "";
+newPasswordForm.addEventListener("keyup", function (e) {
+    const checkLetter = /[a-zA-Z]/;
+    const checkNumber = /[0-9]/;
+    const checkSpecialCharacter = /[^a-zA-Z0-9]/;
+    newPasswordValue = e.target.value;
+    if(newPasswordValue === ""){
+        newPasswordWarning.style.opacity = "0";
+    }else{
+        if (
+            checkSpecialCharacter.test(newPasswordValue) &&
+            checkLetter.test(newPasswordValue) &&
+            checkNumber.test(newPasswordValue) &&
+            this.value.length > 6
+        ) {
+            newPasswordWarning.style.opacity = "0";
+            isNewPasswordValid = true;
+        } else {
+            newPasswordWarning.style.opacity = "1";
+            newPasswordWarning.textContent =
+                "Phải có 7 ký tự, có chữ thường, chữ hoa, số và ký tự đặc biệt";
+            isNewPasswordValid = false;
+        }
     }
-    confirmAddBtn.disabled = !(
-        isPhoneNumberAddValid &&
-        isEmailAddValid &&
-        isSupplierNameAddValid &&
-        isAddressAddValid
+    
+    confirmChangePasswordBtn.disabled = !(
+        isConfirmPasswordValid &&
+        isOldPasswordValid &&
+        isNewPasswordValid
     );
 });
 
-const phoneNumberAddForm = document.querySelector(".phone-number-add-form");
-const addPhoneNumberWarning = document.querySelector(
-    ".add-phone-number-warning"
+const confirmPasswordForm = document.querySelector(".confirm_password_form");
+const confirmPasswordWarning = document.querySelector(
+    ".confirm-password-warning"
 );
-phoneNumberAddForm.addEventListener("keyup", function () {
-    var phone_number = this.value;
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "../Supplier/GetSupplierByPhoneNumber", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onload = function () {
-        if (this.status == 200) {
-            var response = this.responseText;
-            response = response.trim();
-            if (response == "Số điện thoại đã tồn tại") {
-                addPhoneNumberWarning.textContent = "Số điện thoại đã tồn tại";
-                addPhoneNumberWarning.style.opacity = "1";
-                isPhoneNumberAddValid = false;
-            } else {
-                const regex = /^0\d{9}$/;
-                if (!regex.test(phone_number)) {
-                    addPhoneNumberWarning.style.opacity = "1";
-                    addPhoneNumberWarning.textContent =
-                        "Phải đủ 10 số và bắt đầu là 0";
-                    isPhoneNumberAddValid = false;
-                } else {
-                    addPhoneNumberWarning.style.opacity = "0";
-                    isPhoneNumberAddValid = true;
-                }
-            }
+confirmPasswordForm.addEventListener("keyup", function () {
+    var confirmPassword = this.value;
+    if(confirmPassword == ""){
+        confirmPasswordWarning.style.opacity = "0";
+    }else{
+        if (confirmPassword != newPasswordValue) {
+            confirmPasswordWarning.textContent = "Mật khẩu không khớp";
+            confirmPasswordWarning.style.opacity = "1";
+            isConfirmPasswordValid = false;
+        } else {
+            confirmPasswordWarning.style.opacity = "0";
+            isConfirmPasswordValid = true;
         }
-        confirmAddBtn.disabled = !(
-            isPhoneNumberAddValid &&
-            isEmailAddValid &&
-            isSupplierNameAddValid &&
-            isAddressAddValid
-        );
-    };
-    xhr.send("phone_number=" + phone_number);
-});
-const emailAddForm = document.querySelector(".email-add-form");
-const addEmailWarning = document.querySelector(".add-email-warning");
-emailAddForm.addEventListener("keyup", function () {
-    var email = this.value;
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "../Supplier/GetSupplierByEmail", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onload = function () {
-        if (this.status == 200) {
-            var response = this.responseText;
-            response = response.trim();
-            if (response == "Email đã tồn tại") {
-                addEmailWarning.textContent = "Email đã tồn tại";
-                addEmailWarning.style.opacity = "1";
-                isEmailAddValid = false;
-            } else {
-                const checkEmail =
-                    /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-                if (!checkEmail.test(email)) {
-                    addEmailWarning.style.opacity = "1";
-                    addEmailWarning.textContent = "Email không đúng định dạng";
-                    isEmailAddValid = false;
-                } else {
-                    addEmailWarning.style.opacity = "0";
-                    isEmailAddValid = true;
-                }
-            }
-        }
-        confirmAddBtn.disabled = !(
-            isPhoneNumberAddValid &&
-            isEmailAddValid &&
-            isSupplierNameAddValid &&
-            isAddressAddValid
-        );
-    };
-    xhr.send("email=" + email);
+    }
+    
+    confirmChangePasswordBtn.disabled = !(
+        isConfirmPasswordValid &&
+        isOldPasswordValid &&
+        isNewPasswordValid
+    );
 });
 
 
+
+
+const closeIconInfo = document.querySelector("#closeIconInfo");
+const closeBtnInfo = document.querySelector("#closeBtnInfo");
+const modalInnerInfo = document.querySelector(".modal-inner.modal-info");
+const contentModalInfo = document.querySelector(".content-info");
+function hideModalInfo() {
+    modal.classList.add("hide");
+    modalInnerInfo.classList.add("hide");
+}
+function showModalInfo() {
+    modal.classList.remove("hide");
+    modalInnerInfo.classList.remove("hide");
+}
+closeIconInfo.addEventListener("click", hideModalInfo);
+closeBtnInfo.addEventListener("click", hideModalInfo);
+modalInnerInfo.addEventListener("click", function (event) {
+    event.stopPropagation();
+});
+document.querySelector(".personal-info").addEventListener("click", showModalInfo);
+var rowFullname = document.querySelector(".row-data.row-fullname");
+var rowRole = document.querySelector(".row-data.row-role");
+var rowStaffId = document.querySelector(".row-data.row-staff-id");
+var rowAccountId = document.querySelector(".row-data.row-account-id");
+var rowGender = document.querySelector(".row-data.row-gender");
+var rowAddress = document.querySelector(".row-data.row-address");
+var rowEntryDate = document.querySelector(".row-data.row-entry-date");
+var rowPhoneNumber = document.querySelector(".row-data.row-phone-number");
+var rowEmail = document.querySelector(".row-data.row-email");
+var rowCreatedAt = document.querySelector(".row-data.row-created-at");
+var rowUpdatedAt = document.querySelector(".row-data.row-updated-at");
+var avatarImage = document.querySelector(".modal-info .avatar-section .avatar-image");
+fetch("../InternalManager/GetAllDataPersonalInfoStaff/"+sessionStorage.getItem("staff_id"))
+    .then((response) => response.json())
+    .then((values) => {
+        values.personalInfoStaff.forEach((value) => {
+            rowFullname.textContent = value.staff_fullname;
+            rowRole.textContent = value.role_name;
+            rowStaffId.textContent = value.staff_id;
+            rowAccountId.textContent = value.account_id;
+            if(value.gender == 0){
+                rowGender.textContent = "Nam";
+            }else{
+                rowGender.textContent = "Nữ";
+            }
+            rowAddress.textContent = value.address;
+            var date = new Date(value.entry_date);
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            if (day < 10) day = "0" + day;
+            if (month < 10) month = "0" + month;
+            var formattedDate = day + "/" + month + "/" + year;
+            rowEntryDate.textContent = formattedDate;
+            rowPhoneNumber.textContent = value.phone_number;
+            rowEmail.textContent = value.email;
+            rowCreatedAt.textContent = value.created_at;
+            rowUpdatedAt.textContent = value.updated_at;
+            avatarImage.setAttribute("src", "../Public/img/staffAvatar/"+value.avatar);
+        });
+    })
+    .catch((error) => console.log("Error: ", error));
+
+
+
+document.querySelector(".edit-personal-info").addEventListener("click", showModalEdit);
+const closeIconEdit = document.querySelector("#closeIconEdit");
+const modalInnerEdit = document.querySelector(".modal-inner.modal-edit");
+const contentModalEdit = document.querySelector(".content-edit");
+function hideModalEdit() {
+    modal.classList.add("hide");
+    modalInnerEdit.classList.add("hide");
+}
+
+function showModalEdit() {
+    modal.classList.remove("hide");
+    modalInnerEdit.classList.remove("hide");
+    fetch("../InternalManager/GetAllDataStaff")
+    .then((response) => response.json())
+    .then((values) => {
+        values.infoStaff.forEach((staff) => {
+        if (staff.staff_id == staffId) {
+            fullnameEditForm.value = staff.staff_fullname;
+            phoneNumberEditForm.value = staff.phone_number;
+            emailEditForm.value = staff.email;
+            if (staff.gender == 0) {
+                genderEditForm.selectedIndex = 1;
+            } else if (staff.gender == 1) {
+                genderEditForm.selectedIndex = 2;
+            }
+            addressEditForm.value = staff.address;
+
+            emailEditForm.addEventListener("keyup", function () {
+                var email = this.value;
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "../Staff/GetAccountByEmail", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onload = function () {
+                    if (this.status == 200) {
+                        var response = this.responseText;
+                        response = response.trim();
+                        if (response == "Email đã tồn tại" && email != staff.email) {
+                            editEmailWarning.textContent = "Email đã tồn tại";
+                            editEmailWarning.style.opacity = "1";
+                            isEmailEditValid = false;
+                        } else {
+                            const checkEmail =
+                                /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                            if (!checkEmail.test(email)) {
+                                editEmailWarning.style.opacity = "1";
+                                editEmailWarning.textContent = "Email không đúng định dạng";
+                                isEmailEditValid = false;
+                            } else {
+                                editEmailWarning.style.opacity = "0";
+                                isEmailEditValid = true;
+                            }
+                        }
+                    }
+                    confirmEditBtn.disabled = !(
+                        isPhoneNumberEditValid &&
+                        isEmailEditValid &&
+                        isFullnameEditValid &&
+                        isGenderEditValid
+                    );
+                };
+                xhr.send("email=" + email);
+            });
+
+            phoneNumberEditForm.addEventListener("keyup", function () {
+                var phone_number = this.value;
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "../Staff/GetAccountByPhoneNumber", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onload = function () {
+                    if (this.status == 200) {
+                        var response = this.responseText;
+                        response = response.trim();
+                        if (response == "Số điện thoại đã tồn tại" && phone_number != staff.phone_number) {
+                            editPhoneNumberWarning.textContent = "Số điện thoại đã tồn tại";
+                            editPhoneNumberWarning.style.opacity = "1";
+                            isPhoneNumberEditValid = false;
+                        } else {
+                            const regex = /^0\d{9}$/;
+                            if (!regex.test(phone_number)) {
+                                editPhoneNumberWarning.style.opacity = "1";
+                                editPhoneNumberWarning.textContent =
+                                    "Phải đủ 10 số và bắt đầu là 0";
+                                isPhoneNumberEditValid = false;
+                            } else {
+                                editPhoneNumberWarning.style.opacity = "0";
+                                isPhoneNumberEditValid = true;
+                            }
+                        }
+                    }
+                    confirmEditBtn.disabled = !(
+                        isPhoneNumberEditValid &&
+                        isEmailEditValid &&
+                        isFullnameEditValid &&
+                        isGenderEditValid
+                    );
+                };
+                xhr.send("phone_number=" + phone_number);
+            });
+        }
+        });
+    })
+    .catch((error) => console.log("Error: ", error));
+}
+closeIconEdit.addEventListener("click", hideModalEdit);
+modalInnerEdit.addEventListener("click", function (event) {
+    event.stopPropagation();
+});
+const confirmEditBtn = document.getElementById("confirmBtnEdit");
+const refreshEditBtn = document.querySelector(".modal-edit .reset-btn");
+const addressEditForm = document.querySelector(".address-edit-form");
+function refreshEditForm() {
+    fullnameEditForm.value = "";
+    phoneNumberEditForm.value = "";
+    emailEditForm.value = "";
+    genderEditForm.selectedIndex = 0;
+    addressEditForm.value = "";
+    emailEditForm.style.backgroundColor = "#ddd";
+    phoneNumberEditForm.style.backgroundColor = "#ddd";
+    avatarEditForm.value = "";
+}
+refreshEditBtn.addEventListener("click", refreshEditForm);
+var isFullnameEditValid = true;
+var isGenderEditValid = true;
+var isPhoneNumberEditValid = true;
+var isEmailEditValid = true;
+
+const fullnameEditForm = document.querySelector(".fullname-edit-form");
+const editFullnameWarning = document.querySelector(".edit-fullname-warning");
+fullnameEditForm.addEventListener("keyup", function (e) {
+    var value = e.target.value;
+    const regex =
+        /^[a-zA-Z áàảãạÁÀẢÃẠăắằặẳẵĂẮẰẲẴẶâấầẩẫậÂẤẦẨẪẬéèẻẽẹÉÈẺẼẸêếềểễệÊẾỂỄỆíìỉĩịÍÌỈĨỊúùủũụÚÙỦŨỤưứừửữựƯỨỪỬỮỰóòỏõọÓÒỎÕỌôốồổỗộÔỐỒỔỖỘơớờởỡợƠỚỜỞỠỢđĐýỳỷỹỵÝỲỶỸỴ]*$/; // chỉ cho phép chữ cái và khoảng trắng
+    if (!regex.test(value)) {
+        editFullnameWarning.style.opacity = "1";
+        isFullnameEditValid = false;
+    } else {
+        editFullnameWarning.style.opacity = "0";
+        isFullnameEditValid = true;
+    }
+    confirmEditBtn.disabled = !(
+        isPhoneNumberEditValid &&
+        isEmailEditValid &&
+        isFullnameEditValid &&
+        isGenderEditValid
+    );
+});
+
+const genderEditForm = document.querySelector(".gender-edit-form");
+const editGenderWarning = document.querySelector(".edit-gender-warning");
+genderEditForm.value = "-1";
+genderEditForm.addEventListener("change", function (e) {
+    if (this.value == "-1") {
+        editGenderWarning.style.opacity = "1";
+        isGenderEditValid = false;
+    } else {
+        editGenderWarning.style.opacity = "0";
+        isGenderEditValid = true;
+    }
+    confirmEditBtn.disabled = !(
+        isPhoneNumberEditValid &&
+        isEmailEditValid &&
+        isFullnameEditValid &&
+        isGenderEditValid
+    );
+});
+
+const phoneNumberEditForm = document.querySelector(".phone-number-edit-form");
+const editPhoneNumberWarning = document.querySelector(
+    ".edit-phone-number-warning"
+);
+// phoneNumberEditForm.addEventListener("keyup", function () {
+//     var phone_number = this.value;
+//     var xhr = new XMLHttpRequest();
+//     xhr.open("POST", "../Staff/GetAccountByPhoneNumber", true);
+//     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+//     xhr.onload = function () {
+//         if (this.status == 200) {
+//             var response = this.responseText;
+//             response = response.trim();
+//             if (response == "Số điện thoại đã tồn tại") {
+//                 editPhoneNumberWarning.textContent = "Số điện thoại đã tồn tại";
+//                 editPhoneNumberWarning.style.opacity = "1";
+//                 isPhoneNumberEditValid = false;
+//             } else {
+//                 const regex = /^0\d{9}$/;
+//                 if (!regex.test(phone_number)) {
+//                     editPhoneNumberWarning.style.opacity = "1";
+//                     editPhoneNumberWarning.textContent =
+//                         "Phải đủ 10 số và bắt đầu là 0";
+//                     isPhoneNumberEditValid = false;
+//                 } else {
+//                     editPhoneNumberWarning.style.opacity = "0";
+//                     isPhoneNumberEditValid = true;
+//                 }
+//             }
+//         }
+//         confirmEditBtn.disabled = !(
+//             isPhoneNumberEditValid &&
+//             isEmailEditValid &&
+//             isFullnameEditValid &&
+//             isRoleEditValid &&
+//             isGenderEditValid &&
+//             isPasswordEditValid &&
+//             isAvatarEditValid
+//         );
+//     };
+//     xhr.send("phone_number=" + phone_number);
+// });
+const emailEditForm = document.querySelector(".email-edit-form");
+const editEmailWarning = document.querySelector(".edit-email-warning");
+// emailEditForm.addEventListener("keyup", function () {
+//     var email = this.value;
+//     var xhr = new XMLHttpRequest();
+//     xhr.open("POST", "../Staff/GetAccountByEmail", true);
+//     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+//     xhr.onload = function () {
+//         if (this.status == 200) {
+//             var response = this.responseText;
+//             response = response.trim();
+//             if (response == "Email đã tồn tại") {
+//                 editEmailWarning.textContent = "Email đã tồn tại";
+//                 editEmailWarning.style.opacity = "1";
+//                 isEmailEditValid = false;
+//             } else {
+//                 const checkEmail =
+//                     /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+//                 if (!checkEmail.test(email)) {
+//                     editEmailWarning.style.opacity = "1";
+//                     editEmailWarning.textContent = "Email không đúng định dạng";
+//                     isEmailEditValid = false;
+//                 } else {
+//                     editEmailWarning.style.opacity = "0";
+//                     isEmailEditValid = true;
+//                 }
+//             }
+//         }
+//         confirmEditBtn.disabled = !(
+//             isPhoneNumberEditValid &&
+//             isEmailEditValid &&
+//             isFullnameEditValid &&
+//             isRoleEditValid &&
+//             isGenderEditValid &&
+//             isPasswordEditValid &&
+//             isAvatarEditValid
+//         );
+//     };
+//     xhr.send("email=" + email);
+// });
+
+const avatarEditForm = document.querySelector(".avatar-edit-form");
+const editAvatarWarning = document.querySelector(".edit-avatar-warning");
+avatarEditForm.addEventListener("change", function (event) {
+    const regex = /\.(png|jpg|jpeg)$/i;
+    var selectedFile = event.target.files[0];
+    if (!regex.test(selectedFile.name)) {
+        editAvatarWarning.style.opacity = "1";
+        isAvatarEditValid = false;
+    } else {
+        editAvatarWarning.style.opacity = "0";
+        isAvatarEditValid = true;
+    }
+    confirmEditBtn.disabled = !(
+        isPhoneNumberEditValid &&
+        isEmailEditValid &&
+        isFullnameEditValid &&
+        isGenderEditValid
+    );
+});
+
+var staffId = sessionStorage.getItem("staff_id");
+fetch("../InternalManager/GetAllDataStaff")
+    .then((response) => response.json())
+    .then((values) => {
+        values.infoStaff.forEach((staff) => {
+        if (staff.staff_id == staffId) {
+            fullnameEditForm.value = staff.staff_fullname;
+            phoneNumberEditForm.value = staff.phone_number;
+            emailEditForm.value = staff.email;
+            if (staff.gender == 0) {
+                genderEditForm.selectedIndex = 1;
+            } else if (staff.gender == 1) {
+                genderEditForm.selectedIndex = 2;
+            }
+            addressEditForm.value = staff.address;
+
+            emailEditForm.addEventListener("keyup", function () {
+                var email = this.value;
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "../Staff/GetAccountByEmail", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onload = function () {
+                    if (this.status == 200) {
+                        var response = this.responseText;
+                        response = response.trim();
+                        if (response == "Email đã tồn tại" && email != staff.email) {
+                            editEmailWarning.textContent = "Email đã tồn tại";
+                            editEmailWarning.style.opacity = "1";
+                            isEmailEditValid = false;
+                        } else {
+                            const checkEmail =
+                                /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                            if (!checkEmail.test(email)) {
+                                editEmailWarning.style.opacity = "1";
+                                editEmailWarning.textContent = "Email không đúng định dạng";
+                                isEmailEditValid = false;
+                            } else {
+                                editEmailWarning.style.opacity = "0";
+                                isEmailEditValid = true;
+                            }
+                        }
+                    }
+                    confirmEditBtn.disabled = !(
+                        isPhoneNumberEditValid &&
+                        isEmailEditValid &&
+                        isFullnameEditValid &&
+                        isGenderEditValid
+                    );
+                };
+                xhr.send("email=" + email);
+            });
+
+            phoneNumberEditForm.addEventListener("keyup", function () {
+                var phone_number = this.value;
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "../Staff/GetAccountByPhoneNumber", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onload = function () {
+                    if (this.status == 200) {
+                        var response = this.responseText;
+                        response = response.trim();
+                        if (response == "Số điện thoại đã tồn tại" && phone_number != staff.phone_number) {
+                            editPhoneNumberWarning.textContent = "Số điện thoại đã tồn tại";
+                            editPhoneNumberWarning.style.opacity = "1";
+                            isPhoneNumberEditValid = false;
+                        } else {
+                            const regex = /^0\d{9}$/;
+                            if (!regex.test(phone_number)) {
+                                editPhoneNumberWarning.style.opacity = "1";
+                                editPhoneNumberWarning.textContent =
+                                    "Phải đủ 10 số và bắt đầu là 0";
+                                isPhoneNumberEditValid = false;
+                            } else {
+                                editPhoneNumberWarning.style.opacity = "0";
+                                isPhoneNumberEditValid = true;
+                            }
+                        }
+                    }
+                    confirmEditBtn.disabled = !(
+                        isPhoneNumberEditValid &&
+                        isEmailEditValid &&
+                        isFullnameEditValid &&
+                        isGenderEditValid
+                    );
+                };
+                xhr.send("phone_number=" + phone_number);
+            });
+        }
+        });
+    })
+    .catch((error) => console.log("Error: ", error));

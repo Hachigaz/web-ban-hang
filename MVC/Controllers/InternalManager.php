@@ -16,6 +16,8 @@
         public $orderDetailService;
         public $attendanceService;
         public $leaveApplicationService;
+        public $timesheetDetailService;
+        public $contractService;
         public function __construct(){
             $this->internalManagerService = $this->service("InternalManagerService");
             $this->productService = $this->service("ProductService");
@@ -33,6 +35,8 @@
             $this->orderDetailService = $this->service("OrderDetailService");
             $this->attendanceService = $this->service("AttendanceService");
             $this->leaveApplicationService = $this->service("LeaveApplicationService");
+            $this->timesheetDetailService = $this->service("TimesheetDetailService");
+            $this->contractService = $this->service("ContractService");
         }
         public function HomeManager(){
             if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
@@ -282,6 +286,36 @@
                 header('Location: ../SignIn/SayHi');
             }
         }
+        public function AttendenceManager(){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
+                $this->view("internalManager", [
+                    "Page" => "AttendenceManager",
+                    "Title" => "Điểm danh"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
+        }
+        public function TimesheetManager(){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
+                $this->view("internalManager", [
+                    "Page" => "TimesheetManager",
+                    "Title" => "Chấm công"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
+        }
+        public function ContractManager(){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
+                $this->view("internalManager", [
+                    "Page" => "ContractManager",
+                    "Title" => "Hợp đồng"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
+        }
         public function AdvertisementManager(){
             if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $bannerList = $this->productService->productRepo->get(
@@ -428,13 +462,14 @@
 
         public function GetAllDataAccount(){
             $cardValue = array(
-                "countAllAccount" => "8",
-                "countStaffAccount" => "4",
-                "countCustomerAccount" => "4",
-                "countBlockedAccount" => "2"
+                "countAllAccount" => $this->accountService->getQuantityAllAccount(),
+                "countStaffAccount" => $this->accountService->getQuantityStaffAccount(),
+                "countCustomerAccount" => $this->accountService->getQuantityCustomerAccount(),
+                "countBlockedAccount" => $this->accountService->getQuantityAccountBlocked()
             );
             $infoAccount = $this->accountService->getAccountStaffCustomer();
-            $data = array("cardValue" => $cardValue, "infoAccount" => $infoAccount);
+            $allRole = $this->roleService->getAllRole();
+            $data = array("cardValue" => $cardValue, "infoAccount" => $infoAccount, "allRole" => $allRole);
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
         }
@@ -485,7 +520,7 @@
         //     echo json_encode($data, JSON_UNESCAPED_UNICODE);   
         // }
         public function GetAllDataAttendance(){
-            $attendanceData = $this->attendanceService->getAllAttendance();
+            $attendanceData = $this->attendanceService->getAllDataAttendance();
             $data = array("attendances" => $attendanceData);
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
@@ -502,5 +537,36 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
         }
+
+        public function GetAllDataSalary(){
+            $salaryData = $this->timesheetDetailService->getSalaryTable();
+            $allMonth = $this->timesheetDetailService->getAllMonth();
+            $allYear = $this->timesheetDetailService->getAllYear();
+            $data = array("salaryData" => $salaryData, "allMonth" => $allMonth, "allYear" => $allYear);
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE); 
+        }
+
+        public function GetAllDataTimesheet(){
+            $timesheetData = $this->timesheetDetailService->getAllDataTimesheet();
+            $allMonth = $this->timesheetDetailService->getAllMonth();
+            $allYear = $this->timesheetDetailService->getAllYear();
+            $data = array("timesheetData" => $timesheetData, "allMonth" => $allMonth, "allYear" => $allYear);
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE); 
+        }
+
+       public function UpdateStatus(){
+            $attendance_id = $_POST['attendance_id'];
+            $status = $_POST['status'];
+            $this->attendanceService->updateStatus($attendance_id, $status);
+       }
+
+       public function GetAllDataContract(){
+            $contractData = $this->contractService->getAllDataContract();
+            $data = array("contractData" => $contractData);
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE); 
+       }
     }
  

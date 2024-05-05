@@ -93,6 +93,32 @@
                 $this->accountRepo->updateAccount($account, $account_id);
             // }
         }
+        public function updateStaffHaveAvatar($fullname, $phoneNumber, $email, $genderStaff, $addressStaff, $avatarStaff,  $acc_id, $staf_id){
+                $staffData = $this->staffRepo->getStaffById($staf_id)[0];
+                extract($staffData);// gán các giá trị cho các key tương ứng với các biến
+                $staff = new StaffModel(
+                    $account_id, $fullname, $role_id, $genderStaff, $addressStaff, $staff_id, $entry_date, $is_active
+                );
+                $this->staffRepo->updateStaff($staff, $staff_id); 
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
+                $currentDateTime = date('Y-m-d H:i:s');
+                $accountData = $this->accountRepo->getAccountById($acc_id);
+                extract($accountData);
+                if(trim($avatarStaff) != ""){
+                    $account = new AccountModel(
+                        $email, $password, $avatarStaff, $phoneNumber, $account_id, $created_at, $currentDateTime, $is_active
+                    );
+                    
+                }else{
+                    $account = new AccountModel(
+                        $email, $password, $avatar, $phoneNumber, $account_id, $created_at, $currentDateTime, $is_active
+                    );
+                }
+                echo "OK";
+
+                $this->accountRepo->updateAccount($account, $account_id);
+            // }
+        }
 
         public function deleteStaff($staff_id, $account_id){
             $this->staffRepo->deleteStaff($staff_id);

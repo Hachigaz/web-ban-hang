@@ -591,3 +591,10 @@
     font-weight: 600;
     color: #fff;
 }
+
+.unlock{
+    background-color: var(--primary-color-green);
+}
+.locked{
+    background-color: var(--primary-color-red);
+}

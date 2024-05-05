@@ -35,5 +35,13 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->attendanceRepo->getAttendanceById($id), JSON_UNESCAPED_UNICODE);
         }
+
+        public function getAllDataAttendance(){
+            return $this->attendanceRepo->getAllDataAttendance();
+        }
+
+        public function updateStatus($attendance_id, $status){
+            return $this->attendanceRepo->updateStatus($attendance_id, $status);
+        }
     }
 ?>

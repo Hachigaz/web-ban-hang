@@ -4,8 +4,8 @@
             $this->create("timesheets", $timesheet, "timesheet_id");
         }
 
-        public function updateTimesheet($timesheet, $id){// by id
-            $this->update("timesheets", $timesheet, "timesheet_id = ".$id);
+        public function updateTimesheet($timesheet, $id){// by id'
+            $this->update("timesheets", $timesheet, "timesheet_id = ".$id, "timesheet_id");
         }
 
         public function getAllTimesheet(){

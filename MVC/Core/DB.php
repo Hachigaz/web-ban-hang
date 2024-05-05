@@ -285,6 +285,41 @@
             $row = mysqli_fetch_assoc($result);
             return $row["COUNT($column)"];            
         }
+
+        public function getCountColumnUnactive($table, $column, $where){
+            $is_active = "is_active";
+            if($where != ""){
+                $sql = "SELECT COUNT($column) FROM $table WHERE $where AND $is_active = '0'";
+            }else{
+                $sql = "SELECT COUNT($column) FROM $table WHERE $is_active = '0'";
+            }
+            $result = mysqli_query($this->con, $sql);
+            $row = mysqli_fetch_assoc($result);
+            return $row["COUNT($column)"];            
+        }
+
+        public function getCountColumnIsActive($table, $column, $where){
+            if($where != ""){
+                $sql = "SELECT COUNT($column) FROM $table WHERE $where";
+            }else{
+                $sql = "SELECT COUNT($column) FROM $table";
+            }
+            $result = mysqli_query($this->con, $sql);
+            $row = mysqli_fetch_assoc($result);
+            return $row["COUNT($column)"];            
+        }
+
+        public function getCountColumnJoin2Tables($table1, $table2, $commonField, $where, $column){
+            if($where == ""){
+                $sql = "SELECT COUNT($column) FROM $table1 JOIN $table2 ON $table1.$commonField = $table2.$commonField";
+            }else{
+                $sql = "SELECT COUNT($column) FROM $table1 JOIN $table2 ON $table1.$commonField = $table2.$commonField WHERE $where";
+            }
+            $result = mysqli_query($this->con, $sql);
+            $row = mysqli_fetch_assoc($result);
+            return $row["COUNT($column)"];    
+        }
+        
         
         public function getOneColumnTable($table, $column, $where){
             $is_active = "is_active";
@@ -313,7 +348,8 @@
                     FROM accounts
                     JOIN customers ON accounts.account_id = customers.account_id
                     JOIN roles ON roles.role_id = customers.role_id
-                    WHERE customers.is_active = '1'";
+                    WHERE customers.is_active = '1' 
+                    ORDER BY account_id ASC";
             $result = mysqli_query($this->con, $sql);
             $rows = array();
             while ($row = $result->fetch_assoc()){
