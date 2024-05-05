@@ -51,6 +51,14 @@
     grid-gap: 30px;
     /* margin-top: 10px; */
 }
+.imports {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-gap: 30px;
+    /* margin-top: 10px; */
+}
 .details .staff-table {
     position: relative;
     display: grid;
@@ -63,6 +71,18 @@
     overflow-y: scroll;
 }
 .details .staff-table1 {
+    position: relative;
+    display: grid;
+    min-height: 500px;
+    max-height: 540px;
+    min-width: 700px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 4px 7px 25px rgba(0, 0, 0, 0.1);
+    overflow-y: scroll;
+}
+.imports .staff-table2 {
     position: relative;
     display: grid;
     min-height: 500px;
@@ -434,6 +454,9 @@
 }
 
 .modal-inner {
+    min-width: 750px; 
+}
+.modal-import {
     min-width: 900px; 
 }
 .modal-body {
@@ -603,4 +626,24 @@
     opacity: 0;
     color: red;
     transition: 0.25s;
+}
+.imports table {
+    position: absolute;
+    width: calc(100% - 40px);
+    top: 60px;
+    left: 20px;
+    border-collapse: collapse;
+    margin-top: 10px;
+    max-height: 540px;
+    overflow-x: scroll;
+}
+.imports table thead tr {
+    font-size: 19px;
+}
+.imports table thead,
+.imports table tbody {
+    min-width: 100%;
+}
+.imports table thead td {
+    font-weight: 700;
 }

@@ -2,6 +2,8 @@
     class InternalManager extends Controller{
         public $internalManagerService;
         public $exportService;
+        public $brandService;
+        public $skuService;
         public $importService;
         public $exportDetailService;
         public $productService;
@@ -16,13 +18,17 @@
         public $orderDetailService;
         public $attendanceService;
         public $leaveApplicationService;
+        public $categoryService;
         public function __construct(){
             $this->internalManagerService = $this->service("InternalManagerService");
             $this->productService = $this->service("ProductService");
             $this->customerService = $this->service("CustomerService");
             $this->orderService = $this->service("OrderService");
             $this->staffService = $this->service("StaffService");
+            $this->brandService = $this->service("BrandService");
             $this->roleService = $this->service("RoleService");
+            $this->skuService = $this->service("SkuService");
+            $this->categoryService = $this->service("CategoryService");
             $this->supplierService = $this->service("SupplierService");
             $this->shipmentService = $this->service("ShipmentService");
             $this->accountService = $this->service("AccountService");
@@ -406,7 +412,13 @@
         public function GetAllDataImport(){
             $infoImport = $this->importService->getInfoImport();
             $shipments = $this->shipmentService->GetShipmentlByImportId();
-            $data = array("infoImport" => $infoImport,"shipments" => $shipments);
+            $suppliers = $this->supplierService->getAllSupplier();
+            $categories = $this->categoryService->getAllCategory();
+            $brands = $this-> brandService->getAllBrand();
+            $productSku = $this->productService->getAllProduct();
+            $skus = $this->skuService->getAllSku();
+            $data = array("infoImport" => $infoImport,"shipments" => $shipments,"suppliers" => $suppliers,"categories" => $categories,"brands" => $brands,"productSku" => $productSku,"skus" => $skus);
+            // $data = array("categories" => $categories);
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE);   
         }

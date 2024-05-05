@@ -1,7 +1,14 @@
 <?php
     class ImportRepository extends DB{
-        public function createImport($import){
-            $this->create("imports", $import, "import_id");
+        public function createImport($import) {
+            // Assuming your `create1` method inserts the record into the database and returns the auto-generated ID
+            $import_ids = $this->create1("imports", $import, "import_id");
+            
+            // Extract the import_id from the array
+            $import_id = $import_ids['import_id'];
+        
+            echo "import_id new created = $import_id";
+            return $import_id;
         }
 
         public function updateImport($import, $id){// by id

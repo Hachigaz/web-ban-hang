@@ -4,9 +4,9 @@
                 $this->create("categories", $category, "category_id");
             }
 
-            public function updateCategory($category, $id){// by id
-                $this->update("categories", $category, "category_id = ".$id);
-            }
+            // public function updateCategory($category, $id){// by id
+            //     $this->update("categories", $category, "category_id = ".$id);
+            // }
 
             public function deleteCategory($id){// by id
                 $this->delete("categories", "category_id = ".$id);

@@ -39,6 +39,29 @@
                 return false; // trả về false nếu có lỗi xảy ra
             }
         }
+        public function create1($table, $object, $idName) {
+            $data = $object->toArray(); // Convert object to array
+            $data = array_filter($data, function ($value) { // Remove columns with null values
+                return $value !== null;
+            });
+            
+            // Escape string values to prevent SQL injection
+            $escapedData = array_map(function ($value) {
+                return is_string($value) ? $this->con->real_escape_string($value) : $value;
+            }, $data);
+        
+            $fields = implode(',', array_keys($escapedData)); // Get column names
+            $values = "'" . implode("','", $escapedData) . "'"; // Get escaped values
+            $sql = "INSERT INTO $table ($fields) VALUES ($values)";
+        
+            if(mysqli_query($this->con, $sql)) {
+                $id = mysqli_insert_id($this->con); // Get the ID of the newly inserted record
+                $result = mysqli_query($this->con, "SELECT * FROM $table WHERE $idName = $id"); // Query the newly inserted record
+                return mysqli_fetch_assoc($result); // Return the inserted record as an associative array
+            } else {
+                return false; // Return false if an error occurs
+            }
+        }
         
         // public function update($table, $object, $where) {
         //     $data = $object->toArray();// chuyển đối tượng thành mảng key-value

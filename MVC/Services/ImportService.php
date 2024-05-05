@@ -1,15 +1,17 @@
 <?php
     require_once "./MVC/Models/ImportModel.php";
+    require_once "./MVC/Models/ShipmentModel.php";
     class ImportService extends Service{
         public $importRepo;
-
+        public $shipmentRepo;
         public function __construct(){
             $this->importRepo = $this->repository("ImportRepository");
         }
         
         public function createImport(){//$importDTO
-            $import = new ImportModel("4");
-            $this->importRepo->createImport($import);
+            // $import = new ImportModel("4");
+            // $this->importRepo->createImport($import);
+            // header("location: ../../../web-ban-hang/InternalManager/ImportManager");
         }
 
         public function updateImport(){// by id (truyền DTO)
