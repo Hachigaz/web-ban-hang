@@ -246,6 +246,16 @@
                 header('Location: ../SignIn/SayHi');
             }
         }
+        public function SelfSalaryManager(){
+            if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
+                $this->view("internalManager", [
+                    "Page" => "SelfSalaryManager",
+                    "Title" => "Lương cá nhân"
+                ]);
+            }else{
+                header('Location: ../SignIn/SayHi');
+            }
+        }
         public function StatisticManager(){
             if(isset($_SESSION["account_id"]) && isset($_SESSION["role_id"]) && $_SESSION["role_id"]!=5){
                 $this->view("internalManager", [
@@ -531,9 +541,10 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
         }
-        public function GetAllDataPersonalInfoStaff($account_id){
+        public function GetAllDataPersonalInfoStaff($account_id, $staff_id){
             $personalInfoStaff = $this->staffService->getInfoStaffById($account_id);
-            $data = array("personalInfoStaff" => $personalInfoStaff);
+            $selfSalary = $this->timesheetDetailService->GetSalaryByStaffId($staff_id);
+            $data = array("personalInfoStaff" => $personalInfoStaff, "selfSalary" => $selfSalary);
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
         }

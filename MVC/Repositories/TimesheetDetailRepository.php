@@ -65,5 +65,50 @@
                                 ORDER BY t.timesheet_id ASC
                                 ");
         }
+
+        public function getTotalSalaryByMonth($year){
+            return $this->get("SELECT t.month AS `month`, 
+                SUM(td.total_salary) AS `total_salary`
+                FROM `timesheets` t
+                JOIN `timesheet_details` td ON t.`timesheet_id` = td.`timesheet_id`
+                WHERE t.year = $year
+                GROUP BY t.month;
+            ");
+        }
+
+        public function getSalaryByStaffId($staff_id){
+            return $this->get("SELECT 
+                                    c.contract_id, 
+                                    t.month, 
+                                    t.year, 
+                                    CONCAT(FORMAT(td.total_salary, 0, 'en_US'), 'đ') as total_salary
+                                FROM 
+                                    staffs s
+                                JOIN 
+                                    contracts c ON s.staff_id = c.staff_id
+                                JOIN 
+                                    timesheets t ON c.contract_id = t.contract_id
+                                JOIN 
+                                    timesheet_details td ON t.timesheet_id = td.timesheet_id
+                                WHERE c.staff_id = $staff_id
+                                ");
+        }
+
+        public function getTotalSalaryByQuarter($year){
+            return $this->get("SELECT QUARTER(CONCAT_WS('-', t.year, t.month, '01')) AS `quarter`, 
+                SUM(td.total_salary) AS `total_salary`
+                FROM `timesheets` t
+                JOIN `timesheet_details` td ON t.`timesheet_id` = td.`timesheet_id`
+                WHERE t.year = $year
+                GROUP BY QUARTER(CONCAT_WS('-', t.year, t.month, '01'));
+            ");
+        }
+        
+        public function getDistinctYear(){
+            return $this->get("SELECT DISTINCT year
+                FROM `timesheets`
+                ORDER BY year ASC;
+            ");
+        }
     }
 ?>

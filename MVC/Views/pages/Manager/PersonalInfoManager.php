@@ -45,8 +45,15 @@
                 </div>
                 <span class="title">Xin từ chức</span>
             </div>
+            <a href="../InternalManager/SelfSalaryManager" class="self-salary" style="text-decoration: none; color: #000;">
+                <div class="icon-in-box">
+                    <i class="fi fi-rr-user-salary"></i>
+                </div>
+                <span class="title">Lương cá nhân</span>
+            </a>
         </div>
     </div>
+    
     <div class="card">
         <div class="content">
             <div class="change-password">
@@ -225,6 +232,83 @@
                 <input type="text" name="account_id" style="display: none" class="account_id">
                 <input type="text" name="staff_id" style="display: none" class="staff_id">
                 <button class="confirm" id="confirmBtnEdit">Xác nhận sửa</button>
+            </div>
+        </form>
+    </div>
+    
+<div class="modal-inner modal-leave-application hide">
+        <div class="modal-header">
+            <p>Đơn nghỉ phép</p>
+            <i class="fi fi-rr-cross-small" id="closeIconLeaveApplication"></i>
+        </div>
+        <form action="../LeaveApplication/ApproveLeaveApplication" method="post" class="modal-body" enctype="multipart/form-data">
+            <div class="date-picker">
+                <div class="start-date-picker">
+                    <label for="start-date">Từ:</label>
+                    <input type="date" name="start_date" id="leave-start-date" name="start-date" placeholder="Ngày bắt đầu">
+                </div>
+                <div class="end-date-picker">
+                    <label for="end-date">Đến:</label>
+                    <input type="date" name="end_date" id="leave-end-date" name="end-date" placeholder="Ngày kết thúc">
+                </div>
+            </div>
+            
+            <div class="row-section" style="margin-top: 20px">
+                <label for="" class="row-name">Lý do: cá nhân</label>
+                <div class="row-data row-phone-number"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="confirm" id="confirmBtnLeaveSubmit">Xác nhận thêm</button>
+                <input type="text" name="staff_id_leave" style="display: none" class="staff_id_leave">
+            </div>
+        </form>
+    </div>
+    <div class="modal-inner modal-sick-application hide">
+        <div class="modal-header">
+            <p>Đơn nghỉ phép</p>
+            <i class="fi fi-rr-cross-small" id="closeIconSickApplication"></i>
+        </div>
+        <form action="../LeaveApplication/ApproveSickApplication" method="post" class="modal-body" enctype="multipart/form-data">
+            <div class="date-picker">
+                <div class="start-date-picker">
+                    <label for="start-date">Từ:</label>
+                    <input type="date" name="start_date" id="sick-start-date" name="start-date" placeholder="Ngày bắt đầu">
+                </div>
+                <div class="end-date-picker">
+                    <label for="end-date">Đến:</label>
+                    <input type="date" name="end_date" id="sick-end-date" name="end-date" placeholder="Ngày kết thúc">
+                </div>
+            </div>
+            
+            <div class="row-section" style="margin-top: 20px">
+                <label for="" class="row-name">Lý do: Ốm đau, thai sản</label>
+                <div class="row-data row-phone-number"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="confirm" id="confirmBtnSickSubmit">Xác nhận thêm</button>
+                <input type="text" name="staff_id_sick" style="display: none" class="staff_id_sick">
+            </div>
+        </form>
+    </div>
+    <div class="modal-inner modal-demist-application hide">
+        <div class="modal-header">
+            <p>Xin thôi việc</p>
+            <i class="fi fi-rr-cross-small" id="closeIconDemistApplication"></i>
+        </div>
+        <form action="../LeaveApplication/ApproveDemistApplication" method="post" class="modal-body" enctype="multipart/form-data">
+            <div class="date-picker">
+                <div class="start-date-picker" style=" display:none;">
+                    <label for="start-date">Từ:</label>
+                    <input type="date" name="start_date" id="demist-start-date" name="start-date">
+                </div>
+            </div>
+            <div class="row-section">
+                <label for="" class="row-name">Bạn có chắc chắn muốn nộp đơn thôi việc?</label>
+                <div class="row-data row-phone-number"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="confirm" id="confirmBtnDemistSubmit">Xác nhận</button>
+                <input type="text" name="staff_id_demist" style="display: none" class="staff_id_demist">
             </div>
         </form>
     </div>

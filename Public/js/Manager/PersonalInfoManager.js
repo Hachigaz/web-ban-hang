@@ -12,13 +12,17 @@ var accountIdPostEdit = document.querySelector(".modal-edit .account_id");
 accountIdPostEdit.value = sessionStorage.getItem("account_id");
 var staffIdPost = document.querySelector(".staff_id");
 staffIdPost.value = sessionStorage.getItem("staff_id");
+var staffIdLeavePost = document.querySelector(".staff_id_leave");
+staffIdLeavePost.value = sessionStorage.getItem("staff_id");
+var staffIdSickPost = document.querySelector(".staff_id_sick");
+staffIdSickPost.value = sessionStorage.getItem("staff_id");
+var staffIdDemistPost = document.querySelector(".staff_id_demist");
+staffIdDemistPost.value = sessionStorage.getItem("staff_id");
 const changePasswordBtn = document.querySelector(".change-password");
-// changePasswordBtn.addEventListener("click", function () {
-//     console.log("ok");
-// });
+
 fetch(
     "../InternalManager/GetAllDataPersonalInfoStaff/" +
-        sessionStorage.getItem("account_id")
+        sessionStorage.getItem("account_id")+"/"+sessionStorage.getItem("staff_id")
 )
     .then((response) => response.json())
     .then((values) => {
@@ -171,8 +175,112 @@ confirmPasswordForm.addEventListener("keyup", function () {
 });
 
 
+const closeIconLeaveApplication = document.querySelector("#closeIconLeaveApplication");
+
+const modalInnerLeaveApplication = document.querySelector(".modal-inner.modal-leave-application");
+const confirmSubmitLeaveBtn = document.getElementById("confirmBtnLeaveSubmit");
+const formLeaveApplication = document.querySelector(".modal-leave-application .modal-body");
+function hideModalLeaveApplication() {
+    modal.classList.add("hide");
+    modalInnerLeaveApplication.classList.add("hide");
+    startDateLeaveInput.value = "";
+    endDateLeaveInput.value = "";
+}
+function showModalLeaveApplication() {
+    modal.classList.remove("hide");
+    modalInnerLeaveApplication.classList.remove("hide");
+}
+closeIconLeaveApplication.addEventListener("click", hideModalLeaveApplication);
+modalInnerLeaveApplication.addEventListener("click", function (event) {
+    event.stopPropagation();
+});
+const leaveBtn = document.querySelector(".leave");
+leaveBtn.addEventListener("click", showModalLeaveApplication);
+
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0');
+var yyyy = today.getFullYear();
+
+today = yyyy + '-' + mm + '-' + dd;
+document.getElementById("leave-start-date").setAttribute("min", today);
+document.getElementById("leave-end-date").setAttribute("min", today);
+var startDateLeaveInput = document.getElementById("leave-start-date");
+var endDateLeaveInput = document.getElementById("leave-end-date");
+
+// Cập nhật giá trị tối thiểu của end-date mỗi khi start-date thay đổi
+startDateLeaveInput.addEventListener("change", function(){
+    endDateLeaveInput.min = startDateLeaveInput.value;
+});
+endDateLeaveInput.addEventListener("change", function(){
+    startDateLeaveInput.max = endDateLeaveInput.value;
+});
+
+const closeIconDemistApplication = document.querySelector("#closeIconDemistApplication");
+
+const modalInnerDemistApplication = document.querySelector(".modal-inner.modal-demist-application");
+const confirmSubmitDemistBtn = document.getElementById("confirmBtnDemistSubmit");
+const formDemistApplication = document.querySelector(".modal-demist-application .modal-body");
+function hideModalDemistApplication() {
+    modal.classList.add("hide");
+    modalInnerDemistApplication.classList.add("hide");
+}
+function showModalDemistApplication() {
+    modal.classList.remove("hide");
+    modalInnerDemistApplication.classList.remove("hide");
+}
+closeIconDemistApplication.addEventListener("click", hideModalDemistApplication);
+modalInnerDemistApplication.addEventListener("click", function (event) {
+    event.stopPropagation();
+});
+const demistBtn = document.querySelector(".retire");
+demistBtn.addEventListener("click", showModalDemistApplication);
+
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0');
+var yyyy = today.getFullYear();
+
+today = yyyy + '-' + mm + '-' + dd;
+document.getElementById("demist-start-date").setAttribute("min", today);
 
 
+
+const closeIconSickApplication = document.querySelector("#closeIconSickApplication");
+
+const modalInnerSickApplication = document.querySelector(".modal-inner.modal-sick-application");
+const confirmSubmitSickBtn = document.getElementById("confirmBtnSickSubmit");
+const formSickApplication = document.querySelector(".modal-sick-application .modal-body");
+function hideModalSickApplication() {
+    modal.classList.add("hide");
+    modalInnerSickApplication.classList.add("hide");
+}
+function showModalSickApplication() {
+    modal.classList.remove("hide");
+    modalInnerSickApplication.classList.remove("hide");
+}
+closeIconSickApplication.addEventListener("click", hideModalSickApplication);
+modalInnerSickApplication.addEventListener("click", function (event) {
+    event.stopPropagation();
+});
+const sickBtn = document.querySelector(".sick");
+sickBtn.addEventListener("click", showModalSickApplication);
+
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0');
+var yyyy = today.getFullYear();
+
+today = yyyy + '-' + mm + '-' + dd;
+document.getElementById("sick-start-date").setAttribute("min", today);
+document.getElementById("sick-end-date").setAttribute("min", today);
+var startDateSickInput = document.getElementById("sick-start-date");
+var endDateSickInput = document.getElementById("sick-end-date");
+
+// Cập nhật giá trị tối thiểu của end-date mỗi khi start-date thay đổi
+startDateSickInput.addEventListener("change", function(){
+    endDateSickInput.min = startDateSickInput.value;
+});
 const closeIconInfo = document.querySelector("#closeIconInfo");
 const closeBtnInfo = document.querySelector("#closeBtnInfo");
 const modalInnerInfo = document.querySelector(".modal-inner.modal-info");
@@ -203,7 +311,7 @@ var rowEmail = document.querySelector(".row-data.row-email");
 var rowCreatedAt = document.querySelector(".row-data.row-created-at");
 var rowUpdatedAt = document.querySelector(".row-data.row-updated-at");
 var avatarImage = document.querySelector(".modal-info .avatar-section .avatar-image");
-fetch("../InternalManager/GetAllDataPersonalInfoStaff/"+sessionStorage.getItem("staff_id"))
+fetch("../InternalManager/GetAllDataPersonalInfoStaff/"+sessionStorage.getItem("account_id")+"/"+sessionStorage.getItem("staff_id"))
     .then((response) => response.json())
     .then((values) => {
         values.personalInfoStaff.forEach((value) => {

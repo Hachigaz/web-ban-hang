@@ -476,7 +476,7 @@ AND NOT EXISTS (
 
 -- insert vào đơn xin nghỉ và đc duyệt thì tự động insert điểm danh với status là nghỉ phép để ko điểm danh nữa
 DELIMITER //
-CREATE TRIGGER insert_attendance_after_leave_insert
+CREATE TRIGGER insert_attendance_after_leave_insert_check
 AFTER INSERT ON leave_application
 FOR EACH ROW
 BEGIN
@@ -568,8 +568,8 @@ BEGIN
         WHILE cur_date <= end_date DO
             IF NEW.reason = 'Lý do cá nhân' THEN
                 UPDATE timesheets
-                SET days_leave = IF(days_leave = 0, days_leave + 1, days_leave),
-                    days_off = IF(days_leave = 1, days_off + 1, days_off)
+                SET days_off = IF(days_leave = 1, days_off + 1, days_off),
+                    days_leave = IF(days_leave = 0, days_leave + 1, days_leave)
                 WHERE contract_id IN (
                     SELECT contract_id FROM contracts
                     WHERE staff_id = NEW.staff_id
@@ -614,8 +614,9 @@ BEGIN
         WHILE cur_date <= end_date DO
             IF NEW.reason = 'Lý do cá nhân' THEN
                 UPDATE timesheets
-                SET days_leave = IF(days_leave = 0, days_leave + 1, days_leave),
-                    days_off = IF(days_leave = 1, days_off + 1, days_off)
+                SET days_off = IF(days_leave = 1, days_off + 1, days_off),
+                    days_leave = IF(days_leave = 0, days_leave + 1, days_leave)
+                    
                 WHERE contract_id IN (
                     SELECT contract_id FROM contracts
                     WHERE staff_id = NEW.staff_id
