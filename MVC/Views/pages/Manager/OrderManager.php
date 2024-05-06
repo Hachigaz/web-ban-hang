@@ -72,7 +72,7 @@
     <div class="date-picker">
         <div class="end-date-picker">
             <label for="end-date">Đến:</label>
-            <input type="date" name="" id="start-date" name="end-date" placeholder="Ngày đặt đơn">
+            <input type="date" name="" id="end-date" name="end-date" placeholder="Ngày kết thúc">
         </div>
     </div>
 </div>

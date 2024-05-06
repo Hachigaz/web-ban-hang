@@ -27,8 +27,7 @@
         }
 
         public function getAllCategory(){
-            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->categoryRepo->getAllCategory(), JSON_UNESCAPED_UNICODE);
+            return $this->categoryRepo->getAllCategory();
         }
 
         public function getCategoryById(){

@@ -6,19 +6,15 @@
         private $quantity;
         private $remain;
         private $sku_id;
-        private $mfg;
-        private $exp;
         private $shipment_id;
         private $is_active;
-        public function __construct($import_id, $supplier_id, $unit_price_import, $quantity, $sku_id, $mfg, $exp, $remain = null, $shipment_id = null, $is_active = null)
+        public function __construct($import_id, $supplier_id, $unit_price_import, $quantity, $sku_id, $remain = null, $shipment_id = null, $is_active = null)
         {
             $this->import_id = $import_id;
             $this->supplier_id = $supplier_id;
             $this->unit_price_import = $unit_price_import;
             $this->quantity = $quantity;
             $this->sku_id = $sku_id;
-            $this->mfg = $mfg;
-            $this->exp = $exp;
             $this->remain = is_null($remain) ? $quantity : $remain;
             $this->shipment_id = $shipment_id;
             $this->is_active = $is_active;
@@ -71,21 +67,7 @@
             $this->sku_id = $sku_id;
         }
     
-        public function getMfg(){
-            return $this->mfg;
-        }
-    
-        public function setMfg($mfg){
-            $this->mfg = $mfg;
-        }
-    
-        public function getExp(){
-            return $this->exp;
-        }
-    
-        public function setExp($exp){
-            $this->exp = $exp;
-        }
+
     
         public function getShipment_id(){
             return $this->shipment_id;
@@ -112,8 +94,6 @@
                 'quantity' => $this->quantity,
                 'remain' => $this->remain,
                 'sku_id' => $this->sku_id,
-                'mfg' => $this->mfg,
-                'exp' => $this->exp,
                 'is_active' => $this->is_active
             );
         }

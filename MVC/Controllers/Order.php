@@ -21,7 +21,6 @@
             $this->orderService->updateOrder();
         }
         public function CancelledOrder($order_id){
-            
             $this->orderService->CancelledOrder($order_id);
         }
         public function UpdateStatusOrder($order_id){

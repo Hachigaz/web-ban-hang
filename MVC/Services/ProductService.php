@@ -27,9 +27,8 @@
         }
 
         public function getAllProduct(){
-            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->productRepo->getAllProduct(), JSON_UNESCAPED_UNICODE);
-        }
+            return $this->productRepo->getAllProduct(); 
+               }
 
         public function getQuantityAllProduct(){
             return $this->productRepo->getQuantityAllProduct();

@@ -24,8 +24,8 @@
             $productID = $_POST["product_id"];
             $skuID = $_POST["sku_id"];
             $sql = "SELECT imports.import_id, imports.import_date, shipments.shipment_id, shipments.quantity, shipments.remain
-                FROM imports join shipments on imports.import_id = shipments.import_id
-                WHERE shipments.product_id = $productID and shipments.sku_id = $skuID and shipments.is_active = '1' and shipments.remain > 0
+                FROM imports join shipments on imports.import_id = shipments.import_id join skus on shipments.sku_id = skus.sku_id
+                WHERE skus.product_id = $productID and shipments.sku_id = $skuID and shipments.is_active = '1' and shipments.remain > 0
                 ORDER BY imports.import_id;
             ";
 
