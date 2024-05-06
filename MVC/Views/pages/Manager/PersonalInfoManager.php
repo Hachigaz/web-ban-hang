@@ -245,11 +245,11 @@
             <div class="date-picker">
                 <div class="start-date-picker">
                     <label for="start-date">Từ:</label>
-                    <input type="date" name="start_date" id="leave-start-date" name="start-date" placeholder="Ngày bắt đầu">
+                    <input type="date" name="start_date" id="leave-start-date" name="start-date" placeholder="Ngày bắt đầu" required>
                 </div>
                 <div class="end-date-picker">
                     <label for="end-date">Đến:</label>
-                    <input type="date" name="end_date" id="leave-end-date" name="end-date" placeholder="Ngày kết thúc">
+                    <input type="date" name="end_date" id="leave-end-date" name="end-date" placeholder="Ngày kết thúc" required>
                 </div>
             </div>
             
@@ -272,11 +272,11 @@
             <div class="date-picker">
                 <div class="start-date-picker">
                     <label for="start-date">Từ:</label>
-                    <input type="date" name="start_date" id="sick-start-date" name="start-date" placeholder="Ngày bắt đầu">
+                    <input type="date" name="start_date" id="sick-start-date" name="start-date" placeholder="Ngày bắt đầu" required>
                 </div>
                 <div class="end-date-picker">
                     <label for="end-date">Đến:</label>
-                    <input type="date" name="end_date" id="sick-end-date" name="end-date" placeholder="Ngày kết thúc">
+                    <input type="date" name="end_date" id="sick-end-date" name="end-date" placeholder="Ngày kết thúc" required>
                 </div>
             </div>
             

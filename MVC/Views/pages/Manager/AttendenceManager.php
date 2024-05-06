@@ -16,7 +16,7 @@
 <div class="details">
     <div class="customer-table">
         <div class="table-header">
-            <h2>Danh sách lương</h2>
+            <h2>Danh sách điểm danh</h2>
             <button id="btn-export-excel">Xuất Excel</button>
         </div>
         <table id="customer-table">

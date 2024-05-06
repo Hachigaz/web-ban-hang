@@ -128,4 +128,30 @@ exportCustomerTable.addEventListener('click', () => {
         XLSX.writeFile(wb, 'SalaryTable.xlsx');
     }, 2000);
 });
-  
+
+// const modal = document.querySelector(".modal");
+// const closeIconAdd = document.querySelector("#closeIconAdd");
+// const modalInnerAdd = document.querySelector(".modal-inner.modal-add");
+// const contentModalAdd = document.querySelector(".content-add");
+// const btnAdd = document.querySelector(".add-btn");
+// btnAdd.addEventListener("click", showModalAdd);
+// function hideModalAdd() {
+//     modal.classList.add("hide");
+//     modalInnerAdd.classList.add("hide");
+//     refreshAddForm();
+// }
+// function showModalAdd() {
+//     modal.classList.remove("hide");
+//     modalInnerAdd.classList.remove("hide");
+// }
+// function hideModal() {
+//     modal.classList.add("hide");
+//     modalInnerAdd.classList.add("hide");
+// }
+// closeIconAdd.addEventListener("click", hideModalAdd);
+// modal.addEventListener("click", hideModal);
+// modalInnerAdd.addEventListener("click", function (event) {
+//     event.stopPropagation();
+// });
+// const formAdd = document.querySelector(".modal-add .modal-body");
+// const refreshAddBtn = document.querySelector(".modal-add .reset-btn");
