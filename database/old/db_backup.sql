@@ -859,26 +859,26 @@ ADD CONSTRAINT check_salary_contracts CHECK (`contracts`.salary >= 0);
 ALTER TABLE `timesheet_details`
 ADD CONSTRAINT check_total_salary_timesheet_details CHECK (`timesheet_details`.total_salary >= 0);
 -- 5.Kiểm tra staff_id chỉ là 2,3,4
-ALTER TABLE `contracts`
-ADD CONSTRAINT check_staff_id_contracts CHECK (`contracts`.staff_id IN (2,3,4));
+-- ALTER TABLE `contracts`
+-- ADD CONSTRAINT check_staff_id_contracts CHECK (`contracts`.staff_id IN (2,3,4));
 -- 6.Kiểm tra month là 12 tháng
 ALTER TABLE `timesheets`
 ADD CONSTRAINT check_month_timesheets CHECK (`timesheets`.month IN (1,2,3,4,5,6,7,8,9,10,11,12));
--- 7.Kiểm tra year từ 2000 - 3000 (tạm)
-ALTER TABLE `timesheets`
-ADD CONSTRAINT check_year_timesheets CHECK (`timesheets`.year >= 2000 AND `timesheets`.year <= 3000);
+-- -- 7.Kiểm tra year từ 2000 - 3000 (tạm)
+-- ALTER TABLE `timesheets`
+-- ADD CONSTRAINT check_year_timesheets CHECK (`timesheets`.year >= 2000 AND `timesheets`.year <= 3000);
 -- 8.Kiểm tra days_worked <= 26
-ALTER TABLE `timesheets`
-ADD CONSTRAINT check_days_worked_timesheets CHECK (`timesheets`.days_worked >= 0 AND `timesheets`.days_worked <= 26);
--- 9.Kiểm tra days_off <= 26
-ALTER TABLE `timesheets`
-ADD CONSTRAINT check_days_off_timesheets CHECK (`timesheets`.days_off >= 0 AND `timesheets`.days_off <= 26);
--- 10.Kiểm tra days_late <= 26
-ALTER TABLE `timesheets`
-ADD CONSTRAINT check_days_late_timesheets CHECK (`timesheets`.days_late >= 0 AND `timesheets`.days_late <= 26);
+-- ALTER TABLE `timesheets`
+-- ADD CONSTRAINT check_days_worked_timesheets CHECK (`timesheets`.days_worked >= 0 AND `timesheets`.days_worked <= 26);
+-- -- 9.Kiểm tra days_off <= 26
+-- ALTER TABLE `timesheets`
+-- ADD CONSTRAINT check_days_off_timesheets CHECK (`timesheets`.days_off >= 0 AND `timesheets`.days_off <= 26);
+-- -- 10.Kiểm tra days_late <= 26
+-- ALTER TABLE `timesheets`
+-- ADD CONSTRAINT check_days_late_timesheets CHECK (`timesheets`.days_late >= 0 AND `timesheets`.days_late <= 26);
 -- 11.Kiểm tra days_worked = 26 - days_off
-ALTER TABLE `timesheets`
-ADD CONSTRAINT check_days_worked_late_timesheets CHECK (`timesheets`.days_worked + `timesheets`.days_off = 26);
+-- ALTER TABLE `timesheets`
+-- ADD CONSTRAINT check_days_worked_late_timesheets CHECK (`timesheets`.days_worked + `timesheets`.days_off = 26);
 -- 12.Kiểm tra total_salary = salary/26 * days_worked - (salary/26 * days_late * 30%)
 DELIMITER //
 CREATE TRIGGER update_total_salary_timesheets_insert

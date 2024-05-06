@@ -95,12 +95,6 @@
             $sql = "UPDATE $table SET $is_active = '0' WHERE $where";
             return mysqli_query($this->con, $sql);
         }
-        
-        public function lockAndUnlock($table, $where){
-            $is_active = "is_active";
-            $sql = "UPDATE $table SET $is_active = CASE WHEN $is_active = '0' THEN '1' ELSE '0' END WHERE $where";
-            return mysqli_query($this->con, $sql);
-        }        
 
         // tạo thêm 1 hàm delete thật
         public function realDelete($table, $where) {// chỉ thay đổi trạng thái active
