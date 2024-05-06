@@ -33,9 +33,9 @@ CREATE TABLE `categories` (
 );
 
 CREATE TABLE `banner_locations` (
-  `location_id` INT NOT NULL AUTO_INCREMENT,
-  `location_name` VARCHAR(512) NULL,
-  PRIMARY KEY (`location_id`));
+  `location_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `location_name` VARCHAR(512) NULL
+);
 
 CREATE TABLE `banners` (
   `banner_id` INT NOT NULL AUTO_INCREMENT,
@@ -482,66 +482,38 @@ ADD CONSTRAINT check_gender_customers CHECK (`customers`.gender = 0 OR `customer
 
 
 -- EXPORTS ----------------------------------------
--- 1.Kiểm tra xem role_id của staff đang thực hiện phiếu xuất có phải là role 1,2,4 không
--- Truy vấn phức tạp trên nhiều bảng thì phải dùng trigger
-DELIMITER //
-CREATE TRIGGER check_role_export_insert
-BEFORE INSERT ON `exports`
-FOR EACH ROW
-BEGIN
-    DECLARE role_id INT;
-    SELECT `staffs`.`role_id` INTO role_id FROM `staffs` WHERE `staff_id` = NEW.staff_id;
-    IF NOT role_id IN (1,2,4) THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Error: role_id of staff must be 1, 2, or 4';
-    END IF;
-END; //
-DELIMITER ;
-DELIMITER //
-CREATE TRIGGER check_role_export_update
-BEFORE UPDATE ON `exports`
-FOR EACH ROW
-BEGIN
-    DECLARE role_id INT;
-    SELECT `staffs`.`role_id` INTO role_id FROM `staffs` WHERE `staff_id` = NEW.staff_id;
-    IF NOT role_id IN (1,2,4) THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Error: role_id of staff must be 1, 2, or 4';
-    END IF;
-END; //
-DELIMITER ;
 -- 2. Kiểm tra quantity_export > 0
-ALTER TABLE `export_details`
-ADD CONSTRAINT check_export_quantity_export_details CHECK (`export_details`.quantity_export > 0);
--- 3. Kiểm tra xem total_price = unit_price_export*quantity_export không
-DELIMITER //
-CREATE TRIGGER calculate_total_price_export_insert
-AFTER INSERT ON export_details
-FOR EACH ROW
-BEGIN
-    UPDATE `exports`
-    SET `exports`.total_price = (
-        SELECT SUM(unit_price_export * quantity_export)
-        FROM export_details
-        WHERE export_id = NEW.export_id
-    )
-    WHERE export_id = NEW.export_id;
-END; //
-DELIMITER ;
-DELIMITER //
-CREATE TRIGGER calculate_total_price_export_update
-AFTER UPDATE ON export_details
-FOR EACH ROW
-BEGIN
-    UPDATE `exports`
-    SET `exports`.total_price = (
-        SELECT SUM(unit_price_export * quantity_export)
-        FROM export_details
-        WHERE export_id = NEW.export_id
-    )
-    WHERE export_id = NEW.export_id;
-END; //
-DELIMITER ;
+-- ALTER TABLE `export_details`
+-- ADD CONSTRAINT check_export_quantity_export_details CHECK (`export_details`.quantity_export > 0);
+-- -- 3. Kiểm tra xem total_price = unit_price_export*quantity_export không
+-- DELIMITER //
+-- CREATE TRIGGER calculate_total_price_export_insert
+-- AFTER INSERT ON export_details
+-- FOR EACH ROW
+-- BEGIN
+--     UPDATE `exports`
+--     SET `exports`.total_price = (
+--         SELECT SUM(unit_price_export * quantity_export)
+--         FROM export_details
+--         WHERE export_id = NEW.export_id
+--     )
+--     WHERE export_id = NEW.export_id;
+-- END; //
+-- DELIMITER ;
+-- DELIMITER //
+-- CREATE TRIGGER calculate_total_price_export_update
+-- AFTER UPDATE ON export_details
+-- FOR EACH ROW
+-- BEGIN
+--     UPDATE `exports`
+--     SET `exports`.total_price = (
+--         SELECT SUM(unit_price_export * quantity_export)
+--         FROM export_details
+--         WHERE export_id = NEW.export_id
+--     )
+--     WHERE export_id = NEW.export_id;
+-- END; //
+-- DELIMITER ;
 
 -- SHIPMENTS ----------------------------------------------
 -- 1.Kiểm tra xem số lượng sản phẩm ban đầu của mỗi lô có > 0
@@ -554,41 +526,11 @@ ADD CONSTRAINT check_unit_price_import_shipments CHECK (`shipments`.unit_price_i
 ALTER TABLE `shipments`
 ADD CONSTRAINT check_remain_shipments CHECK (`shipments`.remain >= 0 AND `shipments`.remain <= `shipments`.quantity);
 -- 4.Kiểm tra mfg trước ngày exp
-ALTER TABLE `shipments`
-ADD CONSTRAINT check_mfg_shipments CHECK (`shipments`.mfg < `shipments`.exp);
 -- 5.Kiểm tra nếu thời gian hiện tại mà sau exp thì is_active = 0
 -- ALTER TABLE `shipments`
 -- ADD CONSTRAINT check_exp_shipments CHECK (`shipments`.exp < CURDATE())
 
-DELIMITER //
-CREATE TRIGGER check_exp_shipment_insert
-BEFORE INSERT ON `shipments`
-FOR EACH ROW
-BEGIN
-    IF (NEW.exp <= CURDATE()) THEN
-        SET NEW.is_active = 0;
-    ELSE 
-        SET NEW.is_active = 1;
-    END IF;
-END; //
-DELIMITER ;
-DELIMITER //
-CREATE TRIGGER check_exp_shipment_update
-BEFORE UPDATE ON `shipments`
-FOR EACH ROW
-BEGIN
-    IF (NEW.exp <= CURDATE()) THEN
-        SET NEW.is_active = 0;
-    ELSE 
-        SET NEW.is_active = 1;
-    END IF;
-END; //
-DELIMITER ;
-
 -- ORDERS ----------------------------------------
--- 1.Kiểm tra Phone number phải có 10 số và bắt đầu bằng số 0
-ALTER TABLE `orders`
-ADD CONSTRAINT check_phone_number_orders CHECK (`orders`.phone_number_of_receiver REGEXP '^0[0-9]{9}$');
 -- 2.Kiểm tra account_id phải có role_là 5(nếu không có customer nào có account_id đó thì không được tạo order)
 DELIMITER //
 CREATE TRIGGER check_account_order_insert
@@ -616,16 +558,6 @@ BEGIN
     END IF;
 END; //
 DELIMITER ;
--- 3.Kiểm tra định dạng email
-ALTER TABLE `orders`
-ADD CONSTRAINT check_email_format_orders CHECK (`orders`.`email_of_receiver` REGEXP '^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$');
--- 4.Kiểm tra number_of_product > 0
-ALTER TABLE `order_details`
-ADD CONSTRAINT check_number_of_product_order_details CHECK (`order_details`.number_of_products > 0);
--- 5.Kiểm tra giá mỗi sản phẩm >= 0
-ALTER TABLE `order_details`
-ADD CONSTRAINT check_price_order_details CHECK (`order_details`.price >= 0);
--- 6.Kiểm tra total_money = price*number_of_product
 DELIMITER //
 CREATE TRIGGER calculate_total_money_order_insert
 AFTER INSERT ON order_details
@@ -678,32 +610,6 @@ DELIMITER ;
 -- END; //
 -- DELIMITER ;
 -- 8.Kiểm tra staff_id phải có role_là 1,2,3
-DELIMITER //
-CREATE TRIGGER check_role_staff_order_insert
-BEFORE INSERT ON `orders`
-FOR EACH ROW
-BEGIN
-    DECLARE role_id INT;
-    SELECT `staffs`.`role_id` INTO role_id FROM `staffs` WHERE `staff_id` = NEW.staff_id;
-    IF NOT role_id IN (1,2,3) THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Error: role_id of staff must be 1, 2, or 3';
-    END IF;
-END; //
-DELIMITER ;
-DELIMITER //
-CREATE TRIGGER check_role_staff_order_update
-BEFORE UPDATE ON `orders`
-FOR EACH ROW
-BEGIN
-    DECLARE role_id INT;
-    SELECT `staffs`.`role_id` INTO role_id FROM `staffs` WHERE `staff_id` = NEW.staff_id;
-    IF NOT role_id IN (1,2,3) THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Error: role_id of staff must be 1, 2, or 3';
-    END IF;
-END; //
-DELIMITER ;
 -- PRODUCTS -------------------------------------
 -- 1.Kiểm tra giá sản phẩm > 0 (khác giá nhập hàng)
 ALTER TABLE `products`
@@ -1009,17 +915,17 @@ INSERT INTO `roles` (`role_id`, `role_name`, `is_active`) VALUES
 ('4', 'Nhân viên kho', '1'),
 ('5', 'Khách hàng', '1');
 
-INSERT INTO `accounts` (`account_id`, `phone_number`, `email`, `password`, `created_at`, `updated_at`, `is_active`) VALUES
-(1, '0988722521', 'hien@gmail.com', 'thien123', current_timestamp(), current_timestamp(), 1),
-(2, '0988722522', 'huy@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
-(3, '0988722523', 'loc@gmail.com', 'mloc123', current_timestamp(), current_timestamp(), 1),
-(4, '0988722524', 'phong@gmail.com', 'hphong123',current_timestamp(), current_timestamp(), 1),
-(5, '0988722525', 'lan@gmail.com', 'tlan123', current_timestamp(), current_timestamp(), 1),
-(6, '0988722526', 'lieu@gmail.com', 'tlieu123', current_timestamp(), current_timestamp(), 1),
-(7, '0988722527', 'lai@gmail.com', 'tlai123', current_timestamp(), current_timestamp(), 1),
-(8, '0988722528', 'camhuong@gmail.com', 'chuong123', current_timestamp(), current_timestamp(), 1),
-(10, '0988722532', 'customer1@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
-(11, '0988722533', 'customer2@gmail.com', '123', current_timestamp(), current_timestamp(), 1);
+INSERT INTO `accounts` (`account_id`,`avatar`, `phone_number`, `email`, `password`, `created_at`, `updated_at`, `is_active`) VALUES
+(1,'avatar_0988722521.jpg', '0988722521', 'hien@gmail.com', 'thien123', current_timestamp(), current_timestamp(), 1),
+(2,'avatar_0988722522.jpg', '0988722522', 'huy@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
+(3,'avatar_0988722523.jpg', '0988722523', 'loc@gmail.com', 'mloc123', current_timestamp(), current_timestamp(), 1),
+(4,'avatar_0988722524.jpg', '0988722524', 'phong@gmail.com', 'hphong123',current_timestamp(), current_timestamp(), 1),
+(5,'avatar_0988722525.jpeg', '0988722525', 'lan@gmail.com', 'tlan123', current_timestamp(), current_timestamp(), 1),
+(6,'avatar_0988722526.jpeg', '0988722526', 'lieu@gmail.com', 'tlieu123', current_timestamp(), current_timestamp(), 1),
+(7,'avatar_0988722527.jpeg', '0988722527', 'lai@gmail.com', 'tlai123', current_timestamp(), current_timestamp(), 1),
+(8,'avatar_0988722528.jpg', '0988722528', 'camhuong@gmail.com', 'chuong123', current_timestamp(), current_timestamp(), 1),
+(10,'customerAvatar/cat-d.png', '0988722532', 'customer1@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
+(11,'', '0988722533', 'customer2@gmail.com', '123', current_timestamp(), current_timestamp(), 1);
 
 INSERT INTO `customers` (`customer_id`, `customer_fullname`, `role_id`, `account_id`, `gender`, `address`, `date_of_birth`, `is_active`) VALUES 
 ('1', 'Nguyễn Thị Lan', '5', '5', '1', 'Quận 1, Thành Phố Hồ Chí Minh', '2003-06-12', '1'),
@@ -1171,19 +1077,6 @@ INSERT INTO `contracts` (`contract_id`, `staff_id`, `start_date`, `end_date`, `s
 ('3', '3', '2024-03-01', '2025-03-01', '13000000'),
 ('4', '4', '2024-03-01', '2025-03-01', '15000000');
 
-INSERT INTO `timesheets` (`contract_id`, `month`, `year`, `days_worked`, `days_off`, `days_leave`, `days_late`) VALUES 
-('1', '5', '2024', '4', '0', '1', '0'),
-('2', '5', '2024', '3', '0', '1', '1'),
-('3', '5', '2024', '4', '1', '0', '0'),
-('4', '5', '2024', '5', '0', '0', '0'),
-('1', '4', '2024', '26', '0', '1', '0'),
-('2', '4', '2024', '26', '0', '0', '1'),
-('3', '4', '2024', '25', '1', '0', '0'),
-('4', '4', '2024', '20', '0', '0', '6'),
-('1', '3', '2024', '23', '2', '1', '0'),
-('2', '3', '2024', '26', '0', '1', '1'),
-('3', '3', '2024', '23', '1', '0', '0'),
-('4', '3', '2024', '23', '0', '1', '2');
 
 
 INSERT INTO `attendance` (`timesheet_id`, `date`, `status`, `leave_application_id`) VALUES
@@ -1308,6 +1201,29 @@ INSERT INTO products (product_id, product_name, brand_id, category_id, price, gu
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('87', 'Bàn phím Logitech Pebble Keys 2 K380S White ', '14', '8', '7200', '24', 'keyboard/2_32cbb3f99f4e460cb0dbb41ac19450d0_grande.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('88', 'Bàn Phím Bluetooth Logitech K380 Black ', '14', '8', '6090', '24', 'keyboard/hinh-1_8c2dd4e8724c4e6b80d6709e92a9f6e1_5f112479df724affa1ce4f649a40ad43_grande.jpg', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 
+
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-128G-Y', '128GB - Vàng', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-256G-Y', '256GB - Vàng', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-128G-S', '128GB - Bạc', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-256G-S', '256GB - Bạc', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-128G-P', '128GB - Hồng', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-256G-P', '256GB - Hồng', '1');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-128G-B', '128GB - Đen', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-256G-B', '256GB - Đen', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-128G-S', '128GB - Bạc', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-256G-S', '256GB - Bạc', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-128G-R', '128GB - Đỏ', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-256G-R', '256GB - Đỏ', '2');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-128G-Y', '128GB - Vàng', '3');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-256G-Y', '256GB - Vàng', '3');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-128G-P', '128GB - Hồng', '3');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-256G-P', '256GB - Hồng', '3');
+
+INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('5-D', '5');
+INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('6-D', '6');
+INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('7-D', '7');
+INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('8-D', '8');
+
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TX', 'Titan xanh', '42');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TD', 'Titan den', '42');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TN', 'Titan tu nhien', '42');
@@ -1347,28 +1263,6 @@ INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-T', 'Tím', '50');
 
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-D', 'Đen', '52');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-XD', 'Xanh dương', '52');
-
-INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-128G-Y', '128GB - Vàng', '1');
-INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-256G-Y', '256GB - Vàng', '1');
-INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-128G-S', '128GB - Bạc', '1');
-INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-256G-S', '256GB - Bạc', '1');
-INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-128G-P', '128GB - Hồng', '1');
-INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('1-256G-P', '256GB - Hồng', '1');
-INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-128G-B', '128GB - Đen', '2');
-INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-256G-B', '256GB - Đen', '2');
-INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-128G-S', '128GB - Bạc', '2');
-INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-256G-S', '256GB - Bạc', '2');
-INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-128G-R', '128GB - Đỏ', '2');
-INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('2-256G-R', '256GB - Đỏ', '2');
-INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-128G-Y', '128GB - Vàng', '3');
-INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-256G-Y', '256GB - Vàng', '3');
-INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-128G-P', '128GB - Hồng', '3');
-INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-256G-P', '256GB - Hồng', '3');
-
-INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('5-D', '5');
-INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('6-D', '6');
-INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('7-D', '7');
-INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('8-D', '8');
 
 INSERT INTO `banner_locations` (`location_id`, `location_name`) VALUES ('1', 'home-header');
 
@@ -1435,17 +1329,17 @@ INSERT INTO `imports` (`import_id`, `staff_id`, `import_date`, `is_active`) VALU
 
 INSERT INTO `shipments` (`shipment_id`, `import_id`, `supplier_id`, `unit_price_import`, `quantity`, `remain`, `sku_id`, `is_active`) VALUES 
 ('1', '1', '1', '7000000', '50', '49', '1', '1'),
-('2', '1', '2', '3000000', '50', '49', '1', '1'),
-('3', '1', '3', '12000000', '50', '49', '1', '1'),
-('4', '1', '4', '5000000', '50', '49', '1', '1'),
+('2', '1', '2', '3000000', '50', '49', '2', '1'),
+('3', '1', '3', '12000000', '50', '49', '3', '1'),
+('4', '1', '4', '5000000', '50', '49', '4', '1'),
 ('5', '2', '5', '5000000', '50', '49', '1', '1'),
-('6', '2', '6', '4000000', '50', '49', '1', '1'),
-('7', '2', '7', '3000000', '50', '49', '1', '1'),
-('8', '2', '8', '1500000', '50', '49', '1', '1'),
+('6', '2', '6', '4000000', '50', '49', '2', '1'),
+('7', '2', '7', '3000000', '50', '49', '3', '1'),
+('8', '2', '8', '1500000', '50', '49', '4', '1'),
 ('9', '3', '8', '1000000', '50', '49', '1', '1'),
-('10', '4', '8', '500000', '50', '49', '1', '1'),
-('11', '5', '8', '1200000', '50', '49', '1', '1'),
-('12', '6', '8', '500000', '50', '49', '1', '1'),
+('10', '4', '8', '500000', '50', '49', '2', '1'),
+('11', '5', '8', '1200000', '50', '49', '3', '1'),
+('12', '6', '8', '500000', '50', '49', '4', '1'),
 ('13', '6', '8', '1300000', '50', '49', '1', '1'),
 ('14', '7', '8', '500000', '50', '49', '1', '1'),
 ('15', '7', '8', '1200000', '50', '49', '1', '1'),
@@ -1453,6 +1347,30 @@ INSERT INTO `shipments` (`shipment_id`, `import_id`, `supplier_id`, `unit_price_
 ('17', '9', '8', '1300000', '50', '49', '1', '1'),
 ('18', '10', '8', '500000', '50', '49', '1', '1'),
 ('19', '11', '8', '1200000', '50', '49', '1', '1');
+
+
+INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `email_of_receiver`, `phone_number_of_receiver`, `note`, `order_date`, `status_of_order`, `total_money`, `shipping_method`, `shipping_address`, `shipping_date`, `tracking_number`, `payment_method`, `is_active`) VALUES 
+('1', '2', '5', 'Anh Hiển', 'thehien@gmail.com', '0786705877', 'Tặng anh Hiển', current_timestamp(), 'Pending', '2000000', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '70L1-13579', 'COD', '1'),
+('2', '4', '6', 'Anh Huy', 'huy@gmail.com', '0903379371', 'Tặng anh Lộc ', current_timestamp(), 'Pending', '1500000', 'express', 'Đại học sài gòn', '2024-03-07 19:34:36', '50S1-89710', 'COD', '1'),
+('3', '2', '7', 'Anh Lộc', 'loc@gmail.com', '0909832697', 'Tặng anh Huy gà', current_timestamp(), 'Pending', '19999999', 'express', 'Đại học nha trang', '2024-03-07 19:34:36', '49L2-36713', 'COD', '1'),
+('4', '4', '5', 'Anh Phong', 'phong@gmail.com', '010284697', 'Tặng anh Phong', current_timestamp(), 'Pending', '6500000', 'express', 'Bệnh viện ', '2024-03-07 19:34:36', '20S2-44489', 'COD', '1'),
+('5', '3', '8', 'Anh Hiển Cha', 'thehien@gmail.com', '0203678910', 'Tặng ba anh huy', current_timestamp(), 'Pending', '123000', 'express', 'Trạm xá', '2024-03-07 19:34:36', '30D9-89765', 'COD', '1');
+
+INSERT INTO `order_details` (`order_detail_id`, `order_id`, `sku_id`, `price`, `number_of_products`, `color_of_product`) VALUES 
+('1', '1', '1', '299000', '2', 'Đen'),
+('2', '1', '2', '299000','3' ,'Trắng'),
+('3', '2', '1', '299000', '2', 'Tự nhiên'),
+('4', '2', '3', '299000', '5', 'Xanh'),
+('5', '2', '4', '299000', '6', 'Đen'),
+('6', '3', '1', '299000', '4', 'Trắng'),
+('7', '3', '2', '299000', '2', 'Tự nhiên'),
+('8', '4', '1', '299000', '2', 'Xanh'),
+('9', '4', '2', '299000', '2', 'Đen'),
+('10', '4', '3', '299000', '5', 'Trắng'),
+('11', '5', '1', '299000', '5', 'Tự nhiên'),
+('12', '5', '2', '299000', '5', 'Xanh'),
+('13', '5', '4', '299000', '5', 'Đen');
+
 
 DELIMITER //
 CREATE TRIGGER insert_attendance_after_leave_insert_check
@@ -1752,20 +1670,35 @@ CREATE TRIGGER `before_export_detail_insert1` BEFORE INSERT ON `export_details` 
 END
 $$
 DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `orders_status_change_trigger` AFTER UPDATE ON `orders` FOR EACH ROW BEGIN
-    DECLARE notification_text VARCHAR(500);
+-- DELIMITER $$
+-- CREATE TRIGGER `orders_status_change_trigger` AFTER UPDATE ON `orders` FOR EACH ROW BEGIN
+--     DECLARE notification_text VARCHAR(500);
     
-    -- Construct notification text based on the new status_of_order
-    CASE NEW.status_of_order
-        WHEN 'Processing' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đang xử lý');
-        WHEN 'Shipped' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã giao');
-        WHEN 'Delivered' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã nhận');
-        WHEN 'Cancelled' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã hủy');
-    END CASE;
+--     -- Construct notification text based on the new status_of_order
+--     CASE NEW.status_of_order
+--         WHEN 'Processing' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đang xử lý');
+--         WHEN 'Shipped' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã giao');
+--         WHEN 'Delivered' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã nhận');
+--         WHEN 'Cancelled' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã hủy');
+--     END CASE;
     
-    -- Insert the new notification into the noti table
-    INSERT INTO noti (account_id, text, date_noti) VALUES (NEW.account_id, notification_text, NOW());
-END
-$$
-DELIMITER ;
+--     -- Insert the new notification into the noti table
+--     INSERT INTO noti (account_id, text, date_noti) VALUES (NEW.account_id, notification_text, NOW());
+-- END
+-- $$
+-- DELIMITER ;
+
+
+INSERT INTO `timesheets` (`contract_id`, `month`, `year`, `days_worked`, `days_off`, `days_leave`, `days_late`) VALUES 
+('1', '5', '2024', '4', '0', '1', '0'),
+('2', '5', '2024', '3', '0', '1', '1'),
+('3', '5', '2024', '4', '1', '0', '0'),
+('4', '5', '2024', '5', '0', '0', '0'),
+('1', '4', '2024', '26', '0', '1', '0'),
+('2', '4', '2024', '26', '0', '0', '1'),
+('3', '4', '2024', '25', '1', '0', '0'),
+('4', '4', '2024', '20', '0', '0', '6'),
+('1', '3', '2024', '23', '2', '1', '0'),
+('2', '3', '2024', '26', '0', '1', '1'),
+('3', '3', '2024', '23', '1', '0', '0'),
+('4', '3', '2024', '23', '0', '1', '2');

@@ -3,7 +3,7 @@
 <div class="header">
     <div class="wrapper-components">
         <a href="../Home/" class="logo no-user-select no-style header-component">
-            <img src="../Public/img/logo/logo.png" alt="">
+            <img src="../Public/img/logo/logo.png" alt="" width="5  0px" height="50px">
             <span class="brand-name">Techshop</span>
         </a>
         <div class="hotline header-component">
@@ -23,13 +23,17 @@
         <div class="profile header-component">
             <?php 
                 if(isset($_SESSION["logged_in_account"])){
-                    $loggedInAvatar = $_SESSION["logged_in_account"]["avatar"];
+                    if($_SESSION["logged_in_account"]["avatar"]!=""){
+                        $loggedInAvatar = $_SESSION["logged_in_account"]["avatar"];
+                    }
+                    else{
+                        $loggedInAvatar = "customerAvatar/_common/anon-user.jpg";
+                    }
                 }
                 else{
                     $loggedInAvatar = "customerAvatar/_common/anon-user.jpg";
                 }
             ?>
-            <button class="like"><i class="fa-regular fa-heart"></i><span></span></button>
             <a href="../Shopcart/" class="shopping-cart"><i class="fa-solid fa-bag-shopping"></i></i></a>
             <a href="../CustomerInfo/" class="avatar"><img src="../Public/img/<?=$loggedInAvatar?>" alt=""></a>
             <?php 
