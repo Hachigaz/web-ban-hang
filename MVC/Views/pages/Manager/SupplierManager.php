@@ -15,8 +15,9 @@
     <div class="supplier-table">
         <div class="table-header">
             <h2>Danh sách nhà cung cấp</h2>
+            <button id="btn-export-excel">Xuất Excel</button>
         </div>
-        <table>
+        <table id="supplier-table">
             <thead>
                 <tr>
                     <td>Mã nhà cung cấp</td>

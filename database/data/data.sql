@@ -1,19 +1,13 @@
-INSERT INTO `roles` (`role_id`, `role_name`, `is_active`) VALUES 
-('1', 'Admin', '1'), 
-('2', 'Nhân viên quản lý', '1'),
-('3', 'Nhân viên bán hàng', '1'),
-('4', 'Nhân viên kho', '1'),
-('5', 'Khách hàng', '1');
 
-INSERT INTO `accounts` (`account_id`, `phone_number`, `email`, `password`, `created_at`, `updated_at`, `is_active`) VALUES
-(1, '0988722521', 'hien@gmail.com', 'thien123', current_timestamp(), current_timestamp(), 1),
-(2, '0988722522', 'huy@gmail.com', 'qhuy123', current_timestamp(), current_timestamp(), 1),
-(3, '0988722523', 'loc@gmail.com', 'mloc123', current_timestamp(), current_timestamp(), 1),
-(4, '0988722524', 'phong@gmail.com', 'hphong123',current_timestamp(), current_timestamp(), 1),
-(5, '0988722525', 'lan@gmail.com', 'tlan123', current_timestamp(), current_timestamp(), 1),
-(6, '0988722526', 'lieu@gmail.com', 'tlieu123', current_timestamp(), current_timestamp(), 1),
-(7, '0988722527', 'lai@gmail.com', 'tlai123', current_timestamp(), current_timestamp(), 1),
-(8, '0988722528', 'camhuong@gmail.com', 'chuong123', current_timestamp(), current_timestamp(), 1);
+INSERT INTO `accounts` (`account_id`, `phone_number`, `email`, `password`, `avatar`, `created_at`, `updated_at`, `is_active`) VALUES
+(1, '0988722521', 'hien@gmail.com', 'Thien123', 'avatar_0988722521.jpg',current_timestamp(), current_timestamp(), 1),
+(2, '0988722522', 'huy@gmail.com', 'qhuy123', 'avatar_0988722522.jpg', current_timestamp(), current_timestamp(), 1),
+(3, '0988722523', 'loc@gmail.com', 'mloc123', 'avatar_0988722523.jpg', current_timestamp(), current_timestamp(), 1),
+(4, '0988722524', 'phong@gmail.com', 'hphong123', 'avatar_0988722524.jpg',current_timestamp(), current_timestamp(), 1),
+(5, '0988722525', 'lan@gmail.com', 'tlan123', 'avatar_0988722525.jpeg', current_timestamp(), current_timestamp(), 1),
+(6, '0988722526', 'lieu@gmail.com', 'tlieu123', 'avatar_0988722526.jpeg',current_timestamp(), current_timestamp(), 1),
+(7, '0988722527', 'lai@gmail.com', 'tlai123', 'avatar_0988722527.jpeg',current_timestamp(), current_timestamp(), 1),
+(8, '0988722528', 'camhuong@gmail.com', 'chuong123','avatar_0988722528.jpg', current_timestamp(), current_timestamp(), 1);
 
 INSERT INTO `customers` (`customer_id`, `customer_fullname`, `role_id`, `account_id`, `gender`, `address`, `date_of_birth`, `is_active`) VALUES 
 ('1', 'Nguyễn Thị Lan', '5', '5', '1', 'Quận 1, Thành Phố Hồ Chí Minh', '2003-06-12', '1'),
@@ -89,13 +83,13 @@ INSERT INTO `modules` (`module_id`, `module_name`, `is_active`) VALUES
 ('9', 'Hóa đơn', '1'),
 ('10', 'Lương', '1'),
 ('11', 'Thống kê', '1'),
-('12', 'Phân quyền', '1');
+('12', 'Phân quyền', '1'),
 ('13', 'Quảng cáo', '1');
 
 INSERT INTO `decentralizations` (`decentralization_id`, `role_id`, `module_id`, `is_active`) VALUES 
-('1', '1', '1', '1'),-- admin
+('1', '1', '1', '1'),
 ('2', '1', '12', '1'),
-('3', '2', '1', '1'),-- nhan vien quan ly
+('3', '2', '1', '1'),
 ('4', '2', '2', '1'),
 ('5', '2', '3', '1'),
 ('6', '2', '4', '1'),
@@ -108,11 +102,11 @@ INSERT INTO `decentralizations` (`decentralization_id`, `role_id`, `module_id`, 
 ('13', '2', '11', '1'),
 ('14', '2', '12', '1'),
 ('15', '2', '13', '1'),
-('16', '3', '1', '1'),-- nhan vien ban hang
+('16', '3', '1', '1'),
 ('17', '3', '3', '1'),
 ('18', '3', '4', '1'),
 ('19', '3', '9', '1'),
-('20', '4', '4', '1'),-- nhan vien kho
+('20', '4', '4', '1'),
 ('21', '4', '5', '1'),
 ('22', '4', '6', '1'),
 ('23', '4', '7', '1'),
@@ -153,98 +147,11 @@ INSERT INTO `order_details` (`order_detail_id`, `order_id`, `sku_id`, `price`, `
 ('1', '1', '1', '34990000', '1', 'Đen'),
 ('2', '1', '9', '500000', '2', 'Đen');
 
-INSERT INTO `leave_application` (`leave_application_id`, `staff_id`, `start_date`, `end_date`, `reason`, `status`) VALUES 
-('1', '1', '2024-04-15', '2024-04-15', 'Lý do cá nhân', '0'),
-('2', '2', '2024-04-15', '2024-04-15', 'Ốm đau, thai sản', '0'),
-('3', '3', '2024-04-15', '2024-04-15', 'Ốm đau, thai sản', '0'),
-('4', '2', '2024-04-16', '2024-04-16', 'Lý do cá nhân', '0'),
-('5', '1', '2024-04-16', '2024-04-16', 'Ốm đau, thai sản', '0'),
-('6', '3', '2024-04-16', '2024-04-16', 'Ốm đau, thai sản', '0');
 
-INSERT INTO `contracts` (`contract_id`, `staff_id`, `start_date`, `end_date`, `salary`) VALUES 
-('1', '1', '2024-04-01', '2025-04-01', '20000000'), 
-('2', '2', '2024-04-01', '2025-04-01', '18000000'),
-('3', '3', '2024-04-01', '2025-04-01', '13000000'),
-('4', '4', '2024-04-01', '2025-04-01', '15000000');
 
-INSERT INTO `timesheets` (`timesheet_id`, `contract_id`, `month`, `year`, `days_worked`, `days_off`, `days_leave`, `days_late`) VALUES ('1', '1', '4', '2025', '22', '1', '1', '2'),
-('2', '2', '4', '2025', '26', '0', '0', '0'),
-('3', '3', '4', '2025', '23', '0', '1', '2'),
-('4', '4', '4', '2025', '25', '0', '1', '0');
 
-INSERT INTO `attendance` (`attendance_id`, `timesheet_id`, `date`, `status`, `leave_application_id`) VALUES 
-('1', '1', '2024-04-16', 'Present', '1'),
-('2', '2', '2024-04-16', 'Present', '2'),
-('3', '3', '2024-04-16', 'Present', '3');
-
--- INSERT INTO `attendance` (`attendance_id`, `timesheet_id`, `date`, `status`) VALUES 
--- ('1', '1', '2024-04-01', 'Present'),
--- ('2', '1', '2024-04-02', 'Present'),
--- ('3', '1', '2024-04-03', 'Present'),
--- ('4', '1', '2024-04-04', 'Present'),
--- ('5', '1', '2024-04-05', 'Present'),
--- ('6', '1', '2024-04-06', 'Present'),
--- ('7', '1', '2024-04-07', 'Present'),
--- ('8', '1', '2024-04-08', 'Present'),
--- ('9', '1', '2024-04-09', 'Present'),
--- ('10', '1', '2024-04-10', 'Present'),
--- ('11', '1', '2024-04-11', 'Present'),
--- ('12', '1', '2024-04-12', 'Present'),
--- ('13', '1', '2024-04-13', 'Present'),
--- ('14', '1', '2024-04-14', 'Present'),
--- ('15', '1', '2024-04-15', 'Present'),
--- ('16', '1', '2024-04-16', 'Present'),
--- ('17', '1', '2024-04-17', 'Present'),
--- ('18', '1', '2024-04-18', 'Present'),
--- ('19', '1', '2024-04-19', 'Present'),
--- ('20', '1', '2024-04-20', 'Present'),
--- ('21', '1', '2024-04-21', 'Present'),
--- ('22', '1', '2024-04-22', 'Present'),
--- ('23', '1', '2024-04-23', 'Present'),
--- ('24', '1', '2024-04-24', 'Present'),
--- ('25', '1', '2024-04-25', 'Present'),
--- ('26', '1', '2024-04-26', 'Present'),
--- ('27', '1', '2024-04-27', 'Present'),
--- ('28', '1', '2024-04-28', 'Present'),
--- ('29', '1', '2024-04-29', 'Present'),
--- ('30', '1', '2024-04-30', 'Present');
-
--- 12.Kiểm tra total_salary = salary/26 * days_worked - (salary/26 * days_late * 30%)
-DELIMITER //
-CREATE TRIGGER update_total_salary_timesheets_insert
-AFTER INSERT ON timesheets
-FOR EACH ROW
-BEGIN
-    DECLARE total_days_worked INT;
-    DECLARE total_days_late INT;
-    DECLARE total_salary DECIMAL(10, 2);
-    SET total_days_worked = NEW.days_worked;
-    SET total_days_late = NEW.days_late;
-    SET total_salary = (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / 26 * total_days_worked
-                      - (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / 26 * total_days_late * 0.3;
-    INSERT INTO timesheet_details(timesheet_id, total_salary) VALUES (NEW.timesheet_id, total_salary);
-    UPDATE timesheet_details SET timesheet_details.total_salary = total_salary WHERE timesheet_details.timesheet_id = NEW.timesheet_id;
-END;
-//
-DELIMITER ;
-DELIMITER //
-CREATE TRIGGER update_total_salary_timesheets_update
-AFTER UPDATE ON timesheets
-FOR EACH ROW
-BEGIN
-    DECLARE total_days_worked INT;
-    DECLARE total_days_late INT;
-    DECLARE total_salary DECIMAL(10, 2);
-    SET total_days_worked = NEW.days_worked;
-    SET total_days_late = NEW.days_late;
-    SET total_salary = (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / 26 * total_days_worked
-                      - (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / 26 * total_days_late * 0.3;
-    UPDATE timesheet_details SET timesheet_details.total_salary = total_salary WHERE timesheet_details.timesheet_id = NEW.timesheet_id;
-END;
-//
-DELIMITER ;
 INSERT INTO suppliers (supplier_id, supplier_name, phone_number_of_supplier, address_of_supplier, email_of_supplier) VALUES ('19', 'Dell Store Việt Nam', '0923020320', '1230123902103', 'dellstorevn@gamil.com');
-INSERT INTO brands (brand_id, brand_name, brand_logo,supplier_id,is_active) VALUES ('19', 'Dell', 'dell_inspiron.png','19','1');
+INSERT INTO brands (brand_id, brand_name, brand_logo,supplier_id,is_active) VALUES ('19', 'Dell', 'dell.png','19','1');
 
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('27', 'Laptop Dell Inspiron 15 3520 i5 1235U/16GB/512GB/120Hz/OfficeHS/KYHD/Win11', '19', '2', '154900', '24', 'laptop/dell_inspiron.png', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
 INSERT INTO products (product_id, product_name, brand_id, category_id, price, guarantee, thumbnail, created_at, updated_at) VALUES ('28', 'Laptop Dell Vostro 14 3430 i5 1335U/8GB/512GB/2GB MX550/OfficeHS/Win11', '19', '2', '119900', '24', 'laptop/dell_vostro.png', '2024-03-24 10:28:44', '2024-03-24 10:28:44');
@@ -383,5 +290,498 @@ INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('7-D', '7');
 INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('8-D', '8');
 
 
-INSERT INTO `electronic_supermarket`.`banners` (`image_path`, `url`, `banner_name`, `location`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'header_banner', 'home-header', '800', '300');
-INSERT INTO `electronic_supermarket`.`banners` (`image_path`, `url`, `banner_name`, `location`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'header-banner', 'home-header', '800', '300');
+INSERT INTO `exports` (`export_id`, `staff_id`, `order_id`, `export_date`, `total_price`, `is_active`) VALUES 
+('1', '1', '1', '2024-03-01', '15000000', '1'),
+('2', '1', '1', '2024-02-01', '23000000', '1'),
+('3', '1', '1', '2024-04-01', '17500000', '1'),
+('4', '1', '1', '2024-05-01', '18000000', '1'),
+('5', '1', '1', '2023-03-01', '15000000', '1'),
+('6', '1', '1', '2023-02-01', '20000000', '1'),
+('7', '1', '1', '2023-04-01', '25000000', '1'),
+('8', '1', '1', '2023-05-01', '30000000', '1');
+
+INSERT INTO `export_details` (`export_detail_id`, `export_id`, `shipment_id`, `unit_price_export`, `quantity_export`) VALUES 
+('1', '1', '1', '10000000', '1'),
+('2', '1', '2', '5000000', '1'),
+('3', '2', '3', '15000000', '1'),
+('4', '2', '4', '8000000', '1'),
+('5', '3', '5', '10000000', '1'),
+('6', '3', '6', '7500000', '1'),
+('7', '4', '7', '5000000', '2'),
+('8', '4', '8', '2000000', '4'),
+('9', '5', '8', '5000000', '3'),
+('10', '6', '8', '20000000', '1'),
+('11', '7', '8', '5000000', '5'),
+('12', '4', '8', '5000000', '6');
+
+INSERT INTO `shipments` (`shipment_id`, `import_id`, `supplier_id`, `unit_price_import`, `quantity`, `remain`, `sku_id`, `is_active`) VALUES 
+('1', '1', '1', '7000000', '50', '49', '1', '1'),
+('2', '1', '2', '3000000', '50', '49', '1', '1'),
+('3', '1', '3', '12000000', '50', '49', '1', '1'),
+('4', '1', '4', '5000000', '50', '49', '1', '1'),
+('5', '2', '5', '5000000', '50', '49', '1', '1'),
+('6', '2', '6', '4000000', '50', '49', '1', '1'),
+('7', '2', '7', '3000000', '50', '49', '1', '1'),
+('8', '2', '8', '1500000', '50', '49', '1', '1'),
+('9', '3', '8', '1000000', '50', '49', '1', '1'),
+('10', '4', '8', '500000', '50', '49', '1', '1'),
+('11', '5', '8', '1200000', '50', '49', '1', '1'),
+('12', '6', '8', '500000', '50', '49', '1', '1'),
+('13', '6', '8', '1300000', '50', '49', '1', '1'),
+('14', '7', '8', '500000', '50', '49', '1', '1'),
+('15', '7', '8', '1200000', '50', '49', '1', '1'),
+('16', '8', '8', '500000', '50', '49', '1', '1'),
+('17', '9', '8', '1300000', '50', '49', '1', '1'),
+('18', '10', '8', '500000', '50', '49', '1', '1'),
+('19', '11', '8', '1200000', '50', '49', '1', '1');;
+
+INSERT INTO `imports` (`import_id`, `staff_id`, `import_date`, `is_active`) VALUES 
+('1', '2', '2024-01-01', '1'),
+('2', '3', '2024-01-15', '1'),
+('3', '3', '2024-02-01', '1'),
+('4', '3', '2024-03-01', '1'),
+('5', '2', '2024-04-01', '1'),
+('6', '2', '2023-10-01', '1'),
+('7', '2', '2023-11-01', '1'),
+('8', '2', '2023-09-01', '1'),
+('9', '2', '2023-08-01', '1'),
+('10', '2', '2022-10-01', '1'),
+('11', '2', '2022-11-01', '1');
+
+INSERT INTO `roles` (`role_id`, `role_name`, `is_active`) VALUES 
+('1', 'Admin', '1'),
+('2', 'Nhân viên quản lý', '1'),
+('3', 'Nhân viên bán hàng', '1'),
+('4', 'Nhân viên kho', '1'),
+('5', 'Khách hàng', '1');
+
+INSERT INTO `contracts` (`contract_id`, `staff_id`, `start_date`, `end_date`, `salary`) VALUES 
+('1', '1', '2024-03-01', '2025-03-01', '20000000'), 
+('2', '2', '2024-03-01', '2025-03-01', '18000000'),
+('3', '3', '2024-03-01', '2025-03-01', '13000000'),
+('4', '4', '2024-03-01', '2025-03-01', '15000000');
+
+
+
+INSERT INTO `leave_application` (`staff_id`, `start_date`, `end_date`, `reason`, `status`) VALUES
+(1, '2024-05-01', '2024-05-01', 'Lý do cá nhân', 0),
+(2, '2024-05-01', '2024-05-01', 'Ốm đau, thai sản', 0),
+(3, '2024-05-01', '2024-05-01', 'Ốm đau, thai sản', 0),
+(2, '2024-05-02', '2024-05-02', 'Lý do cá nhân', 0),
+(1, '2024-05-02', '2024-05-02', 'Ốm đau, thai sản', 0),
+(3, '2024-05-02', '2024-05-02', 'Ốm đau, thai sản', 0);
+
+
+INSERT INTO `attendance` (`timesheet_id`, `date`, `status`, `leave_application_id`) VALUES
+(4, '2024-05-03', 'Có mặt', NULL),
+(1, '2024-05-03', 'Có mặt', NULL),
+(2, '2024-05-03', 'Trễ', NULL),
+(3, '2024-05-03', 'Vắng mặt', NULL),
+(1, '2024-05-04', 'Có mặt', NULL),
+(2, '2024-05-04', 'Có mặt', NULL),
+(3, '2024-05-04', 'Có mặt', NULL),
+(4, '2024-05-04', 'Có mặt', NULL),
+(1, '2024-05-05', 'Có mặt', NULL),
+(2, '2024-05-05', 'Có mặt', NULL),
+(3, '2024-05-05', 'Có mặt', NULL),
+(4, '2024-05-05', 'Có mặt', NULL),
+(1, '2024-05-01', 'Nghỉ phép', '1'),
+(2, '2024-05-01', 'Nghỉ phép', '2'),
+(3, '2024-05-01', 'Nghỉ phép', '3'),
+(4, '2024-05-01', 'Có mặt', NULL),
+(1, '2024-05-02', 'Nghỉ phép', '4'),
+(2, '2024-05-02', 'Nghỉ phép', '5'),
+(3, '2024-05-02', 'Nghỉ phép', '6'),
+(4, '2024-05-02', 'Có mặt', NULL);
+
+-- -- Lấy ngày hiện tại
+-- SET @today = CURDATE();
+
+-- -- Chèn các bản ghi attendance mới nếu chưa có bản ghi nào cho hôm nay
+-- INSERT INTO attendance (timesheet_id, date, status)
+-- SELECT timesheet_id, @today, 'Chưa điểm danh'
+-- FROM timesheets
+-- WHERE month = MONTH(@today) AND year = YEAR(@today)
+-- AND NOT EXISTS (
+--     SELECT 1 FROM attendance 
+--     WHERE date = @today AND timesheet_id = timesheets.timesheet_id
+-- );
+
+
+
+
+
+
+-- DELIMITER //
+-- CREATE TRIGGER insert_attendance_after_leave_insert
+-- AFTER INSERT ON leave_application
+-- FOR EACH ROW
+-- BEGIN
+--     DECLARE cur_date DATE;
+--     DECLARE end_date DATE;
+
+--     SET cur_date = NEW.start_date;
+--     SET end_date = NEW.end_date;
+
+--     -- Chèn các bản ghi attendance mới cho mỗi ngày từ start_date đến end_date
+--     WHILE cur_date <= end_date AND NEW.reason <> 'Nghỉ việc' DO
+--         INSERT INTO attendance (timesheet_id, date, status, leave_application_id)
+--         SELECT timesheet_id, cur_date, 'Nghỉ phép', NEW.leave_application_id
+--         FROM timesheets
+--         INNER JOIN contracts ON timesheets.contract_id = contracts.contract_id
+--         WHERE contracts.staff_id = NEW.staff_id
+--         AND month = MONTH(cur_date) AND year = YEAR(cur_date)
+--         AND NOT EXISTS (
+--             SELECT 1 FROM attendance 
+--             WHERE date = cur_date AND timesheet_id = timesheets.timesheet_id
+--         );
+
+--         SET cur_date = DATE_ADD(cur_date, INTERVAL 1 DAY);
+--     END WHILE;
+-- END;
+-- //
+-- DELIMITER ;
+
+-- insert vào đơn xin nghỉ và đc duyệt thì tự động insert điểm danh với status là nghỉ phép để ko điểm danh nữa
+DELIMITER //
+CREATE TRIGGER insert_attendance_after_leave_insert_check
+AFTER INSERT ON leave_application
+FOR EACH ROW
+BEGIN
+    DECLARE cur_date DATE;
+    DECLARE end_date DATE;
+
+    SET cur_date = NEW.start_date;
+    SET end_date = NEW.end_date;
+
+    -- Chèn các bản ghi attendance mới cho mỗi ngày từ start_date đến end_date
+    WHILE cur_date <= end_date DO
+        IF NEW.status = 1 AND NEW.reason <> 'Nghỉ việc' THEN
+            INSERT INTO attendance (timesheet_id, date, status, leave_application_id)
+            SELECT timesheet_id, cur_date, 'Nghỉ phép', NEW.leave_application_id
+            FROM timesheets
+            INNER JOIN contracts ON timesheets.contract_id = contracts.contract_id
+            WHERE contracts.staff_id = NEW.staff_id
+            AND NOT EXISTS (
+                SELECT 1 FROM attendance 
+                WHERE date = cur_date AND timesheet_id = timesheets.timesheet_id
+            );
+        ELSEIF NEW.status = 0 THEN
+            INSERT INTO attendance (timesheet_id, date, status)
+            SELECT timesheet_id, cur_date, 'Chưa điểm danh'
+            FROM timesheets
+            INNER JOIN contracts ON timesheets.contract_id = contracts.contract_id
+            WHERE contracts.staff_id = NEW.staff_id
+            AND NOT EXISTS (
+                SELECT 1 FROM attendance 
+                WHERE date = cur_date AND timesheet_id = timesheets.timesheet_id
+            );
+        END IF;
+
+        SET cur_date = DATE_ADD(cur_date, INTERVAL 1 DAY);
+    END WHILE;
+END;
+//
+DELIMITER ;
+
+
+
+DELIMITER //
+CREATE TRIGGER update_attendance_after_leave_update
+AFTER UPDATE ON leave_application
+FOR EACH ROW
+BEGIN
+    DECLARE cur_date DATE;
+    DECLARE end_date DATE;
+
+    IF NEW.status = 1 THEN
+        SET cur_date = NEW.start_date;
+        SET end_date = NEW.end_date;
+
+        -- Cập nhật các bản ghi attendance cho mỗi ngày từ start_date đến end_date
+        WHILE cur_date <= end_date AND NEW.reason <> 'Nghỉ việc' DO
+            UPDATE attendance
+            SET status = 'Nghỉ phép', leave_application_id = NEW.leave_application_id
+            WHERE date = cur_date
+            AND timesheet_id IN (
+                SELECT timesheet_id FROM timesheets
+                INNER JOIN contracts ON timesheets.contract_id = contracts.contract_id
+                WHERE contracts.staff_id = NEW.staff_id
+            );
+
+            SET cur_date = DATE_ADD(cur_date, INTERVAL 1 DAY);
+        END WHILE;
+    END IF;
+END;
+//
+DELIMITER ;
+
+
+
+
+--
+DELIMITER //
+CREATE TRIGGER insert_attendance_after_leave_insert
+AFTER INSERT ON leave_application
+FOR EACH ROW
+BEGIN
+    DECLARE cur_date DATE;
+    DECLARE end_date DATE;
+
+    IF NEW.status = 1 THEN
+        SET cur_date = NEW.start_date;
+        SET end_date = NEW.end_date;
+
+        -- Chèn các bản ghi attendance mới cho mỗi ngày từ start_date đến end_date
+        WHILE cur_date <= end_date DO
+            IF NEW.reason = 'Lý do cá nhân' THEN
+                UPDATE timesheets
+                SET days_off = IF(days_leave = 1, days_off + 1, days_off),
+                    days_leave = IF(days_leave = 0, days_leave + 1, days_leave)
+                WHERE contract_id IN (
+                    SELECT contract_id FROM contracts
+                    WHERE staff_id = NEW.staff_id
+                );
+            ELSEIF NEW.reason = 'Ốm đau, thai sản' THEN
+                UPDATE timesheets
+                SET days_worked = days_worked + 1
+                WHERE contract_id IN (
+                    SELECT contract_id FROM contracts
+                    WHERE staff_id = NEW.staff_id
+                );
+            ELSEIF NEW.reason = 'Nghỉ việc' THEN
+                UPDATE accounts
+                SET is_active = 0
+                WHERE account_id IN (
+                    SELECT account_id FROM staffs
+                    WHERE staff_id = NEW.staff_id
+                );
+            END IF;
+
+            SET cur_date = DATE_ADD(cur_date, INTERVAL 1 DAY);
+        END WHILE;
+    END IF;
+END;
+//
+DELIMITER ;
+
+-- duyệt đơn thì cập nhật ngày nghỉ, nếu duyệt đơn xin nghỉ việc thì khóa tài khoản, ngừng điểm danh, chấm công, tính lương
+DELIMITER //
+CREATE TRIGGER update_timesheets_and_accounts_after_leave_update
+AFTER UPDATE ON leave_application
+FOR EACH ROW
+BEGIN
+    DECLARE cur_date DATE;
+    DECLARE end_date DATE;
+
+    IF NEW.status = 1 AND OLD.status = 0 THEN
+        SET cur_date = NEW.start_date;
+        SET end_date = NEW.end_date;
+
+        -- Cập nhật các bản ghi timesheets và accounts tương ứng khi một leave_application được cập nhật từ status = 0 sang status = 1
+        WHILE cur_date <= end_date DO
+            IF NEW.reason = 'Lý do cá nhân' THEN
+                UPDATE timesheets
+                SET days_off = IF(days_leave = 1, days_off + 1, days_off),
+                    days_leave = IF(days_leave = 0, days_leave + 1, days_leave)
+                    
+                WHERE contract_id IN (
+                    SELECT contract_id FROM contracts
+                    WHERE staff_id = NEW.staff_id
+                );
+            ELSEIF NEW.reason = 'Ốm đau, thai sản' THEN
+                UPDATE timesheets
+                SET days_worked = days_worked + 1
+                WHERE contract_id IN (
+                    SELECT contract_id FROM contracts
+                    WHERE staff_id = NEW.staff_id
+                );
+            ELSEIF NEW.reason = 'Nghỉ việc' THEN
+                UPDATE accounts
+                SET is_active = 0
+                WHERE account_id IN (
+                    SELECT account_id FROM staffs
+                    WHERE staff_id = NEW.staff_id
+                );
+            END IF;
+
+            SET cur_date = DATE_ADD(cur_date, INTERVAL 1 DAY);
+        END WHILE;
+    END IF;
+END;
+//
+DELIMITER ;
+
+-- đi trễ
+-- DELIMITER //
+-- CREATE TRIGGER update_days_late_after_attendance_update
+-- AFTER UPDATE ON attendance
+-- FOR EACH ROW
+-- BEGIN
+--     IF NEW.status = 'Trễ' THEN
+--         UPDATE timesheets
+--         SET days_late = days_late + 1
+--         WHERE timesheet_id = NEW.timesheet_id;
+--     END IF;
+-- END;
+-- //
+-- DELIMITER ;
+
+-- Sau khi cập nhật bảng điểm danh thì cập nhật số ngày làm, nghỉ, trễ trong bảng chấm công
+DELIMITER //
+CREATE TRIGGER update_timesheets_after_attendance_update
+AFTER UPDATE ON attendance
+FOR EACH ROW
+BEGIN
+    IF NEW.status = 'Có mặt' THEN
+        UPDATE timesheets
+        SET days_worked = days_worked + 1
+        WHERE timesheet_id = NEW.timesheet_id;
+    ELSEIF NEW.status = 'Vắng mặt' THEN
+        UPDATE timesheets
+        SET days_off = days_off + 1
+        WHERE timesheet_id = NEW.timesheet_id;
+    ELSEIF NEW.status = 'Trễ' THEN
+        UPDATE timesheets
+        SET days_late = days_late + 1
+        WHERE timesheet_id = NEW.timesheet_id;
+    END IF;
+END;
+//
+DELIMITER ;
+
+-- Thêm hợp đồng thì tự động thêm trường chấm công vào bảng với tháng, năm tương ứng và chỉ nằm trong khoảng thời gian trong hợp đồng
+DELIMITER //
+CREATE TRIGGER add_timesheet
+AFTER INSERT ON contracts
+FOR EACH ROW
+BEGIN
+  DECLARE current_month INT;
+  DECLARE current_year INT;
+  SET current_month = MONTH(CURDATE());
+  SET current_year = YEAR(CURDATE());
+
+  IF NOT EXISTS (SELECT 1 FROM timesheets WHERE contract_id = NEW.contract_id AND month = current_month AND year = current_year) 
+  AND (CURDATE() BETWEEN NEW.start_date AND NEW.end_date) THEN
+    INSERT INTO timesheets (`timesheet_id`, `contract_id`, `month`, `year`, `days_worked`, `days_off`, `days_leave`, `days_late`) 
+    VALUES (UUID(), NEW.contract_id, current_month, current_year, 0, 0, 0, 0);
+  END IF;
+END; //
+DELIMITER ;
+
+
+
+
+-- INSERT INTO `banner_locations` (`location_id`, `location_name`) VALUES ('1', 'home-header');
+
+-- INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'banner_header1', '1', '800', '600');
+-- INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'banner_header2', '1', '800', '600');
+
+-- INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm nổi bật', 'Các sản phẩm mới và nổi bật trong tháng 4',1);
+-- INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm mới', 'Sản phẩm mới vừa xuất hiện trên thị trường',2);
+
+-- INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('1', '1', '1');
+-- INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('2', '2', '1');
+-- INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES ('3', '3', '1');
+
+
+
+
+-- Việc tạo tự động timesheet sẽ không còn được thực hiện nếu tháng hiện tại không nằm trong hợp đồng
+-- INSERT INTO timesheets (`contract_id`, `month`, `year`, `days_worked`, `days_off`, `days_leave`, `days_late`)
+--     SELECT contracts.contract_id, MONTH(CURDATE()), YEAR(CURDATE()), 0, 0, 0, 0
+--     FROM contracts
+--     WHERE NOT EXISTS (
+--         SELECT 1 FROM timesheets 
+--         WHERE month = MONTH(CURDATE()) AND year = YEAR(CURDATE()) AND contract_id = contracts.contract_id
+--     )
+--     AND CURDATE() BETWEEN contracts.start_date AND contracts.end_date;
+
+-- Lấy ngày hiện tại
+
+-- Chèn các bản ghi attendance mới nếu chưa có bản ghi nào cho hôm nay
+-- SET @today = CURDATE();
+-- INSERT INTO attendance (timesheet_id, date, status)
+-- SELECT timesheet_id, @today, 'Chưa điểm danh'
+-- FROM timesheets
+-- INNER JOIN contracts ON timesheets.contract_id = contracts.contract_id
+-- INNER JOIN staffs ON contracts.staff_id = staffs.staff_id
+-- INNER JOIN accounts ON staffs.account_id = accounts.account_id
+-- WHERE month = MONTH(@today) AND year = YEAR(@today)
+-- AND accounts.is_active = 1
+-- AND NOT EXISTS (
+--     SELECT 1 FROM attendance 
+--     WHERE date = @today AND timesheet_id = timesheets.timesheet_id
+-- );
+INSERT INTO `timesheets` (`contract_id`, `month`, `year`, `days_worked`, `days_off`, `days_leave`, `days_late`) VALUES 
+('1', '5', '2024', '4', '0', '1', '0'),
+('2', '5', '2024', '3', '0', '1', '1'),
+('3', '5', '2024', '4', '1', '0', '0'),
+('4', '5', '2024', '5', '0', '0', '0'),
+('1', '4', '2024', '26', '0', '1', '0'),
+('2', '4', '2024', '26', '0', '0', '1'),
+('3', '4', '2024', '25', '1', '0', '0'),
+('4', '4', '2024', '20', '0', '0', '6'),
+('1', '3', '2024', '23', '2', '1', '0'),
+('2', '3', '2024', '26', '0', '1', '1'),
+('3', '3', '2024', '23', '1', '0', '0'),
+('4', '3', '2024', '23', '0', '1', '2');
+
+DELIMITER //
+CREATE TRIGGER update_total_salary_timesheets_insert
+AFTER INSERT ON timesheets
+FOR EACH ROW
+BEGIN
+    DECLARE total_days_worked INT;
+    DECLARE total_days_late INT;
+    DECLARE total_days_off INT;
+    DECLARE total_days_leave INT;
+    DECLARE total_day INT;
+    DECLARE total_salary DECIMAL(10, 2);
+    SET total_days_worked = NEW.days_worked;
+    SET total_days_late = NEW.days_late;
+    SET total_days_leave = NEW.days_leave;
+    SET total_days_off = NEW.days_off;
+    SET total_day = total_days_worked+total_days_late+total_days_leave+total_days_off;
+    IF total_days_leave <= 1 THEN
+        SET total_days_worked = total_days_worked+total_days_leave;
+    END IF;
+    IF total_day < 26 THEN
+        SET total_day = 26;
+    END IF;
+    SET total_salary = (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / total_day * (total_days_worked+total_days_late)
+                      - (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / total_day * total_days_late * 0.3;
+    INSERT INTO timesheet_details(timesheet_id, total_salary) VALUES (NEW.timesheet_id, total_salary);
+    UPDATE timesheet_details SET timesheet_details.total_salary = total_salary WHERE timesheet_details.timesheet_id = NEW.timesheet_id;
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER update_total_salary_timesheets_update
+AFTER UPDATE ON timesheets
+FOR EACH ROW
+BEGIN
+    DECLARE total_days_worked INT;
+    DECLARE total_days_late INT;
+    DECLARE total_days_off INT;
+    DECLARE total_days_leave INT;
+    DECLARE total_salary DECIMAL(10, 2);
+    DECLARE total_day INT;
+    SET total_days_worked = NEW.days_worked;
+    SET total_days_late = NEW.days_late;
+    SET total_days_leave = NEW.days_leave;
+    SET total_days_off = NEW.days_off;
+    SET total_day = total_days_worked+total_days_late+total_days_leave+total_days_off;
+    IF total_days_leave <= 1 THEN
+        SET total_days_worked = total_days_worked+total_days_leave;
+    END IF;
+    IF total_day < 26 THEN
+        SET total_day = 26;
+    END IF;
+    SET total_salary = (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / total_day * (total_days_worked+total_days_late)
+                      - (SELECT salary FROM contracts WHERE contract_id = NEW.contract_id) / total_day * total_days_late * 0.3;
+    UPDATE timesheet_details SET timesheet_details.total_salary = total_salary WHERE timesheet_details.timesheet_id = NEW.timesheet_id;
+END;
+//
+DELIMITER ;

@@ -759,7 +759,7 @@ function fillOptionEditInfo(element){
     
     let optionEditFormElement = document.querySelector(".product-options-panel .option-edit-form")
     optionEditFormElement.querySelector(".c-input#input-option-name input").value=optionName
-    optionEditFormElement.querySelector(".c-input#input-option-value input").value=optionValue
+    optionEditFormElement.querySelector(".c-input#input-option-value textarea").value=optionValue
 }
 
 let currentSelectedOption = null
@@ -852,9 +852,7 @@ function removeOption(element){
         req.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(this.responseText)
-                alert(optionID)
                 let responseData = JSON.parse(this.responseText)
-                console.log(responseData)
                 if(responseData["status"]=="success"){
                     window.location.reload()
                 }

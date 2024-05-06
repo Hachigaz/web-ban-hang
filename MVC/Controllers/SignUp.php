@@ -14,6 +14,7 @@
         public function CreateAccount(){
             //check thong tin
             $input_email = $_POST["input_email"];
+            $input_phone = $_POST["input_phone_number"];
             $input_password = $_POST["input_password"];
             $input_confirm_password = $_POST["input_confirm_password"];
             
@@ -26,12 +27,16 @@
             if($this->accountService->accountRepo->getAccountByEmail($input_email)!=null){
                 header("Location: ../SignUp/?status=signup_email_exists");
                 return;
-            };
-
+            }
+            else if($this->accountService->accountRepo->getAccountByPhoneNumber($input_phone)!=null){
+                header("Location: ../SignUp/?status=signup_phone_exists");
+                return;
+            }
             //very
             $signUpData = [
                 "email"=>$input_email,
-                "password" =>$input_password,
+                "phone_number"=>$input_phone,
+                "password" =>$input_password
             ];
             
             $_SESSION["signup_user_data"] = $signUpData;
@@ -65,8 +70,7 @@
             $message = "
                 Mã xác nhận email là: $verification_code.";
             
-            //return mail($userEmail,$emailSubject,$message);
-            return true;
+            return mail($userEmail,$emailSubject,$message);
         }
         public function VerifyAccount(){
             if($_SESSION["verification_code"]==null){
@@ -115,9 +119,9 @@
             }
             else{
                 $userData = $_SESSION["signup_user_data"];
-
+                echo(var_dump($userData));
                 $sql = "
-                    INSERT INTO accounts(email,phone_number,password) VALUES ('".$userData["email"]."','".$userData["email"]."','".$userData["password"]."')
+                    INSERT INTO accounts(email,phone_number,password) VALUES ('".$userData["email"]."','".$userData["phone_number"]."','".$userData["password"]."')
                 ";
                 $this->accountService->accountRepo->set($sql);
                 
@@ -142,14 +146,19 @@
 
         public function CheckEmailExist(){
             $userEmail = $_POST["user_email"];
+            $userPhone = $_POST["user_phone_number"];
 
             //kiem tra email ton tai chua
             if($this->accountService->accountRepo->getAccountByEmail($userEmail)!=null){
                 $returnStatus = ["exist_status"=>"email_exists"];
             }
+            else if($this->accountService->accountRepo->getAccountByPhoneNumber($userPhone)!=null){
+                $returnStatus = ["exist_status"=>"phone_exists"];
+            }
             else{
                 $returnStatus = ["exist_status"=>"non_exists"];
             }
+            
             
             header('Content-Type: application/json');
             echo(json_encode($returnStatus));

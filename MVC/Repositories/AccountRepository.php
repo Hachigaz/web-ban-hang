@@ -12,6 +12,10 @@
                 $this->delete("accounts", "account_id = ".$id);
             }
 
+            public function lockAndUnlockAccount($id){// by id
+                $this->lockAndUnlock("accounts", "account_id = ".$id);
+            }
+
             public function getAllAccount(){
                 return $this->read("accounts");
             }
@@ -72,10 +76,35 @@
             public function joinAccountStaff($email){
                 return $this->joinTables("accounts", "staffs", "account_id", "");
             }
+
+            public function joinAccountStaffCustomer(){
+                return $this->getAccountStaffCustomer();
+            }
             
             public function getRoleByAccountId($account_id){
                 return $this->unionTables("customers", "staffs", "role_id", "account_id = ".$account_id, "account_id = ".$account_id)[0]["role_id"];
             }
 
+            public function getQuantityAllAccount(){
+                return $this->getCountColumnIsActive("accounts", "account_id", "");
+            }
+
+            public function getQuantityAccountBlocked(){
+                return $this->getCountColumnUnactive("accounts", "account_id", "");
+            }
+
+            public function getQuantityStaffAccount(){
+                return $this->getCountColumnJoin2Tables("accounts", "staffs", "account_id", "", "staff_id");
+            }
+
+            public function getQuantityCustomerAccount(){
+                return $this->getCountColumnJoin2Tables("accounts", "customers", "account_id", "", "customer_id");
+            }
+
+            public function changePassword($password, $account_id){
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
+                $currentDateTime = date('Y-m-d H:i:s');
+                return $this->set("UPDATE accounts SET password = '$password', updated_at = '$currentDateTime' WHERE accounts.account_id = $account_id");
+            }
         }
     ?>

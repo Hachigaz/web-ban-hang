@@ -28,6 +28,7 @@
                         </div>
                     </div>
                     <div class="image-preview-list-wrapper no-user-select">
+                        <?php if(count($data["ProductImages"])>0):?>
                         <div class="preview-image-list">
                             <div class="image-wrapper" onclick="showImage(this)">
                                 <div class="overlay"></div>
@@ -48,6 +49,7 @@
                                 unset($productImages);
                             ?>
                         </div>
+                        <?php endif?>
                     </div>
                 </div>
             </div>
@@ -265,10 +267,10 @@
                             <?php 
                             $customerAvatar = $review["avatar"];
                             if($customerAvatar==""){
-                                $customerAvatar = "_common/anon-user.jpg";
+                                $customerAvatar = "customerAvatar/_common/anon-user.jpg";
                             }
                             ?>
-                            <img src="../Public/img/customerAvatar/<?= $customerAvatar ?>" alt="" srcset="">
+                            <img src="../Public/img/<?= $customerAvatar ?>" alt="" srcset="">
                             <?php 
                                 unset($ratingCount);
                             ?>

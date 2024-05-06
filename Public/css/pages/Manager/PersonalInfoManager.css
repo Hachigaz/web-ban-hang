@@ -40,34 +40,36 @@
 .card-box .card:hover .icon-box {
     color: #fff;
 } */
-.card .content{
+.card .content {
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: 100%;
 }
+.self-salary,
 .change-password,
 .retire,
 .leave,
 .sick,
 .personal-info,
-.edit-personal-info{
+.edit-personal-info {
     display: flex;
     align-items: center;
     padding: 5px 10px;
     cursor: pointer;
     border-radius: 6px;
 }
+.self-salary:hover,
 .change-password:hover,
 .retire:hover,
 .leave:hover,
 .sick:hover,
 .personal-info:hover,
-.edit-personal-info:hover{
+.edit-personal-info:hover {
     background-color: var(--primary-color-blue);
     color: #fff;
 }
-.icon-in-box{
+.icon-in-box {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -79,7 +81,7 @@
     margin-right: 10px;
 }
 /* Đăng xuất */
-.card .content a.logout{
+.card .content a.logout {
     color: #000;
     text-decoration: none;
 }
@@ -449,6 +451,15 @@
     overflow: hidden;
     animation: modalShow ease 0.5s;
 }
+.modal-inner.modal-demist-application,
+.modal-inner.modal-sick-application,
+.modal-inner.modal-leave-application,
+.modal-inner.modal-change-password{
+    width: 400px;
+}
+.modal-inner.modal-info{
+    width: 800px;
+}
 .modal-header {
     display: flex;
     justify-content: space-between;
@@ -458,16 +469,12 @@
     background-color: var(--primary-color-blue);
     color: #fff;
 }
-.modal-add .modal-header {
-    background-color: var(--primary-color-green);
-}
-.modal-edit .modal-header {
+.modal-edit .modal-header,
+.modal-change-password .modal-header {
     background-color: var(--primary-color-yellow);
 }
-.modal-delete .modal-header {
-    background-color: var(--primary-color-red);
-}
-.modal-delete p{
+
+.modal-delete p {
     font-size: 20px;
 }
 .modal-header i {
@@ -491,11 +498,8 @@
     text-align: right;
     justify-self: center;
 }
-.modal-edit .modal-footer,
-.modal-add .modal-footer{
-    grid-column: 1 / span 2;
-}
-.modal-delete .modal-footer{
+
+.modal-delete .modal-footer {
     justify-content: flex-end;
     padding: 30px 15px 0 15px;
 }
@@ -509,14 +513,9 @@
     cursor: pointer;
     transition: 0.4s;
 }
-.modal-add .modal-footer button {
-    background-color: var(--primary-color-green);
-}
-.modal-edit .modal-footer button {
+.modal-edit .modal-footer button,
+.modal-change-password .modal-footer button {
     background-color: var(--primary-color-yellow);
-}
-.modal-delete .modal-footer button {
-    background-color: var(--primary-color-red);
 }
 .modal-footer button:hover {
     background-color: #ccc;
@@ -536,58 +535,71 @@
     }
 }
 
-
 /* info modal */
-.modal-info .modal-body{
+.modal-info .modal-body {
     display: flex;
     justify-content: space-between;
 }
-.info-section .row-section{
+.info-section .row-section {
     display: flex;
     font-size: 20px;
     margin: 15px 0;
 }
-.info-section .row-section .row-data{
+.info-section .row-section .row-data {
     width: 170px;
 }
-.info-section .row-section .row-name{
+.info-section .row-section .row-name {
     width: 140px;
     font-weight: 600;
 }
-.avatar-section{
+.avatar-section {
     align-self: center;
 }
-.modal-info .modal-footer{
+.modal-demist-application .modal-footer,
+.modal-sick-application .modal-footer,
+.modal-leave-application .modal-footer,
+.modal-info .modal-footer {
     padding: 0 30px 30px;
     display: flex;
     justify-content: center;
 }
-.modal-info .avatar-section .avatar-image{
+.modal-demist-application .modal-footer,
+.modal-sick-application .modal-footer,
+.modal-leave-application .modal-footer{
+    margin-top: 20px;
+}
+.modal-info .avatar-section .avatar-image {
     width: 200px;
     height: 200px;
     object-fit: cover;
 }
 /* Add form */
 .modal-edit .modal-body,
-.modal-add .modal-body {
+.modal-change-password .modal-body {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     gap: 5px 35px;
 }
-.label-form{
+.modal-edit .modal-body{
+    grid-template-columns: repeat(2, 1fr);
+}
+.modal-edit .modal-footer{
+    grid-column: 1 / span 2;
+}
+.label-form {
     margin-left: 5px;
 }
 /* choose file */
 .modal-edit .modal-body .custom-file-input,
-.modal-add .modal-body .custom-file-input {
+.modal-change-password .modal-body .custom-file-input {
     width: 100%;
 }
 .modal-edit .modal-body .custom-file-input::-webkit-file-upload-button,
-.modal-add .modal-body .custom-file-input::-webkit-file-upload-button {
+.modal-change-password .modal-body .custom-file-input::-webkit-file-upload-button {
     visibility: hidden;
 }
 .modal-edit .modal-body .custom-file-input::before,
-.modal-add .modal-body .custom-file-input::before {
+.modal-change-password .modal-body .custom-file-input::before {
     position: absolute;
     content: "Chọn avatar";
     display: inline-block;
@@ -604,11 +616,11 @@
     font-size: 10pt;
 }
 .modal-edit .modal-body .custom-file-input:active::before,
-.modal-add .modal-body .custom-file-input:active::before {
+.modal-change-password .modal-body .custom-file-input:active::before {
     background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
 .modal-edit .modal-body .input-section input,
-.modal-add .modal-body .input-section input {
+.modal-change-password .modal-body .input-section input {
     border: none;
     padding: 7px 14px;
     margin-top: 5px;
@@ -617,7 +629,7 @@
     width: 100%;
 }
 .modal-edit .modal-body .input-section select,
-.modal-add .modal-body .input-section select {
+.modal-change-password .modal-body .input-section select {
     border: none;
     padding: 7px 14px;
     margin-top: 5px;
@@ -630,8 +642,8 @@
     color: red;
     transition: 0.25s;
 }
-    
-#btn-export-excel{
+
+#btn-export-excel {
     background-color: var(--primary-color-blue);
     padding: 10px;
     border-radius: 5px;

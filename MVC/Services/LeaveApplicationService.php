@@ -7,8 +7,18 @@
             $this->leaveApplicationRepo = $this->repository("LeaveApplicationRepository");
         }
         
-        public function createLeaveApplication(){//$reviewDTO
-            $leaveApplication = new LeaveApplicationModel("4", "2024-04-05", "2024-04-05", "Lý do cá nhân", "0","4");
+        public function createLeaveApplication($staff_id, $start_date, $end_date){//$reviewDTO
+            $leaveApplication = new LeaveApplicationModel($staff_id, $start_date, $end_date, "Lý do cá nhân", "0");
+            $this->leaveApplicationRepo->createLeaveApplication($leaveApplication);
+        }
+
+        public function createSickApplication($staff_id, $start_date, $end_date){//$reviewDTO
+            $leaveApplication = new LeaveApplicationModel($staff_id, $start_date, $end_date, "Ốm đau, thai sản", "0");
+            $this->leaveApplicationRepo->createLeaveApplication($leaveApplication);
+        }
+
+        public function createDemistApplication($staff_id, $start_date, $end_date){//$reviewDTO
+            $leaveApplication = new LeaveApplicationModel($staff_id, $start_date, $end_date, "Nghỉ việc", "0");
             $this->leaveApplicationRepo->createLeaveApplication($leaveApplication);
         }
 

@@ -16,5 +16,21 @@
         public function GetTimesheetDetailById(){
             $this->timesheetDetailService->GetTimesheetDetailById();
         }
+
+        public function GetTotalSalaryByMonth($year){
+            $this->timesheetDetailService->getTotalSalaryByMonth($year);
+        }
+
+        public function GetTotalSalaryByQuarter($year){
+            $this->timesheetDetailService->GetTotalSalaryByQuarter($year);
+        }
+
+        public function GetDistinctYear(){
+            $this->timesheetDetailService->getDistinctYear();
+        }
+        
+        public function GetSalaryByStaffId($staff_id){
+            $this->timesheetDetailService->getSalaryByStaffId($staff_id);
+        }
     }
 ?>

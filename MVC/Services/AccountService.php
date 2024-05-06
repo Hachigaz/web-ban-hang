@@ -29,9 +29,12 @@
             $this->accountRepo->updateAccount($account, "9");
         }
 
-        public function deleteAccount(){
-            $id = "9";
+        public function deleteAccount($id){
             $this->accountRepo->deleteAccount($id);
+        }
+
+        public function lockAndUnlockAccount($id){
+            $this->accountRepo->lockAndUnlockAccount($id);
         }
 
         public function getAllAccount(){
@@ -39,9 +42,13 @@
             return json_encode($this->accountRepo->getAllAccount(), JSON_UNESCAPED_UNICODE);
         }
 
+        public function getAccountStaffCustomer(){
+            return $this->accountRepo->joinAccountStaffCustomer();
+        }
+
         public function getAccountById($id){
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            return json_encode($this->accountRepo->getAccountById($id), JSON_UNESCAPED_UNICODE);
+            echo json_encode($this->accountRepo->getAccountById($id), JSON_UNESCAPED_UNICODE);
         }
 
         public function toString($string){// tránh bị lỗi khi nhập ký tự đặc biệt vào chuỗi
@@ -92,6 +99,26 @@
         public function changeAccountPassword($account_email,$new_password){
             $sql = "UPDATE accounts set accounts.password = '$new_password' where email='$account_email'";
             $this->accountRepo->set($sql);
+        }
+
+        public function getQuantityAllAccount(){
+            return $this->accountRepo->getQuantityAllAccount();
+        }
+        
+        public function getQuantityAccountBlocked(){
+            return $this->accountRepo->getQuantityAccountBlocked();
+        }
+
+        public function getQuantityStaffAccount(){
+            return $this->accountRepo->getQuantityStaffAccount();
+        }
+
+        public function getQuantityCustomerAccount(){
+            return $this->accountRepo->getQuantityCustomerAccount();
+        }
+
+        public function changePassword($password, $account_id){
+            return $this->accountRepo->changePassword($password, $account_id);
         }
     }
 ?>

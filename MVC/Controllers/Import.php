@@ -65,5 +65,17 @@
         public function getInfoImport(){
             $this->importService->getInfoImport();
         }
+
+        public function GetQuantityImportByMonth($year){
+            $this->importService->getQuantityImportByMonth($year);
+        }
+
+        public function GetQuantityImportByQuarter($year){
+            $this->importService->getQuantityImportByQuarter($year);
+        }
+
+        public function GetDistinctYear(){
+            $this->importService->getDistinctYear();
+        }
     }
 ?>

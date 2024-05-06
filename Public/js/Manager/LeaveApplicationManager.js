@@ -78,7 +78,7 @@ fetch("../InternalManager/GetAllDataLeaveApplication")
                     "Bạn có chắc là muốn duyệt đơn xin nghỉ cho nhân viên " + staffName ;
                 approveA.setAttribute(
                     "href",
-                    "../LeaveApplication/ApproveLeaveApplication/" + leaveApplicationId
+                    "../LeaveApplication/ApproveApplication/" + leaveApplicationId
                 );
                 showModalApprove();
             }

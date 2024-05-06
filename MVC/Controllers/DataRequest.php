@@ -67,6 +67,21 @@
             unset($productID);
         }
 
+        public function GetFeaturedRowsData(){
+            $rowID = $_POST["row_id"];
+            $sql = "SELECT products.product_id, products.product_name
+                FROM products join featured_products on products.product_id = featured_products.product_id
+                WHERE featured_products.featured_row = $rowID;
+            ";
+
+            $resultData = $this->productService->productRepo->get($sql);
+            $productList = $resultData;
+
+            include("./MVC/Views/pages/Manager/AdvertisementManager/productFeaturedPrint.php");
+            unset($productList);
+            unset($rowID);
+        }
+
         public function Add(){
             $table = $_POST["table"];
 
@@ -74,7 +89,7 @@
             $arrayValues= [];
             foreach (array_keys($_POST) as $key){
                 if($key != "table"){
-                    array_push($arrayKeys,$key);
+                    array_push($arrayKeys,$table.".".$key);
                     array_push($arrayValues,"'".$_POST["$key"]."'");
                 }
             }
@@ -86,8 +101,16 @@
                 $fileNameSep = strrpos($imgPath, '/'); 
                 $imgDir = [substr($imgPath, 0, $fileNameSep),substr($imgPath, $fileNameSep + 1)];
 
-                $storePath = "./Public/img/products/".$imgDir[0]."/";
-                
+                if($table=="accounts"){
+                    $storePath = "./Public/img/".$imgDir[0]."/";
+                }
+                else if($table == "banners"){
+                    $storePath = "./Public/img/".$imgDir[0]."/";
+                }
+                else{
+                    $storePath = "./Public/img/products/".$imgDir[0]."/";    
+                }
+
                 $fileNameInfo = explode(".",$imgDir[1]);
                 if (!is_dir($storePath)) {
                     mkdir($storePath);
@@ -122,6 +145,59 @@
             unset($table);
         }
 
+        public function updateFeaturedProducts(){
+            $featuredRow = $_POST["featured_row"];
+            $addProductIdList = json_decode($_POST["product_id_list"]);
+            
+            $sql = "SELECT product_id FROM featured_products WHERE featured_products.featured_row = $featuredRow";
+            $removeProductIdList = $this->productService->productRepo->get($sql);
+            $removeProductIdList = array_column($removeProductIdList,"product_id");
+
+            // echo(var_dump($addProductIdList));
+            // echo(var_dump($removeProductIdList));
+            $temp = $addProductIdList;
+            for ($i = 0; $i < count($temp); $i++){
+                $keyIndex = array_search($addProductIdList[$i],$removeProductIdList);
+                if(!($keyIndex===false)){
+                    unset($removeProductIdList[$keyIndex]);
+                    unset($addProductIdList[$i]);
+                }
+            }
+
+            // echo(var_dump($addProductIdList));
+            // echo(var_dump($removeProductIdList));
+
+            if(count($addProductIdList)>0){
+                $insertPairs = [];
+                foreach ($addProductIdList as $productID){
+                    array_push($insertPairs,"('$featuredRow','$productID')");   
+                }
+                // echo(var_dump($insertPairs));
+                $insertPairs = implode(",",$insertPairs);
+                $sql = "INSERT INTO featured_products(featured_row,product_id) VALUES$insertPairs";
+                // echo($sql);
+                $this->productService->productRepo->set($sql);
+                unset($insertPairs);
+                unset($sql);
+            }
+
+            if(count($removeProductIdList)>0){
+                $deletePairs = "(".implode(",",$removeProductIdList).")";
+                // echo(var_dump($deletePairs));
+                $sql = "DELETE FROM featured_products WHERE featured_row = $featuredRow and product_id in $deletePairs";
+                // echo($sql);
+
+                $this->productService->productRepo->set($sql);
+                unset($deletePairs);
+                unset($sql);
+            }
+            unset($addProductIdList);
+            unset($removeProductIdList);
+            unset($temp);
+
+            echo(json_encode(["status"=>"success"]));
+        }
+
         public function Update(){
             $table = $_POST["table"];
             $tableKey = $_POST["table_id"];
@@ -145,7 +221,11 @@
                 if($filePath!=""){
                     if($table=="accounts"){
                         $deletePath = "./Public/img/$filePath";
-                    }else{
+                    }
+                    else if($table == "banners"){
+                        $deletePath = "./Public/img/$filePath";
+                    }
+                    else{
                         $deletePath = "./Public/img/products/$filePath";
                     }
                     if(file_exists($deletePath)){
@@ -161,7 +241,11 @@
                 
                 if($table=="accounts"){
                     $storePath = "./Public/img/".$imgDir[0]."/";
-                }else{
+                }
+                else if($table == "banners"){
+                    $storePath = "./Public/img/".$imgDir[0]."/";
+                }
+                else{
                     $storePath = "./Public/img/products/".$imgDir[0]."/";
                 }
                 

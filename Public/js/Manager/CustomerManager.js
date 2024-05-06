@@ -965,21 +965,21 @@ refreshBtn.onclick = filterTable;
 //     // };
 //     html2pdf(contentCustomer);
 // },5000);
-// function deleteColumn(table, columnIndex) {
-//     [...table.rows].forEach((row) => {
-//       row.deleteCell(columnIndex);
-//     });
-// }
-// const customerTable = document.querySelector("#customer-table");
-// const exportCustomerTable = document.querySelector("#btn-export-excel");
-// exportCustomerTable.addEventListener('click', () => {
-//     // Tạo một bản sao của bảng
-//     var clone = customerTable.cloneNode(true);
-//     // Xóa cột bạn không muốn xuất
-//     deleteColumn(clone, 7); // Xóa cột thứ 2
-//     setTimeout(function(){
-//         const wb = XLSX.utils.table_to_book(clone, {sheet: 'sheet-1'});
-//         XLSX.writeFile(wb, 'CustomerTable.xlsx');
-//     }, 2000);
-// });
+function deleteColumn(table, columnIndex) {
+    [...table.rows].forEach((row) => {
+      row.deleteCell(columnIndex);
+    });
+}
+const customerTable = document.querySelector("#customer-table");
+const exportCustomerTable = document.querySelector("#btn-export-excel");
+exportCustomerTable.addEventListener('click', () => {
+    // Tạo một bản sao của bảng
+    var clone = customerTable.cloneNode(true);
+    // Xóa cột bạn không muốn xuất
+    deleteColumn(clone, 7); // Xóa cột thứ 2
+    setTimeout(function(){
+        const wb = XLSX.utils.table_to_book(clone, {sheet: 'sheet-1'});
+        XLSX.writeFile(wb, 'CustomerTable.xlsx');
+    }, 2000);
+});
   

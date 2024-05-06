@@ -3,8 +3,8 @@
         public $con;
         protected $servername = "localhost";
         protected $username = "root";
-        protected $password = "Abc12345";
-        protected $dbname = "electronic_supermarket";
+        protected $password = "";
+        protected $dbname = "do_an_electronic_supermarket_test";
 
         function __construct(){
             $this->con = mysqli_connect($this->servername, $this->username, $this->password);
@@ -95,6 +95,12 @@
             $sql = "UPDATE $table SET $is_active = '0' WHERE $where";
             return mysqli_query($this->con, $sql);
         }
+        
+        public function lockAndUnlock($table, $where){
+            $is_active = "is_active";
+            $sql = "UPDATE $table SET $is_active = CASE WHEN $is_active = '0' THEN '1' ELSE '0' END WHERE $where";
+            return mysqli_query($this->con, $sql);
+        }        
 
         // tạo thêm 1 hàm delete thật
         public function realDelete($table, $where) {// chỉ thay đổi trạng thái active
@@ -307,6 +313,41 @@
             $row = mysqli_fetch_assoc($result);
             return $row["COUNT($column)"];            
         }
+
+        public function getCountColumnUnactive($table, $column, $where){
+            $is_active = "is_active";
+            if($where != ""){
+                $sql = "SELECT COUNT($column) FROM $table WHERE $where AND $is_active = '0'";
+            }else{
+                $sql = "SELECT COUNT($column) FROM $table WHERE $is_active = '0'";
+            }
+            $result = mysqli_query($this->con, $sql);
+            $row = mysqli_fetch_assoc($result);
+            return $row["COUNT($column)"];            
+        }
+
+        public function getCountColumnIsActive($table, $column, $where){
+            if($where != ""){
+                $sql = "SELECT COUNT($column) FROM $table WHERE $where";
+            }else{
+                $sql = "SELECT COUNT($column) FROM $table";
+            }
+            $result = mysqli_query($this->con, $sql);
+            $row = mysqli_fetch_assoc($result);
+            return $row["COUNT($column)"];            
+        }
+
+        public function getCountColumnJoin2Tables($table1, $table2, $commonField, $where, $column){
+            if($where == ""){
+                $sql = "SELECT COUNT($column) FROM $table1 JOIN $table2 ON $table1.$commonField = $table2.$commonField";
+            }else{
+                $sql = "SELECT COUNT($column) FROM $table1 JOIN $table2 ON $table1.$commonField = $table2.$commonField WHERE $where";
+            }
+            $result = mysqli_query($this->con, $sql);
+            $row = mysqli_fetch_assoc($result);
+            return $row["COUNT($column)"];    
+        }
+        
         
         public function getOneColumnTable($table, $column, $where){
             $is_active = "is_active";
@@ -322,6 +363,29 @@
             }
             return $rows;
         }
+
+        //
+        public function getAccountStaffCustomer(){
+            $sql = "SELECT accounts.account_id, accounts.phone_number, accounts.email, staffs.staff_fullname as name, staffs.staff_id as id, staffs.role_id, roles.role_name, accounts.created_at, accounts.updated_at, accounts.is_active
+                    FROM accounts
+                    JOIN staffs ON accounts.account_id = staffs.account_id
+                    JOIN roles ON roles.role_id = staffs.role_id
+                    WHERE staffs.is_active = '1'
+                    UNION
+                    SELECT accounts.account_id, accounts.phone_number, accounts.email, customers.customer_fullname, customers.customer_id, customers.role_id, roles.role_name, accounts.created_at, accounts.updated_at, accounts.is_active
+                    FROM accounts
+                    JOIN customers ON accounts.account_id = customers.account_id
+                    JOIN roles ON roles.role_id = customers.role_id
+                    WHERE customers.is_active = '1' 
+                    ORDER BY account_id ASC";
+            $result = mysqli_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
+        }
+        //
 
         public function selectManyColumn($table, $columns, $where){
             $is_active = "is_active";

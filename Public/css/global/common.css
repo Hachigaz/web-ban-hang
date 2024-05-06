@@ -1,4 +1,4 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap");
 /* @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"); */
 /*reset-css*/
 *,
@@ -43,7 +43,7 @@ body {
 }
 :root {
     --primary-font: "Dosis", sans-serif;
-    --primary-color-blue: #36c3fe;
+    --primary-color-blue: rgb(54, 195, 254);
     --primary-color-blue-opacity: rgba(56, 122, 223, 0.2);
     --primary-bg-color: rgba(43, 190, 249, 0.2);
     --primary-color-yellow: #fba834;

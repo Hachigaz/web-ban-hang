@@ -31,5 +31,40 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->timesheetDetailRepo->getTimesheetDetailById($id), JSON_UNESCAPED_UNICODE);
         }
+
+        public function getSalaryTable(){
+            return $this->timesheetDetailRepo->getSalaryTable();
+        }
+
+        public function getAllMonth(){
+            return $this->timesheetDetailRepo->getAllMonth();
+        }
+
+        public function getAllYear(){
+            return $this->timesheetDetailRepo->getAllYear();
+        }
+
+        public function getAllDataTimesheet(){
+            return $this->timesheetDetailRepo->getAllDataTimesheet();
+        }
+
+        public function getTotalSalaryByMonth($year){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->timesheetDetailRepo->getTotalSalaryByMonth($year), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function getTotalSalaryByQuarter($year){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->timesheetDetailRepo->getTotalSalaryByQuarter($year), JSON_UNESCAPED_UNICODE);
+        }
+
+        public function getDistinctYear(){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->timesheetDetailRepo->getDistinctYear(), JSON_UNESCAPED_UNICODE);
+        }
+        public function getSalaryByStaffId($staff_id){
+            return $this->timesheetDetailRepo->getSalaryByStaffId($staff_id);
+        }
+        
     }
 ?>

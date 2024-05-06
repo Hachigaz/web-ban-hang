@@ -36,14 +36,20 @@ div.c-input .input-error-message{
 
 textarea,
 input[type="text"],
-input[type="password"]{
+input[type="password"],
+select,
+option
+{
     height: 2.4em;
     font-size: 11pt;
     background-color: white;
 }
+
 input[type="text"],
-input[type="password"]{
-    text-indent: 20px;
+input[type="password"],
+select,
+option{
+    text-indent: 4px;
 }
 
 textarea{
@@ -76,6 +82,8 @@ textarea,
 input[type="text"],
 input[type="password"],
 input[type="submit"],
-input[type="button"]{
+input[type="button"],
+select
+{
     border-radius: 4px;
 }

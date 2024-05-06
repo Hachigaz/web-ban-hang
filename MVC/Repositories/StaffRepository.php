@@ -29,11 +29,11 @@
         }
 
         public function joinStaffAccountRole(){
-            return $this->join3Tables("staffs", "accounts", "roles","staffs.account_id = accounts.account_id", "staffs.role_id = roles.role_id", "staffs.is_active = 1 AND accounts.is_active = 1 ORDER BY staff_id ASC");
+            return $this->join3Tables("staffs", "accounts", "roles","staffs.account_id = accounts.account_id", "staffs.role_id = roles.role_id", "staffs.is_active = 1 ORDER BY staff_id ASC");
         }
 
         public function joinStaffAccountRoleById($account_id){
-            return $this->join3Tables("staffs", "accounts", "roles","staffs.account_id = accounts.account_id", "staffs.role_id = roles.role_id", "staffs.is_active = 1 AND accounts.is_active = 1 AND staffs.account_id = $account_id ORDER BY staff_id ASC");
+            return $this->join3Tables("staffs", "accounts", "roles","staffs.account_id = accounts.account_id", "staffs.role_id = roles.role_id", "staffs.is_active = 1 AND staffs.account_id = $account_id ORDER BY staff_id ASC");
         }
     }
 ?>
