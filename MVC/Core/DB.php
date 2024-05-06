@@ -4,7 +4,7 @@
         protected $servername = "localhost";
         protected $username = "root";
         protected $password = "Abc12345";
-        protected $dbname = "newschema";
+        protected $dbname = "electronic_supermarket";
         // protected $dbname = "electronic_supermarket";
 
         function __construct(){

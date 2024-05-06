@@ -32,45 +32,45 @@ CREATE TABLE `categories` (
   `is_active` tinyint(1) DEFAULT 1
 );
 
-CREATE TABLE `banner_locations` (
-  `location_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `location_name` VARCHAR(512) NULL
-);
+-- CREATE TABLE `banner_locations` (
+--   `location_id` INT PRIMARY KEY AUTO_INCREMENT,
+--   `location_name` VARCHAR(512) NULL
+-- );
 
-CREATE TABLE `banners` (
-  `banner_id` INT NOT NULL AUTO_INCREMENT,
-  `image_path` VARCHAR(512) NULL,
-  `url` VARCHAR(512) NULL,
-  `banner_name` VARCHAR(256) NULL,
-  `location_id` INT NULL,
-  `width` INT NULL,
-  `height` INT NULL,
-  `is_active` TINYINT(1) DEFAULT 1,
-  PRIMARY KEY (`banner_id`),
-  INDEX `banner_banner-locations_idx` (`location_id` ASC) VISIBLE,
-  CONSTRAINT `banner_banner-locations`
-    FOREIGN KEY (`location_id`)
-    REFERENCES `banner_locations` (`location_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+-- CREATE TABLE `banners` (
+--   `banner_id` INT NOT NULL AUTO_INCREMENT,
+--   `image_path` VARCHAR(512) NULL,
+--   `url` VARCHAR(512) NULL,
+--   `banner_name` VARCHAR(256) NULL,
+--   `location_id` INT NULL,
+--   `width` INT NULL,
+--   `height` INT NULL,
+--   `is_active` TINYINT(1) DEFAULT 1,
+--   PRIMARY KEY (`banner_id`),
+--   INDEX `banner_banner-locations_idx` (`location_id` ASC) VISIBLE,
+--   CONSTRAINT `banner_banner-locations`
+--     FOREIGN KEY (`location_id`)
+--     REFERENCES `banner_locations` (`location_id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION);
 
 
 
-CREATE TABLE `featured_products` (
-  `featured_id` INT NOT NULL AUTO_INCREMENT,
-  `product_id` INT NOT NULL,
-  `featured_row` INT NULL,
-  PRIMARY KEY (`featured_id`)
-);
+-- CREATE TABLE `featured_products` (
+--   `featured_id` INT NOT NULL AUTO_INCREMENT,
+--   `product_id` INT NOT NULL,
+--   `featured_row` INT NULL,
+--   PRIMARY KEY (`featured_id`)
+-- );
 
-CREATE TABLE `featured_products_rows` (
-  `row_id` INT NOT NULL PRIMARY KEY  AUTO_INCREMENT,
-  `row_name` VARCHAR(512) NULL,
-  `row_description` VARCHAR(2048) NULL,
-  `row_url` VARCHAR(512) NULL,
-  `index` INT DEFAULT 100,
-  `is_active` TINYINT(1) DEFAULT 1
-);
+-- CREATE TABLE `featured_products_rows` (
+--   `row_id` INT NOT NULL PRIMARY KEY  AUTO_INCREMENT,
+--   `row_name` VARCHAR(512) NULL,
+--   `row_description` VARCHAR(2048) NULL,
+--   `row_url` VARCHAR(512) NULL,
+--   `index` INT DEFAULT 100,
+--   `is_active` TINYINT(1) DEFAULT 1
+-- );
 
 
 CREATE TABLE `customers` (
@@ -267,10 +267,12 @@ CREATE TABLE `removes` (
   `order_detail_id` INT(11),
   `shipment_id` INT(11),
   `number` INT(50),
+  `price_remove` DECIMAL(20, 2), -- Đã thêm cột giá vào bảng Removes
   FOREIGN KEY (`orderID`) REFERENCES `orders`(`order_id`),
   FOREIGN KEY (`order_detail_id`) REFERENCES `order_details`(`order_detail_id`),
   FOREIGN KEY (`shipment_id`) REFERENCES `shipments`(`shipment_id`)
 );
+
 
 CREATE TABLE `contracts` (
   `contract_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -392,8 +394,8 @@ ALTER TABLE `noti` ADD FOREIGN KEY (`account_id`) REFERENCES `accounts` (`accoun
 
 ALTER TABLE `export_details` ADD FOREIGN KEY (`shipment_id`) REFERENCES `shipments` (`shipment_id`);
 
-ALTER TABLE `featured_products` ADD FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
-ALTER TABLE `featured_products` ADD FOREIGN KEY (`featured_row`) REFERENCES `featured_products_rows` (`row_id`);
+-- ALTER TABLE `featured_products` ADD FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+-- ALTER TABLE `featured_products` ADD FOREIGN KEY (`featured_row`) REFERENCES `featured_products_rows` (`row_id`);
 
 
 -- ACCOUNTS ----------------------------
@@ -817,13 +819,6 @@ CREATE TRIGGER `create_export_trigger` AFTER UPDATE ON `orders` FOR EACH ROW BEG
         -- Insert a new row into exports table
         INSERT INTO exports (staff_id, order_id, export_date, total_price)
         SELECT NEW.staff_id, NEW.order_id, NOW(), NEW.total_money;
-
-        -- Update the orders table to set the shipping_date to current date
-        -- Insert into export_details table
-        INSERT INTO export_details (export_id, shipment_id, unit_price_export, quantity_export)
-        SELECT (SELECT MAX(export_id) FROM exports), shipment_id, unit_price_import, quantity
-        FROM shipments
-        WHERE import_id = NEW.order_id;
     END IF;
 END
 $$
@@ -838,6 +833,12 @@ BEGIN
     DECLARE shipmentID INT;
     DECLARE shipmentRemain INT;
     DECLARE productsToAdd INT;
+    DECLARE productPrice DECIMAL(20, 2);
+
+    -- Get the price of the product
+    SELECT price INTO productPrice
+    FROM order_details
+    WHERE order_detail_id = NEW.order_detail_id;
 
     -- Get the total number of products to add and initialize remaining products
     SET productsRemaining = NEW.number_of_products;
@@ -859,9 +860,9 @@ BEGIN
         -- Calculate the number of products to assign from this shipment
         SET productsToAdd = LEAST(productsRemaining, shipmentRemain);
 
-        -- Insert into Removes with the calculated number
-        INSERT INTO Removes (orderID, order_detail_id, shipment_id, number)
-        VALUES (NEW.order_id, NEW.order_detail_id, shipmentID, productsToAdd);
+        -- Insert into Removes with the calculated number and price
+        INSERT INTO Removes (orderID, order_detail_id, shipment_id, number, price_remove)
+        VALUES (NEW.order_id, NEW.order_detail_id, shipmentID, productsToAdd, productPrice);
 
         -- Update remaining products
         SET productsRemaining = productsRemaining - productsToAdd;
@@ -872,8 +873,8 @@ BEGIN
         WHERE shipment_id = shipmentID;
     END WHILE;
 END//
-
 DELIMITER ;
+
 DELIMITER //
 CREATE TRIGGER return_remaining_products_trigger
 AFTER UPDATE ON orders
@@ -1264,32 +1265,32 @@ INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-T', 'Tím', '50');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-D', 'Đen', '52');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-XD', 'Xanh dương', '52');
 
-INSERT INTO `banner_locations` (`location_id`, `location_name`) VALUES ('1', 'home-header');
+-- INSERT INTO `banner_locations` (`location_id`, `location_name`) VALUES ('1', 'home-header');
 
-INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'banner_header1', '1', '800', '600');
-INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'banner_header2', '1', '800', '600');
+-- INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'banner_header1', '1', '800', '600');
+-- INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'banner_header2', '1', '800', '600');
 
-INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm nổi bật', 'Các sản phẩm mới và nổi bật trong tháng 4',1);
-INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm mới', 'Sản phẩm mới vừa xuất hiện trên thị trường',2);
+-- INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm nổi bật', 'Các sản phẩm mới và nổi bật trong tháng 4',1);
+-- INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm mới', 'Sản phẩm mới vừa xuất hiện trên thị trường',2);
 
-INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES 
-('35', '1', '1'),
-('40', '2', '1'),
-('41', '4', '1'),
-('42', '3', '1'),
-('43', '47', '1'),
-('44', '46', '1'),
-('45', '50', '1'),
-('46', '52', '1'),
-('47', '53', '1'),
-('48', '6', '2'),
-('49', '5', '2'),
-('50', '8', '2'),
-('51', '7', '2'),
-('52', '40', '2'),
-('53', '41', '2'),
-('54', '32', '2'),
-('55', '31', '2');
+-- INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES 
+-- ('35', '1', '1'),
+-- ('40', '2', '1'),
+-- ('41', '4', '1'),
+-- ('42', '3', '1'),
+-- ('43', '47', '1'),
+-- ('44', '46', '1'),
+-- ('45', '50', '1'),
+-- ('46', '52', '1'),
+-- ('47', '53', '1'),
+-- ('48', '6', '2'),
+-- ('49', '5', '2'),
+-- ('50', '8', '2'),
+-- ('51', '7', '2'),
+-- ('52', '40', '2'),
+-- ('53', '41', '2'),
+-- ('54', '32', '2'),
+-- ('55', '31', '2');
 
 INSERT INTO `options` (`option_id`, `product_id`, `option_name`, `option_value`, `is_active`) VALUES
 ('3', '1', 'Kích thước', '159,9 mm x 76,7 mm x 8,25 mm', '1'),
@@ -1328,25 +1329,24 @@ INSERT INTO `imports` (`import_id`, `staff_id`, `import_date`, `is_active`) VALU
 ('11', '2', '2022-11-01', '1');
 
 INSERT INTO `shipments` (`shipment_id`, `import_id`, `supplier_id`, `unit_price_import`, `quantity`, `remain`, `sku_id`, `is_active`) VALUES 
-('1', '1', '1', '7000000', '50', '49', '1', '1'),
-('2', '1', '2', '3000000', '50', '49', '2', '1'),
-('3', '1', '3', '12000000', '50', '49', '3', '1'),
-('4', '1', '4', '5000000', '50', '49', '4', '1'),
-('5', '2', '5', '5000000', '50', '49', '1', '1'),
-('6', '2', '6', '4000000', '50', '49', '2', '1'),
-('7', '2', '7', '3000000', '50', '49', '3', '1'),
-('8', '2', '8', '1500000', '50', '49', '4', '1'),
-('9', '3', '8', '1000000', '50', '49', '1', '1'),
-('10', '4', '8', '500000', '50', '49', '2', '1'),
-('11', '5', '8', '1200000', '50', '49', '3', '1'),
-('12', '6', '8', '500000', '50', '49', '4', '1'),
-('13', '6', '8', '1300000', '50', '49', '1', '1'),
-('14', '7', '8', '500000', '50', '49', '1', '1'),
-('15', '7', '8', '1200000', '50', '49', '1', '1'),
-('16', '8', '8', '500000', '50', '49', '1', '1'),
-('17', '9', '8', '1300000', '50', '49', '1', '1'),
-('18', '10', '8', '500000', '50', '49', '1', '1'),
-('19', '11', '8', '1200000', '50', '49', '1', '1');
+('1', '1', '1', '7000000', '50', '50', '1', '1'),
+('2', '1', '2', '3000000', '50', '50', '2', '1'),
+('3', '1', '3', '12000000', '50', '50', '3', '1'),
+('4', '1', '4', '5000000', '50', '50', '4', '1'),
+('5', '2', '5', '5000000', '50', '50', '1', '1'),
+('6', '2', '6', '4000000', '50', '50', '2', '1'),
+('7', '2', '7', '3000000', '50', '50', '3', '1'),
+('8', '2', '8', '1500000', '50', '50', '4', '1'),
+('9', '3', '8', '1000000', '50', '50', '1', '1'),
+('10', '4', '8', '500000', '50', '50', '2', '1'),
+('11', '5', '8', '1200000', '50', '50', '3', '1'),
+('12', '6', '8', '500000', '50', '50', '4', '1'),
+('13', '6', '8', '1300000', '50', '50', '1', '1'),
+('14', '7', '8', '500000', '50', '50', '1', '1'),
+('16', '8', '8', '500000', '50', '50', '1', '1'),
+('17', '9', '8', '1300000', '50', '50', '1', '1'),
+('18', '10', '8', '500000', '50', '50', '1', '1'),
+('19', '11', '8', '1200000', '50', '50', '1', '1');
 
 
 INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `email_of_receiver`, `phone_number_of_receiver`, `note`, `order_date`, `status_of_order`, `total_money`, `shipping_method`, `shipping_address`, `shipping_date`, `tracking_number`, `payment_method`, `is_active`) VALUES 
@@ -1657,36 +1657,37 @@ END;
 //
 DELIMITER ;
 
-DELIMITER $$
-CREATE TRIGGER `before_export_detail_insert1` BEFORE INSERT ON `export_details` FOR EACH ROW BEGIN
-    -- Get the unit price import of the corresponding shipment
-    DECLARE shipment_unit_price_import DECIMAL(20, 2);
-    SELECT unit_price_import INTO shipment_unit_price_import
-    FROM shipments
-    WHERE shipment_id = NEW.shipment_id;
-    
-    -- Calculate the unit price export (50% higher than unit price import)
-    SET NEW.unit_price_export = shipment_unit_price_import * 1.5;
-END
-$$
-DELIMITER ;
 -- DELIMITER $$
--- CREATE TRIGGER `orders_status_change_trigger` AFTER UPDATE ON `orders` FOR EACH ROW BEGIN
---     DECLARE notification_text VARCHAR(500);
+-- CREATE TRIGGER `before_export_detail_insert1` BEFORE INSERT ON `export_details` FOR EACH ROW BEGIN
+--     -- Get the unit price import of the corresponding shipment
+--     DECLARE shipment_unit_price_import DECIMAL(20, 2);
+--     SELECT unit_price_import INTO shipment_unit_price_import
+--     FROM shipments
+--     WHERE shipment_id = NEW.shipment_id;
     
---     -- Construct notification text based on the new status_of_order
---     CASE NEW.status_of_order
---         WHEN 'Processing' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đang xử lý');
---         WHEN 'Shipped' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã giao');
---         WHEN 'Delivered' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã nhận');
---         WHEN 'Cancelled' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã hủy');
---     END CASE;
-    
---     -- Insert the new notification into the noti table
---     INSERT INTO noti (account_id, text, date_noti) VALUES (NEW.account_id, notification_text, NOW());
+--     -- Calculate the unit price export (50% higher than unit price import)
+--     SET NEW.unit_price_export = shipment_unit_price_import * 1.5;
 -- END
 -- $$
 -- DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `orders_status_change_trigger` AFTER UPDATE ON `orders` FOR EACH ROW BEGIN
+    DECLARE notification_text VARCHAR(500);
+    
+    -- Construct notification text based on the new status_of_order
+    CASE NEW.status_of_order
+        WHEN 'Pending' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã được tạo');
+        WHEN 'Processing' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đang xử lý');
+        WHEN 'Shipped' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã giao');
+        WHEN 'Delivered' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã nhận');
+        WHEN 'Cancelled' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã hủy');
+    END CASE;
+    
+    -- Insert the new notification into the noti table
+    INSERT INTO noti (account_id, text, date_noti) VALUES (NEW.account_id, notification_text, NOW());
+END
+$$
+DELIMITER ;
 
 
 INSERT INTO `timesheets` (`contract_id`, `month`, `year`, `days_worked`, `days_off`, `days_leave`, `days_late`) VALUES 
