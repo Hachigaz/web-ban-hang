@@ -652,3 +652,25 @@ BEGIN
 END//
 
 DELIMITER ;
+DELIMITER //
+
+CREATE TRIGGER orders_status_change_trigger
+AFTER UPDATE ON orders
+FOR EACH ROW
+BEGIN
+    DECLARE notification_text VARCHAR(500);
+    
+    -- Construct notification text based on the new status_of_order
+    CASE NEW.status_of_order
+        WHEN 'Processing' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đang xử lý');
+        WHEN 'Shipped' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã giao');
+        WHEN 'Delivered' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã nhận');
+        WHEN 'Cancelled' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã hủy');
+    END CASE;
+    
+    -- Insert the new notification into the noti table
+    INSERT INTO noti (account_id, text, date_noti) VALUES (NEW.account_id, notification_text, NOW());
+END;
+//
+
+DELIMITER ;

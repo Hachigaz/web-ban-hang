@@ -27,8 +27,7 @@
         }
 
         public function getAllBrand(){
-            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->brandRepo->getAllBrand(), JSON_UNESCAPED_UNICODE);
+            return $this->brandRepo->getAllBrand();
         }
 
         public function getBrandById(){

@@ -46,6 +46,7 @@
     gap: 10px;
     width: 100%;
 }
+.self-salary,
 .change-password,
 .retire,
 .leave,
@@ -58,6 +59,7 @@
     cursor: pointer;
     border-radius: 6px;
 }
+.self-salary:hover,
 .change-password:hover,
 .retire:hover,
 .leave:hover,
@@ -449,6 +451,9 @@
     overflow: hidden;
     animation: modalShow ease 0.5s;
 }
+.modal-inner.modal-demist-application,
+.modal-inner.modal-sick-application,
+.modal-inner.modal-leave-application,
 .modal-inner.modal-change-password{
     width: 400px;
 }
@@ -550,10 +555,18 @@
 .avatar-section {
     align-self: center;
 }
+.modal-demist-application .modal-footer,
+.modal-sick-application .modal-footer,
+.modal-leave-application .modal-footer,
 .modal-info .modal-footer {
     padding: 0 30px 30px;
     display: flex;
     justify-content: center;
+}
+.modal-demist-application .modal-footer,
+.modal-sick-application .modal-footer,
+.modal-leave-application .modal-footer{
+    margin-top: 20px;
 }
 .modal-info .avatar-section .avatar-image {
     width: 200px;

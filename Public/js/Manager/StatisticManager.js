@@ -38,7 +38,7 @@ const salaryConfig = {
         plugins: {
             title: {
                 display: true,
-                text: "Biểu đồ tổng lương trả cho của tất cả nhân viên qua các tháng trong năm 2024",
+                text: "Biểu đồ tổng lương trả cho tất cả nhân viên qua các tháng trong năm 2024",
                 font: {
                     size: 20,
                 },
@@ -52,6 +52,93 @@ const salaryConfig = {
     },
 }
 var salaryChartEntity = new Chart(salaryChart, salaryConfig);
+
+
+const urlYearSalary = '../TimesheetDetail/GetDistinctYear';
+let dataYearSalary = [];
+
+fetch(urlYearSalary)
+    .then(response => response.json()) 
+    .then(json => {
+        dataYearSalary = json; // Lưu dữ liệu vào mảng
+        // Thêm các năm vào combobox
+        dataYearSalary.forEach((item, index, array) => {
+            let option = document.createElement('option');
+            option.value = item.year;
+            option.text = item.year;
+
+            if (index === array.length - 1) {
+                option.selected = true;
+            }
+            console.log(item.year);
+            yearSelectSalary.add(option);
+        });
+        fetchDataAndUpdateSalaryChart(urlMonthSalary+dataYearSalary.pop().year);
+    })
+    .catch(error => console.error('Error:', error));
+
+let yearSelectSalary = document.getElementById('year-salary');
+
+
+
+const urlMonthSalary = '../TimesheetDetail/GetTotalSalaryByMonth/';
+const urlQuarterSalary = '../TimesheetDetail/GetTotalSalaryByQuarter/';
+const radioMonthSalary = document.querySelector("#month-salary");
+const radioQuarterSalary = document.querySelector("#quarter-salary");
+
+
+function fetchDataAndUpdateSalaryChart(url){
+    let isQuarter = url.includes('Quarter');
+    let length = isQuarter ? 4 : 12;
+    let labels = Array.from({length}, (_, i) => isQuarter ? `Quý ${i+1}` : `Tháng ${i+1}`);
+    let year = url.slice(-4); // Lấy năm từ url
+
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        let salary = Array(length).fill(0);
+
+        if(isQuarter){
+            data.forEach(item => {
+                let index = parseInt(item.quarter) - 1; 
+                salary[index] = parseFloat(item.total_salary); 
+            });
+            salaryConfig.options.plugins.title.text = `Biểu đồ tổng lợi nhuận thu được qua các quý trong năm ${year}`;
+        }else{
+            data.forEach(item => {
+                let index = parseInt(item.month) - 1; 
+                salary[index] = parseFloat(item.total_salary); 
+            });
+            salaryConfig.options.plugins.title.text = `Biểu đồ tổng lợi nhuận thu được qua các tháng trong năm ${year}`;
+        }
+
+        salaryConfig.data.labels = labels;
+        salaryConfig.data.datasets[0].data = salary;
+        salaryChartEntity.update();
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+yearSelectSalary.addEventListener('change', (event) => {
+    let year = event.target.value;
+    let url = radioQuarterSalary.checked ? `${urlQuarterSalary}${year}` : `${urlMonthSalary}${year}`;
+    fetchDataAndUpdateSalaryChart(url);
+});
+
+radioMonthSalary.addEventListener('change', () => {
+    let year = yearSelectSalary.value;
+    let url = `${urlMonthSalary}${year}`;
+    console.log(year);
+    fetchDataAndUpdateSalaryChart(url);
+});
+
+radioQuarterSalary.addEventListener('change', () => {
+    let year = yearSelectSalary.value;
+    let url = `${urlQuarterSalary}${year}`;
+    console.log(year);
+    fetchDataAndUpdateSalaryChart(url);
+});
 
 
 var downloadSalaryChartJs = () => {

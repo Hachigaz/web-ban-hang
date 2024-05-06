@@ -10,7 +10,7 @@ const content = document.querySelector(".content-module");
 
 const startDateFilter = document.querySelector("#start-date");
 const endDateFilter = document.querySelector("#end-date");
-const roleFilter = document.querySelector("#role-filter");
+const roleFilter = document.querySelector("#status-filter");
 const statusFilter = document.querySelector("#status-filter");
 const searchFilter = document.querySelector("#search-filter");
 
@@ -64,19 +64,19 @@ fetch("../InternalManager/GetAllDataOrder")
         //     roleFilter.appendChild(option); // gán giá trị các role vào combobox
         // });
         var pendingOption = document.createElement("option");
-        pendingOption.value = "Pending";
+        pendingOption.value = "Đang chờ";
         pendingOption.text = "Đang chờ";
         var processingOption = document.createElement("option");
-        processingOption.value = "Processing";
+        processingOption.value = "Đang xử lý";
         processingOption.text = "Đang xử lý";
         var shippedOption = document.createElement("option");
-        shippedOption.value = "Shipped";
+        shippedOption.value = "Đã giao";
         shippedOption.text = "Đã giao";
         var deliveredOption = document.createElement("option");
-        deliveredOption.value = "Delivered";
+        deliveredOption.value = "Đã nhận";
         deliveredOption.text = "Đã nhận";
         var cancelledOption = document.createElement("option");
-        cancelledOption.value = "Cancelled";
+        cancelledOption.value = "Đã hủy";
         cancelledOption.text = "Đã hủy";
         statusFilter.appendChild(pendingOption); // gán giá trị các giới tính vào combobox
         statusFilter.appendChild(processingOption);
@@ -384,13 +384,16 @@ modalInnerAdd.addEventListener("click", function (event) {
     event.stopPropagation();
 });
 
+
+// Call the function to update the date strings initially
 const refreshBtn = document.querySelector(".reset-btn");
 refreshBtn.addEventListener("click", function () {
     startDateFilter.value = "";
     endDateFilter.value = "";
     roleFilter.selectedIndex = 0;
-    genderFilter.selectedIndex = 0;
     searchFilter.value = "";
+    document.getElementById("start-date").max = null;
+    document.getElementById("end-date").min = null;
 });
 
 const confirmAddBtn = document.getElementById("confirmBtnAdd");
@@ -647,8 +650,8 @@ emailAddForm.addEventListener("keyup", function () {
 function filterTable() {
     var trs = tbody.getElementsByTagName("tr");
     // Lấy giá trị lọc
-    var roleFilterValue = roleFilter.value;
-    var genderFilterValue = genderFilter.value;
+    var statusFilterValue = statusFilter.value;
+    // var genderFilterValue = genderFilter.value;
     var searchFilterValue = searchFilter.value.toLowerCase();
     // var startDate = new Date(document.getElementById("start-date").value);
     // var endDate = new Date(document.getElementById("end-date").value);
@@ -656,57 +659,33 @@ function filterTable() {
     var endDateString = document.getElementById("end-date").value;
 
     for (var i = 0; i < trs.length; i++) {
-        var roleTd = trs[i].getElementsByTagName("td")[2]; // lấy ra giá trị từng cột
-        var genderTd = trs[i].getElementsByTagName("td")[5];
+        var statusTd = trs[i].getElementsByTagName("td")[4]; // lấy ra giá trị từng cột
+        // var genderTd = trs[i].getElementsByTagName("td")[5];
 
-        var staffCodeTd = trs[i].getElementsByTagName("td")[0];
-        var staffNameTd = trs[i].getElementsByTagName("td")[1];
-        var staffPhoneTd = trs[i].getElementsByTagName("td")[3];
-        var staffEmailTd = trs[i].getElementsByTagName("td")[4];
-        var staffAddressTd = trs[i].getElementsByTagName("td")[6];
+        var orderCodeTd = trs[i].getElementsByTagName("td")[0];
+        var orderDateTd = trs[i].getElementsByTagName("td")[1];
+        var orderTotalTd = trs[i].getElementsByTagName("td")[2];
+        var orderTrackingTd = trs[i].getElementsByTagName("td")[3];
 
-        var entryDateTd = trs[i].getElementsByTagName("td")[7];
 
         if (
-            roleTd &&
-            genderTd &&
-            staffCodeTd &&
-            staffNameTd &&
-            staffPhoneTd &&
-            staffEmailTd &&
-            staffAddressTd &&
-            entryDateTd
+            statusTd &&
+            orderCodeTd &&
+            orderDateTd &&
+            orderTotalTd &&
+            orderTrackingTd 
         ) {
             // nếu tồn tại thì thay đổi tránh crash
-            var roleValue = roleTd.textContent || roleTd.innerText;
-            var genderValue = genderTd.textContent || genderTd.innerText;
+            var statusValue = statusTd.textContent || statusTd.innerText;
 
-            var roleMatch =
-                roleFilterValue == "Chức vụ" ||
-                roleValue.indexOf(roleFilterValue) > -1;
-            var genderMatch =
-                genderFilterValue == "Giới tính" || //nếu mặc định thì sẽ hiển thị
-                genderValue.indexOf(genderFilterValue) > -1; // nếu không chứa giá trị lọc thì ẩn
-            var staffCodeMatch =
-                staffCodeTd.textContent
+            var statusMatch =
+                statusFilterValue == "Tình trạng" ||
+                statusValue.indexOf(statusFilterValue) > -1;
+            var orderTrackingMatch =
+                orderTrackingTd.textContent
                     .toLowerCase()
                     .indexOf(searchFilterValue) > -1; // so sánh giá trị trong bảng với giá trị lọc
-            var staffNameMatch =
-                staffNameTd.textContent
-                    .toLowerCase()
-                    .indexOf(searchFilterValue) > -1;
-            var staffPhoneMatch =
-                staffPhoneTd.textContent
-                    .toLowerCase()
-                    .indexOf(searchFilterValue) > -1;
-            var staffEmailMatch =
-                staffEmailTd.textContent
-                    .toLowerCase()
-                    .indexOf(searchFilterValue) > -1;
-            var staffAddressMatch =
-                staffAddressTd.textContent
-                    .toLowerCase()
-                    .indexOf(searchFilterValue) > -1;
+
             if (endDateString != "") {
                 // nếu endDate được chọn thì max của startDate là endDate
                 document.getElementById("start-date").max = endDateString;
@@ -717,27 +696,25 @@ function filterTable() {
             }
             var bothDatePickersSelected = startDateString && endDateString; // cả 2 datePicker được chọn thì mới bắt đầu kiểm tra điều kiện lọc
             if (bothDatePickersSelected) {
-                var entryDateMatch =
+                var orderDateMatch =
                     compareStartDate(
-                        entryDateTd.textContent,
-                        convertToDDMMYYYY(startDateString)
+                        orderDateTd.textContent,
+                        convertToDDMMYYYY(startDateString),
+                        console.log(convertToDDMMYYYY(startDateString))
+
                     ) &&
                     compareEndDate(
-                        entryDateTd.textContent,
-                        convertToDDMMYYYY(endDateString)
+                        orderDateTd.textContent,
+                        convertToDDMMYYYY(endDateString),
+                        console.log(convertToDDMMYYYY(endDateString))
                     );
             } else {
-                entryDateMatch = true;
+                orderDateMatch = true;
             }
             trs[i].style.display =
-                roleMatch &&
-                genderMatch &&
-                (staffCodeMatch ||
-                    staffNameMatch ||
-                    staffPhoneMatch ||
-                    staffEmailMatch ||
-                    staffAddressMatch) &&
-                entryDateMatch
+                statusMatch &&
+                orderTrackingMatch &&
+                orderDateMatch
                     ? ""
                     : "none";
         }
@@ -820,4 +797,9 @@ closeBtns.forEach(btn => {
     });
 });
 
-
+roleFilter.onchange = filterTable;
+// genderFilter.onchange = filterTable;
+searchFilter.oninput = filterTable;
+startDateFilter.onchange = filterTable;
+endDateFilter.onchange = filterTable;
+refreshBtn.onclick = filterTable;

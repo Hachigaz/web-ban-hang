@@ -4,7 +4,7 @@
     width: 100%;
     padding: 20px;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 30px;
 }
 .card-box .card {
@@ -51,43 +51,11 @@
     grid-gap: 30px;
     /* margin-top: 10px; */
 }
-.imports {
-    position: relative;
-    width: 100%;
-    padding: 20px;
-    display: grid;
-    grid-gap: 30px;
-    /* margin-top: 10px; */
-}
-.details .staff-table {
+.details .customer-table {
     position: relative;
     display: grid;
     min-height: 500px;
     max-height: 540px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 4px 7px 25px rgba(0, 0, 0, 0.1);
-    overflow-y: scroll;
-}
-.details .staff-table1 {
-    position: relative;
-    display: grid;
-    min-height: 500px;
-    max-height: 540px;
-    min-width: 700px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 4px 7px 25px rgba(0, 0, 0, 0.1);
-    overflow-y: scroll;
-}
-.imports .staff-table2 {
-    position: relative;
-    display: grid;
-    min-height: 500px;
-    max-height: 540px;
-    min-width: 700px;
     background-color: #fff;
     padding: 20px;
     border-radius: 20px;
@@ -126,6 +94,13 @@
 .details table thead tr {
     font-size: 19px;
 }
+.details table thead tr td:nth-child(3),
+.details table thead tr td:nth-child(4),
+.details table thead tr td:nth-child(5),
+.details table thead tr td:nth-child(6) {
+    text-align: center;
+}
+
 .details table thead,
 .details table tbody {
     min-width: 100%;
@@ -133,23 +108,34 @@
 .details table thead td {
     font-weight: 700;
 }
-.details .staff-table table tr {
+.details .customer-table table tr {
     color: #111;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
-.details .staff-table table tr:last-child {
+
+.details .customer-table table tr:last-child {
     border-bottom: none;
 }
-.details .staff-table table tbody tr:hover {
+.details .customer-table table tbody tr:hover {
     background-color: var(--primary-color-blue);
     color: #fff;
 }
-.details .staff-table table tbody td {
+.details .customer-table table tbody td {
     padding: 10px 0;
     font-size: 17px;
     font-weight: 500;
 }
-.details .staff-table table td:last-child {
+.details .customer-table table td:first-child {
+    text-align: center;
+}
+.details .customer-table table td:nth-child(2),
+.details .customer-table table td:nth-child(3),
+.details .customer-table table td:nth-child(4),
+.details .customer-table table td:nth-child(5),
+.details .customer-table table td:nth-child(6) {
+    text-align: center;
+}
+.details .customer-table table td:last-child {
     text-align: center;
 }
 .status.delivered {
@@ -238,7 +224,7 @@
     }
 }
 @media (max-width: 768px) {
-    .staff-table {
+    .customer-table {
         overflow-x: auto;
     }
     .status.inprogress {
@@ -435,7 +421,7 @@
     background-color: var(--primary-color-blue);
     color: #fff;
 }
-.modal-info .modal-header {
+.modal-add .modal-header {
     background-color: var(--primary-color-green);
 }
 .modal-edit .modal-header {
@@ -453,12 +439,6 @@
     color: #fff;
 }
 
-.modal-inner {
-    min-width: 750px; 
-}
-.modal-import {
-    min-width: 900px; 
-}
 .modal-body {
     padding: 25px;
 }
@@ -475,7 +455,7 @@
     justify-self: center;
 }
 .modal-edit .modal-footer,
-.modal-info .modal-footer{
+.modal-add .modal-footer{
     grid-column: 1 / span 2;
 }
 .modal-delete .modal-footer{
@@ -492,7 +472,7 @@
     cursor: pointer;
     transition: 0.4s;
 }
-.modal-info .modal-footer button {
+.modal-add .modal-footer button {
     background-color: var(--primary-color-green);
 }
 .modal-edit .modal-footer button {
@@ -521,26 +501,17 @@
 
 
 /* info modal */
-.hide1{
-    width: 500;
-}
 .modal-info .modal-body{
     display: flex;
-    justify-content: space-between;    
+    justify-content: space-between;
 }
 .info-section .row-section{
     display: flex;
     font-size: 20px;
     margin: 15px 0;
 }
-.info-section .row-section .row-name{
-    width: 140px;
-    font-weight: 600;
-}
-.info-section .row-section{
-    display: flex;
-    font-size: 20px;
-    margin: 15px 0;
+.info-section .row-section .row-data{
+    width: 170px;
 }
 .info-section .row-section .row-name{
     width: 140px;
@@ -554,11 +525,6 @@
     display: flex;
     justify-content: center;
 }
-.modal-footer{
-    padding: 0 30px 30px;
-    display: flex;
-    justify-content: center;
-}
 .modal-info .avatar-section .avatar-image{
     width: 200px;
     height: 200px;
@@ -566,7 +532,7 @@
 }
 /* Add form */
 .modal-edit .modal-body,
-.modal-info .modal-body {
+.modal-add .modal-body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 5px 35px;
@@ -576,15 +542,15 @@
 }
 /* choose file */
 .modal-edit .modal-body .custom-file-input,
-.modal-info .modal-body .custom-file-input {
+.modal-add .modal-body .custom-file-input {
     width: 100%;
 }
 .modal-edit .modal-body .custom-file-input::-webkit-file-upload-button,
-.modal-info .modal-body .custom-file-input::-webkit-file-upload-button {
+.modal-add .modal-body .custom-file-input::-webkit-file-upload-button {
     visibility: hidden;
 }
 .modal-edit .modal-body .custom-file-input::before,
-.modal-info .modal-body .custom-file-input::before {
+.modal-add .modal-body .custom-file-input::before {
     position: absolute;
     content: "Chọn avatar";
     display: inline-block;
@@ -601,11 +567,11 @@
     font-size: 10pt;
 }
 .modal-edit .modal-body .custom-file-input:active::before,
-.modal-info .modal-body .custom-file-input:active::before {
+.modal-add .modal-body .custom-file-input:active::before {
     background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
 .modal-edit .modal-body .input-section input,
-.modal-info .modal-body .input-section input {
+.modal-add .modal-body .input-section input {
     border: none;
     padding: 7px 14px;
     margin-top: 5px;
@@ -614,7 +580,7 @@
     width: 100%;
 }
 .modal-edit .modal-body .input-section select,
-.modal-info .modal-body .input-section select {
+.modal-add .modal-body .input-section select {
     border: none;
     padding: 7px 14px;
     margin-top: 5px;
@@ -627,23 +593,29 @@
     color: red;
     transition: 0.25s;
 }
-.imports table {
-    position: absolute;
-    width: calc(100% - 40px);
-    top: 60px;
-    left: 20px;
-    border-collapse: collapse;
-    margin-top: 10px;
-    max-height: 540px;
-    overflow-x: scroll;
+    
+#btn-export-excel{
+    background-color: var(--primary-color-blue);
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    color: #fff;
 }
-.imports table thead tr {
-    font-size: 19px;
+
+.attendence-btn:hover{
+    opacity: 0.8;
 }
-.imports table thead,
-.imports table tbody {
-    min-width: 100%;
+.attendence-btn{
+    width: 90px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #1795ce;
+    color: #fff;
 }
-.imports table thead td {
-    font-weight: 700;
+.attendence a{
+    text-decoration: none;
 }

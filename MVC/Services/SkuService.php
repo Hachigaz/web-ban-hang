@@ -27,9 +27,9 @@
         }
 
         public function getAllSku(){
-            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
-            echo json_encode($this->skuRepo->getAllSku(), JSON_UNESCAPED_UNICODE);
+            return $this->skuRepo->getAllSku(); 
         }
+
 
         public function getSkuById(){
             $id = "1";

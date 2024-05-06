@@ -4,9 +4,9 @@
                 $this->create("brands", $brand, "brand_id");
             }
 
-            public function updateBrand($brand, $id){// by id
-                $this->update("brands", $brand, "brand_id = ".$id);
-            }
+            // public function updateBrand($brand, $id){// by id
+            //     $this->update("brands", $brand, "brand_id = ".$id);
+            // }
 
             public function deleteBrand($id){// by id
                 $this->delete("brands", "brand_id = ".$id);

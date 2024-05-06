@@ -25,6 +25,7 @@
             // Xử lý params
             $this->params = $arr?array_values($arr):[];// nếu arr có tồn tại thì gán arr cho params, nếu không có thì gán mảng rỗng
             call_user_func_array([$this->controller, $this->action], $this->params);// Hàm này tạo đối tượng controller, chạy hàm action, tham số truyền vào là các param
+            // call_user_func_array([$this->controller, $this->action], [$importData, $shipmentData]);
         }
         function UrlProcess(){
             if(isset($_GET['url'])){// Nếu tồn tại biến url đã đặt trong .htaccess
