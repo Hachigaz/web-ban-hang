@@ -32,45 +32,45 @@ CREATE TABLE `categories` (
   `is_active` tinyint(1) DEFAULT 1
 );
 
--- CREATE TABLE `banner_locations` (
---   `location_id` INT PRIMARY KEY AUTO_INCREMENT,
---   `location_name` VARCHAR(512) NULL
--- );
+CREATE TABLE `banner_locations` (
+  `location_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `location_name` VARCHAR(512) NULL
+);
 
--- CREATE TABLE `banners` (
---   `banner_id` INT NOT NULL AUTO_INCREMENT,
---   `image_path` VARCHAR(512) NULL,
---   `url` VARCHAR(512) NULL,
---   `banner_name` VARCHAR(256) NULL,
---   `location_id` INT NULL,
---   `width` INT NULL,
---   `height` INT NULL,
---   `is_active` TINYINT(1) DEFAULT 1,
---   PRIMARY KEY (`banner_id`),
---   INDEX `banner_banner-locations_idx` (`location_id` ASC) VISIBLE,
---   CONSTRAINT `banner_banner-locations`
---     FOREIGN KEY (`location_id`)
---     REFERENCES `banner_locations` (`location_id`)
---     ON DELETE NO ACTION
---     ON UPDATE NO ACTION);
+CREATE TABLE `banners` (
+  `banner_id` INT NOT NULL AUTO_INCREMENT,
+  `image_path` VARCHAR(512) NULL,
+  `url` VARCHAR(512) NULL,
+  `banner_name` VARCHAR(256) NULL,
+  `location_id` INT NULL,
+  `width` INT NULL,
+  `height` INT NULL,
+  `is_active` TINYINT(1) DEFAULT 1,
+  PRIMARY KEY (`banner_id`),
+  INDEX `banner_banner-locations_idx` (`location_id` ASC) VISIBLE,
+  CONSTRAINT `banner_banner-locations`
+    FOREIGN KEY (`location_id`)
+    REFERENCES `banner_locations` (`location_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
 
 
--- CREATE TABLE `featured_products` (
---   `featured_id` INT NOT NULL AUTO_INCREMENT,
---   `product_id` INT NOT NULL,
---   `featured_row` INT NULL,
---   PRIMARY KEY (`featured_id`)
--- );
+CREATE TABLE `featured_products` (
+  `featured_id` INT NOT NULL AUTO_INCREMENT,
+  `product_id` INT NOT NULL,
+  `featured_row` INT NULL,
+  PRIMARY KEY (`featured_id`)
+);
 
--- CREATE TABLE `featured_products_rows` (
---   `row_id` INT NOT NULL PRIMARY KEY  AUTO_INCREMENT,
---   `row_name` VARCHAR(512) NULL,
---   `row_description` VARCHAR(2048) NULL,
---   `row_url` VARCHAR(512) NULL,
---   `index` INT DEFAULT 100,
---   `is_active` TINYINT(1) DEFAULT 1
--- );
+CREATE TABLE `featured_products_rows` (
+  `row_id` INT NOT NULL PRIMARY KEY  AUTO_INCREMENT,
+  `row_name` VARCHAR(512) NULL,
+  `row_description` VARCHAR(2048) NULL,
+  `row_url` VARCHAR(512) NULL,
+  `index` INT DEFAULT 100,
+  `is_active` TINYINT(1) DEFAULT 1
+);
 
 
 CREATE TABLE `customers` (
@@ -1265,32 +1265,32 @@ INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-T', 'Tím', '50');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-D', 'Đen', '52');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-XD', 'Xanh dương', '52');
 
--- INSERT INTO `banner_locations` (`location_id`, `location_name`) VALUES ('1', 'home-header');
+INSERT INTO `banner_locations` (`location_id`, `location_name`) VALUES ('1', 'home-header');
 
--- INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'banner_header1', '1', '800', '600');
--- INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'banner_header2', '1', '800', '600');
+INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'banner_header1', '1', '800', '600');
+INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'banner_header2', '1', '800', '600');
 
--- INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm nổi bật', 'Các sản phẩm mới và nổi bật trong tháng 4',1);
--- INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm mới', 'Sản phẩm mới vừa xuất hiện trên thị trường',2);
+INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm nổi bật', 'Các sản phẩm mới và nổi bật trong tháng 4',1);
+INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm mới', 'Sản phẩm mới vừa xuất hiện trên thị trường',2);
 
--- INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES 
--- ('35', '1', '1'),
--- ('40', '2', '1'),
--- ('41', '4', '1'),
--- ('42', '3', '1'),
--- ('43', '47', '1'),
--- ('44', '46', '1'),
--- ('45', '50', '1'),
--- ('46', '52', '1'),
--- ('47', '53', '1'),
--- ('48', '6', '2'),
--- ('49', '5', '2'),
--- ('50', '8', '2'),
--- ('51', '7', '2'),
--- ('52', '40', '2'),
--- ('53', '41', '2'),
--- ('54', '32', '2'),
--- ('55', '31', '2');
+INSERT INTO `featured_products` (`featured_id`, `product_id`, `featured_row`) VALUES 
+('35', '1', '1'),
+('40', '2', '1'),
+('41', '4', '1'),
+('42', '3', '1'),
+('43', '47', '1'),
+('44', '46', '1'),
+('45', '50', '1'),
+('46', '52', '1'),
+('47', '53', '1'),
+('48', '6', '2'),
+('49', '5', '2'),
+('50', '8', '2'),
+('51', '7', '2'),
+('52', '40', '2'),
+('53', '41', '2'),
+('54', '32', '2'),
+('55', '31', '2');
 
 INSERT INTO `options` (`option_id`, `product_id`, `option_name`, `option_value`, `is_active`) VALUES
 ('3', '1', 'Kích thước', '159,9 mm x 76,7 mm x 8,25 mm', '1'),
@@ -1664,7 +1664,7 @@ DELIMITER ;
 --     SELECT unit_price_import INTO shipment_unit_price_import
 --     FROM shipments
 --     WHERE shipment_id = NEW.shipment_id;
-    
+
 --     -- Calculate the unit price export (50% higher than unit price import)
 --     SET NEW.unit_price_export = shipment_unit_price_import * 1.5;
 -- END
