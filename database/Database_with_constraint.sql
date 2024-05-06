@@ -1350,11 +1350,11 @@ INSERT INTO `shipments` (`shipment_id`, `import_id`, `supplier_id`, `unit_price_
 
 
 INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `email_of_receiver`, `phone_number_of_receiver`, `note`, `order_date`, `status_of_order`, `total_money`, `shipping_method`, `shipping_address`, `shipping_date`, `tracking_number`, `payment_method`, `is_active`) VALUES 
-('1', '2', '5', 'Anh Hiển', 'thehien@gmail.com', '0786705877', 'Tặng anh Hiển', current_timestamp(), 'Pending', '2000000', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '70L1-13579', 'COD', '1'),
+('1', '4', '5', 'Anh Hiển', 'thehien@gmail.com', '0786705877', 'Tặng anh Hiển', current_timestamp(), 'Pending', '2000000', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '70L1-13579', 'COD', '1'),
 ('2', '4', '6', 'Anh Huy', 'huy@gmail.com', '0903379371', 'Tặng anh Lộc ', current_timestamp(), 'Pending', '1500000', 'express', 'Đại học sài gòn', '2024-03-07 19:34:36', '50S1-89710', 'COD', '1'),
-('3', '2', '7', 'Anh Lộc', 'loc@gmail.com', '0909832697', 'Tặng anh Huy gà', current_timestamp(), 'Pending', '19999999', 'express', 'Đại học nha trang', '2024-03-07 19:34:36', '49L2-36713', 'COD', '1'),
+('3', '4', '7', 'Anh Lộc', 'loc@gmail.com', '0909832697', 'Tặng anh Huy gà', current_timestamp(), 'Pending', '19999999', 'express', 'Đại học nha trang', '2024-03-07 19:34:36', '49L2-36713', 'COD', '1'),
 ('4', '4', '5', 'Anh Phong', 'phong@gmail.com', '010284697', 'Tặng anh Phong', current_timestamp(), 'Pending', '6500000', 'express', 'Bệnh viện ', '2024-03-07 19:34:36', '20S2-44489', 'COD', '1'),
-('5', '3', '8', 'Anh Hiển Cha', 'thehien@gmail.com', '0203678910', 'Tặng ba anh huy', current_timestamp(), 'Pending', '123000', 'express', 'Trạm xá', '2024-03-07 19:34:36', '30D9-89765', 'COD', '1');
+('5', '4', '8', 'Anh Hiển Cha', 'thehien@gmail.com', '0203678910', 'Tặng ba anh huy', current_timestamp(), 'Pending', '123000', 'express', 'Trạm xá', '2024-03-07 19:34:36', '30D9-89765', 'COD', '1');
 
 INSERT INTO `order_details` (`order_detail_id`, `order_id`, `sku_id`, `price`, `number_of_products`, `color_of_product`) VALUES 
 ('1', '1', '1', '299000', '2', 'Đen'),
