@@ -1463,11 +1463,22 @@ INSERT INTO `shipments` (`shipment_id`, `import_id`, `supplier_id`, `unit_price_
 -- ('48', '11', '19', '30000000', '1', 'ABC');
 
 INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `email_of_receiver`, `phone_number_of_receiver`, `note`, `order_date`, `status_of_order`, `total_money`, `shipping_method`, `shipping_address`, `shipping_date`, `tracking_number`, `payment_method`, `is_active`) VALUES 
-('1', '4', '5', 'Anh Hiển', 'thehien@gmail.com', '0786705877', 'Tặng anh Hiển', current_timestamp(), 'Pending', '2000000', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '70L1-13579', 'COD', '1'),
-('2', '4', '6', 'Anh Huy', 'huy@gmail.com', '0903379371', 'Tặng anh Lộc ', current_timestamp(), 'Pending', '1500000', 'express', 'Đại học sài gòn', '2024-03-07 19:34:36', '50S1-89710', 'COD', '1'),
-('3', '4', '7', 'Anh Lộc', 'loc@gmail.com', '0909832697', 'Tặng anh Huy gà', current_timestamp(), 'Pending', '19999999', 'express', 'Đại học nha trang', '2024-03-07 19:34:36', '49L2-36713', 'COD', '1'),
-('4', '4', '5', 'Anh Phong', 'phong@gmail.com', '010284697', 'Tặng anh Phong', current_timestamp(), 'Pending', '6500000', 'express', 'Bệnh viện ', '2024-03-07 19:34:36', '20S2-44489', 'COD', '1'),
-('5', '4', '8', 'Anh Long', 'thehien@gmail.com', '0203678910', 'Tặng ba ', current_timestamp(), 'Pending', '123000', 'express', 'Trạm xá', '2024-03-07 19:34:36', '30D9-89765', 'COD', '1');
+("1", '2', '5', 'Anh Hiển', 'thehien@gmail.com', '0786705877', 'Tặng ny', '2024-02-03 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '70S1-16679', 'COD', '1'),
+("2", '2', '6', 'Anh Huy', 'huy@gmail.com', '0903379371', 'Hàng dễ vỡ', '2024-01-03 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '95H7-55639', 'COD', '1'),
+("3", '1', '7', 'Anh Lộc', 'loc@gmail.com', '0909832697', 'Tặng ba má', '2024-01-03 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '85P6-17980', 'COD', '1'),
+("4", '1', '8', 'Anh Long', 'huy@gmail.com', '0909832697', 'Tặng phụ huynh', '2024-04-11 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '01O7-30354', 'COD', '1'),
+("5", '2', '6', 'Anh Huy', 'huy@gmail.com', '0909832697', 'Không giao lúc sáng', '2024-04-11 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '49C8-45275', 'COD', '1'),
+("6", '2', '6', 'Anh Phong', 'thehien@gmail.com', '0909832697', 'Không cần gọi điện', '2024-02-12 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '23P2-84774', 'COD', '1'),
+("7", '1', '6', 'Anh Huy', 'huy@gmail.com', '0909832697', 'Tặng anh Hiển', '2024-01-13 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '13N8-81383', 'COD', '1'),
+("8", '1', '6', 'Anh Huy', 'loc@gmail.com', '0909832697', 'Tặng anh Hiển', '2024-01-14 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '49R4-58398', 'COD', '1'),
+("9", '1', '8', 'Anh Long', 'loc@gmail.com', '0909832697', 'Tặng anh Hiển', '2024-03-15 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '46I5-13688', 'COD', '1');
+
+INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `email_of_receiver`, `phone_number_of_receiver`, `note`, `order_date`, `status_of_order`, `total_money`, `shipping_method`, `shipping_address`, `shipping_date`, `tracking_number`, `payment_method`, `is_active`) VALUES 
+('10', '4', '5', 'Anh Hiển', 'thehien@gmail.com', '0786705877', 'Tặng anh Hiển', current_timestamp(), 'Pending', '2000000', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '70L1-13579', 'COD', '1'),
+('11', '4', '6', 'Anh Huy', 'huy@gmail.com', '0903379371', 'Tặng anh Lộc ', current_timestamp(), 'Pending', '1500000', 'express', 'Đại học sài gòn', '2024-03-07 19:34:36', '50S1-89710', 'COD', '1'),
+('12', '4', '7', 'Anh Lộc', 'loc@gmail.com', '0909832697', 'Tặng anh Huy gà', current_timestamp(), 'Pending', '19999999', 'express', 'Đại học nha trang', '2024-03-07 19:34:36', '49L2-36713', 'COD', '1'),
+('13', '4', '5', 'Anh Phong', 'phong@gmail.com', '010284697', 'Tặng anh Phong', current_timestamp(), 'Pending', '6500000', 'express', 'Bệnh viện ', '2024-03-07 19:34:36', '20S2-44489', 'COD', '1'),
+('14', '4', '8', 'Anh Long', 'thehien@gmail.com', '0203678910', 'Tặng ba ', current_timestamp(), 'Pending', '123000', 'express', 'Trạm xá', '2024-03-07 19:34:36', '30D9-89765', 'COD', '1');
 
 INSERT INTO `order_details` (`order_detail_id`, `order_id`, `sku_id`, `price`, `number_of_products`, `color_of_product`) VALUES 
 ('1', '1', '1', '34990000', '2', 'Vàng'),
@@ -1482,7 +1493,44 @@ INSERT INTO `order_details` (`order_detail_id`, `order_id`, `sku_id`, `price`, `
 ('10', '4', '21', '299000', '5', 'Xanh'),
 ('11', '5', '22', '299000', '5', 'Đen'),
 ('12', '5', '23', '299000', '5', 'Tự nhiên'),
-('13', '5', '24', '299000', '5', 'Trắng');
+('13', '5', '24', '299000', '5', 'Trắng'),
+('14', '6', '1', '34990000', '2', 'Vàng'),
+('15', '6','2', '34990000','3' ,'Vàng'),
+('16', '6', '7', '14890000', '2', 'Đen'),
+('17', '6', '8', '14890000', '5', 'Đen'),
+('18', '6', '4', '34990000', '6', 'Bạc'),
+('19', '7', '8', '14890000', '4', 'Đen'),
+('20', '7', '3', '34990000', '2', 'Bạc'),
+('21', '8', '3', '34990000', '2', 'Bạc'),
+('22', '8', '2', '34990000', '2', 'Vàng'),
+('23', '8', '21', '299000', '5', 'Xanh'),
+('24', '8', '22', '299000', '5', 'Đen'),
+('25', '8', '23', '299000', '5', 'Tự nhiên'),
+('26', '8', '1', '34990000', '2', 'Vàng'),
+('27', '9', '2', '34990000','3' ,'Vàng'),
+('28', '9', '7', '14890000', '2', 'Đen'),
+('29', '9', '8', '14890000', '5', 'Đen'),
+('30', '9', '4', '34990000', '6', 'Bạc'),
+('31', '10', '8', '14890000', '4', 'Đen'),
+('32', '10', '3', '34990000', '2', 'Bạc'),
+('33', '11', '3', '34990000', '2', 'Bạc'),
+('34', '11', '2', '34990000', '2', 'Vàng'),
+('35', '11', '21', '299000', '5', 'Xanh'),
+('36', '11', '22', '299000', '5', 'Đen'),
+('37', '11', '23', '299000', '5', 'Tự nhiên'),
+('38', '11', '1', '34990000', '2', 'Vàng'),
+('39', '12', '2', '34990000','3' ,'Vàng'),
+('40', '12', '7', '14890000', '2', 'Đen'),
+('41', '12', '8', '14890000', '5', 'Đen'),
+('42', '12', '4', '34990000', '6', 'Bạc'),
+('43', '13', '8', '14890000', '4', 'Đen'),
+('44', '13', '3', '34990000', '2', 'Bạc'),
+('45', '14', '3', '34990000', '2', 'Bạc'),
+('46', '14', '2', '34990000', '2', 'Vàng'),
+('47', '14', '21', '299000', '5', 'Xanh'),
+('48', '14', '22', '299000', '5', 'Đen'),
+('49', '14', '23', '299000', '5', 'Tự nhiên'),
+('50', '14', '1', '34990000', '2', 'Vàng');
 
 
 DELIMITER //
