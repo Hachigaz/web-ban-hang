@@ -1288,31 +1288,26 @@ INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-T', 'Tím', '45');
 
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('46-W', 'Trang', '46');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('46-X', 'Xanh mint', '46');
-
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-X', 'Xanh mint', '47');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-T', 'Tím', '47');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-G', 'Xám', '47');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-K', 'Kem', '47');
-
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-W', 'Trang', '48');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-XL', 'Xanh lá', '48');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-D', 'Đen', '48');
-
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('49-X', 'Xanh', '49');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('49-D', 'Đen', '49');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('49-T', 'Tím', '49');
-
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-XL', 'Xanh lá', '50');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-D', 'Đen', '50');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-T', 'Tím', '50');
-
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-D', 'Đen', '52');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-XD', 'Xanh dương', '52');
 
 INSERT INTO `banner_locations` (`location_id`, `location_name`) VALUES ('1', 'home-header');
 
-INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=laptop?context-value=1', 'banner_header1', '1', '800', '600');
-INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=laptop?context-value=2', 'banner_header2', '1', '800', '600');
+INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner1.png', '../Catalog/Category?context=categories?context-value=1', 'banner_header1', '1', '800', '600');
+INSERT INTO `banners` (`image_path`, `url`, `banner_name`, `location_id`, `width`, `height`) VALUES ('banners/banner2.png', '../Catalog/Category?context=categories?context-value=1', 'banner_header2', '1', '800', '600');
 
 INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm nổi bật', 'Các sản phẩm mới và nổi bật trong tháng 4',1);
 INSERT INTO `featured_products_rows` (`row_name`, `row_description`,`index`) VALUES ('Sản phẩm mới', 'Sản phẩm mới vừa xuất hiện trên thị trường',2);
@@ -1391,7 +1386,6 @@ INSERT INTO `shipments` (`shipment_id`, `import_id`, `supplier_id`, `unit_price_
 ('17', '9', '8', '1300000', '50', '50', '1', '1'),
 ('18', '10', '8', '500000', '50', '50', '1', '1'),
 ('19', '11', '8', '1200000', '50', '50', '1', '1');
-
 
 INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `email_of_receiver`, `phone_number_of_receiver`, `note`, `order_date`, `status_of_order`, `total_money`, `shipping_method`, `shipping_address`, `shipping_date`, `tracking_number`, `payment_method`, `is_active`) VALUES 
 ('1', '4', '5', 'Anh Hiển', 'thehien@gmail.com', '0786705877', 'Tặng anh Hiển', current_timestamp(), 'Pending', '2000000', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '70L1-13579', 'COD', '1'),
