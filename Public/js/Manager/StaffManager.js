@@ -377,6 +377,8 @@ refreshBtn.addEventListener("click", function () {
     roleFilter.selectedIndex = 0;
     genderFilter.selectedIndex = 0;
     searchFilter.value = "";
+    document.getElementById("start-date").max = null;
+    document.getElementById("end-date").min = null;
 });
 
 const confirmAddBtn = document.getElementById("confirmBtnAdd");
