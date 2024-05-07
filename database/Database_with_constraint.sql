@@ -1329,24 +1329,24 @@ INSERT INTO `imports` (`import_id`, `staff_id`, `import_date`, `is_active`) VALU
 ('11', '2', '2022-11-01', '1');
 
 INSERT INTO `shipments` (`shipment_id`, `import_id`, `supplier_id`, `unit_price_import`, `quantity`, `remain`, `sku_id`, `is_active`) VALUES 
-('1', '1', '1', '7000000', '50', '50', '1', '1'),
-('2', '1', '2', '3000000', '50', '50', '2', '1'),
-('3', '1', '3', '12000000', '50', '50', '3', '1'),
-('4', '1', '4', '5000000', '50', '50', '4', '1'),
-('5', '2', '5', '5000000', '50', '50', '1', '1'),
-('6', '2', '6', '4000000', '50', '50', '2', '1'),
-('7', '2', '7', '3000000', '50', '50', '3', '1'),
-('8', '2', '8', '1500000', '50', '50', '4', '1'),
-('9', '3', '8', '1000000', '50', '50', '1', '1'),
-('10', '4', '8', '500000', '50', '50', '2', '1'),
-('11', '5', '8', '1200000', '50', '50', '3', '1'),
-('12', '6', '8', '500000', '50', '50', '4', '1'),
-('13', '6', '8', '1300000', '50', '50', '1', '1'),
-('14', '7', '8', '500000', '50', '50', '1', '1'),
-('16', '8', '8', '500000', '50', '50', '1', '1'),
-('17', '9', '8', '1300000', '50', '50', '1', '1'),
-('18', '10', '8', '500000', '50', '50', '1', '1'),
-('19', '11', '8', '1200000', '50', '50', '1', '1');
+('1', '1', '1', '10000000', '50', '50', '1', '1'),
+('2', '1', '2', '10000000', '50', '50', '2', '1'),
+('3', '1', '3', '10000000', '50', '50', '3', '1'),
+('4', '1', '4', '10000000', '50', '50', '4', '1'),
+('5', '2', '5', '10000000', '50', '50', '1', '1'),
+('6', '2', '6', '10000000', '50', '50', '5', '1'),
+('7', '2', '7', '10000000', '50', '50', '6', '1'),
+('8', '2', '8', '9000000', '50', '50', '7', '1'),
+('9', '3', '8', '10000000', '50', '50', '2', '1'),
+('10', '4', '8', '10000000', '50', '50', '3', '1'),
+('11', '5', '8', '10000000', '50', '50', '4', '1'),
+('12', '6', '8', '9000000', '50', '50', '8', '1'),
+('13', '6', '8', '9000000', '50', '50', '13', '1'),
+('14', '7', '8', '9000000', '50', '50', '14', '1'),
+('16', '8', '8', '100000', '50', '50', '21', '1'),
+('17', '9', '8', '100000', '50', '50', '22', '1'),
+('18', '10', '8', '100000', '50', '50', '23', '1'),
+('19', '11', '8', '100000', '50', '50', '24', '1');
 
 
 INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `email_of_receiver`, `phone_number_of_receiver`, `note`, `order_date`, `status_of_order`, `total_money`, `shipping_method`, `shipping_address`, `shipping_date`, `tracking_number`, `payment_method`, `is_active`) VALUES 
@@ -1354,22 +1354,22 @@ INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `em
 ('2', '4', '6', 'Anh Huy', 'huy@gmail.com', '0903379371', 'Tặng anh Lộc ', current_timestamp(), 'Pending', '1500000', 'express', 'Đại học sài gòn', '2024-03-07 19:34:36', '50S1-89710', 'COD', '1'),
 ('3', '4', '7', 'Anh Lộc', 'loc@gmail.com', '0909832697', 'Tặng anh Huy gà', current_timestamp(), 'Pending', '19999999', 'express', 'Đại học nha trang', '2024-03-07 19:34:36', '49L2-36713', 'COD', '1'),
 ('4', '4', '5', 'Anh Phong', 'phong@gmail.com', '010284697', 'Tặng anh Phong', current_timestamp(), 'Pending', '6500000', 'express', 'Bệnh viện ', '2024-03-07 19:34:36', '20S2-44489', 'COD', '1'),
-('5', '4', '8', 'Anh Hiển Cha', 'thehien@gmail.com', '0203678910', 'Tặng ba anh huy', current_timestamp(), 'Pending', '123000', 'express', 'Trạm xá', '2024-03-07 19:34:36', '30D9-89765', 'COD', '1');
+('5', '4', '8', 'Anh Long', 'thehien@gmail.com', '0203678910', 'Tặng ba ', current_timestamp(), 'Pending', '123000', 'express', 'Trạm xá', '2024-03-07 19:34:36', '30D9-89765', 'COD', '1');
 
 INSERT INTO `order_details` (`order_detail_id`, `order_id`, `sku_id`, `price`, `number_of_products`, `color_of_product`) VALUES 
-('1', '1', '1', '299000', '2', 'Đen'),
-('2', '1', '2', '299000','3' ,'Trắng'),
-('3', '2', '1', '299000', '2', 'Tự nhiên'),
-('4', '2', '3', '299000', '5', 'Xanh'),
-('5', '2', '4', '299000', '6', 'Đen'),
-('6', '3', '1', '299000', '4', 'Trắng'),
-('7', '3', '2', '299000', '2', 'Tự nhiên'),
-('8', '4', '1', '299000', '2', 'Xanh'),
-('9', '4', '2', '299000', '2', 'Đen'),
-('10', '4', '3', '299000', '5', 'Trắng'),
-('11', '5', '1', '299000', '5', 'Tự nhiên'),
-('12', '5', '2', '299000', '5', 'Xanh'),
-('13', '5', '4', '299000', '5', 'Đen');
+('1', '1', '1', '34990000', '2', 'Vàng'),
+('2', '1', '2', '34990000','3' ,'Vàng'),
+('3', '2', '7', '14890000', '2', 'Đen'),
+('4', '2', '8', '14890000', '5', 'Đen'),
+('5', '2', '4', '34990000', '6', 'Bạc'),
+('6', '3', '8', '14890000', '4', 'Đen'),
+('7', '3', '3', '34990000', '2', 'Bạc'),
+('8', '4', '3', '34990000', '2', 'Bạc'),
+('9', '4', '2', '34990000', '2', 'Vàng'),
+('10', '4', '21', '299000', '5', 'Xanh'),
+('11', '5', '22', '299000', '5', 'Đen'),
+('12', '5', '23', '299000', '5', 'Tự nhiên'),
+('13', '5', '24', '299000', '5', 'Trắng');
 
 
 DELIMITER //
@@ -1670,24 +1670,24 @@ DELIMITER ;
 -- END
 -- $$
 -- DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `orders_status_change_trigger` AFTER UPDATE ON `orders` FOR EACH ROW BEGIN
-    DECLARE notification_text VARCHAR(500);
+-- DELIMITER $$
+-- CREATE TRIGGER `orders_status_change_trigger` AFTER UPDATE ON `orders` FOR EACH ROW BEGIN
+--     DECLARE notification_text VARCHAR(500);
     
-    -- Construct notification text based on the new status_of_order
-    CASE NEW.status_of_order
-        WHEN 'Pending' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã được tạo');
-        WHEN 'Processing' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đang xử lý');
-        WHEN 'Shipped' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã giao');
-        WHEN 'Delivered' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã nhận');
-        WHEN 'Cancelled' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã hủy');
-    END CASE;
+--     -- Construct notification text based on the new status_of_order
+--     CASE NEW.status_of_order
+--         WHEN 'Pending' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã được tạo');
+--         WHEN 'Processing' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đang xử lý');
+--         WHEN 'Shipped' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã giao');
+--         WHEN 'Delivered' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã nhận');
+--         WHEN 'Cancelled' THEN SET notification_text = CONCAT('Hóa đơn ', NEW.tracking_number, ' của bạn đã thay đổi trạng thái sang: Đã hủy');
+--     END CASE;
     
-    -- Insert the new notification into the noti table
-    INSERT INTO noti (account_id, text, date_noti) VALUES (NEW.account_id, notification_text, NOW());
-END
-$$
-DELIMITER ;
+--     -- Insert the new notification into the noti table
+--     INSERT INTO noti (account_id, text, date_noti) VALUES (NEW.account_id, notification_text, NOW());
+-- END
+-- $$
+-- DELIMITER ;
 
 
 INSERT INTO `timesheets` (`contract_id`, `month`, `year`, `days_worked`, `days_off`, `days_leave`, `days_late`) VALUES 
