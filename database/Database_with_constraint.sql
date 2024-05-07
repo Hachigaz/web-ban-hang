@@ -1108,12 +1108,12 @@ INSERT INTO `products` (`product_id`, `product_name`, `brand_id`, `category_id`,
 
 
 INSERT INTO `leave_application` (`staff_id`, `start_date`, `end_date`, `reason`, `status`) VALUES
-(1, '2024-05-01', '2024-05-01', 'Lý do cá nhân', 0),
-(2, '2024-05-01', '2024-05-01', 'Ốm đau, thai sản', 0),
-(3, '2024-05-01', '2024-05-01', 'Ốm đau, thai sản', 0),
-(2, '2024-05-02', '2024-05-02', 'Lý do cá nhân', 0),
-(1, '2024-05-02', '2024-05-02', 'Ốm đau, thai sản', 0),
-(3, '2024-05-02', '2024-05-02', 'Ốm đau, thai sản', 0);
+(1, '2024-05-01', '2024-05-01', 'Lý do cá nhân', 1),
+(2, '2024-05-01', '2024-05-01', 'Ốm đau, thai sản', 1),
+(3, '2024-05-01', '2024-05-01', 'Ốm đau, thai sản', 1),
+(2, '2024-05-02', '2024-05-02', 'Lý do cá nhân', 1),
+(1, '2024-05-02', '2024-05-02', 'Ốm đau, thai sản', 1),
+(3, '2024-05-02', '2024-05-02', 'Ốm đau, thai sản', 1);
 
 
 INSERT INTO `contracts` (`contract_id`, `staff_id`, `start_date`, `end_date`, `salary`) VALUES 
