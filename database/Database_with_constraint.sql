@@ -925,16 +925,42 @@ INSERT INTO `accounts` (`account_id`,`avatar`, `phone_number`, `email`, `passwor
 (6,'avatar_0988722526.jpeg', '0988722526', 'lieu@gmail.com', 'tlieu123', current_timestamp(), current_timestamp(), 1),
 (7,'avatar_0988722527.jpeg', '0988722527', 'lai@gmail.com', 'tlai123', current_timestamp(), current_timestamp(), 1),
 (8,'avatar_0988722528.jpg', '0988722528', 'camhuong@gmail.com', 'chuong123', current_timestamp(), current_timestamp(), 1),
-(10,'customerAvatar/cat-d.png', '0988722532', 'customer1@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
-(11,'', '0988722533', 'customer2@gmail.com', '123', current_timestamp(), current_timestamp(), 1);
+(9,'customerAvatar/cat-d.png', '0988722532', 'customer1@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
+(10,'customerAvatar/the-wok.png', '0988722544', 'customer2@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
+(11,'customerAvatar/1.jpg', '0988722533', 'customer3@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
+(12,'customerAvatar/1.jpg', '0988722534', 'customer4@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
+(13,'customerAvatar/1.jpg', '0988722535', 'customer5@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
+(14,'customerAvatar/1.jpg', '0988722536', 'customer6@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
+(15,'customerAvatar/1.jpg', '0988722537', 'customer7@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
+(16,'customerAvatar/1.jpg', '0988722538', 'customer8@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
+(17,'customerAvatar/1.jpg', '0988722539', 'customer9@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
+(18,'customerAvatar/1.jpg', '0988722540', 'customer10@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
+(19,'customerAvatar/1.jpg', '0988722541', 'customer11@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
+(20,'customerAvatar/1.jpg', '0988722542', 'customer12@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
+(21,'customerAvatar/1.jpg', '0988722543', 'customer13@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
+(22,'customerAvatar/1.jpg', '0988722545', 'customer14@gmail.com', '123', current_timestamp(), current_timestamp(), 1),
+(23,'customerAvatar/1.jpg', '0988722546', 'customer15@gmail.com', '123', current_timestamp(),  current_timestamp(), 1);
 
 INSERT INTO `customers` (`customer_id`, `customer_fullname`, `role_id`, `account_id`, `gender`, `address`, `date_of_birth`, `is_active`) VALUES 
 ('1', 'Nguyễn Thị Lan', '5', '5', '1', 'Quận 1, Thành Phố Hồ Chí Minh', '2003-06-12', '1'),
 ('2', 'Nguyễn Thị Liễu', '5', '6', '1', 'Quận 2, Thành Phố Hồ Chí Minh', '2003-04-12', '1'),
 ('3', 'Nguyễn Thị Lài', '5', '7', '1', 'Quận 3, Thành Phố Hồ Chí Minh', '2004-02-11', '1'),
 ('4', 'Nguyễn Thị Cẩm Hường', '5', '8', '1', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1'),
-('5', 'customer 1', '5', '10', '1', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1'),
-('6', 'customer 2', '5', '11', '1', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1');
+('5', 'Tôi là khách hàng', '5', '9', '1', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1'),
+('6', 'Mai Thị Sặc', '5', '10', '1', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1'),
+('7', 'Wok man', '5', '11', '1', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1'),
+('8', 'Lý Thị Tình', '5', '12', '0', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1'),
+('9', 'Lê Đình Bùn', '5', '13', '0', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1'),
+('10', 'Mai Thị Huệ', '5', '14', '0', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1'),
+('11', 'Bùi Văn Rức', '5', '15', '1', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1'),
+('12', 'Lý Thị Hạnh', '5', '16', '0', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1'),
+('13', 'Đặng Văn Thành', '5', '17', '1', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1'),
+('14', 'Hoàng Thị Lan', '5', '18', '0', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1'),
+('15', 'Lê Văn Ngã', '5', '19', '1', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1'),
+('16', 'Nguyễn Văn Quảng', '5', '20', '1', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1'),
+('17', 'Đặng Văn Hùng', '5', '21', '1', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1'),
+('18', 'Lý Thị Thanh', '5', '22', '0', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1'),
+('19', 'Mai Thị Lan', '5', '23', '0', 'Quận 4, Thành Phố Hồ Chí Minh', '2001-05-11', '1');
 
 INSERT INTO `staffs` (`staff_id`, `account_id`, `staff_fullname`, `role_id`, `gender`, `address`,`entry_date`, `is_active`) VALUES 
 ('1', '1', 'Lê Nguyễn Thế Hiển', '1', '0', 'Tây Ninh', current_timestamp(), '1'),
@@ -1354,7 +1380,20 @@ INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `em
 ('2', '4', '6', 'Anh Huy', 'huy@gmail.com', '0903379371', 'Tặng anh Lộc ', current_timestamp(), 'Pending', '1500000', 'express', 'Đại học sài gòn', '2024-03-07 19:34:36', '50S1-89710', 'COD', '1'),
 ('3', '4', '7', 'Anh Lộc', 'loc@gmail.com', '0909832697', 'Tặng anh Huy gà', current_timestamp(), 'Pending', '19999999', 'express', 'Đại học nha trang', '2024-03-07 19:34:36', '49L2-36713', 'COD', '1'),
 ('4', '4', '5', 'Anh Phong', 'phong@gmail.com', '010284697', 'Tặng anh Phong', current_timestamp(), 'Pending', '6500000', 'express', 'Bệnh viện ', '2024-03-07 19:34:36', '20S2-44489', 'COD', '1'),
-('5', '4', '8', 'Anh Hiển Cha', 'thehien@gmail.com', '0203678910', 'Tặng ba anh huy', current_timestamp(), 'Pending', '123000', 'express', 'Trạm xá', '2024-03-07 19:34:36', '30D9-89765', 'COD', '1');
+('5', '4', '8', 'Anh Hiển Cha', 'thehien@gmail.com', '0203678910', 'Tặng ba anh huy', current_timestamp(), 'Pending', '123000', 'express', 'Trạm xá', '2024-03-07 19:34:36', '30D9-89765', 'COD', '1'),
+('6', '4', '23', 'ABC', 'thehien@gmail.com', '0203678910', 'ABC', current_timestamp(), 'Delivered', '123000', 'express', 'ABC', '2024-03-07 19:34:36', '30D9-89766', 'COD', '1'),
+('7', '4', '11', 'ABC', 'thehien@gmail.com', '0203678910', 'ABC', current_timestamp(), 'Delivered', '123000', 'express', 'ABC', '2024-03-07 19:34:36', '30D9-89767', 'COD', '1'),
+('8', '4', '12', 'ABC', 'thehien@gmail.com', '0203678910', 'ABC', current_timestamp(), 'Delivered', '123000', 'express', 'ABC', '2024-03-07 19:34:36', '30D9-89768', 'COD', '1'),
+('9', '4', '13', 'ABC', 'thehien@gmail.com', '0203678910', 'ABC', current_timestamp(), 'Delivered', '123000', 'express', 'ABC', '2024-03-07 19:34:36', '30D9-89769', 'COD', '1'),
+('10', '4', '14', 'ABC', 'thehien@gmail.com', '0203678910', 'ABC', current_timestamp(), 'Delivered', '123000', 'express', 'ABC', '2024-03-07 19:34:36', '30D9-89770', 'COD', '1'),
+('11', '4', '15', 'ABC', 'thehien@gmail.com', '0203678910', 'ABC', current_timestamp(), 'Delivered', '123000', 'express', 'ABC', '2024-03-07 19:34:36', '30D9-89771', 'COD', '1'),
+('12', '4', '16', 'ABC', 'thehien@gmail.com', '0203678910', 'ABC', current_timestamp(), 'Delivered', '123000', 'express', 'ABC', '2024-03-07 19:34:36', '30D9-89772', 'COD', '1'),
+('13', '4', '17', 'ABC', 'thehien@gmail.com', '0203678910', 'ABC', current_timestamp(), 'Delivered', '123000', 'express', 'ABC', '2024-03-07 19:34:36', '30D9-89773', 'COD', '1'),
+('14', '4', '18', 'ABC', 'thehien@gmail.com', '0203678910', 'ABC', current_timestamp(), 'Delivered', '123000', 'express', 'ABC', '2024-03-07 19:34:36', '30D9-89774', 'COD', '1'),
+('15', '4', '19', 'ABC', 'thehien@gmail.com', '0203678910', 'ABC', current_timestamp(), 'Delivered', '123000', 'express', 'ABC', '2024-03-07 19:34:36', '30D9-89775', 'COD', '1'),
+('16', '4', '20', 'ABC', 'thehien@gmail.com', '0203678910', 'ABC', current_timestamp(), 'Delivered', '123000', 'express', 'ABC', '2024-03-07 19:34:36', '30D9-89776', 'COD', '1'),
+('17', '4', '21', 'ABC', 'thehien@gmail.com', '0203678910', 'ABC', current_timestamp(), 'Delivered', '123000', 'express', 'ABC', '2024-03-07 19:34:36', '30D9-89777', 'COD', '1'),
+('18', '4', '22', 'ABC', 'thehien@gmail.com', '0203678910', 'ABC', current_timestamp(), 'Delivered', '123000', 'express', 'ABC', '2024-03-07 19:34:36', '30D9-89778', 'COD', '1');
 
 INSERT INTO `order_details` (`order_detail_id`, `order_id`, `sku_id`, `price`, `number_of_products`, `color_of_product`) VALUES 
 ('1', '1', '1', '299000', '2', 'Đen'),
@@ -1369,8 +1408,42 @@ INSERT INTO `order_details` (`order_detail_id`, `order_id`, `sku_id`, `price`, `
 ('10', '4', '3', '299000', '5', 'Trắng'),
 ('11', '5', '1', '299000', '5', 'Tự nhiên'),
 ('12', '5', '2', '299000', '5', 'Xanh'),
-('13', '5', '4', '299000', '5', 'Đen');
-
+('13', '6', '1', '30000000', '1', 'ABC'),
+('14', '6', '5', '30000000', '1', 'ABC'),
+('15', '6', '13', '30000000', '1', 'ABC'),
+('16', '6', '17', '30000000', '1', 'ABC'),
+('17', '6', '18', '30000000', '1', 'ABC'),
+('18', '6', '19', '30000000', '1', 'ABC'),
+('19', '7', '1', '30000000', '1', 'ABC'),
+('20', '7', '5', '30000000', '1', 'ABC'),
+('21', '7', '13', '30000000', '1', 'ABC'),
+('22', '7', '17', '30000000', '1', 'ABC'),
+('23', '7', '18', '30000000', '1', 'ABC'),
+('24', '7', '19', '30000000', '1', 'ABC'),
+('25', '8', '1', '30000000', '1', 'ABC'),
+('26', '8', '5', '30000000', '1', 'ABC'),
+('27', '8', '13', '30000000', '1', 'ABC'),
+('28', '8', '17', '30000000', '1', 'ABC'),
+('29', '8', '18', '30000000', '1', 'ABC'),
+('30', '8', '19', '30000000', '1', 'ABC'),
+('31', '9', '1', '30000000', '1', 'ABC'),
+('32', '9', '5', '30000000', '1', 'ABC'),
+('33', '9', '13', '30000000', '1', 'ABC'),
+('34', '9', '17', '30000000', '1', 'ABC'),
+('35', '9', '18', '30000000', '1', 'ABC'),
+('36', '9', '19', '30000000', '1', 'ABC'),
+('37', '10', '1', '30000000', '1', 'ABC'),
+('38', '10', '5', '30000000', '1', 'ABC'),
+('39', '10', '13', '30000000', '1', 'ABC'),
+('40', '10', '17', '30000000', '1', 'ABC'),
+('41', '10', '18', '30000000', '1', 'ABC'),
+('42', '10', '19', '30000000', '1', 'ABC'),
+('43', '11', '1', '30000000', '1', 'ABC'),
+('44', '11', '5', '30000000', '1', 'ABC'),
+('45', '11', '13', '30000000', '1', 'ABC'),
+('46', '11', '17', '30000000', '1', 'ABC'),
+('47', '11', '18', '30000000', '1', 'ABC'),
+('48', '11', '19', '30000000', '1', 'ABC');
 
 DELIMITER //
 CREATE TRIGGER insert_attendance_after_leave_insert_check
@@ -1379,7 +1452,6 @@ FOR EACH ROW
 BEGIN
     DECLARE cur_date DATE;
     DECLARE end_date DATE;
-
     SET cur_date = NEW.start_date;
     SET end_date = NEW.end_date;
 

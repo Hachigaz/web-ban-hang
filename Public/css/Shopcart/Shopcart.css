@@ -82,6 +82,8 @@
     margin-right: 100px;
     display: flex; /* Sử dụng Flexbox để xếp hai phần tử cart và Total cùng một hàng */
     justify-content: center; /* Căn giữa theo chiều ngang */
+    padding-bottom:80px;
+    min-height:80vh;
 }
 
 .cart, .Total {
