@@ -1473,7 +1473,10 @@ INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `em
 ('8', '4', '6', 'Anh Huy', 'thehien@gmail.com', '0786705987', 'Tặng anh Hiển', current_timestamp(), 'Delivered', '30000000', 'express', 'Nghĩa Địa Gia Đôi', '2023-05-01 19:34:36', '70L1-13575', 'COD', '1'),
 ('9', '4', '6', 'Anh Huy', 'thehien@gmail.com', '0786705987', 'Tặng anh Hiển', current_timestamp(), 'Delivered', '45000000', 'express', 'Nghĩa Địa Gia Đôi', '2023-06-07 19:34:36', '70L1-13575', 'COD', '1'),
 ('10', '4', '6', 'Anh Huy', 'thehien@gmail.com', '0786705987', 'Tặng anh Hiển', current_timestamp(), 'Delivered', '45000000', 'express', 'Nghĩa Địa Gia Đôi', '2024-06-08 19:34:36', '70L1-13575', 'COD', '1'),
-('11', '4', '6', 'Anh Huy', 'thehien@gmail.com', '0786705987', 'Tặng anh Hiển', current_timestamp(), 'Delivered', '50000000', 'express', 'Nghĩa Địa Gia Đôi', '2024-06-09 19:34:36', '70L1-13575', 'COD', '1');
+('11', '4', '6', 'Anh Huy', 'thehien@gmail.com', '0786705987', 'Tặng anh Hiển', current_timestamp(), 'Delivered', '50000000', 'express', 'Nghĩa Địa Gia Đôi', '2024-06-09 19:34:36', '70L1-13575', 'COD', '1'),
+('12', '4', '6', 'Anh Huy', 'thehien@gmail.com', '0786705987', 'Tặng anh Hiển', current_timestamp(), 'Delivered', '22000000', 'express', 'Nghĩa Địa Gia Đôi', '2023-07-07 19:34:36', '70L1-13575', 'COD', '1'),
+('13', '4', '6', 'Anh Huy', 'thehien@gmail.com', '0786705987', 'Tặng anh Hiển', current_timestamp(), 'Delivered', '25000000', 'express', 'Nghĩa Địa Gia Đôi', '2024-08-08 19:34:36', '70L1-13575', 'COD', '1'),
+('14', '4', '6', 'Anh Huy', 'thehien@gmail.com', '0786705987', 'Tặng anh Hiển', current_timestamp(), 'Delivered', '36000000', 'express', 'Nghĩa Địa Gia Đôi', '2024-09-09 19:34:36', '70L1-13575', 'COD', '1');
 
 INSERT INTO `exports` (`export_id`, `staff_id`, `order_id`, `export_date`, `total_price`, `is_active`) VALUES 
 ('1', '1', '1', '2024-03-01', '15000000', '1'),
@@ -1486,7 +1489,10 @@ INSERT INTO `exports` (`export_id`, `staff_id`, `order_id`, `export_date`, `tota
 ('8', '4', '8', '2023-05-01', '30000000', '1'),
 ('9', '4', '9', '2023-06-07', '45000000', '1'),
 ('10', '4', '10', '2023-06-08', '45000000', '1'),
-('11', '4', '11', '2023-06-09', '50000000', '1');
+('11', '4', '11', '2023-06-09', '50000000', '1'),
+('12', '4', '12', '2023-07-07', '22000000', '1'),
+('13', '4', '13', '2023-08-08', '25000000', '1'),
+('14', '4', '14', '2023-09-09', '36000000', '1');
 
 INSERT INTO `export_details` (`export_detail_id`, `export_id`, `shipment_id`, `unit_price_export`, `quantity_export`) VALUES 
 ('1', '1', '1', '10000000', '1'),
@@ -1500,9 +1506,19 @@ INSERT INTO `export_details` (`export_detail_id`, `export_id`, `shipment_id`, `u
 ('9', '5', '8', '5000000', '3'),
 ('10', '6', '8', '20000000', '1'),
 ('11', '7', '8', '5000000', '5'),
-('12', '4', '8', '5000000', '6'),
-('13', '4', '9', '20000000', '1'),
-('14', '4', '9', '5000000', '6');
+('12', '8', '8', '5000000', '6'),
+('13', '9', '9', '20000000', '1'),
+('14', '9', '11', '25000000', '1'),
+('15', '10', '9', '20000000', '1'),
+('16', '10', '11', '25000000', '1'),
+('17', '11', '9', '5000000', '5'),
+('18', '11', '11', '5000000', '5'),
+('19', '12', '9', '10000000', '1'),
+('20', '12', '11', '12000000', '1'),
+('21', '13', '9', '10000000', '1'),
+('22', '13', '11', '15000000', '1'),
+('23', '14', '9', '16000000', '5'),
+('24', '14', '11', '20000000', '5');
 DELIMITER //
 CREATE TRIGGER insert_attendance_after_leave_insert_check
 AFTER INSERT ON leave_application
