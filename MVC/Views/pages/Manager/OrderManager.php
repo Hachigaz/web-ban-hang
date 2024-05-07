@@ -157,7 +157,7 @@
                     <label for="" class="row-name">Ngày đặt</label>
                     <div class="row-data row-order-date"></div>
                 </div>
-                <div class="row-section">
+                <div class="row-section" style="display: none;">
                     <label for="" class="row-name">Ngày ship</label>
                     <div class="row-data row-shipping-date"></div>
                 </div>

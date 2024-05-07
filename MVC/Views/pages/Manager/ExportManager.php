@@ -109,7 +109,7 @@
     </div>
     <div class="modal-inner modal-details hide">
         <div class="modal-header">
-            <p>Chi tiết hóa đơn</p>
+            <p>Chi tiết phiếu xuất</p>
             <!-- //<button class="down-page-btn1">Trang trước (3/3)</button> -->
             <i class="fi fi-rr-cross-small" id="closeIconInfo2"></i>
         </div>
