@@ -815,19 +815,7 @@ END
 //
 DELIMITER ;
 
-DELIMITER $$
-CREATE TRIGGER `create_export_details_trigger` AFTER INSERT ON `exports` FOR EACH ROW BEGIN
-    DECLARE export_id INT;
-    SET export_id = NEW.export_id;
 
-    INSERT INTO export_details (export_id, shipment_id, unit_price_export, quantity_export)
-    SELECT export_id, shipment_id, price, number
-    FROM Removes
-    JOIN order_details ON Removes.order_detail_id = order_details.order_detail_id
-    WHERE order_details.order_id = NEW.order_id;
-END
-$$
-DELIMITER ;
 
 
 DELIMITER $$
@@ -1958,3 +1946,17 @@ INSERT INTO `export_details` (`export_detail_id`, `export_id`, `shipment_id`, `u
 (34, 9, 8, 14890000.00, 2),
 (35, 9, 12, 14890000.00, 5),
 (36, 9, 4, 34990000.00, 6);
+
+DELIMITER $$
+CREATE TRIGGER `create_export_details_trigger` AFTER INSERT ON `exports` FOR EACH ROW BEGIN
+    DECLARE export_id INT;
+    SET export_id = NEW.export_id;
+
+    INSERT INTO export_details (export_id, shipment_id, unit_price_export, quantity_export)
+    SELECT export_id, shipment_id, price, number
+    FROM Removes
+    JOIN order_details ON Removes.order_detail_id = order_details.order_detail_id
+    WHERE order_details.order_id = NEW.order_id;
+END
+$$
+DELIMITER ;
