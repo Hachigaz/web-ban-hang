@@ -175,6 +175,11 @@ class OrderService extends Service{
         // return $orders['order_id'];
         return $orders;
     }
-    
+    public function getAllDataStatistic(){
+        return $this->orderRepo->getAllDataStatistic();
+    }
+    public function getAllDataStatisticByTime($start_date, $end_date){
+        return $this->orderRepo->getAllDataStatisticByTime($start_date, $end_date);
+    }
 }
 ?>

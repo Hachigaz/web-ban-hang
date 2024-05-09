@@ -348,8 +348,10 @@
 
                 $urlParams = $this->DecodeURL();
 
-                $resultProductList = $this->productService->getFilteredProducts($urlParams);
-    
+                $resultProductList = $this->productService->GetFilteredProducts($urlParams,
+                    " DISTINCT products.product_id, products.product_name, products.description, categories.category_name, brands.brand_name, products.price, products.description, products.thumbnail, products.guarantee, products.average_rating, categories.category_id, brands.brand_id, products.created_at, products.updated_at",
+                    " join skus on skus.product_id = products.product_id"
+                );
                 $sql = "SELECT category_id,category_name
                 FROM categories
                 WHERE categories.is_active = '1'";
@@ -389,7 +391,14 @@
         public function AdvertisementGetMoreProducts(){
             $urlParams = $this->DecodeURL();
 
-            $resultProductList = $this->productService->GetFilteredProducts($urlParams,"","", "", "products.product_id ASC");
+            // $resultProductList = $this->productService->GetFilteredProducts($urlParams,"","", "", "products.product_id ASC");
+
+            $resultProductList = $this->productService->GetFilteredProducts($urlParams,
+                " DISTINCT products.product_id, products.product_name, products.description, categories.category_name, brands.brand_name, products.price, products.description, products.thumbnail, products.guarantee, products.average_rating, categories.category_id, brands.brand_id, products.created_at, products.updated_at",
+                " join skus on skus.product_id = products.product_id",
+                "",
+                "products.product_id ASC"
+            );
 
             ob_start();
             $productList = $resultProductList["ProductList"];
@@ -588,6 +597,13 @@
        public function GetAllDataContract(){
             $contractData = $this->contractService->getAllDataContract();
             $data = array("contractData" => $contractData);
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE); 
+       }
+
+       public function GetAllDataBusinessSituation(){
+            $revenueAllProduct = $this->orderService->getAllDataStatistic();
+            $data = array("revenueAllProduct" => $revenueAllProduct);
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
        }

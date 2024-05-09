@@ -159,8 +159,11 @@
 
         public function SayHi(){
             $urlParams = $this->DecodeURL();
-
-            $resultProductList = $this->productService->GetFilteredProducts($urlParams);
+            
+            $resultProductList = $this->productService->GetFilteredProducts($urlParams,
+                " DISTINCT products.product_id, products.product_name, products.description, categories.category_name, brands.brand_name, products.price, products.description, products.thumbnail, products.guarantee, products.average_rating, categories.category_id, brands.brand_id, products.created_at, products.updated_at",
+                " join skus on skus.product_id = products.product_id"
+            );
             $resultFilterElements = $this->ProcessFilterOptions($urlParams);
             $priceRangeValue = $this->ProcessPriceRange($urlParams);
 
@@ -224,7 +227,10 @@
         public function GetMoreProducts(){
             $urlParams = $this->DecodeURL();
 
-            $resultProductList = $this->productService->GetFilteredProducts($urlParams);
+            $resultProductList = $this->productService->GetFilteredProducts($urlParams,
+                " DISTINCT products.product_id, products.product_name, products.description, categories.category_name, brands.brand_name, products.price, products.description, products.thumbnail, products.guarantee, products.average_rating, categories.category_id, brands.brand_id, products.created_at, products.updated_at",
+                " join skus on skus.product_id = products.product_id"
+            );
 
             ob_start();
             $productList = $resultProductList["ProductList"];

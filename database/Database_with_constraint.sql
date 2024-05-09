@@ -789,19 +789,7 @@ END
 //
 DELIMITER ;
 
-DELIMITER $$
-CREATE TRIGGER `create_export_details_trigger` AFTER INSERT ON `exports` FOR EACH ROW BEGIN
-    DECLARE export_id INT;
-    SET export_id = NEW.export_id;
 
-    INSERT INTO export_details (export_id, shipment_id, unit_price_export, quantity_export)
-    SELECT export_id, shipment_id, price, number
-    FROM Removes
-    JOIN order_details ON Removes.order_detail_id = order_details.order_detail_id
-    WHERE order_details.order_id = NEW.order_id;
-END
-$$
-DELIMITER ;
 
 
 DELIMITER $$
@@ -1082,12 +1070,12 @@ INSERT INTO `products` (`product_id`, `product_name`, `brand_id`, `category_id`,
 
 
 INSERT INTO `leave_application` (`staff_id`, `start_date`, `end_date`, `reason`, `status`) VALUES
-(1, '2024-05-01', '2024-05-01', 'Lý do cá nhân', 0),
-(2, '2024-05-01', '2024-05-01', 'Ốm đau, thai sản', 0),
-(3, '2024-05-01', '2024-05-01', 'Ốm đau, thai sản', 0),
-(2, '2024-05-02', '2024-05-02', 'Lý do cá nhân', 0),
-(1, '2024-05-02', '2024-05-02', 'Ốm đau, thai sản', 0),
-(3, '2024-05-02', '2024-05-02', 'Ốm đau, thai sản', 0);
+(1, '2024-05-01', '2024-05-01', 'Lý do cá nhân', 1),
+(2, '2024-05-01', '2024-05-01', 'Ốm đau, thai sản', 1),
+(3, '2024-05-01', '2024-05-01', 'Ốm đau, thai sản', 1),
+(2, '2024-05-02', '2024-05-02', 'Lý do cá nhân', 1),
+(1, '2024-05-02', '2024-05-02', 'Ốm đau, thai sản', 1),
+(3, '2024-05-02', '2024-05-02', 'Ốm đau, thai sản', 1);
 
 
 INSERT INTO `contracts` (`contract_id`, `staff_id`, `start_date`, `end_date`, `salary`) VALUES 
@@ -1237,18 +1225,74 @@ INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-128G-Y', '1
 INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-256G-Y', '256GB - Vàng', '3');
 INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-128G-P', '128GB - Hồng', '3');
 INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-256G-P', '256GB - Hồng', '3');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('4-128G-Y', '128GB - Trắng', '4');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('4-256G-Y', '256GB - Trắng', '4');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('4-128G-P', '128GB - Đen', '4');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('4-256G-P', '256GB - Đen', '4');
 
-INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('5-D', '5');
-INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('6-D', '6');
-INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('7-D', '7');
-INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('8-D', '8');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('5-D','Mặc định', '5');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('6-D','Mặc định', '6');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('7-D','Mặc định', '7');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('8-D','Mặc định', '8');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('9-D','Mặc định', '9');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('10-D','Mặc định', '10');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('11-D','Mặc định', '11');
+
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('12-W','Trắng', '12');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('12-B','Đen', '12');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('12-P','Hồng', '12');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('13-W','Trắng', '13');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('13-B','Đen', '13');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('14-B','Đen', '14');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('14-RB','Đỏ đen', '14');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('14-WP','Trắng hồng', '14');
+
+
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('15-D','Mặc định', '15');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('16-D','Mặc định', '16');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('17-D','Mặc định', '17');
+
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('18-D','Mặc định', '18');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('19-D','Mặc định', '19');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('20-D','Mặc định', '20');
+
+
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('21-D','Mặc định', '21');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('22-D','Mặc định', '22');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('23-D','Mặc định', '23');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('24-D','Mặc định', '24');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('25-TKL','TKL - 78 phím', '25');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('25-FZ','Fullsize - 105 phím', '25');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('26-TKL','TKL - 78 phím', '26');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('26-FZ','Fullsize - 105 phím', '26');
+
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('27-D','Mặc định', '27');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('28-D','Mặc định', '28');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('29-D','Mặc định', '29');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('30-D','Mặc định', '30');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('31-D','Mặc định', '31');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('32-D','Mặc định', '32');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('33-D','Mặc định', '33');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('34-D','Mặc định', '34');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('35-D','Mặc định', '35');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('36-D','Mặc định', '36');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('37-D','Mặc định', '37');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('38-D','Mặc định', '38');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('39-D','Mặc định', '39');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('40-D','Mặc định', '40');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('41-D','Mặc định', '41');
 
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TX', 'Titan xanh', '42');
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TD', 'Titan den', '42');
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TN', 'Titan tu nhien', '42');
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TW', 'Titan trang', '42');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TD', 'Titan đen', '42');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TN', 'Titan tự nhiên', '42');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TW', 'Titan trắng', '42');
 
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-W', 'Trang', '44');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('43-TX', 'Titan xanh', '43');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('43-TD', 'Titan đen', '43');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('43-TN', 'Titan tự nhiên', '43');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('43-TW', 'Titan trắng', '43');
+
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-W', 'Trắng', '44');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-XL', 'Xanh lá', '44');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-D', 'Đen', '44');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-T', 'Tím', '44');
@@ -1260,7 +1304,7 @@ INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-X', 'Xám', '45');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-D', 'Đen', '45');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-T', 'Tím', '45');
 
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('46-W', 'Trang', '46');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('46-W', 'Trắng', '46');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('46-X', 'Xanh mint', '46');
 
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-X', 'Xanh mint', '47');
@@ -1268,7 +1312,7 @@ INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-T', 'Tím', '47');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-G', 'Xám', '47');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-K', 'Kem', '47');
 
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-W', 'Trang', '48');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-W', 'Trắng', '48');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-XL', 'Xanh lá', '48');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-D', 'Đen', '48');
 
@@ -1278,7 +1322,10 @@ INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('49-T', 'Tím', '49');
 
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-XL', 'Xanh lá', '50');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-D', 'Đen', '50');
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-T', 'Tím', '50');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-T', 'Tím', '50')
+
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('51-TX', 'Titan xanh', '42');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('51-TD', 'Titan den', '42');
 
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-D', 'Đen', '52');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-XD', 'Xanh dương', '52');
@@ -1436,23 +1483,21 @@ INSERT INTO `shipments` (`shipment_id`, `import_id`, `supplier_id`, `unit_price_
 -- ('47', '11', '18', '30000000', '1', 'ABC'),
 -- ('48', '11', '19', '30000000', '1', 'ABC');
 
-INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `email_of_receiver`, `phone_number_of_receiver`, `note`, `order_date`, `status_of_order`, `total_money`, `shipping_method`, `shipping_address`, `shipping_date`, `tracking_number`, `payment_method`, `is_active`) VALUES 
-("1", '2', '5', 'Anh Hiển', 'thehien@gmail.com', '0786705877', 'Tặng ny', '2024-02-03 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '70S1-16679', 'COD', '1'),
-("2", '2', '6', 'Anh Huy', 'huy@gmail.com', '0903379371', 'Hàng dễ vỡ', '2024-01-03 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '95H7-55639', 'COD', '1'),
-("3", '1', '7', 'Anh Lộc', 'loc@gmail.com', '0909832697', 'Tặng ba má', '2024-01-03 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '85P6-17980', 'COD', '1'),
-("4", '1', '8', 'Anh Long', 'huy@gmail.com', '0909832697', 'Tặng phụ huynh', '2024-04-11 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '01O7-30354', 'COD', '1'),
-("5", '2', '6', 'Anh Huy', 'huy@gmail.com', '0909832697', 'Không giao lúc sáng', '2024-04-11 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '49C8-45275', 'COD', '1'),
-("6", '2', '6', 'Anh Phong', 'thehien@gmail.com', '0909832697', 'Không cần gọi điện', '2024-02-12 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '23P2-84774', 'COD', '1'),
-("7", '1', '6', 'Anh Huy', 'huy@gmail.com', '0909832697', 'Tặng anh Hiển', '2024-01-13 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '13N8-81383', 'COD', '1'),
-("8", '1', '6', 'Anh Huy', 'loc@gmail.com', '0909832697', 'Tặng anh Hiển', '2024-01-14 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '49R4-58398', 'COD', '1'),
-("9", '1', '8', 'Anh Long', 'loc@gmail.com', '0909832697', 'Tặng anh Hiển', '2024-03-15 23:03:52', 'Pending', '174950000.00', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '46I5-13688', 'COD', '1');
-
-INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `email_of_receiver`, `phone_number_of_receiver`, `note`, `order_date`, `status_of_order`, `total_money`, `shipping_method`, `shipping_address`, `shipping_date`, `tracking_number`, `payment_method`, `is_active`) VALUES 
-('10', '4', '5', 'Anh Hiển', 'thehien@gmail.com', '0786705877', 'Tặng anh Hiển', current_timestamp(), 'Pending', '2000000', 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '70L1-13579', 'COD', '1'),
-('11', '4', '6', 'Anh Huy', 'huy@gmail.com', '0903379371', 'Tặng anh Lộc ', current_timestamp(), 'Pending', '1500000', 'express', 'Đại học sài gòn', '2024-03-07 19:34:36', '50S1-89710', 'COD', '1'),
-('12', '4', '7', 'Anh Lộc', 'loc@gmail.com', '0909832697', 'Tặng anh Huy gà', current_timestamp(), 'Pending', '19999999', 'express', 'Đại học nha trang', '2024-03-07 19:34:36', '49L2-36713', 'COD', '1'),
-('13', '4', '5', 'Anh Phong', 'phong@gmail.com', '010284697', 'Tặng anh Phong', current_timestamp(), 'Pending', '6500000', 'express', 'Bệnh viện ', '2024-03-07 19:34:36', '20S2-44489', 'COD', '1'),
-('14', '4', '8', 'Anh Long', 'thehien@gmail.com', '0203678910', 'Tặng ba ', current_timestamp(), 'Pending', '123000', 'express', 'Trạm xá', '2024-03-07 19:34:36', '30D9-89765', 'COD', '1');
+INSERT INTO `orders` (`order_id`, `staff_id`, `account_id`, `receiver_name`, `email_of_receiver`, `phone_number_of_receiver`, `note`, `order_date`, `status_of_order`, `total_money`, `shipping_method`, `shipping_address`, `shipping_date`, `tracking_number`, `payment_method`, `is_active`) VALUES
+(1, 2, 5, 'Anh Hiển', 'thehien@gmail.com', '0786705877', 'Tặng ny', '2024-02-03 23:03:52', 'Shipped', 174950000.00, 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '70S1-16679', 'COD', 1),
+(2, 2, 6, 'Anh Huy', 'huy@gmail.com', '0903379371', 'Hàng dễ vỡ', '2024-01-03 23:03:52', 'Shipped', 314170000.00, 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '95H7-55639', 'COD', 1),
+(3, 1, 7, 'Anh Lộc', 'loc@gmail.com', '0909832697', 'Tặng ba má', '2024-01-03 23:03:52', 'Shipped', 129540000.00, 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '85P6-17980', 'COD', 1),
+(4, 1, 8, 'Anh Long', 'huy@gmail.com', '0909832697', 'Tặng phụ huynh', '2024-04-11 23:03:52', 'Shipped', 141455000.00, 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '01O7-30354', 'COD', 1),
+(5, 2, 6, 'Anh Huy', 'huy@gmail.com', '0909832697', 'Không giao lúc sáng', '2024-04-11 23:03:52', 'Shipped', 4485000.00, 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '49C8-45275', 'COD', 1),
+(6, 2, 6, 'Anh Phong', 'thehien@gmail.com', '0909832697', 'Không cần gọi điện', '2024-02-12 23:03:52', 'Shipped', 489120000.00, 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '23P2-84774', 'COD', 1),
+(7, 1, 6, 'Anh Huy', 'huy@gmail.com', '0909832697', 'Tặng anh Hiển', '2024-01-13 23:03:52', 'Shipped', 129540000.00, 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '13N8-81383', 'COD', 1),
+(8, 1, 6, 'Anh Huy', 'loc@gmail.com', '0909832697', 'Tặng anh Hiển', '2024-01-14 23:03:52', 'Shipped', 214425000.00, 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '49R4-58398', 'COD', 1),
+(9, 1, 8, 'Anh Long', 'loc@gmail.com', '0909832697', 'Tặng anh Hiển', '2024-03-15 23:03:52', 'Shipped', 419140000.00, 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '46I5-13688', 'COD', 1),
+(10, 4, 5, 'Anh Hiển', 'thehien@gmail.com', '0786705877', 'Tặng anh Hiển', '2024-05-08 07:57:22', 'Pending', 129540000.00, 'express', 'Nghĩa Địa Gia Đôi', '2024-03-07 19:34:36', '70L1-13579', 'COD', 1),
+(11, 4, 6, 'Anh Huy', 'huy@gmail.com', '0903379371', 'Tặng anh Lộc ', '2024-05-08 07:57:22', 'Pending', 214425000.00, 'express', 'Đại học sài gòn', '2024-03-07 19:34:36', '50S1-89710', 'COD', 1),
+(12, 4, 7, 'Anh Lộc', 'loc@gmail.com', '0909832697', 'Tặng anh Huy gà', '2024-05-08 07:57:22', 'Pending', 419140000.00, 'express', 'Đại học nha trang', '2024-03-07 19:34:36', '49L2-36713', 'COD', 1),
+(13, 4, 5, 'Anh Phong', 'phong@gmail.com', '010284697', 'Tặng anh Phong', '2024-05-08 07:57:22', 'Pending', 129540000.00, 'express', 'Bệnh viện ', '2024-03-07 19:34:36', '20S2-44489', 'COD', 1),
+(14, 4, 8, 'Anh Long', 'thehien@gmail.com', '0203678910', 'Tặng ba ', '2024-05-08 07:57:22', 'Pending', 214425000.00, 'express', 'Trạm xá', '2024-03-07 19:34:36', '30D9-89765', 'COD', 1);
 
 INSERT INTO `order_details` (`order_detail_id`, `order_id`, `sku_id`, `price`, `number_of_products`, `color_of_product`) VALUES 
 ('1', '1', '1', '34990000', '2', 'Vàng'),
@@ -1891,3 +1936,60 @@ INSERT INTO `timesheets` (`contract_id`, `month`, `year`, `days_worked`, `days_o
 ('2', '9', '2023', '15', '12', '1', '1'),
 ('3', '9', '2023', '20', '5', '0', '0'),
 ('4', '9', '2023', '15', '10', '1', '2');
+
+INSERT INTO `exports` (`export_id`, `staff_id`, `order_id`, `export_date`, `total_price`, `is_active`) VALUES
+(1, 2, 1, '2024-02-03 07:58:11', 174950000.00, 1),
+(2, 2, 2, '2024-03-02 07:58:19', 314170000.00, 1),
+(3, 1, 3, '2024-02-21 07:58:27', 129540000.00, 1),
+(4, 1, 4, '2024-04-09 07:58:37', 141455000.00, 1),
+(5, 2, 5, '2024-04-17 07:58:50', 4485000.00, 1),
+(6, 2, 6, '2024-04-08 07:59:00', 489120000.00, 1),
+(7, 1, 7, '2024-04-09 07:59:15', 129540000.00, 1),
+(8, 1, 8, '2024-03-12 07:59:29', 214425000.00, 1),
+(9, 1, 9, '2024-04-30 07:59:40', 419140000.00, 1);
+
+INSERT INTO `export_details` (`export_detail_id`, `export_id`, `shipment_id`, `unit_price_export`, `quantity_export`) VALUES
+(1, 1, 1, 34990000.00, 2),
+(2, 1, 2, 34990000.00, 3),
+(4, 2, 8, 14890000.00, 2),
+(5, 2, 12, 14890000.00, 5),
+(6, 2, 4, 34990000.00, 6),
+(7, 3, 12, 14890000.00, 4),
+(8, 3, 3, 34990000.00, 2),
+(10, 4, 3, 34990000.00, 2),
+(11, 4, 2, 34990000.00, 2),
+(12, 4, 16, 299000.00, 5),
+(13, 5, 17, 299000.00, 5),
+(14, 5, 18, 299000.00, 5),
+(15, 5, 19, 299000.00, 5),
+(16, 6, 1, 34990000.00, 2),
+(17, 6, 2, 34990000.00, 3),
+(18, 6, 8, 14890000.00, 2),
+(19, 6, 12, 14890000.00, 5),
+(20, 6, 4, 34990000.00, 6),
+(23, 7, 12, 14890000.00, 4),
+(24, 7, 3, 34990000.00, 2),
+(26, 8, 3, 34990000.00, 2),
+(27, 8, 2, 34990000.00, 2),
+(28, 8, 16, 299000.00, 5),
+(29, 8, 17, 299000.00, 5),
+(30, 8, 18, 299000.00, 5),
+(31, 8, 1, 34990000.00, 2),
+(33, 9, 2, 34990000.00, 3),
+(34, 9, 8, 14890000.00, 2),
+(35, 9, 12, 14890000.00, 5),
+(36, 9, 4, 34990000.00, 6);
+
+DELIMITER $$
+CREATE TRIGGER `create_export_details_trigger` AFTER INSERT ON `exports` FOR EACH ROW BEGIN
+    DECLARE export_id INT;
+    SET export_id = NEW.export_id;
+
+    INSERT INTO export_details (export_id, shipment_id, unit_price_export, quantity_export)
+    SELECT export_id, shipment_id, price, number
+    FROM Removes
+    JOIN order_details ON Removes.order_detail_id = order_details.order_detail_id
+    WHERE order_details.order_id = NEW.order_id;
+END
+$$
+DELIMITER ;

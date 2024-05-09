@@ -13,7 +13,7 @@
             }
 
             public function lockAndUnlockAccount($id){// by id
-                $this->lockAndUnlock("accounts", "account_id = ".$id);
+                $this->set("UPDATE accounts SET is_active = CASE WHEN is_active = 1 THEN 0 ELSE 1 END WHERE account_id = $id");
             }
 
             public function getAllAccount(){
