@@ -19,9 +19,6 @@
                 <div>
                     <table>
                         <tbody>
-                            <td>1</td>
-                            <tr>2</tr>
-                            <td>1</td>
 
                         </tbody>
                     </table>
