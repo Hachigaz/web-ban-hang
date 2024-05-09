@@ -197,14 +197,15 @@ modalInnerLeaveApplication.addEventListener("click", function (event) {
 const leaveBtn = document.querySelector(".leave");
 leaveBtn.addEventListener("click", showModalLeaveApplication);
 
-var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0');
-var yyyy = today.getFullYear();
+var tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1); // Thêm 1 ngày vào ngày hiện tại
+var dd = String(tomorrow.getDate()).padStart(2, '0');
+var mm = String(tomorrow.getMonth() + 1).padStart(2, '0'); // Lưu ý: getMonth() trả về từ 0 (tháng 1) đến 11 (tháng 12)
+var yyyy = tomorrow.getFullYear();
 
-today = yyyy + '-' + mm + '-' + dd;
-document.getElementById("leave-start-date").setAttribute("min", today);
-document.getElementById("leave-end-date").setAttribute("min", today);
+tomorrow = yyyy + '-' + mm + '-' + dd;
+document.getElementById("leave-start-date").setAttribute("min", tomorrow);
+document.getElementById("leave-end-date").setAttribute("min", tomorrow);
 var startDateLeaveInput = document.getElementById("leave-start-date");
 var endDateLeaveInput = document.getElementById("leave-end-date");
 
@@ -236,13 +237,7 @@ modalInnerDemistApplication.addEventListener("click", function (event) {
 const demistBtn = document.querySelector(".retire");
 demistBtn.addEventListener("click", showModalDemistApplication);
 
-var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0');
-var yyyy = today.getFullYear();
-
-today = yyyy + '-' + mm + '-' + dd;
-document.getElementById("demist-start-date").setAttribute("min", today);
+document.getElementById("demist-start-date").setAttribute("min", tomorrow);
 
 
 
@@ -266,14 +261,9 @@ modalInnerSickApplication.addEventListener("click", function (event) {
 const sickBtn = document.querySelector(".sick");
 sickBtn.addEventListener("click", showModalSickApplication);
 
-var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0');
-var yyyy = today.getFullYear();
 
-today = yyyy + '-' + mm + '-' + dd;
-document.getElementById("sick-start-date").setAttribute("min", today);
-document.getElementById("sick-end-date").setAttribute("min", today);
+document.getElementById("sick-start-date").setAttribute("min", tomorrow);
+document.getElementById("sick-end-date").setAttribute("min", tomorrow);
 var startDateSickInput = document.getElementById("sick-start-date");
 var endDateSickInput = document.getElementById("sick-end-date");
 

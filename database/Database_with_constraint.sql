@@ -37,6 +37,22 @@ CREATE TABLE `banner_locations` (
   `location_name` VARCHAR(512) NULL
 );
 
+-- CREATE TABLE `banners` (
+--   `banner_id` INT NOT NULL AUTO_INCREMENT,
+--   `image_path` VARCHAR(512) NULL,
+--   `url` VARCHAR(512) NULL,
+--   `banner_name` VARCHAR(256) NULL,
+--   `location_id` INT NULL,
+--   `width` INT NULL,
+--   `height` INT NULL,
+--   `is_active` TINYINT(1) DEFAULT 1,
+--   PRIMARY KEY (`banner_id`),
+--   INDEX `banner_banner-locations_idx` (`location_id` ASC) VISIBLE,
+--   CONSTRAINT `banner_banner-locations`
+--     FOREIGN KEY (`location_id`)
+--     REFERENCES `banner_locations` (`location_id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION);
 CREATE TABLE `banners` (
   `banner_id` INT NOT NULL AUTO_INCREMENT,
   `image_path` VARCHAR(512) NULL,
@@ -47,12 +63,14 @@ CREATE TABLE `banners` (
   `height` INT NULL,
   `is_active` TINYINT(1) DEFAULT 1,
   PRIMARY KEY (`banner_id`),
-  INDEX `banner_banner-locations_idx` (`location_id` ASC) VISIBLE,
+  INDEX `banner_banner-locations_idx` (`location_id` ASC),
   CONSTRAINT `banner_banner-locations`
     FOREIGN KEY (`location_id`)
     REFERENCES `banner_locations` (`location_id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION
+);
+
 
 
 
@@ -1456,31 +1474,61 @@ BEGIN
     SET end_date = NEW.end_date;
 
     -- Chèn các bản ghi attendance mới cho mỗi ngày từ start_date đến end_date
-    WHILE cur_date <= end_date DO
-        IF NEW.status = 1 AND NEW.reason <> 'Nghỉ việc' THEN
-            INSERT INTO attendance (timesheet_id, date, status, leave_application_id)
-            SELECT timesheet_id, cur_date, 'Nghỉ phép', NEW.leave_application_id
-            FROM timesheets
-            INNER JOIN contracts ON timesheets.contract_id = contracts.contract_id
-            WHERE contracts.staff_id = NEW.staff_id
-            AND NOT EXISTS (
-                SELECT 1 FROM attendance 
-                WHERE date = cur_date AND timesheet_id = timesheets.timesheet_id
-            );
-        ELSEIF NEW.status = 0 THEN
-            INSERT INTO attendance (timesheet_id, date, status)
-            SELECT timesheet_id, cur_date, 'Chưa điểm danh'
-            FROM timesheets
-            INNER JOIN contracts ON timesheets.contract_id = contracts.contract_id
-            WHERE contracts.staff_id = NEW.staff_id
-            AND NOT EXISTS (
-                SELECT 1 FROM attendance 
-                WHERE date = cur_date AND timesheet_id = timesheets.timesheet_id
-            );
-        END IF;
+    -- WHILE cur_date <= end_date DO
+    --     IF NEW.status = 1 AND NEW.reason <> 'Nghỉ việc' THEN
+    --         INSERT INTO attendance (timesheet_id, date, status, leave_application_id)
+    --         SELECT timesheet_id, cur_date, 'Nghỉ phép', NEW.leave_application_id
+    --         FROM timesheets
+    --         INNER JOIN contracts ON timesheets.contract_id = contracts.contract_id
+    --         WHERE contracts.staff_id = NEW.staff_id
+    --         AND NOT EXISTS (
+    --             SELECT 1 FROM attendance 
+    --             WHERE date = cur_date AND timesheet_id = timesheets.timesheet_id
+    --         );
+    --     ELSEIF NEW.status = 0 THEN
+    --         INSERT INTO attendance (timesheet_id, date, status)
+    --         SELECT timesheet_id, cur_date, 'Chưa điểm danh'
+    --         FROM timesheets
+    --         INNER JOIN contracts ON timesheets.contract_id = contracts.contract_id
+    --         WHERE contracts.staff_id = NEW.staff_id
+    --         AND NOT EXISTS (
+    --             SELECT 1 FROM attendance 
+    --             WHERE date = cur_date AND timesheet_id = timesheets.timesheet_id
+    --         );
+    --     END IF;
 
-        SET cur_date = DATE_ADD(cur_date, INTERVAL 1 DAY);
-    END WHILE;
+    --     SET cur_date = DATE_ADD(cur_date, INTERVAL 1 DAY);
+    -- END WHILE;
+    WHILE cur_date <= end_date DO
+    IF NEW.status = 1 AND NEW.reason <> 'Nghỉ việc' THEN
+        INSERT INTO attendance (timesheet_id, date, status, leave_application_id)
+        SELECT timesheet_id, cur_date, 'Nghỉ phép', NEW.leave_application_id
+        FROM timesheets
+        INNER JOIN contracts ON timesheets.contract_id = contracts.contract_id
+        WHERE contracts.staff_id = NEW.staff_id
+        AND MONTH(cur_date) = timesheets.month
+        AND YEAR(cur_date) = timesheets.year
+        AND NOT EXISTS (
+            SELECT 1 FROM attendance 
+            WHERE date = cur_date AND timesheet_id = timesheets.timesheet_id
+        );
+    ELSEIF NEW.status = 0 THEN
+        INSERT INTO attendance (timesheet_id, date, status)
+        SELECT timesheet_id, cur_date, 'Chưa điểm danh'
+        FROM timesheets
+        INNER JOIN contracts ON timesheets.contract_id = contracts.contract_id
+        WHERE contracts.staff_id = NEW.staff_id
+        AND MONTH(cur_date) = timesheets.month
+        AND YEAR(cur_date) = timesheets.year
+        AND NOT EXISTS (
+            SELECT 1 FROM attendance 
+            WHERE date = cur_date AND timesheet_id = timesheets.timesheet_id
+        );
+    END IF;
+
+    SET cur_date = DATE_ADD(cur_date, INTERVAL 1 DAY);
+END WHILE;
+
 END;
 //
 DELIMITER ;
