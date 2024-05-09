@@ -1251,18 +1251,74 @@ INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-128G-Y', '1
 INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-256G-Y', '256GB - Vàng', '3');
 INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-128G-P', '128GB - Hồng', '3');
 INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('3-256G-P', '256GB - Hồng', '3');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('4-128G-Y', '128GB - Trắng', '4');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('4-256G-Y', '256GB - Trắng', '4');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('4-128G-P', '128GB - Đen', '4');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('4-256G-P', '256GB - Đen', '4');
 
-INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('5-D', '5');
-INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('6-D', '6');
-INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('7-D', '7');
-INSERT INTO `skus` (`sku_code`, `product_id`) VALUES ('8-D', '8');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('5-D','Mặc định', '5');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('6-D','Mặc định', '6');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('7-D','Mặc định', '7');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('8-D','Mặc định', '8');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('9-D','Mặc định', '9');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('10-D','Mặc định', '10');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('11-D','Mặc định', '11');
+
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('12-W','Trắng', '12');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('12-B','Đen', '12');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('12-P','Hồng', '12');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('13-W','Trắng', '13');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('13-B','Đen', '13');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('14-B','Đen', '14');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('14-RB','Đỏ đen', '14');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`) VALUES ('14-WP','Trắng hồng', '14');
+
+
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('15-D','Mặc định', '15');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('16-D','Mặc định', '16');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('17-D','Mặc định', '17');
+
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('18-D','Mặc định', '18');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('19-D','Mặc định', '19');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('20-D','Mặc định', '20');
+
+
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('21-D','Mặc định', '21');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('22-D','Mặc định', '22');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('23-D','Mặc định', '23');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('24-D','Mặc định', '24');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('25-TKL','TKL - 78 phím', '25');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('25-FZ','Fullsize - 105 phím', '25');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('26-TKL','TKL - 78 phím', '26');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('26-FZ','Fullsize - 105 phím', '26');
+
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('27-D','Mặc định', '27');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('28-D','Mặc định', '28');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('29-D','Mặc định', '29');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('30-D','Mặc định', '30');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('31-D','Mặc định', '31');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('32-D','Mặc định', '32');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('33-D','Mặc định', '33');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('34-D','Mặc định', '34');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('35-D','Mặc định', '35');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('36-D','Mặc định', '36');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('37-D','Mặc định', '37');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('38-D','Mặc định', '38');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('39-D','Mặc định', '39');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('40-D','Mặc định', '40');
+INSERT INTO `skus` (`sku_code`, `sku_name`, `product_id`)  VALUES ('41-D','Mặc định', '41');
 
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TX', 'Titan xanh', '42');
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TD', 'Titan den', '42');
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TN', 'Titan tu nhien', '42');
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TW', 'Titan trang', '42');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TD', 'Titan đen', '42');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TN', 'Titan tự nhiên', '42');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('42-TW', 'Titan trắng', '42');
 
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-W', 'Trang', '44');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('43-TX', 'Titan xanh', '43');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('43-TD', 'Titan đen', '43');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('43-TN', 'Titan tự nhiên', '43');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('43-TW', 'Titan trắng', '43');
+
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-W', 'Trắng', '44');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-XL', 'Xanh lá', '44');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-D', 'Đen', '44');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('44-T', 'Tím', '44');
@@ -1274,7 +1330,7 @@ INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-X', 'Xám', '45');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-D', 'Đen', '45');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('45-T', 'Tím', '45');
 
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('46-W', 'Trang', '46');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('46-W', 'Trắng', '46');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('46-X', 'Xanh mint', '46');
 
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-X', 'Xanh mint', '47');
@@ -1282,7 +1338,7 @@ INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-T', 'Tím', '47');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-G', 'Xám', '47');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('47-K', 'Kem', '47');
 
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-W', 'Trang', '48');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-W', 'Trắng', '48');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-XL', 'Xanh lá', '48');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('48-D', 'Đen', '48');
 
@@ -1292,7 +1348,10 @@ INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('49-T', 'Tím', '49');
 
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-XL', 'Xanh lá', '50');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-D', 'Đen', '50');
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-T', 'Tím', '50');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-T', 'Tím', '50')
+
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('51-TX', 'Titan xanh', '42');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('51-TD', 'Titan den', '42');
 
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-D', 'Đen', '52');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-XD', 'Xanh dương', '52');

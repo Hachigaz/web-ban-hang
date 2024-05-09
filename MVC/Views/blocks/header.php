@@ -35,6 +35,7 @@
                 }
             ?>
             <a href="../Shopcart/" class="shopping-cart"><i class="fa-solid fa-bag-shopping"></i></i></a>
+            <a href="../OrderHistory/" class="shopping-cart"><i class="fa-solid fa-list-alt"></i></i></a>
             <a href="../CustomerInfo/" class="avatar"><img src="../Public/img/<?=$loggedInAvatar?>" alt=""></a>
             <?php 
                 unset($loggedInAvatar);
