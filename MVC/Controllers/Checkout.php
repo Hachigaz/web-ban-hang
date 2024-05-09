@@ -1,5 +1,5 @@
 <?php
-    class CheckOut extends Controller{// Có thể hiểu class Controller thông qua bridge.php 
+    class Checkout extends Controller{// Có thể hiểu class Controller thông qua bridge.php 
         public $productService;
 
         public function __construct(){
@@ -29,8 +29,7 @@
             ]);            
         }        
         public function getAllProductSku(){
-            $productSku = $this->productService->getProductSku();
-            // echo var_dump($cardValue);
+            $productSku = $this->productService->getProductSku2();
             $data = array( "productSku" => $productSku);
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE);   

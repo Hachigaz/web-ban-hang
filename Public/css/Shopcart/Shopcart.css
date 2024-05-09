@@ -128,7 +128,7 @@
 .product-price,
 .quantity,
 .total-price-product {
-    width: 15%;
+    width: 25%;
     /* font-weight: bold; */
 }
 .product-price,
@@ -158,7 +158,7 @@
     text-align: center;
     margin-left: 10px;
     margin-right: 10px;
-    width: 20px; /* Thiết lập kích thước của input */
+    width: 30px; /* Thiết lập kích thước của input */
     /* Hoặc có thể sử dụng max-width nếu bạn muốn input co giãn tối đa */
     /* max-width: 50px; */
 }
@@ -169,7 +169,7 @@
 .product-name {
     width: 60%; /* Sử dụng lại chiều rộng của header1 */
     order: 1; /* Xác định thứ tự xuất hiện trong flex container */
-    margin-left:90px;
+    margin-left:30px;
 }
 .product-name:hover {
     color: blue;
@@ -732,4 +732,7 @@
 .featured-products-panel .product-item .rating-icon-wrapper img{
     width:100%;
     height:100%;
+}
+img {
+    width: 15%;
 }

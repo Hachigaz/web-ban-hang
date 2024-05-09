@@ -26,6 +26,7 @@
             
                 $this->shipmentRepo->createShipment($shipmentModel);
             }
+
             header("location: ../../../web-ban-hang/InternalManager/ImportManager");
         }
          

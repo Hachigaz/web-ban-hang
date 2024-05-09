@@ -17,13 +17,15 @@
             <span>Không có sản phẩm nào trong giỏ hàng</span></br>
             <a href="../Home/" class="backhome">Về trang chủ</a>
         </div>
-        <div class="inline">
-            <a href="../Home/" class="backhome-2">Trang chủ -></a>
+        <div id="container">
+            <div class="inline" >
+                <a href="../Home/" class="backhome-2">Trang chủ -></a>
+            </div>
+            <span class="inline" id="container-1">
+                Giỏ hàng </br>
+            </span>
         </div>
-        <span class="inline">
-            Giỏ hàng </br>
-        </span>
-        <div class="container">
+        <div class="container" id="container-2">
     <div class="gio-1">
         Giỏ hàng
     </div>

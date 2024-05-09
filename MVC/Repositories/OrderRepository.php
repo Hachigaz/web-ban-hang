@@ -1,7 +1,10 @@
 <?php
 class OrderRepository extends DB{
     public function createOrder($order){
-        $this->create("orders", $order, "order_id");
+        $order_ids=$this->create("orders", $order, "order_id");
+        $order_id = $order_ids['order_id'];
+        return $order_id;
+
     }
 
     public function getQuantityOrderByStatus($status_of_order){
@@ -29,6 +32,9 @@ class OrderRepository extends DB{
     
     public function getOrderById($id){
         return $this->getAllByWhere("orders", "order_id = ".$id);
+    }
+    public function getOrderbyAccount($id){
+        return $this->getAllByWhere("orders", "account_id= ".$id);
     }
     // public function joinOrderOrderdetails(){
     //     return $this->joinTablesNotwhere("orders", "order_details","order_id");

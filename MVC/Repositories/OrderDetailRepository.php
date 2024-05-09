@@ -19,7 +19,9 @@
         public function getOrderDetailById($id){
             return $this->getAllDontHaveIsActive("order_details", "order_detail_id = ".$id);
         }
-        // public function getDetails($id){
+        public function GetOrderDetailByOrderId2($id){
+            return $this->getAllByWhere2("order_details", "order_id= ".$id);
+        }
         //     return $this->getAllByWhere1("order_details", "order_id = 1" .$id );
         // }
         public function getDetails(){

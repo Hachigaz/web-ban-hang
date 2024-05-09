@@ -112,7 +112,7 @@ CREATE TABLE `decentralizations` (
 CREATE TABLE `exports` (
   `export_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `staff_id` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
+  `order_id` int(11) NULL,
   `export_date` datetime DEFAULT (now()),
   `total_price` decimal(20,2) DEFAULT 0 COMMENT 'Không tự sinh đc như mysql',
   `is_active` tinyint(1) DEFAULT 1
@@ -141,7 +141,7 @@ CREATE TABLE `modules` (
 
 CREATE TABLE `orders` (
   `order_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `staff_id` int(11) NOT NULL,
+  `staff_id` int(11) NULL,
   `account_id` int(11) NOT NULL,
   `receiver_name` varchar(100) DEFAULT '' COMMENT 'Có thể giấu tên',
   `email_of_receiver` varchar(100) NOT NULL,
@@ -552,60 +552,34 @@ ADD CONSTRAINT check_remain_shipments CHECK (`shipments`.remain >= 0 AND `shipme
 
 -- ORDERS ----------------------------------------
 -- 2.Kiểm tra account_id phải có role_là 5(nếu không có customer nào có account_id đó thì không được tạo order)
-DELIMITER //
-CREATE TRIGGER check_account_order_insert
-BEFORE INSERT ON `orders`
-FOR EACH ROW
-BEGIN
-    DECLARE role_id INT;
-    SELECT `customers`.`role_id` INTO role_id FROM `customers` WHERE `account_id` = NEW.account_id;
-    IF role_id IS NULL THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Error: Account ID not found in customers';
-    END IF;
-END; //
-DELIMITER ;
-DELIMITER //
-CREATE TRIGGER check_account_order_update
-BEFORE UPDATE ON `orders`
-FOR EACH ROW
-BEGIN
-    DECLARE role_id INT;
-    SELECT `customers`.`role_id` INTO role_id FROM `customers` WHERE `account_id` = NEW.account_id;
-    IF role_id IS NULL THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Error: Account ID not found in customers';
-    END IF;
-END; //
-DELIMITER ;
-DELIMITER //
-CREATE TRIGGER calculate_total_money_order_insert
-AFTER INSERT ON order_details
-FOR EACH ROW
-BEGIN
-    UPDATE `orders`
-    SET `orders`.total_money = (
-        SELECT SUM(number_of_products * price)
-        FROM order_details
-        WHERE order_id = NEW.order_id
-    )
-    WHERE order_id = NEW.order_id;
-END; //
-DELIMITER ;
-DELIMITER //
-CREATE TRIGGER calculate_total_money_order_update
-AFTER UPDATE ON order_details
-FOR EACH ROW
-BEGIN
-    UPDATE `orders`
-    SET `orders`.total_money = (
-        SELECT SUM(number_of_products * price)
-        FROM order_details
-        WHERE order_id = NEW.order_id
-    )
-    WHERE order_id = NEW.order_id;
-END; //
-DELIMITER ;
+-- DELIMITER //
+-- CREATE TRIGGER calculate_total_money_export_insert
+-- AFTER INSERT ON export_details
+-- FOR EACH ROW
+-- BEGIN
+--     UPDATE `exports`
+--     SET `exports`.total_price = (
+--         SELECT SUM(unit_price_export * quantity_export)
+--         FROM export_details
+--         WHERE export_id = NEW.export_id
+--     )
+--     WHERE export_id = NEW.export_id;
+-- END; //
+-- DELIMITER ;
+-- DELIMITER //
+-- CREATE TRIGGER calculate_total_money_order_update
+-- AFTER UPDATE ON export_details
+-- FOR EACH ROW
+-- BEGIN
+--     UPDATE `exports`
+--     SET `exports`.total_price = (
+--         SELECT SUM(unit_price_export * quantity_export)
+--         FROM export_details
+--         WHERE export_id = NEW.export_id
+--     )
+--     WHERE export_id = NEW.export_id;
+-- END; //
+-- DELIMITER ;
 -- -- 7.Kiểm tra shipping_date > ngày hiện tại
 -- DELIMITER //
 -- CREATE TRIGGER check_shipping_date_order_insert

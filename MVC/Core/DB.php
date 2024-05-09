@@ -113,7 +113,62 @@
             }
             return $rows;
         }
-
+        public function read4($account_id) {
+            // Kết nối CSDL và thực thi truy vấn
+            $sql = "SELECT order_details.order_detail_id, order_details.order_id, order_details.sku_id, 
+                           order_details.price, order_details.number_of_products, order_details.color_of_product
+                    FROM orders 
+                    INNER JOIN order_details ON orders.order_id = order_details.order_id
+                    WHERE orders.account_id = $account_id AND orders.is_active = 1";
+            $result = mysqli_query($this->con, $sql);
+        
+            // Tạo mảng để lưu kết quả truy vấn
+            $rows = array();
+            while ($row = $result->fetch_assoc()) {
+                $rows[] = $row;
+            }
+        
+            // Trả về mảng chứa thông tin của các chi tiết đơn hàng tương ứng
+            return $rows;
+        }
+        
+        
+        public function read2(){// đọc hết dữ liệu trong bảng $table ra(chi lay ra is_active = 1)
+            $sql = "SELECT 
+            p.product_id,
+            s.sku_id,
+            sku_remain.total_remain AS total_remain,
+            pr.price,
+            pr.product_name,
+            pr.thumbnail,
+            sk.sku_name,
+            sk.sku_code
+        FROM 
+            products pr
+        JOIN 
+            skus sk ON pr.product_id = sk.product_id
+        JOIN 
+            skus s ON pr.product_id = s.product_id
+        JOIN 
+            (SELECT 
+                sh.sku_id,
+                SUM(sh.remain) AS total_remain
+            FROM 
+                shipments sh
+            GROUP BY 
+                sh.sku_id) AS sku_remain ON sku_remain.sku_id = s.sku_id
+        JOIN
+            products p ON s.product_id = p.product_id
+        GROUP BY 
+            p.product_id, s.sku_id;
+        ";
+            $result = mysqli_query($this->con, $sql);
+            $rows = array();
+            while ($row = $result->fetch_assoc()) { // lấy từng trường trong bảng ra gán vào mảng
+                $rows[] = $row;
+            }
+            return $rows;
+        }
         public function readDontHaveIsActive($table){// đọc hết dữ liệu trong bảng $table ra(không cần phải có cột is_active)
             $sql = "SELECT * FROM $table";
             $result = mysqli_query($this->con, $sql);

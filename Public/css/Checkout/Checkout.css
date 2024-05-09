@@ -101,14 +101,22 @@
 }
 .C{
     font-size: 30px;
+    border: none;
 }
-
-.cart, .Total {
+.cart, .Total .Shop {
     /* flex: 1; Phần tử cart và Total chiếm bằng nhau trên mỗi bên của container */
     margin: 0 15px;
 }
 .Total{
     max-height: 250px;
+    max-width: 400px;
+}
+.Shop{
+    max-height: 900px;
+    max-width: 400px;
+}
+.product-name{
+    margin-left: 20px;
 }
 .cart {
     flex: 0.7;
@@ -148,13 +156,12 @@
 }
 
 /* Định dạng cho các phần tử giá trị */
-.product-price,
 .quantity,
 .total-price-product {
     width: 15%;
     /* font-weight: bold; */
 }
-.product-price,
+
 .total-price-product {
        font-weight: bold;
 
@@ -189,27 +196,38 @@
 }
 /* Định dạng cho các div nằm dưới "Đơn giá", "Số lượng" và "Thành tiền" */
 .product-name {
-    width: 60%; /* Sử dụng lại chiều rộng của header1 */
-    order: 1; /* Xác định thứ tự xuất hiện trong flex container */
+    width: 100%; /* Sử dụng lại chiều rộng của header1 */
+}
+.product-price {
+    font-weight: bold;
 }
 .product-name:hover {
     color: blue;
 }
-
-.product-price {
-    order: 2; /* Xác định thứ tự xuất hiện trong flex container */
+.hidden{
+    display: none;
+}
+.inline-3{
+    color: black;
+    text-decoration: none;
+}
+.inline-3:hover{
+    font-weight: bold;
 }
 
-.quantity {
-    order: 3; /* Xác định thứ tự xuất hiện trong flex container */
-}
-
-.total-price-product {
-    order: 4; /* Xác định thứ tự xuất hiện trong flex container */
-}
 
 
 .Total{
+    flex:0.3;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    /* background-color: blue; */
+    border: 0.5px solid #000; /* Thiết lập border có độ dày 2px và màu đen */
+    padding: 10px; /* Thêm padding để tạo khoảng trắng xung quanh nội dung */
+ 
+}
+.Shop{
     flex:0.3;
     display: flex;
     flex-direction: column;
@@ -233,6 +251,33 @@
 }
 
 .Total-footer{
+    background-color: blue;
+    color:white; /* chuyển màu chữ thành đỏ */
+    text-decoration: none; /* loại bỏ dòng gạch dưới */
+    border: 0.5px solid ; /* tạo border màu xanh, độ rộng 2px */
+    border-radius: 10px; /* tạo border vo tròn */
+    padding: 20px 50px; /* thêm padding để tạo khoảng cách giữa border và nội dung */
+    width: fit-content;
+    text-align: center;
+    font-weight: bold;
+    margin-left: auto; /* căn giữa theo chiều ngang */
+    margin-right: auto; /* căn giữa theo chiều ngang */
+    margin-top: 25px;
+}
+.Shop-header{
+    font-weight: bold;
+}
+.Shop-header-2{
+    margin-left: 100px;
+}
+.Shop-content {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.Shop-footer{
     background-color: blue;
     color:white; /* chuyển màu chữ thành đỏ */
     text-decoration: none; /* loại bỏ dòng gạch dưới */
@@ -328,7 +373,9 @@
     margin-right: 5px; /* Khoảng cách giữa các button */
 }
 
-
+/* .right{
+    margin-left: 500px;
+} */
 
 
 
@@ -766,4 +813,7 @@
 .featured-products-panel .product-item .rating-icon-wrapper img{
     width:100%;
     height:100%;
+}
+img{
+    width: 10%;
 }

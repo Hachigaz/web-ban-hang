@@ -26,7 +26,7 @@ function addProducttocart(product_id, sku_id) {
                 });
 
                 const img = document.createElement("img");
-                img.src = foundProduct.thumbnail; // Thay thế bằng URL thực tế của hình ảnh
+                img.src ="../Public/img/products/" +foundProduct.thumbnail; // Thay thế bằng URL thực tế của hình ảnh
                 productDiv.appendChild(img);
 
                 const nameDiv = document.createElement("div");
@@ -38,6 +38,11 @@ function addProducttocart(product_id, sku_id) {
                 skuDiv.classList.add("product-sku-code");
                 skuDiv.textContent = foundProduct.sku_code;
                 nameDiv.appendChild(skuDiv);
+
+                const remainDiv = document.createElement("div");
+                skuDiv.classList.add("product-remain");
+                remainDiv.textContent ="Số lượng còn lại: " +foundProduct.total_remain;
+                nameDiv.appendChild(remainDiv);
 
                 const priceDiv = document.createElement("div");
                 priceDiv.classList.add("product-price");
@@ -57,21 +62,37 @@ function addProducttocart(product_id, sku_id) {
                 controllDiv.appendChild(minusBtn);
 
                 const quantityInput = document.createElement("input");
-                quantityInput.id ="quantity_sku_" + sku_id;
-                quantityInput.type = "input";
+                quantityInput.id = "quantity_sku_" + sku_id;
+                quantityInput.type = "text"; // Set type to text
                 quantityInput.value = 1;
-                quantityInput.min = 1; // Số nhỏ nhất là 1
+                quantityInput.min = 1; // Minimum value is 1
+                quantityInput.max = foundProduct.total_remain; // Maximum value is 10
                 quantityInput.addEventListener("change", () => {
-                    if (parseInt(quantityInput.value) < 1) {
+                    const enteredValue = parseInt(quantityInput.value);
+                    if (isNaN(enteredValue) || enteredValue < 1) {
                         quantityInput.value = 1;
+                    } else if (enteredValue > foundProduct.total_remain) {
+                        quantityInput.value = foundProduct.total_remain;
+                        alert("Không đủ hàng trong kho.");
                     }
-                    updateTotalPrice(); // Cập nhật giá trị total price khi thay đổi số lượng
+                    updateTotalPrice();
                     saveState(product_id, sku_id, checkbox.checked, quantityInput.value);
                 });
-                quantityInput.addEventListener("keydown", (event) => {
-                    // Ngăn sự kiện mặc định của phím (ví dụ: khi người dùng bấm các phím số)
-                    event.preventDefault();
+                
+                // Prevent non-numeric input
+                quantityInput.addEventListener("input", () => {
+                    quantityInput.value = quantityInput.value.replace(/\D/g, ''); // Remove non-numeric characters
                 });
+                
+                // Style to hide arrows
+                // quantityInput.style.appearance = "textfield"; // Hide arrows in some browsers
+                // quantityInput.style.MozAppearance = "textfield"; // Hide arrows in Firefox
+                
+                // Additional styling to prevent resizing of the input
+                
+                // quantityInput.addEventListener("keydown", (event) => {
+                //     //alert khi người dùng nhập số lớn hơn max
+                // });
 
                 quantityInput.addEventListener("change", () => {
                     // Kiểm tra nếu giá trị nhập vào là số và lớn hơn hoặc bằng 1 thì cập nhật giá trị của input
@@ -260,17 +281,23 @@ resetButton.addEventListener("click", resetCart);
 const cartContent = document.querySelector(".cart-content");
 const noItemDiv = document.getElementById("no-item");
 const cartDiv = document.getElementById("cart");
+const container = document.getElementById("container");
+const container2 = document.getElementById("container-2");
 
 // Hàm kiểm tra xem có sản phẩm trong cart-content không và ẩn/hiện tương ứng
 function checkCartContent() {
     if (cartContent.children.length > 0) {
         // Nếu có sản phẩm trong cart-content, ẩn no-item và hiển thị cart
         noItemDiv.style.display = "none";
+        container2.style.display = "block";
+        container.style.display = "block";
         cartDiv.style.display = "flex";
     } else {
         // Nếu không có sản phẩm trong cart-content, ẩn cart và hiển thị no-item
         noItemDiv.style.display = "block";
         cartDiv.style.display = "none";
+        container.style.display = "none";
+        container2.style.display = "none";
     }
 }
 function checkStoredProducts() {
@@ -295,13 +322,44 @@ const thanhToanButton = document.getElementById('Total-footer');
 // Add event listener to check total amount and enable/disable the button
 thanhToanButton.addEventListener('click', function() {
     const totalMoneyDiv = document.querySelector(".value-total-money");
-    const totalMoney = parseInt(totalMoneyDiv.textContent.replace('đ', ''));
-    if (totalMoney !== 0) {
+    const totalMoneyText = totalMoneyDiv.textContent.trim(); // Lấy nội dung của phần tử
+    const totalMoney = parseInt(totalMoneyText.replace(/\D/g, '')); // Lấy số từ nội dung và chuyển đổi thành số nguyên
+    if (!isNaN(totalMoney) && totalMoney !== 0) { // Kiểm tra xem totalMoney có phải là số và không bằng 0 không
         document.getElementById("Total-footer").addEventListener("click", function() {
-            // Hiển thị form khi người dùng nhấp vào div "Total-footer"
-            window.location.href = "http://localhost/web-ban-hang/Checkout/";        
+            // Lấy danh sách các sản phẩm được chọn
+            var selectedProducts = document.querySelectorAll('.product-item input[type="checkbox"]:checked');
+
+            for (var key in localStorage) {
+                if (key.startsWith("productsold_")) {
+                    localStorage.removeItem(key);
+                    console.log("đã xóa")
+                }
+            }
+            // Lưu thông tin của từng sản phẩm vào localStorage
+            selectedProducts.forEach(function(product, index) {
+                var skuId = product.id.split('_')[1]; // Lấy sku_id từ id của input
+
+                // Lấy giá trị của input tương ứng
+                var quantityInput = document.querySelector('#quantity_sku_' + skuId);
+                var number = parseInt(quantityInput.value); // Lấy giá trị và chuyển đổi sang kiểu số
+            
+                // Tạo đối tượng chứa thông tin sản phẩm
+                var productSold = {
+                    "sku_id": skuId,
+                    "number": number
+                };
+            
+                // Lưu đối tượng vào localStorage
+                localStorage.setItem('productsold_' + (index + 1), JSON.stringify(productSold));
+                console.log(productSold);
+            });
+            
+            // Chuyển hướng đến trang Checkout với thông tin về accountId và tổng tiền
+            window.location.href = "http://localhost/web-ban-hang/Checkout/" + loggedInId + "?money=" + totalMoney;
         });
-    } else {
+        
+    }
+     else {
         // Show a message or perform other actions when the total amount is 0
         alert("Vui lòng chọn sản phẩm để thanh toán.");
     }
@@ -425,6 +483,22 @@ document.addEventListener("click", function(event) {
         }
     }
 });
-// window.onload = function() {
-//     callAll(); // Gọi hàm callAll() khi trang được tải
-// };
+// Lấy phần tử a chứa giá trị loggedInId
+// Lấy giá trị của loggedInId từ phần tử a
+var accountIdElement = document.querySelector('.account_id');
+var loggedInId = accountIdElement.textContent.trim();
+
+
+// Lấy URL hiện tại từ trình duyệt
+var currentUrl = window.location.href;
+
+// Kiểm tra xem URL đã chứa loggedInId chưa
+if (!currentUrl.includes(loggedInId)) {
+    // Thêm loggedInId vào URL hiện tại
+    var newUrl = currentUrl + loggedInId;
+
+    // Cập nhật URL của trình duyệt
+    window.history.replaceState({}, document.title, newUrl);
+}
+
+
