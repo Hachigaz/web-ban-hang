@@ -26,7 +26,7 @@
                          <table>
                             <thead>
                                 <tr>
-                                    <td>STT</td>
+                                    <td>Mã đơn</td>
                                     <td>Ngày đặt</td>
                                     <td>Tổng tiền</td>
                                     <td>Tracking Number</td>
@@ -162,10 +162,10 @@
                 <thead>
                     <tr>
                         <td>STT</td>
+                        <td>Tên</td>
                         <td>SKU</td>
                         <td>Số lượng</td>
                         <td>Đơn giá</td>
-                        <td>Màu</td>
                     </tr>
                 </thead>
                 <tbody>

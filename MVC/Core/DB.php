@@ -116,21 +116,25 @@
         public function read4($account_id) {
             // Kết nối CSDL và thực thi truy vấn
             $sql = "SELECT order_details.order_detail_id, order_details.order_id, order_details.sku_id, 
-                           order_details.price, order_details.number_of_products, order_details.color_of_product
+                           order_details.price, order_details.number_of_products, order_details.color_of_product,
+                           products.product_name, products.thumbnail, skus.sku_code
                     FROM orders 
                     INNER JOIN order_details ON orders.order_id = order_details.order_id
+                    INNER JOIN skus ON order_details.sku_id = skus.sku_id
+                    INNER JOIN products ON skus.product_id = products.product_id
                     WHERE orders.account_id = $account_id AND orders.is_active = 1";
             $result = mysqli_query($this->con, $sql);
-        
+            
             // Tạo mảng để lưu kết quả truy vấn
             $rows = array();
             while ($row = $result->fetch_assoc()) {
                 $rows[] = $row;
             }
-        
+            
             // Trả về mảng chứa thông tin của các chi tiết đơn hàng tương ứng
             return $rows;
         }
+        
         
         
         public function read2(){// đọc hết dữ liệu trong bảng $table ra(chi lay ra is_active = 1)

@@ -33,6 +33,8 @@ class OrderService extends Service{
         
             $this->orderDetailRepo->createOrderDetail($OrderDetailModel);
         }
+        header("location: ../../../Home/");
+
     }
     // public function updateOrder(){
     //     $orderData = $this->orderRepo->getOrderById("3");

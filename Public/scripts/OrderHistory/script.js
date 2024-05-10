@@ -201,9 +201,11 @@ fetch("../OrderHistory/GetOrderbyAccount/"+loggedInId)
                         sttCell.textContent = Object.keys(addedSKUs).length; // Số thứ tự tự động tăng
                 
                         // Tạo và thêm ô SKU ID vào dòng mới
-                        var skuIdCell = row.insertCell();
-                        skuIdCell.textContent = order.sku_id;
+                        var nameCell = row.insertCell();
+                        nameCell.textContent = order.product_name;
                 
+                        var skuCell = row.insertCell();
+                        skuCell.textContent = order.sku_code;
                         // Tạo và thêm ô Số lượng vào dòng mới
                         var numberCell = row.insertCell();
                         numberCell.textContent = order.number_of_products;
@@ -216,8 +218,6 @@ fetch("../OrderHistory/GetOrderbyAccount/"+loggedInId)
 
                 
                         // Tạo và thêm ô Màu vào dòng mới
-                        var colorCell = row.insertCell();
-                        colorCell.textContent = order.color_of_product;
                 
                         // Thêm dòng mới vào tbody1
                         tbody1.appendChild(row);
