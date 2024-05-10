@@ -60,5 +60,9 @@
         public function GetOrder1(){
             $this->orderService->GetOrder1();
         }
+        public function GetAllDataStatisticByTime($start_date, $end_date){
+            header('Content-Type: application/json');
+            echo json_encode($this->orderService->getAllDataStatisticByTime($start_date, $end_date), JSON_UNESCAPED_UNICODE);
+        }
     }
 ?>

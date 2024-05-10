@@ -81,12 +81,12 @@
             <input type="date" name="" id="end-date" name="end-date" placeholder="Ngày kết thúc">
         </div>
         <div class="combobox">
-            <select name="" id="">
-                <option value="">Tất cả sản phẩm</option>
-                <option value="">Loại sản phẩm</option>
+            <select name="" id="option-product">
+                <option value="all-product">Tất cả sản phẩm</option>
+                <option value="category">Loại sản phẩm</option>
             </select>
-            <select name="" id="">
-                <option value="">Điện thoại</option>
+            <select name="" id="category" class="hide">
+                 
             </select>
         </div>
     </div>
@@ -101,13 +101,13 @@
             </div>
             <div class="revenue-of-products">
                 <p class="title-statistic">Doanh thu</p>
-                <div class="number-of-product-value">
+                <div class="revenue-value">
                     _ _ _
                 </div>
             </div>
             <div class="profit-of-products">
                 <p class="title-statistic">Lợi nhuận</p>
-                <div class="number-of-product-value">
+                <div class="profit-value">
                     _ _ _
                 </div>
             </div>
@@ -116,15 +116,18 @@
     <div class="details">
     <div class="customer-table">
         <div class="table-header">
-            <h2>Bảng số liệu từ ngày ... đến ...</h2>
+            <h2>Bảng số liệu</h2>
         </div>
         <table id="customer-table">
             <thead>
                 <tr>
+                    <td>STT</td>
                     <td>Tên sản phẩm</td>
                     <td>Loại sản phẩm</td>
-                    <td>Ngày bán</td>
-                    <td>Doanh thu</td>
+                    <td>Giá nhập</td>
+                    <td>Giá bán</td>
+                    <td>Số lượng</td>
+                    <td>Ngày xuất bán</td>
                     <td>Lợi nhuận</td>
                 </tr>
             </thead>

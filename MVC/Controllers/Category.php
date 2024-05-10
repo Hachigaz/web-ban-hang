@@ -29,5 +29,8 @@
         public function GetCategoryById(){
             $this->categoryService->GetCategoryById();
         }
+        public function GetAllCategoryName(){
+            $this->categoryService->getAllCategoryName();
+        }
     }
 ?>

@@ -88,6 +88,9 @@ button.active{
     height: 150px;
     border-radius: 5px;
     box-shadow: 4px 7px 25px rgba(0, 0, 0, 0.1);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-color-green);
 }
 .date-picker {
     display: flex;
@@ -117,7 +120,7 @@ button.active{
 .details {
     position: relative;
     top: 50px;
-    width: 60%;
+    width: 75%;
     padding: 20px;
     display: grid;
     grid-gap: 30px;
@@ -199,6 +202,7 @@ button.active{
 .details .customer-table table td:first-child {
     text-align: center;
 }
+.details .customer-table table td:nth-child(6),
 .details .customer-table table td:nth-child(5) {
     text-align: center;
 }

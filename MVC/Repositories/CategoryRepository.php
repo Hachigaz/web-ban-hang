@@ -19,5 +19,8 @@
             public function getCategoryById($id){
                 return $this->getAllByWhere("categories", "category_id = ".$id);
             }
+            public function getAllCategoryName(){
+                return $this->get("SELECT category_name FROM categories");
+            }
         }
     ?>

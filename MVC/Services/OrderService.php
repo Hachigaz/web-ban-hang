@@ -148,6 +148,11 @@ class OrderService extends Service{
         echo json_encode($this->orderRepo->getOrderById($id), JSON_UNESCAPED_UNICODE);
         return $this->orderRepo->getOrderById($id);
     }
-    
+    public function getAllDataStatistic(){
+        return $this->orderRepo->getAllDataStatistic();
+    }
+    public function getAllDataStatisticByTime($start_date, $end_date){
+        return $this->orderRepo->getAllDataStatisticByTime($start_date, $end_date);
+    }
 }
 ?>
