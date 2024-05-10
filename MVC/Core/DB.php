@@ -139,7 +139,8 @@
             $sql = "SELECT products.product_id, products.product_name, products.brand_id, products.category_id, 
                            products.price, products.guarantee, products.thumbnail, products.description, 
                            products.created_at, products.updated_at, products.average_rating, products.total_reviews, 
-                           products.is_active, skus.sku_id, skus.sku_name, skus.sku_code
+                           products.is_active, skus.sku_id, skus.sku_name, skus.sku_code,
+                           (SELECT SUM(remain) FROM shipments WHERE shipments.sku_id = skus.sku_id) AS total_remain
                     FROM products
                     INNER JOIN skus ON products.product_id = skus.product_id
                     WHERE products.is_active = 1";
@@ -151,9 +152,10 @@
                 $rows[] = $row;
             }
             
-            // Trả về mảng chứa thông tin sản phẩm và sku tương ứng
+            // Trả về mảng chứa thông tin sản phẩm và sku tương ứng, cùng với total_remain
             return $rows;
         }
+        
         
         
         
