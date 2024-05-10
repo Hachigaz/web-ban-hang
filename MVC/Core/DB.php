@@ -134,6 +134,27 @@
             // Trả về mảng chứa thông tin của các chi tiết đơn hàng tương ứng
             return $rows;
         }
+        public function read5() {
+            // Kết nối CSDL và thực thi truy vấn
+            $sql = "SELECT products.product_id, products.product_name, products.brand_id, products.category_id, 
+                           products.price, products.guarantee, products.thumbnail, products.description, 
+                           products.created_at, products.updated_at, products.average_rating, products.total_reviews, 
+                           products.is_active, skus.sku_id, skus.sku_name, skus.sku_code
+                    FROM products
+                    INNER JOIN skus ON products.product_id = skus.product_id
+                    WHERE products.is_active = 1";
+            $result = mysqli_query($this->con, $sql);
+            
+            // Tạo mảng để lưu kết quả truy vấn
+            $rows = array();
+            while ($row = $result->fetch_assoc()) {
+                $rows[] = $row;
+            }
+            
+            // Trả về mảng chứa thông tin sản phẩm và sku tương ứng
+            return $rows;
+        }
+        
         
         
         

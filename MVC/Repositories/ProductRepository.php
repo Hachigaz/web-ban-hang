@@ -52,7 +52,7 @@
                 return $this->joinTablesNotWhere("products", "skus","product_id");
             }
             public function joinProductSku2(){
-                return $this->read2();
+                return $this->read5();
             }
         }
     ?>

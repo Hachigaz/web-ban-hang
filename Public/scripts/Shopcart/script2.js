@@ -4,7 +4,7 @@ function addProducttocart(product_id, sku_id) {
         .then((response) => response.json())
         .then((data) => {
             const productSku = data.productSku;
-            const foundProduct = productSku.find(item => item.sku_id === sku_id);
+            const foundProduct = productSku.find(item =>item.product_id === product_id && item.sku_id === sku_id );
             if (foundProduct) {
                 const cartContent = document.querySelector(".cart-content");
 
