@@ -339,16 +339,16 @@
             $table = $_POST["table"];
             $tableKey = $_POST["table_id"];
             $keyValue = $_POST["$tableKey"];
-            $existColumnName = $_POST["$existColumnName"];
+            $existColumnName = $_POST["exist_column"];
 
             $sql = "SELECT * FROM $table WHERE $tableKey = '$keyValue'";
 
             $ret = $this->productService->productRepo->get($sql);
-
+            // echo(var_dump($ret));
             if(count($ret) > 0){
                 echo(json_encode([
                     "status"=>"key_exists",
-                    "key_value"=>$ret["$existColumnName"]
+                    "key_value"=>$ret[0]["$existColumnName"]
                 ]));
             }
             else{

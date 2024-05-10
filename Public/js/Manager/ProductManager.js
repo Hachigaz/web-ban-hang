@@ -468,21 +468,24 @@ function addSKU(element){
         }
 
         let checkReqData = new FormData()
-        checkReqData.append("table","skus")
+        checkReqData.append("table","skus join products on skus.product_id = products.product_id")
+        checkReqData.append("table_id","sku_code")
         checkReqData.append("sku_code",skuCode)
-        checkReqData.append("sku_name",skuName)
-        checkReqData.append("product_id",productInfo["product_id"])
+        checkReqData.append("exist_column","product_name")
         
         let checkReq = new XMLHttpRequest()
         checkReq.onreadystatechange = function() {
+            print(this.responseText)
             if (this.readyState == 4 && this.status == 200) {
                 console.log(this.responseText)
                 let responseData = JSON.parse(this.responseText)
-                if(responseData["status"]=="success"){
-                    window.location.reload()
+                if(responseData["status"]=="key_exists"){
+                    alert("Mã SKU bị trùng với sản phẩm: "+responseData["key_value"])
                 }
             }
         };
+        // checkReq.open("POST", "../DataRequest/CheckExist", true);
+        // checkReq.send(checkReqData)
 
         let reqData = new FormData()
         reqData.append("table","skus")
