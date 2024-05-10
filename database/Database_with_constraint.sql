@@ -1324,11 +1324,23 @@ INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-XL', 'Xanh lá', '
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-D', 'Đen', '50');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-T', 'Tím', '50');
 
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('51-TX', 'Titan xanh', '42');
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('51-TD', 'Titan den', '42');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('51-TX', 'Titan xanh', '51');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('51-TD', 'Titan den', '51');
 
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-D', 'Đen', '52');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('52-XD', 'Xanh dương', '52');
+
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('53-TX', 'Titan xanh', '53');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('53-TD', 'Titan den', '53');
+
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('54-D', 'Đen', '54');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('54-XD', 'Xanh dương', '54');
+
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('55-TX', 'Titan xanh', '55');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('55-TD', 'Titan den', '55');
+
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('56-D', 'Đen', '56');
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('56-XD', 'Xanh dương', '56');
 
 INSERT INTO `banner_locations` (`location_id`, `location_name`) VALUES ('1', 'home-header');
 

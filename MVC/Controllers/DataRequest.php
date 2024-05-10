@@ -334,6 +334,31 @@
             unset($keyValue);
             unset($sql);
         }
+        
+        public function CheckExist(){
+            $table = $_POST["table"];
+            $tableKey = $_POST["table_id"];
+            $keyValue = $_POST["$tableKey"];
+            $existColumnName = $_POST["$existColumnName"];
+
+            $sql = "SELECT * FROM $table WHERE $tableKey = '$keyValue'";
+
+            $ret = $this->productService->productRepo->get($sql);
+
+            if(count($ret) > 0){
+                echo(json_encode([
+                    "status"=>"key_exists",
+                    "key_value"=>$ret["$existColumnName"]
+                ]));
+            }
+            else{
+                echo(json_encode(["status"=>"success"]));                
+            }
+            unset($table);
+            unset($tableKey);
+            unset($keyValue);
+            unset($sql);
+        }
 
         public function DeleteImage(){
 

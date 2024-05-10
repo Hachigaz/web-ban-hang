@@ -467,6 +467,23 @@ function addSKU(element){
             return
         }
 
+        let checkReqData = new FormData()
+        checkReqData.append("table","skus")
+        checkReqData.append("sku_code",skuCode)
+        checkReqData.append("sku_name",skuName)
+        checkReqData.append("product_id",productInfo["product_id"])
+        
+        let checkReq = new XMLHttpRequest()
+        checkReq.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+                let responseData = JSON.parse(this.responseText)
+                if(responseData["status"]=="success"){
+                    window.location.reload()
+                }
+            }
+        };
+
         let reqData = new FormData()
         reqData.append("table","skus")
         reqData.append("sku_code",skuCode)

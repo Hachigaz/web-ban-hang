@@ -26,6 +26,7 @@ function addProducttocart(product_id, sku_id) {
                 });
 
                 const img = document.createElement("img");
+                img.classList.add("product_image_display")
                 img.src ="../Public/img/products/" +foundProduct.thumbnail; // Thay thế bằng URL thực tế của hình ảnh
                 productDiv.appendChild(img);
 
@@ -355,7 +356,7 @@ thanhToanButton.addEventListener('click', function() {
             });
             
             // Chuyển hướng đến trang Checkout với thông tin về accountId và tổng tiền
-            window.location.href = "http://localhost/web-ban-hang/Checkout/" + loggedInId + "?money=" + totalMoney;
+            window.location.href = "../Checkout/" + loggedInId + "?money=" + totalMoney;
         });
         
     }
