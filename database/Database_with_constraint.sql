@@ -1322,7 +1322,7 @@ INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('49-T', 'Tím', '49');
 
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-XL', 'Xanh lá', '50');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-D', 'Đen', '50');
-INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-T', 'Tím', '50')
+INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('50-T', 'Tím', '50');
 
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('51-TX', 'Titan xanh', '42');
 INSERT INTO skus (sku_code, sku_name, product_id) VALUES ('51-TD', 'Titan den', '42');

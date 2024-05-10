@@ -3,9 +3,9 @@
         public $con;
         protected $servername = "localhost";
         protected $username = "root";
-        protected $password = "";
+        protected $password = "Abc12345";
         // protected $dbname = "newschema";
-        protected $dbname = "do_an_electronic_supermarket_test";
+        protected $dbname = "electronic_supermarket";
 
         function __construct(){
             $this->con = mysqli_connect($this->servername, $this->username, $this->password);
