@@ -590,6 +590,7 @@ const exportChartElement = document.querySelector(".chart-container.export-chart
 const importChartElement = document.querySelector(".chart-container.import-chart");
 const salaryChartElement = document.querySelector(".chart-container.salary-chart");
 const profitChartElement = document.querySelector(".chart-container.profit-chart");
+const businessSituationElement = document.querySelector(".chart-container.business-situation");
 var buttons = document.querySelectorAll(".top-bar-buttons button");
 var charts = document.querySelectorAll(".chart-container");
 [...buttons].forEach((button) => {
@@ -617,7 +618,6 @@ var charts = document.querySelectorAll(".chart-container");
                 profitChartEntity = new Chart(profitChart ,profitConfig);
             }
             profitChartElement.classList.remove("hide");
-
         }
         if(button.className == "salary-statistic"){
             if(salaryChartEntity){
@@ -625,6 +625,9 @@ var charts = document.querySelectorAll(".chart-container");
                 salaryChartEntity = new Chart(salaryChart ,salaryConfig);
             }
             salaryChartElement.classList.remove("hide");
+        }
+        if(button.className == "business-situation"){
+            businessSituationElement.classList.remove("hide");
         }
         [...buttons].forEach((button) => {
             button.classList.remove("active");
