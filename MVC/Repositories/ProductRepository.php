@@ -15,6 +15,7 @@
             public function getAllProduct(){
                 return $this->read("products");
             }
+
             
             public function getProductById($product_id){
                 return $this->getAllByWhere("products", "product_id = ".$product_id);
@@ -49,6 +50,9 @@
             }
             public function joinProductSku(){
                 return $this->joinTablesNotWhere("products", "skus","product_id");
+            }
+            public function joinProductSku2(){
+                return $this->read5();
             }
         }
     ?>

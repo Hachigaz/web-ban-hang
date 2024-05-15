@@ -1,11 +1,14 @@
 <?php
 require_once "./MVC/Models/OrderModel.php";
-
+require_once "./MVC/Models/OrderDetailModel.php";
 class OrderService extends Service{
     public $orderRepo;
+    public $orderDetailRepo;
+
     public $exportRepo;
     public function __construct(){
         $this->orderRepo = $this->repository("OrderRepository");
+        $this->orderDetailRepo = $this->repository("OrderDetailRepository");
     }
     
     // public function createOrder($receiver_name, $email_of_receiver, $phone_number_of_receiver, $shipping_address, $note){//$staffDTO
@@ -14,7 +17,25 @@ class OrderService extends Service{
     //         $this->orderRepo->createOrder($order);
         
     // }
+    public function createOrder($account_id,$receiver_name, $email_of_receiver, $phone_number_of_receiver,$note,$t,$shipping_method,$shipping_address,$tracking_number,$payment_method,$orderData){
+        $staff_id = "3" ;
+        $order = new OrderModel($staff_id,$account_id,$receiver_name, $email_of_receiver, $phone_number_of_receiver,$note,$t,$shipping_method,$shipping_address,$tracking_number,$payment_method);
+        $order_id =$this->orderRepo->createOrder($order);
+        // echo $order_id;
+        foreach ($orderData as $order_Data) {
+            $OrderDetailModel = new OrderDetailModel(
+                $order_id,
+                $order_Data['sku'],
+                $order_Data['price'],
+                $order_Data['number'],
+                "Vàng"
+            );
+        
+            $this->orderDetailRepo->createOrderDetail($OrderDetailModel);
+        }
+        header("location: ../../../Home/");
 
+    }
     // public function updateOrder(){
     //     $orderData = $this->orderRepo->getOrderById("3");
     //     extract($orderData);
@@ -57,12 +78,13 @@ class OrderService extends Service{
         }
 
          extract($orderData);
-    
+         $total_money=$orderData[0]['total_money'];
+
         // Tạo một đối tượng OrderModel mới với trạng thái đã hủy
         $order = new OrderModel(
-            $staff_id, $account_id, $receiver_name, $email_of_receiver, $phone_number_of_receiver, 
-            $note, $shipping_method, $shipping_address, $shipping_date, $tracking_number, 
-            $payment_method, $total_money, $order_id, $order_date, "Cancelled", $is_active
+            "3", $account_id, $receiver_name, $email_of_receiver, $phone_number_of_receiver, 
+            $note,$total_money, $shipping_method, $shipping_address,$tracking_number,  
+            $payment_method,$shipping_date, $order_id,$order_date ,"Cancelled", $is_active
         );
     
         // Cập nhật đơn hàng trong repository
@@ -93,6 +115,7 @@ class OrderService extends Service{
             $order_date=$orderData[0]['order_date'];
             $status_of_order=$orderData[0]['status_of_order'];
             if ($status_of_order === "Pending") {
+                $staff_id ="3";
                 $status_of_order = "Processing";
             } elseif ($status_of_order === "Processing") {
                 $status_of_order = "Shipped";
@@ -107,10 +130,11 @@ class OrderService extends Service{
     
         // Tạo một đối tượng OrderModel mới với trạng thái đã hủy
         $order = new OrderModel(
-            $staff_id, $account_id, $receiver_name, $email_of_receiver, $phone_number_of_receiver, 
-            $note, $shipping_method, $shipping_address, $shipping_date, $tracking_number, 
-            $payment_method, $total_money, $order_id, $order_date,$status_of_order , $is_active
+            "3", $account_id, $receiver_name, $email_of_receiver, $phone_number_of_receiver, 
+            $note,$total_money, $shipping_method, $shipping_address,$tracking_number,  
+            $payment_method,$shipping_date, $order_id,$order_date ,$status_of_order, $is_active
         );
+
     
         // Cập nhật đơn hàng trong repository
         $this->orderRepo->updateOrder($order, $order_id); 
@@ -148,6 +172,16 @@ class OrderService extends Service{
         echo json_encode($this->orderRepo->getOrderById($id), JSON_UNESCAPED_UNICODE);
         return $this->orderRepo->getOrderById($id);
     }
-    
+    public function getOrderbyAccount($id) {
+        $orders = $this->orderRepo->getOrderbyAccount($id);     
+        // return $orders['order_id'];
+        return $orders;
+    }
+    public function getAllDataStatistic(){
+        return $this->orderRepo->getAllDataStatistic();
+    }
+    public function getAllDataStatisticByTime($start_date, $end_date){
+        return $this->orderRepo->getAllDataStatisticByTime($start_date, $end_date);
+    }
 }
 ?>

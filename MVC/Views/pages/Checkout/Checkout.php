@@ -16,8 +16,8 @@
         <div class="inline">
             <a href="/web-ban-hang/Home/" class="backhome-2">Trang chủ -></a>
         </div>
-        <span class="inline">
-            Giỏ hàng -> </br>
+        <span class="inline" >
+            <a href="http://localhost/web-ban-hang/Shopcart/" class="inline-3">Giỏ hàng -> </br></a>
         </span>
         <span class="inline">
             Thanh toán </br>
@@ -30,47 +30,56 @@
 </div>
         <div class="shop-cart" id="cart">
             <div class="cart">
+                <form  method="post" class="modal-body" enctype="multipart/form-data" id="create">
+                <label  id="total_money" name="total_money" style="display:none"></label><br>
                 <label>Họ tên người nhận </label> <label style="color: red;">*</label> <br>
-                <input class="input1"> <br>
+                <input class="input1" id="name" name="name"> <br>
                 <label>Số điện thoại</label><label style="color: red;">*</label> <br>
-                <input class="input1"> <br>
+                <input class="input1" id="phone_number" name="phone_number"> <br>
                 <label>Địa chỉ</label><label style="color: red;">*</label> <br>
-                <input class="input1"> <br>
+                <input class="input1" id="address" name="address"> <br>
                 <label>Email</label><label style="color: red;">*</label> <br>
-                <input class="input1"> <br>
+                <input class="input1" id="email" name="email"> <br>
                 <label>Note</label> <br>
-                <input class="input2"></br>
+                <input class="input2" id="note" name="note"></br>
                 <label for="shipping" style="margin-right:190px ;">Vận chuyển: </label>
-                    <select id="shipping"> </br>
-                    <option value="standard">Giao hàng tiêu chuẩn</option></br>
-                    <option value="express">Giao hàng nhanh</option>
-                    <option value="pickup">Lấy hàng tại cửa hàng</option>
+                    <select id="shipping_method" name="shipping_method"> </br>
+                    <option value="express">Express</option></br>
+
                     <!-- Các tùy chọn khác nếu cần -->
                     </select> </br>
 
                     <label for="payment" style="margin-right:169px ;">Phương thức thanh toán:</label>
-                    <select id="payment">
-                    <option value="paypal">Thẻ tín dụng</option>
-                    <option value="cash">Tiền mặt</option>
+                    <select id="payment_method" name="payment_method">
+                    <option value="COD">COD</option>
                     <!-- Các tùy chọn khác nếu cần -->
                     </select> </br>
                     <label class="b">Mã tra cứu</label> 
-                    <label class="C">70A-7567</label> 
+                    <!-- Hidden input field to submit the tracking_number value -->
+                    <input type="hidden" name="tracking_number" id="tracking_number_hidden">
+
+                    <!-- Disabled input field for display -->
+                    <input class="C .no-change" id="tracking_number_display" disabled>
+                    <input type="submit" value="Submit" style="display:none">
+                    </form>
             </div>
             <div class="right">
-                <div class="shopping">
-                    <!-- <div class="Total-header"> Thông tin đơn hàng</div>
-                    <div class="Total-header-2" style="float: right;"> Chỉnh sửa</div>  -->
-                    <div class="Total-header"> </div>
-
+                <div class="Shop" >
+                    <div class="Shop-content">
+                        <div></div>
+                        <!-- <div class="temp-money" >Tạm tính</div> 
+                        <div class="value-temp-money" id="temp-money">100 000đ</div> 
+                        <div class="fee-money" >Phí vận chuyển</div> 
+                        <div class="value-fee" id="fee"> 50 000đ</div> 
+                        <div class="total-money"> Thành tiền</div>
+                        <div class="value-total-money" >160 000 đ</div> -->
+                    </div>
                 </div>
-                <div class="Total" style="margin-top: 400px;">
+                <div class="Total" style="margin-top: 50px;">
                     <div class="Total-header"> </div>
                     <div class="Total-content">
                         <div class="temp-money" >Tạm tính</div> 
                         <div class="value-temp-money" id="temp-money">100 000đ</div> 
-                        <div class="fee-money" >Phí vận chuyển</div> 
-                        <div class="value-fee" id="fee"> 50 000đ</div> 
                         <div class="total-money"> Thành tiền</div>
                         <div class="value-total-money" >160 000 đ</div>
                     </div>
@@ -107,5 +116,5 @@
 </div>
         <?php require_once "./MVC/Views/pages/".$data["Page"].".php" ?>
     </body>
-        <!-- <script src="../Public/scripts/Shopcart/script2.js"></script> -->
+        <script src="../Public/scripts/Checkout/script.js"></script>
 </html>

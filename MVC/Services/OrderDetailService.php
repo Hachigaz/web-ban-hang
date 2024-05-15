@@ -8,7 +8,7 @@
         }
         
         public function createOrderDetail(){//$orderDetailDTO
-            $orderDetail = new OrderDetailModel("1", "1", "2000000", "2", "Đen");
+            $orderDetail = new OrderDetailModel("77", "1", "2000000", "2", "Đen");
             $this->orderDetailRepo->createOrderDetail($orderDetail);
         }
 
@@ -38,6 +38,10 @@
         }
         public function GetOrderDetailByOrderId(){
             return $this->orderDetailRepo->getDetails();
+        }
+        public function GetOrderDetailByOrderId2($id){
+
+            return $this->orderDetailRepo->read4($id);
         }
     }
 ?>

@@ -35,5 +35,9 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($this->categoryRepo->getCategoryById($id), JSON_UNESCAPED_UNICODE);
         }
+        public function getAllCategoryName(){
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($this->categoryRepo->getAllCategoryName(), JSON_UNESCAPED_UNICODE);
+        }
     }
 ?>

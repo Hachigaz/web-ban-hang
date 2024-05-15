@@ -4,15 +4,15 @@
         private $sku_id;
         private $price;
         private $color_of_product;
-        private $number_of_product;
+        private $number_of_products;
         private $order_detail_id;
-        public function __construct($order_id, $sku_id, $price, $number_of_product, $color_of_product, $order_detail_id = null)
+        public function __construct($order_id, $sku_id, $price, $number_of_products, $color_of_product, $order_detail_id = null)
         {
             $this->order_id = $order_id;
             $this->sku_id = $sku_id;
             $this->price = $price;
             $this->color_of_product = $color_of_product;
-            $this->number_of_product = $number_of_product;
+            $this->number_of_products = $number_of_products;
             $this->order_detail_id = $order_detail_id;
         }
         public function getOrderId(){
@@ -64,7 +64,7 @@
                 'order_id' => $this->order_id,
                 'sku_id' => $this->sku_id,
                 'price' => $this->price,
-                'number_of_product' => $this->number_of_product,
+                'number_of_products' => $this->number_of_products,
                 'color_of_product' => $this->color_of_product
             );
         }

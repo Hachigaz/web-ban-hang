@@ -600,5 +600,12 @@
             header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
             echo json_encode($data, JSON_UNESCAPED_UNICODE); 
        }
+
+       public function GetAllDataBusinessSituation(){
+            $revenueAllProduct = $this->orderService->getAllDataStatistic();
+            $data = array("revenueAllProduct" => $revenueAllProduct);
+            header('Content-Type: application/json');// chuyển đổi dữ liệu sang json
+            echo json_encode($data, JSON_UNESCAPED_UNICODE); 
+       }
     }
  

@@ -590,6 +590,7 @@ const exportChartElement = document.querySelector(".chart-container.export-chart
 const importChartElement = document.querySelector(".chart-container.import-chart");
 const salaryChartElement = document.querySelector(".chart-container.salary-chart");
 const profitChartElement = document.querySelector(".chart-container.profit-chart");
+const businessSituationElement = document.querySelector(".chart-container.business-situation");
 var buttons = document.querySelectorAll(".top-bar-buttons button");
 var charts = document.querySelectorAll(".chart-container");
 [...buttons].forEach((button) => {
@@ -617,7 +618,6 @@ var charts = document.querySelectorAll(".chart-container");
                 profitChartEntity = new Chart(profitChart ,profitConfig);
             }
             profitChartElement.classList.remove("hide");
-
         }
         if(button.className == "salary-statistic"){
             if(salaryChartEntity){
@@ -626,9 +626,285 @@ var charts = document.querySelectorAll(".chart-container");
             }
             salaryChartElement.classList.remove("hide");
         }
+        if(button.className == "business-situation"){
+            businessSituationElement.classList.remove("hide");
+        }
         [...buttons].forEach((button) => {
             button.classList.remove("active");
         });
         this.classList.add("active");
     });
 })
+fetchDataAllProduct();
+const optionProduct = document.querySelector("#option-product");
+const optionCategory = document.querySelector("#category");
+const startDate = document.querySelector("#start-date");
+const endDate = document.querySelector("#end-date");
+startDate.addEventListener("change", function(){
+    startDate.max = endDate.value;
+    endDate.min = startDate.value;
+    if(optionProduct.value == "all-product" && startDate.value != "" && endDate.value != ""){
+        fetchDataByTime(startDate.value, endDate.value);
+    }else if(optionProduct.value == "category" && startDate.value != "" && endDate.value != ""){
+        fetchDataByTimeByCategory(startDate.value, endDate.value, optionCategory.value);
+    }
+});
+endDate.addEventListener("change", function(){
+    startDate.max = endDate.value;
+    endDate.min = startDate.value;
+    if(optionProduct.value == "all-product" && startDate.value != "" && endDate.value != ""){
+        fetchDataByTime(startDate.value, endDate.value);
+    }else if(optionProduct.value == "category" && startDate.value != "" && endDate.value != ""){
+        fetchDataByTimeByCategory(startDate.value, endDate.value, optionCategory.value);
+    }
+});
+optionCategory.addEventListener("change", function(){
+    if(optionProduct.value == "category" && startDate.value != "" && endDate.value != ""){
+        fetchDataByTimeByCategory(startDate.value, endDate.value, optionCategory.value);
+    }else{
+        fetchDataByCategory(optionCategory.value);
+    }
+});
+optionProduct.addEventListener("change", function(){
+    if(optionProduct.value == "all-product"){
+        optionCategory.classList.add("hide");
+        if(startDate.value != "" && endDate.value != ""){
+            fetchDataByTime(startDate.value, endDate.value);
+        }else{
+            fetchDataAllProduct();
+        }  
+        // optionCategory.selected = "Điện thoại";
+    }else{
+        optionCategory.classList.remove("hide");
+        if(startDate.value != "" && endDate.value != ""){
+            fetchDataByTimeByCategory(startDate.value, endDate.value, optionCategory.value);
+        }else{
+            fetchDataByCategory(optionCategory.value);
+        }  
+    }
+});
+const tbody = document.querySelector(".details table tbody");   
+const numberOfProductValue = document.querySelector(".number-of-product-value");
+const revenueValue = document.querySelector(".revenue-value");
+const profitValue = document.querySelector(".profit-value");
+const selectCategory = document.querySelector("#category");
+fetch("../Category/GetAllCategoryName")
+    .then((response) => response.json())
+    .then((values) => {
+        values.forEach((value) => {
+            var option = document.createElement("option");
+            option.textContent = value.category_name;
+            option.value = value.category_name;
+            selectCategory.appendChild(option);
+        });
+    })
+    .catch((error) => console.log("Error: ", error));
+function fetchDataAllProduct(){
+    fetch("../InternalManager/GetAllDataBusinessSituation")
+    .then((response) => response.json())
+    .then((values) => {
+        let totalProducts = 0;
+        let totalRevenue = 0;
+        let totalProfit = 0;
+        tbody.innerHTML = '';
+        values.revenueAllProduct.forEach((value) => {
+                var row = tbody.insertRow();
+
+                var orderDetailIdCell = row.insertCell();
+                orderDetailIdCell.textContent = value.order_detail_id; // In ra order_id
+
+                var productNameCell = row.insertCell();
+                productNameCell.textContent = value.product_name; // In ra order_id
+
+                var categoryCell = row.insertCell();
+                categoryCell.textContent = value.category_name; // In ra order_id
+
+                var importPriceCell = row.insertCell();
+                importPriceCell.textContent = parseFloat(value.unit_price_import).toLocaleString('it-IT') + 'đ';// In ra order_id
+
+                var priceCell = row.insertCell();
+                priceCell.textContent = parseFloat(value.price).toLocaleString('it-IT') + 'đ'; // In ra order_id
+
+                var quantityCell = row.insertCell();
+                quantityCell.textContent = value.number_of_products; // In ra order_id
+                totalProducts += parseInt(value.number_of_products);
+                totalRevenue += parseFloat(value.price * value.number_of_products);
+                
+                var exportDateCell = row.insertCell();
+                var date = new Date(value.export_date);
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                if (day < 10) day = "0" + day;
+                if (month < 10) month = "0" + month;
+                var formattedDate = day + "/" + month + "/" + year;
+                exportDateCell.textContent = formattedDate; // format lại ngày
+        
+                var profitCell = row.insertCell();
+                profitCell.textContent = parseFloat(value.profit).toLocaleString('it-IT') + 'đ'; 
+                totalProfit += parseFloat(value.profit);
+        });
+        numberOfProductValue.textContent = totalProducts;
+        revenueValue.textContent = totalRevenue.toLocaleString('it-IT') + 'đ';
+        profitValue.textContent = totalProfit.toLocaleString('it-IT') + 'đ';
+    })
+    .catch((error) => console.log("Error: ", error));
+}
+function fetchDataByCategory(category){
+    fetch("../InternalManager/GetAllDataBusinessSituation")
+    .then((response) => response.json())
+    .then((values) => {
+        let totalProducts = 0;
+        let totalRevenue = 0;
+        let totalProfit = 0;
+        tbody.innerHTML = '';
+        values.revenueAllProduct.forEach((value) => {
+            if(value.category_name == category){
+                var row = tbody.insertRow();
+
+                var orderDetailIdCell = row.insertCell();
+                orderDetailIdCell.textContent = value.order_detail_id; // In ra order_id
+
+                var productNameCell = row.insertCell();
+                productNameCell.textContent = value.product_name; // In ra order_id
+
+                var categoryCell = row.insertCell();
+                categoryCell.textContent = value.category_name; // In ra order_id
+
+                var importPriceCell = row.insertCell();
+                importPriceCell.textContent = parseFloat(value.unit_price_import).toLocaleString('it-IT') + 'đ';// In ra order_id
+
+                var priceCell = row.insertCell();
+                priceCell.textContent = parseFloat(value.price).toLocaleString('it-IT') + 'đ'; // In ra order_id
+
+                var quantityCell = row.insertCell();
+                quantityCell.textContent = value.number_of_products; // In ra order_id
+                totalProducts += parseInt(value.number_of_products);
+                totalRevenue += parseFloat(value.price * value.number_of_products);
+                
+                var exportDateCell = row.insertCell();
+                var date = new Date(value.export_date);
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                if (day < 10) day = "0" + day;
+                if (month < 10) month = "0" + month;
+                var formattedDate = day + "/" + month + "/" + year;
+                exportDateCell.textContent = formattedDate; // format lại ngày
+        
+                var profitCell = row.insertCell();
+                profitCell.textContent = parseFloat(value.profit).toLocaleString('it-IT') + 'đ'; 
+                totalProfit += parseFloat(value.profit);
+            }
+        });
+        numberOfProductValue.textContent = totalProducts;
+        revenueValue.textContent = totalRevenue.toLocaleString('it-IT') + 'đ';
+        profitValue.textContent = totalProfit.toLocaleString('it-IT') + 'đ';
+    })
+    .catch((error) => console.log("Error: ", error));
+}
+function fetchDataByTime(startDate, endDate){
+    fetch("../Order/GetAllDataStatisticByTime/"+startDate+"/"+endDate)
+    .then((response) => response.json())
+    .then((values) => {
+        let totalProducts = 0;
+        let totalRevenue = 0;
+        let totalProfit = 0;
+        tbody.innerHTML = '';
+        values.forEach((value) => {
+                var row = tbody.insertRow();
+
+                var orderDetailIdCell = row.insertCell();
+                orderDetailIdCell.textContent = value.order_detail_id; // In ra order_id
+
+                var productNameCell = row.insertCell();
+                productNameCell.textContent = value.product_name; // In ra order_id
+
+                var categoryCell = row.insertCell();
+                categoryCell.textContent = value.category_name; // In ra order_id
+
+                var importPriceCell = row.insertCell();
+                importPriceCell.textContent = parseFloat(value.unit_price_import).toLocaleString('it-IT') + 'đ';// In ra order_id
+
+                var priceCell = row.insertCell();
+                priceCell.textContent = parseFloat(value.price).toLocaleString('it-IT') + 'đ'; // In ra order_id
+
+                var quantityCell = row.insertCell();
+                quantityCell.textContent = value.number_of_products; // In ra order_id
+                totalProducts += parseInt(value.number_of_products);
+                totalRevenue += parseFloat(value.price * value.number_of_products);
+                
+                var exportDateCell = row.insertCell();
+                var date = new Date(value.export_date);
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                if (day < 10) day = "0" + day;
+                if (month < 10) month = "0" + month;
+                var formattedDate = day + "/" + month + "/" + year;
+                exportDateCell.textContent = formattedDate; // format lại ngày
+        
+                var profitCell = row.insertCell();
+                profitCell.textContent = parseFloat(value.profit).toLocaleString('it-IT') + 'đ'; 
+                totalProfit += parseFloat(value.profit);
+        });
+        numberOfProductValue.textContent = totalProducts;
+        revenueValue.textContent = totalRevenue.toLocaleString('it-IT') + 'đ';
+        profitValue.textContent = totalProfit.toLocaleString('it-IT') + 'đ';
+    })
+    .catch((error) => console.log("Error: ", error));
+}
+function fetchDataByTimeByCategory(startDate, endDate, category){
+    fetch("../Order/GetAllDataStatisticByTime/"+startDate+"/"+endDate)
+    .then((response) => response.json())
+    .then((values) => {
+        let totalProducts = 0;
+        let totalRevenue = 0;
+        let totalProfit = 0;
+        tbody.innerHTML = '';
+        values.forEach((value) => {
+            if(value.category_name == category){
+                var row = tbody.insertRow();
+
+                var orderDetailIdCell = row.insertCell();
+                orderDetailIdCell.textContent = value.order_detail_id; // In ra order_id
+
+                var productNameCell = row.insertCell();
+                productNameCell.textContent = value.product_name; // In ra order_id
+
+                var categoryCell = row.insertCell();
+                categoryCell.textContent = value.category_name; // In ra order_id
+
+                var importPriceCell = row.insertCell();
+                importPriceCell.textContent = parseFloat(value.unit_price_import).toLocaleString('it-IT') + 'đ';// In ra order_id
+
+                var priceCell = row.insertCell();
+                priceCell.textContent = parseFloat(value.price).toLocaleString('it-IT') + 'đ'; // In ra order_id
+
+                var quantityCell = row.insertCell();
+                quantityCell.textContent = value.number_of_products; // In ra order_id
+                totalProducts += parseInt(value.number_of_products);
+                totalRevenue += parseFloat(value.price * value.number_of_products);
+                
+                var exportDateCell = row.insertCell();
+                var date = new Date(value.export_date);
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                if (day < 10) day = "0" + day;
+                if (month < 10) month = "0" + month;
+                var formattedDate = day + "/" + month + "/" + year;
+                exportDateCell.textContent = formattedDate; // format lại ngày
+        
+                var profitCell = row.insertCell();
+                profitCell.textContent = parseFloat(value.profit).toLocaleString('it-IT') + 'đ'; 
+                totalProfit += parseFloat(value.profit);
+            }
+                
+        });
+        numberOfProductValue.textContent = totalProducts;
+        revenueValue.textContent = totalRevenue.toLocaleString('it-IT') + 'đ';
+        profitValue.textContent = totalProfit.toLocaleString('it-IT') + 'đ';
+    })
+    .catch((error) => console.log("Error: ", error));
+}

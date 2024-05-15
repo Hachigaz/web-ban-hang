@@ -23,6 +23,7 @@
         <div class="profile header-component">
             <?php 
                 if(isset($_SESSION["logged_in_account"])){
+                    $loggedInId=$_SESSION["logged_in_account"]["account_id"];
                     if($_SESSION["logged_in_account"]["avatar"]!=""){
                         $loggedInAvatar = $_SESSION["logged_in_account"]["avatar"];
                     }
@@ -37,6 +38,7 @@
             <a href="../Shopcart/" class="shopping-cart"><i class="fa-solid fa-bag-shopping"></i></i></a>
             <a href="../OrderHistory/" class="shopping-cart"><i class="fa-solid fa-list-alt"></i></i></a>
             <a href="../CustomerInfo/" class="avatar"><img src="../Public/img/<?=$loggedInAvatar?>" alt=""></a>
+            <a href="" class="account_id" style="display: none;"><?=$loggedInId?></a>
             <?php 
                 unset($loggedInAvatar);
             ?>
