@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Techshop</title>
         <meta http-equiv="Cache-Control" content="max-age=3600, must-revalidate" />
+        <link rel="stylesheet" href="../Public/css/globals/globals.css">
         <link rel="stylesheet" href="../Public/css/components/header.css">
         <link rel="stylesheet" href="../Public/css/global/common.css">
         <link rel="stylesheet" href="../Public/css/Checkout/Checkout.css">
