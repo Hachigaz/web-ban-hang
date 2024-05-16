@@ -1,3 +1,5 @@
+const { search } = require("core-js/fn/symbol")
+
 function toggleFilterElement(element){
     let filterElement = element.parentElement.parentElement.parentElement.getAttribute("filter_id")
     let filterValue = element.value
@@ -44,6 +46,16 @@ function setFilter(filterElement, filterValue){
         redirectURL+=`?${encodeURI(searchParams.toString())}`
     }
     window.location.replace(redirectURL)
+}
+
+function setFilter1(searchParams, filterElement, filterValue){
+    if(searchParams.has(filterElement)){
+        searchParams.set(filterElement,filterValue)
+    }
+    else{
+        searchParams.append(filterElement,filterValue)
+    }
+    return searchParams
 }
 
 function toggleFilter(filterElement, filterValue){
@@ -131,12 +143,21 @@ function updateUpperRangeSlider(element){
 function priceRangeUpdate(element){
     let lowerRangeValue = element.querySelector("#lower-range").value
     let upperRangeValue = element.querySelector("#upper-range").value
+
+
     let searchParams = new URLSearchParams(decodeURI(window.location.search))
-    
-    if(searchParams.get("lower-price-range")!= lowerRangeValue){
-        setFilter("lower-price-range",lowerRangeValue)
-    }
-    if(searchParams.get("upper-price-range")!= upperRangeValue){
-        setFilter("upper-price-range",upperRangeValue)
+
+    if(searchParams.get("lower-price-range")!= lowerRangeValue || searchParams.get("upper-price-range")!= upperRangeValue){
+        if(searchParams.get("lower-price-range")!= lowerRangeValue){
+            setFilter1(searchParams,"lower-price-range",lowerRangeValue)
+        }
+        if(searchParams.get("upper-price-range")!= upperRangeValue){
+            setFilter1(searchParams,"upper-price-range",upperRangeValue)
+        }
+        let redirectURL = `${window.location.href.replace(window.location.search,"")}`
+        if(searchParams.size>0){
+            redirectURL+=`?${encodeURI(searchParams.toString())}`
+        }
+        window.location.replace(redirectURL)
     }
 }

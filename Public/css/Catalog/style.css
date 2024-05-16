@@ -118,11 +118,13 @@
 .filter-content.double-slider .number-display-wrapper #lower-number{
     position: absolute;
     left: 0px;
+    font-size: 11pt;
 }
 
 .filter-content.double-slider .number-display-wrapper #upper-number{
     position: absolute;
     right:0px;
+    font-size: 11pt;
 }
 .filter-content.double-slider input[type=text] {
   min-width: 70px;

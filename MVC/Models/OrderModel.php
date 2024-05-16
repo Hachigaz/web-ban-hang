@@ -16,7 +16,7 @@
         private $order_date;
         private $status_of_order;
         private $is_active;
-        public function __construct($staff_id, $account_id, $receiver_name, $email_of_receiver, $phone_number_of_receiver, $note,$total_money ,$shipping_method, $shipping_address,$tracking_number, $payment_method, $shipping_date=null , $order_id = null, $order_date = null, $status_of_order = null, $is_active = null)
+        public function __construct($staff_id, $account_id, $receiver_name, $email_of_receiver, $phone_number_of_receiver, $note,$total_money ,$shipping_method, $shipping_address,$tracking_number, $payment_method, $shipping_date='1990-01-01 00:00:00' , $order_id = null, $order_date = null, $status_of_order = null, $is_active = null)
         {
             $this->staff_id = $staff_id;
             $this->account_id = $account_id;

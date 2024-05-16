@@ -66,7 +66,7 @@
             $_SESSION["verification_code"]= $verificationData;
 
             $userEmail = $_SESSION["signup_user_data"]["email"];
-            $emailSubject = "Xác nhận email";
+            $emailSubject = "Xác nhận email đăng ký tài khoản";
             $message = "
                 Mã xác nhận email là: $verification_code.";
             

@@ -66,7 +66,7 @@
                 </a>  -->
                 <div  class="Total-footer" id ="Total-footer">
                     <!-- Thanh toán<br> -->
-                    <a class="help" href="http://localhost/web-ban-hang/Signin/">Đăng nhập để tiếp tục</a>
+                    <a class="help" href="../Signin/">Đăng nhập để tiếp tục</a>
                 </div>                 
             </div>
         </div>
