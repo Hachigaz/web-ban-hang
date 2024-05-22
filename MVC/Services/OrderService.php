@@ -91,6 +91,45 @@ class OrderService extends Service{
         $this->orderRepo->updateOrder($order, $order_id); 
         header("location: ../../../web-ban-hang/InternalManager/OrderManager");
     }
+    public function CancelledOrder2($order_id){
+        // Lấy thông tin đơn hàng từ repository
+        $orderData = $this->getOrderById($order_id);
+
+        if ($orderData === null) {
+            // Handle the case where no order data is found
+            // $response = ["error" => "Order not found"];
+        } else {
+            // $response = array("orderData" => $orderData);
+            $staff_id = $orderData[0]['staff_id'];  
+            $account_id = $orderData[0]['account_id'];    
+            $receiver_name=$orderData[0]['receiver_name'];
+            $email_of_receiver = $orderData[0]['email_of_receiver'];
+            $phone_number_of_receiver = $orderData[0]['phone_number_of_receiver'];
+            $note=$orderData[0]['note'];
+            $shipping_method = $orderData[0]['shipping_method'];
+            $shipping_address = $orderData[0]['shipping_address'];
+            $shipping_date=$orderData[0]['shipping_date'];
+            $tracking_number = $orderData[0]['tracking_number'];
+            $payment_method = $orderData[0]['payment_method'];
+            $total_money=$orderData[0]['total_money'];
+            $order_date=$orderData[0]['order_date'];
+            $is_active=$orderData[0]['is_active'];  
+        }
+
+         extract($orderData);
+         $total_money=$orderData[0]['total_money'];
+
+        // Tạo một đối tượng OrderModel mới với trạng thái đã hủy
+        $order = new OrderModel(
+            "3", $account_id, $receiver_name, $email_of_receiver, $phone_number_of_receiver, 
+            $note,$total_money, $shipping_method, $shipping_address,$tracking_number,  
+            $payment_method,$shipping_date, $order_id,$order_date ,"Cancelled", $is_active
+        );
+    
+        // Cập nhật đơn hàng trong repository
+        $this->orderRepo->updateOrder($order, $order_id); 
+        header("location: ../../OrderHistory/");
+    }
     public function UpdateStatusOrder($order_id){
         // Lấy thông tin đơn hàng từ repository
         $orderData = $this->getOrderById($order_id);

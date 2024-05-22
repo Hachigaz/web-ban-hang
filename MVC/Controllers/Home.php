@@ -20,7 +20,7 @@
             $sql = "SELECT products.product_id, products.product_name, products.thumbnail, categories.category_id, categories.category_name, brands.brand_id, brands.brand_name, products.price, products.average_rating, products.total_reviews,featured_products.featured_row
             FROM products join categories on products.category_id = categories.category_id join brands on products.brand_id = brands.brand_id join featured_products on products.product_id = featured_products.product_id
             WHERE products.is_active = 1
-            ORDER BY featured_products.featured_row ASC
+            ORDER BY featured_products.featured_row ASC, products.updated_at DESC
             ";
             $featuredProductList = $this->productService->productRepo->get($sql);
             unset($sql);

@@ -139,7 +139,7 @@ fetch("../OrderHistory/GetOrderbyAccount/"+loggedInId)
                 // Thiết lập thuộc tính href của deleteA với order_id ban đầu
                 deleteA.setAttribute(
                     "href",
-                    "../Order/CancelledOrder/" + original_order_id
+                    "../Order/CancelledOrder2/" + original_order_id
                 );
                 // Hiển thị modal với nội dung tương ứng
                 contentModalDelete.textContent = "Bạn có chắc là muốn hủy đơn hàng " ;

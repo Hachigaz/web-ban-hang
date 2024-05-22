@@ -31,6 +31,9 @@
         public function CancelledOrder($order_id){
             $this->orderService->CancelledOrder($order_id);
         }
+        public function CancelledOrder2($order_id){
+            $this->orderService->CancelledOrder2($order_id);
+        }
         public function UpdateStatusOrder($order_id){
             $this->orderService->UpdateStatusOrder($order_id);
         }

@@ -340,8 +340,14 @@
     background-color: #9bcf53;
     color: #fff;
 }
+
 .add-btn:hover {
     opacity: 0.8;
+}
+
+.all{
+    min-height: 76.4vh;
+    padding-bottom: 50px;
 }
 
 /*button table*/
