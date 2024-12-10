@@ -52,6 +52,5 @@
 
         <?php require_once "./MVC/Views/pages/".$data["Page"].".php" ?>
     </div>
-    <?php require_once "./MVC/Views/blocks/footer.php" ?>
 </body>
 </html>
