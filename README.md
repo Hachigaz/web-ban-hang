@@ -34,8 +34,9 @@ A full E-commerce web application created using PHP for backend processing and H
 ### Product Catalog Page
 ![alt text](readme/img/catalog_page.png)
 ### Product Detail Page
+#### Product detail information and images
 ![alt text](readme/img/product_detail_1.png)
-### Product Feedback Page
+#### Product rating and feedbacks
 ![alt text](readme/img/product_detail_feedback.png)
 ### Checkout Page
 ![alt text](readme/img/checkout_page.png)
